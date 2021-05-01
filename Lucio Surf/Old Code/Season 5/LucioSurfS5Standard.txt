@@ -1,0 +1,1419 @@
+variables {
+    global:
+        0: TimeFirst
+        1: TimeSecond
+        2: TimeThird
+        3: PlayerFirst
+        4: PlayerSecond
+        5: PlayerThird
+        6: Visible
+        7: ForLoop
+        23: PosStart
+        24: PosCheckpoint
+        25: PosFinish
+        26: PosTarget
+    player:
+        0: TimeCurrent
+        1: TimeBest
+        2: NewBest
+        3: Checkpoint
+        4: Target
+        5: Finished
+        6: AutoReset
+        7: HideHelp
+        8: Mode
+        9: Attempts
+        10: SpeedColor
+        11: ForLoop
+        12: ForLoop2
+        13: StatusCheckpoint
+        14: StatusTarget
+        15: StatusTargetPreHit
+        16: IndexCheckpoint
+        17: IndexTarget
+        18: Temp
+        19: TargetHitInUse
+        23: PosPracticeCheckpoint
+        24: FacingPracticeCheckpoint
+        25: VelocityPracticeCheckpoint
+        26: SpeedPracticeCheckpoint
+}
+subroutines {
+    0: TargetHit1
+    1: TargetHit2
+    2: TargetHit3
+    3: TargetHit4
+}
+rule ("Mark target as hit 1") {
+    event {
+        Subroutine;
+        TargetHit1;
+    }
+    actions {
+        Set Player Variable At Index(Event Player, TargetHitInUse, 0, True);
+        Set Player Variable At Index(Event Player, Temp, 0, (Event Player).ForLoop2);
+        Set Player Variable At Index(Event Player, StatusTargetPreHit, First Of((Event Player).Temp), True);
+        Wait(Divide(Distance Between(Eye Position(Event Player), Value In Array(Global.PosTarget, First Of((Event Player).Temp))), 50), Ignore Condition);
+        If(Value In Array((Event Player).StatusTargetPreHit, First Of((Event Player).Temp)));
+            Set Player Variable At Index(Event Player, StatusTarget, First Of((Event Player).Temp), True);
+            Modify Player Variable(Event Player, Target, Add, 1);
+            Play Effect(Event Player, Buff Explosion Sound, Color(White), Position Of(Event Player), 200);
+            Small Message(Event Player, String("{0}: {1}", Custom String("{0} {1}", String("Targets", Null, Null, Null), String("Hit", Null, Null, Null), Null), Custom String("{0} / {1}", (Event Player).Target, Count Of(Global.PosTarget), Null), Null));
+        End;
+        Set Player Variable At Index(Event Player, TargetHitInUse, 0, False);
+    }
+}
+
+rule ("Mark target as hit 2") {
+    event {
+        Subroutine;
+        TargetHit2;
+    }
+    actions {
+        Set Player Variable At Index(Event Player, TargetHitInUse, 1, True);
+        Set Player Variable At Index(Event Player, Temp, 1, (Event Player).ForLoop2);
+        Set Player Variable At Index(Event Player, StatusTargetPreHit, Value In Array((Event Player).Temp, 1), True);
+        Wait(Divide(Distance Between(Eye Position(Event Player), Value In Array(Global.PosTarget, Value In Array((Event Player).Temp, 1))), 50), Ignore Condition);
+        If(Value In Array((Event Player).StatusTargetPreHit, Value In Array((Event Player).Temp, 1)));
+            Set Player Variable At Index(Event Player, StatusTarget, Value In Array((Event Player).Temp, 1), True);
+            Modify Player Variable(Event Player, Target, Add, 1);
+            Play Effect(Event Player, Buff Explosion Sound, Color(White), Position Of(Event Player), 200);
+            Small Message(Event Player, String("{0}: {1}", Custom String("{0} {1}", String("Targets", Null, Null, Null), String("Hit", Null, Null, Null), Null), Custom String("{0} / {1}", (Event Player).Target, Count Of(Global.PosTarget), Null), Null));
+        End;
+        Set Player Variable At Index(Event Player, TargetHitInUse, 1, False);
+    }
+}
+
+rule ("Mark target as hit 3") {
+    event {
+        Subroutine;
+        TargetHit3;
+    }
+    actions {
+        Set Player Variable At Index(Event Player, TargetHitInUse, 2, True);
+        Set Player Variable At Index(Event Player, Temp, 2, (Event Player).ForLoop2);
+        Set Player Variable At Index(Event Player, StatusTargetPreHit, Value In Array((Event Player).Temp, 2), True);
+        Wait(Divide(Distance Between(Eye Position(Event Player), Value In Array(Global.PosTarget, Value In Array((Event Player).Temp, 2))), 50), Ignore Condition);
+        If(Value In Array((Event Player).StatusTargetPreHit, Value In Array((Event Player).Temp, 2)));
+            Set Player Variable At Index(Event Player, StatusTarget, Value In Array((Event Player).Temp, 2), True);
+            Modify Player Variable(Event Player, Target, Add, 1);
+            Play Effect(Event Player, Buff Explosion Sound, Color(White), Position Of(Event Player), 200);
+            Small Message(Event Player, String("{0}: {1}", Custom String("{0} {1}", String("Targets", Null, Null, Null), String("Hit", Null, Null, Null), Null), Custom String("{0} / {1}", (Event Player).Target, Count Of(Global.PosTarget), Null), Null));
+        End;
+        Set Player Variable At Index(Event Player, TargetHitInUse, 2, False);
+    }
+}
+
+rule ("Mark target as hit 4") {
+    event {
+        Subroutine;
+        TargetHit4;
+    }
+    actions {
+        Set Player Variable At Index(Event Player, TargetHitInUse, 3, True);
+        Set Player Variable At Index(Event Player, Temp, 3, (Event Player).ForLoop2);
+        Set Player Variable At Index(Event Player, StatusTargetPreHit, Value In Array((Event Player).Temp, 3), True);
+        Wait(Divide(Distance Between(Eye Position(Event Player), Value In Array(Global.PosTarget, Value In Array((Event Player).Temp, 3))), 50), Ignore Condition);
+        If(Value In Array((Event Player).StatusTargetPreHit, Value In Array((Event Player).Temp, 3)));
+            Set Player Variable At Index(Event Player, StatusTarget, Value In Array((Event Player).Temp, 3), True);
+            Modify Player Variable(Event Player, Target, Add, 1);
+            Play Effect(Event Player, Buff Explosion Sound, Color(White), Position Of(Event Player), 200);
+            Small Message(Event Player, String("{0}: {1}", Custom String("{0} {1}", String("Targets", Null, Null, Null), String("Hit", Null, Null, Null), Null), Custom String("{0} / {1}", (Event Player).Target, Count Of(Global.PosTarget), Null), Null));
+        End;
+        Set Player Variable At Index(Event Player, TargetHitInUse, 3, False);
+    }
+}
+
+disabled rule ("Debug (Player)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    actions {
+        Create HUD Text(Event Player, Custom String("Primary: {0}", Is Firing Primary(Event Player), Null, Null), Null, Null, Left, -1, Color(White), Null, Null, String, Default Visibility);
+    }
+}
+
+rule ("Start - Assault - Every Map Is In Order (a - z)") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(Compare(Current Map, ==, Map(Hanamura)));
+            Set Global Variable(PosStart, Vector(85.867, -1.847, 16.524));
+            Set Global Variable(PosCheckpoint, Array(Vector(64.123, -3.111, 84.188)));
+            Set Global Variable(PosFinish, Vector(30.542, 2.173, 40.845));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Horizon Lunar Colony)));
+            Set Global Variable(PosStart, Vector(-38.253, 10.174, -122.811));
+            Set Global Variable(PosCheckpoint, Array(Vector(43.183, 14.173, -77.129)));
+            Set Global Variable(PosFinish, Vector(25.671, 7.174, -15.62));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Paris)));
+            Set Global Variable(PosStart, Vector(-119.964, 10.036, -51.908));
+            Set Global Variable(PosCheckpoint, Array(Vector(-44.044, 11.232, -33.258)));
+            Set Global Variable(PosFinish, Vector(15.807, 10.1, -57.496));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Temple of Anubis)));
+            Set Global Variable(PosStart, Vector(9.122, 5.587, 124.801));
+            Set Global Variable(PosCheckpoint, Array(Vector(-16.156, 5.683, 38.261)));
+            Set Global Variable(PosFinish, Vector(14.464, 10.246, 12.459));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Volskaya Industries)));
+            Set Global Variable(PosStart, Vector(-96.722, -2.303, 24.146));
+            Set Global Variable(PosCheckpoint, Array(Vector(-37.356, 2.194, 98.043)));
+            Set Global Variable(PosFinish, Vector(-30.133, 2.294, 38.232));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Escort") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(Compare(Current Map, ==, Map(Dorado)));
+            Set Global Variable(PosStart, Vector(62.246, 13.594, 21.758));
+            Set Global Variable(PosCheckpoint, Array(Vector(117.076, 18.107, 5.438)));
+            Set Global Variable(PosFinish, Vector(26.047, 5.274, -41.35));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Havana)));
+            Set Global Variable(PosStart, Vector(-107.317, 4.173, -59.178));
+            Set Global Variable(PosCheckpoint, Array(Vector(24.458, 10.173, -87.151)));
+            Set Global Variable(PosFinish, Vector(65.054, 12.174, -83.635));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Junkertown)));
+            Set Global Variable(PosStart, Vector(-49.399, 9.662, -42.145));
+            Set Global Variable(PosCheckpoint, Array(Vector(-46.378, 19.653, -90.257)));
+            Set Global Variable(PosFinish, Vector(40.235, 9.176, -51.024));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Rialto)));
+            Set Global Variable(PosStart, Vector(-31.663, 1.924, -115.564));
+            Set Global Variable(PosCheckpoint, Array(Vector(24.407, 2.155, -132.75)));
+            Set Global Variable(PosFinish, Vector(160.704, -3.678, -62.886));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Route 66)));
+            Set Global Variable(PosStart, Vector(71.704, 0.114, 11.87));
+            Set Global Variable(PosCheckpoint, Array(Vector(-42.605, 3.614, 5.206)));
+            Set Global Variable(PosFinish, Vector(-100.763, 8.673, 8.128));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Watchpoint: Gibraltar)));
+            Set Global Variable(PosStart, Vector(83.581, 3.21, -31.786));
+            Set Global Variable(PosCheckpoint, Array(Vector(66.186, -1.827, -114.804)));
+            Set Global Variable(PosFinish, Vector(22.688, -5.9, -159.187));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Hybrid") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(Compare(Current Map, ==, Map(Blizzard World)));
+            Set Global Variable(PosStart, Vector(52.118, -1.362, -7.795));
+            Set Global Variable(PosCheckpoint, Array(Vector(53.816, -5.205, -87.717)));
+            Set Global Variable(PosFinish, Vector(-57.568, -3.929, -5.401));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Eichenwalde)));
+            Set Global Variable(PosStart, Vector(2.656, 7.176, 0.346));
+            Set Global Variable(PosCheckpoint, Array(Vector(31.753, 14.173, -79.386)));
+            Set Global Variable(PosFinish, Vector(83.903, 12.856, -87.977));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Hollywood)));
+            Set Global Variable(PosStart, Vector(-25.875, 1.924, 21.201));
+            Set Global Variable(PosCheckpoint, Array(Vector(12.661, 1.923, -86.28)));
+            Set Global Variable(PosFinish, Vector(-38.232, 9.923, -116.867));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(King's Row)));
+            Set Global Variable(PosStart, Vector(4.83, 7.175, -1.205));
+            Set Global Variable(PosCheckpoint, Array(Vector(-83.851, 0.682, 4.438)));
+            Set Global Variable(PosFinish, Vector(-118.429, -1.208, 24.984));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Numbani)));
+            Set Global Variable(PosStart, Vector(144.571, 2.424, 29.313));
+            Set Global Variable(PosCheckpoint, Array(Vector(49.435, 4.372, -6.419)));
+            Set Global Variable(PosFinish, Vector(163.628, 4.551, -0.052));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Control - Busan") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Map == Map(Busan);
+    }
+    actions {
+        "Downtown"
+        If(Compare(Objective Index, ==, 0));
+            Set Global Variable(PosStart, Vector(84.198, 15.173, -142.989));
+            Set Global Variable(PosCheckpoint, Array(Vector(22.583, 8.173, -81.736)));
+            Set Global Variable(PosFinish, Vector(-12.436, 16.173, -117.693));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "MEKA Base"
+        If(Compare(Objective Index, ==, 2));
+            Set Global Variable(PosStart, Vector(165.682, 10.268, 271.056));
+            Set Global Variable(PosCheckpoint, Array(Vector(-328.5, 9.8, 107.4)));
+            Set Global Variable(PosFinish, Vector(247.878, 13.269, 199.614));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Sanctuary"
+        If(Compare(Objective Index, ==, 1));
+            Set Global Variable(PosStart, Vector(-284.514, 12.224, 174.822));
+            Set Global Variable(PosCheckpoint, Array(Vector(-382.463, 9.223, 138.889)));
+            Set Global Variable(PosFinish, Vector(-271.677, 10.456, 137.999));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Control - Ilios") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Map == Map(Ilios);
+    }
+    actions {
+        "Lighthouse"
+        If(Compare(Objective Index, ==, 0));
+            Set Global Variable(PosStart, Vector(284.738, -17.767, -75.819));
+            Set Global Variable(PosCheckpoint, Array(Vector(363.517, -18.172, -53.426)));
+            Set Global Variable(PosFinish, Vector(336.947, -24.402, 22.725));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Ruins"
+        If(Compare(Objective Index, ==, 2));
+            Set Global Variable(PosStart, Vector(111.647, 66.563, -177.77));
+            Set Global Variable(PosCheckpoint, Array(Vector(28.446, 61.562, -143.87)));
+            Set Global Variable(PosFinish, Vector(-55.178, 65.562, -178.229));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Well"
+        If(Compare(Objective Index, ==, 1));
+            Set Global Variable(PosStart, Vector(-258.986, -1.673, 48.481));
+            Set Global Variable(PosCheckpoint, Array(Vector(-224.969, 5.51, -33.21)));
+            Set Global Variable(PosFinish, Vector(-141.105, 13.206, -87.497));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Control - Lijiang Tower") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Map == Map(Lijiang Tower);
+    }
+    actions {
+        "Control Tower"
+        If(Compare(Objective Index, ==, 2));
+            Set Global Variable(PosStart, Vector(-26.497, 270.173, 340.286));
+            Set Global Variable(PosCheckpoint, Array(Vector(10.656, 270.173, 261.943)));
+            Set Global Variable(PosFinish, Vector(27.763, 270.173, 355.578));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Garden"
+        If(Compare(Objective Index, ==, 1));
+            Set Global Variable(PosStart, Vector(61.321, 98.173, 161.408));
+            Set Global Variable(PosCheckpoint, Array(Vector(-0.067, 96.173, 107.872)));
+            Set Global Variable(PosFinish, Vector(-68.698, 98.173, 163.209));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Night Market"
+        If(Compare(Objective Index, ==, 0));
+            Set Global Variable(PosStart, Vector(61.03, 6.174, -10.232));
+            Set Global Variable(PosCheckpoint, Array(Vector(1.479, -0.673, -59.482)));
+            Set Global Variable(PosFinish, Vector(-58.911, 6.173, -10.302));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Control - Nepal") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Map == Map(Nepal);
+    }
+    actions {
+        "Sanctum"
+        If(Compare(Objective Index, ==, 2));
+            Set Global Variable(PosStart, Vector(107.495, 133.277, -73.174));
+            Set Global Variable(PosCheckpoint, Array(Vector(55.295, 129.981, 0.52)));
+            Set Global Variable(PosFinish, Vector(102.618, 136.173, 78.165));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Shrine"
+        If(Compare(Objective Index, ==, 1));
+            Set Global Variable(PosStart, Vector(-22.294, 22.173, 76.936));
+            Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
+            Set Global Variable(PosFinish, Vector(-50.994, 15.16, -77.311));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Village"
+        If(Compare(Objective Index, ==, 0));
+            Set Global Variable(PosStart, Vector(-168.653, -97.361, -48.431));
+            Set Global Variable(PosCheckpoint, Array(Vector(-221.123, -88.032, 0.323)));
+            Set Global Variable(PosFinish, Vector(-147.782, -91.897, 62.105));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Control - Oasis") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Map == Map(Oasis);
+    }
+    actions {
+        "City Center"
+        If(Compare(Objective Index, ==, 0));
+            Set Global Variable(PosStart, Vector(84.599, 2.177, 298.498));
+            Set Global Variable(PosCheckpoint, Array(Vector(157.26, 4.174, 264.225)));
+            Set Global Variable(PosFinish, Vector(157.23, 1.176, 205.119));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "Gardens"
+        If(Compare(Objective Index, ==, 1));
+            Set Global Variable(PosStart, Vector(73.282, 7.673, -285.746));
+            Set Global Variable(PosCheckpoint, Array(Vector(141.33, 7.4, -247.33)));
+            Set Global Variable(PosFinish, Vector(155.223, 10.178, -186.502));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+            Abort;
+        End;
+        "University"
+        If(Compare(Objective Index, ==, 2));
+            Set Global Variable(PosStart, Vector(-208.867, 20.506, -71.688));
+            Set Global Variable(PosCheckpoint, Array(Vector(-172.403, 17.173, 2.078)));
+            Set Global Variable(PosFinish, Vector(-188.53, 18.173, 60.728));
+            Set Global Variable(PosTarget, Array(Vector(0, 0, 0)));
+    }
+}
+
+rule ("Start - Global") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        "Start / Checkpoint / Finish effects"
+        Create Effect(All Players(All Teams), Ring, Color(Green), Global.PosStart, 2, Visible To);
+        Create Effect(All Players(All Teams), Light Shaft, Color(White), Global.PosFinish, 5, Visible To);
+        Create Effect(All Players(All Teams), Ring, Color(White), Global.PosFinish, 5, Visible To);
+        Create Icon(All Players(All Teams), Add(Global.PosFinish, Vector(0, 6, 0)), Flag, Visible To and Position, Color(White), True);
+        For Global Variable(ForLoop, 0, Count Of(Global.PosCheckpoint), 1);
+            Create Effect(All Players(All Teams), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, Global.ForLoop), 3.5, Visible To);
+            Create Effect(All Players(All Teams), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, Global.ForLoop), 3.5, Visible To);
+            Create Icon(All Players(All Teams), Add(Value In Array(Global.PosCheckpoint, Global.ForLoop), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), True);
+        End;
+        "Vars"
+        Set Match Time(3599);
+        Set Global Variable(TimeFirst, 9999);
+        Set Global Variable(TimeSecond, 9999);
+        Set Global Variable(TimeThird, 9999);
+        Set Global Variable(Visible, True);
+        "Leaderboards"
+        Create HUD Text(All Players(All Teams), String("{0} - {1} - {2}", Custom String("3", Null, Null, Null), String("{0} sec", Global.TimeThird, Null, Null), Global.PlayerThird), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(All Players(All Teams), String("{0} - {1} - {2}", Custom String("2", Null, Null, Null), String("{0} sec", Global.TimeSecond, Null, Null), Global.PlayerSecond), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(All Players(All Teams), String("{0} - {1} - {2}", String("Record", Null, Null, Null), String("{0} sec", Global.TimeFirst, Null, Null), Global.PlayerFirst), Null, Null, Right, 0, Color(White), Null, Null, Visible To and String, Default Visibility);
+        "Help text standard"
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Mode, !=, -1)), Null, Null, Custom String("Toggle Help - 'Ultimate Status'", Null, Null, Null), Left, 3, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, !=, -1)), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Toggle Invisibility - 'Need Healing'", Null, Null, Null), Left, 4, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Not((Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Not((Current Array Element).Mode))), Null, Null, Custom String("Cycle Auto Reset - Leftclick", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Not((Current Array Element).Mode))), Null, Null, Custom String("Practice Mode - Interact", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Not((Current Array Element).Mode))), Null, Null, Custom String("Player Spectator Mode - Ability 2", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Not((Current Array Element).Mode))), Null, Null, Custom String("Spectator Mode - Ability 1", Null, Null, Null), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        "Help text practice"
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 1)), Compare((Current Array Element).Mode, <=, 3))), Null, Null, Custom String("Standard Mode - Interact", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 1)), Compare((Current Array Element).Mode, <=, 3))), Null, Null, Custom String("Ult Reset (Checkpoint) - Ultimate", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 1)), Compare((Current Array Element).Mode, <=, 3))), Null, Null, Custom String("Set Checkpoint - Rightclick", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        "Help text playerspec"
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 4)), Compare((Current Array Element).Mode, <=, 6))), Null, Null, Custom String("Standard Mode - Ability 2", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 4)), Compare((Current Array Element).Mode, <=, 6))), Null, Null, Custom String("Spectate next - Leftclick", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 4)), Compare((Current Array Element).Mode, <=, 6))), Null, Null, Custom String("Spectate previous - Rightclick", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        "Help text spectator"
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 7)), Compare((Current Array Element).Mode, <=, 9))), Null, Null, Custom String("Standard Mode - Ability 1", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 7)), Compare((Current Array Element).Mode, <=, 9))), Null, Null, Custom String("Stop - Leftclick", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, >=, 7)), Compare((Current Array Element).Mode, <=, 9))), Null, Null, Custom String("Slow Move - Rightclick", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+    }
+}
+
+rule ("Start - Player") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Has Spawned(Event Player) == True;
+    }
+    actions {
+        Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
+        Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player), Null, Null), Null, Null, Top, 1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
+        Create HUD Text(Event Player, String("{0} sec", (Event Player).TimeCurrent, Null, Null), Null, Null, Top, 2, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Null, Null, String("{0}: {1}", String("Checkpoints", Null, Null, Null), Custom String("{0} / {1}", (Event Player).Checkpoint, Count Of(Global.PosCheckpoint), Null), Null), Top, 4, Null, Null, Color(Blue), String, Default Visibility);
+        Create HUD Text(Event Player, Null, Null, String("{0}: {1}", String("Targets", Null, Null, Null), Custom String("{0} / {1}", (Event Player).Target, Count Of(Global.PosTarget), Null), Null), Top, 4, Null, Null, Color(Blue), String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Best - {0} sec", (Event Player).TimeBest, Null, Null), Null, Null, Left, 1, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("ATTEMPTS: {0}", (Event Player).Attempts, Null, Null), Null, Null, Left, 2, Color(White), Null, Null, String, Default Visibility);
+        Create In-World Text(Event Player, Custom String("{0} m", Distance Between(Global.PosFinish, Event Player), Null, Null), Add(Global.PosFinish, Vector(0, 5, 0)), 2, Do Not Clip, Visible To and String, Color(White), Default Visibility);
+        Set Player Variable(Event Player, TimeBest, 9999);
+        Set Player Variable(Event Player, Finished, False);
+        Set Player Variable(Event Player, Checkpoint, 0);
+        Set Player Variable(Event Player, StatusCheckpoint, Empty Array);
+        For Player Variable(Event Player, ForLoop, 0, Count Of(Global.PosCheckpoint), 1);
+            Modify Player Variable(Event Player, StatusCheckpoint, Append To Array, False);
+        End;
+        Set Player Variable(Event Player, Mode, 0);
+        Set Player Variable(Event Player, Attempts, -1);
+        Set Player Variable(Event Player, Temp, Array(0, 0, 0, 0));
+        Set Player Variable(Event Player, TargetHitInUse, Array(False, False, False, False));
+        Enable Death Spectate All Players(Event Player);
+        Enable Death Spectate Target HUD(Event Player);
+        Disallow Button(Event Player, Button(Ability 1));
+        Disallow Button(Event Player, Button(Ability 2));
+        Disallow Button(Event Player, Button(Ultimate));
+        Kill(Event Player, Null);
+        Wait(10, Ignore Condition);
+        Big Message(Event Player, Custom String("Welcome to Lucio Surf!", Null, Null, Null));
+        Big Message(Event Player, Custom String("Hit the blue Checkpoints first.", Null, Null, Null));
+    }
+}
+
+rule ("Start timer") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 0;
+        (Event Player).Checkpoint == False;
+        Or(Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))), >, 2), And(Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))), <, 2), Not(Is On Ground(Event Player)))) == True;
+    }
+    actions {
+        Chase Player Variable At Rate(Event Player, TimeCurrent, 5000, 1, None);
+        Abort If(Not(Global.Visible));
+        Set Invisible(Event Player, None);
+        Allow Button(Event Player, Button(Primary Fire));
+    }
+}
+
+rule ("Target") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Firing Primary(Event Player) == True;
+        (Event Player).Mode >= 0;
+        (Event Player).Mode <= 3;
+    }
+    actions {
+        For Player Variable(Event Player, ForLoop, 0, 4, 1);
+            For Player Variable(Event Player, ForLoop2, 0, Count Of(Global.PosTarget), 1);
+                Set Player Variable(Event Player, IndexTarget, Value In Array(Global.PosTarget, (Event Player).ForLoop2));
+                If(Value In Array((Event Player).StatusTargetPreHit, (Event Player).ForLoop2));
+                    Continue;
+                End;
+                If(Compare(Distance Between((Event Player).IndexTarget, Ray Cast Hit Position(Eye Position(Event Player), Add(Eye Position(Event Player), Multiply(Facing Direction Of(Event Player), Distance Between(Eye Position(Event Player), (Event Player).IndexTarget))), Null, All Players(All Teams), False)), <, 2));
+                    If(Not(First Of((Event Player).TargetHitInUse)));
+                        Start Rule(TargetHit1, Do Nothing);
+                    Else If(Not(Value In Array((Event Player).TargetHitInUse, 1)));
+                        Start Rule(TargetHit2, Do Nothing);
+                    Else If(Not(Value In Array((Event Player).TargetHitInUse, 2)));
+                        Start Rule(TargetHit3, Do Nothing);
+                    Else If(Not(Value In Array((Event Player).TargetHitInUse, 3)));
+                        Start Rule(TargetHit4, Do Nothing);
+                    Else;
+                        Set Player Variable At Index(Event Player, StatusTarget, First Of((Event Player).Temp), True);
+                        Modify Player Variable(Event Player, Target, Add, 1);
+                        Play Effect(Event Player, Buff Explosion Sound, Color(White), Position Of(Event Player), 200);
+                        Small Message(Event Player, String("{0}: {1}", Custom String("{0} {1}", String("Targets", Null, Null, Null), String("Hit", Null, Null, Null), Null), Custom String("{0} / {1}", (Event Player).Target, Count Of(Global.PosTarget), Null), Null));
+                        Start Rule(TargetHit1, Restart Rule);
+                    End;
+                End;
+            End;
+            Wait(0.125, Abort When False);
+        End;
+    }
+}
+
+rule ("Checkpoint") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Finished == False;
+        (Event Player).Mode == 0;
+        Is True For Any(Global.PosCheckpoint, And(And(Compare(Distance Between(Current Array Element, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Current Array Element), Z Component Of(Position Of(Event Player)))), <=, 3.5), Is In Line of Sight(Position Of(Event Player), Vector(X Component Of(Position Of(Event Player)), Y Component Of(Current Array Element), Z Component Of(Position Of(Event Player))), Barriers Do Not Block LOS)), Compare(Y Component Of(Eye Position(Event Player)), >=, Y Component Of(Current Array Element)))) == True;
+        (Event Player).TimeCurrent > 1;
+    }
+    actions {
+        "Get Index to check for other conditions"
+        Set Player Variable(Event Player, IndexCheckpoint, Index Of Array Value(Global.PosCheckpoint, Filtered Array(Global.PosCheckpoint, Compare(Distance Between(Current Array Element, Vector(X Component Of(Eye Position(Event Player)), Y Component Of(Current Array Element), Z Component Of(Position Of(Event Player)))), <=, 3.5))));
+        "Check extra conditions"
+        If(Value In Array((Event Player).StatusCheckpoint, (Event Player).IndexCheckpoint));
+            Small Message(Event Player, Custom String("Checkpoint already collected", Null, Null, Null));
+            Abort;
+        End;
+        Modify Player Variable(Event Player, Checkpoint, Add, 1);
+        Set Player Variable At Index(Event Player, StatusCheckpoint, (Event Player).IndexCheckpoint, True);
+        Play Effect(Event Player, Debuff Impact Sound, Color(White), Position Of(Event Player), 200);
+        Big Message(Event Player, (Event Player).TimeCurrent);
+        If(Compare((Event Player).Checkpoint, ==, Count Of(Global.PosCheckpoint)));
+            Small Message(Event Player, Custom String("{0} {1}", String("Finish", Null, Null, Null), String("Unlocked", Null, Null, Null), Null));
+            Abort;
+        End;
+        Small Message(Event Player, Custom String("{0} {1}", String("Checkpoints", Null, Null, Null), Custom String("{0} / {1}", (Event Player).Checkpoint, Count Of(Global.PosCheckpoint), Null), Null));
+    }
+}
+
+rule ("Checkpoint (no LoS)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Finished == False;
+        (Event Player).Mode == 0;
+        Is True For Any(Global.PosCheckpoint, And(Compare(Distance Between(Current Array Element, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Current Array Element), Z Component Of(Position Of(Event Player)))), <=, 3.5), Or(Not(Is In Line of Sight(Position Of(Event Player), Vector(X Component Of(Position Of(Event Player)), Y Component Of(Current Array Element), Z Component Of(Position Of(Event Player))), Barriers Do Not Block LOS)), Compare(Y Component Of(Eye Position(Event Player)), <, Y Component Of(Current Array Element))))) == True;
+    }
+    actions {
+        Small Message(Event Player, Custom String("{0} {1}", String("Checkpoint", Null, Null, Null), String("Out of View", Null, Null, Null), Null));
+    }
+}
+
+rule ("Finish") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Checkpoint == Count Of(Global.PosCheckpoint);
+        (Event Player).Finished == False;
+        (Event Player).Mode == 0;
+        Update Every Frame(Compare(Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))), <=, 5)) != False;
+        Is In Line of Sight(Position Of(Event Player), Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player))), Barriers Do Not Block LOS) == True;
+        Y Component Of(Eye Position(Event Player)) >= Y Component Of(Global.PosFinish);
+    }
+    actions {
+        Stop Chasing Player Variable(Event Player, TimeCurrent);
+        Abort If(Compare((Event Player).TimeCurrent, <=, 1));
+        If(Subtract(Count Of(Global.PosTarget), (Event Player).Target));
+            Modify Player Variable(Event Player, TimeCurrent, Add, Divide(Subtract(Count Of(Global.PosTarget), (Event Player).Target), 2));
+            Small Message(Event Player, Custom String("Missed {0} Targets - Added {1} secs to your time.", Subtract(Count Of(Global.PosTarget), (Event Player).Target), Divide(Subtract(Count Of(Global.PosTarget), (Event Player).Target), 2), Null));
+        End;
+        Modify Player Variable(Event Player, Attempts, Add, 1);
+        "Check if new Personal Best is achieved"
+        If(Compare((Event Player).TimeCurrent, <, (Event Player).TimeBest));
+            Set Player Variable(Event Player, TimeBest, (Event Player).TimeCurrent);
+            Set Player Variable(Event Player, NewBest, True);
+            If(Compare((Event Player).TimeCurrent, >=, Global.TimeFirst));
+                Big Message(Event Player, Custom String("{0} - {1}", Custom String("{0} {1}", String("Best", Null, Null, Null), String("Time", Null, Null, Null), Null), (Event Player).TimeBest, Null));
+            End;
+        End;
+        "Order new places"
+        If(And(And(Compare((Event Player).TimeCurrent, <, Global.TimeThird), Compare(Event Player, !=, Global.PlayerFirst)), Compare(Event Player, !=, Global.PlayerSecond)));
+            Set Global Variable(PlayerThird, Event Player);
+            Set Global Variable(TimeThird, (Event Player).TimeCurrent);
+        End;
+        If(And(Compare((Event Player).TimeCurrent, <, Global.TimeSecond), Compare(Event Player, !=, Global.PlayerFirst)));
+            If(Compare(Event Player, !=, Global.PlayerSecond));
+                Set Global Variable(PlayerThird, Global.PlayerSecond);
+                Set Global Variable(TimeThird, Global.TimeSecond);
+            End;
+            Set Global Variable(PlayerSecond, Event Player);
+            Set Global Variable(TimeSecond, (Event Player).TimeCurrent);
+        End;
+        If(Compare((Event Player).TimeCurrent, <, Global.TimeFirst));
+            If(Compare(Event Player, !=, Global.PlayerFirst));
+                Set Global Variable(PlayerSecond, Global.PlayerFirst);
+                Set Global Variable(TimeSecond, Global.TimeFirst);
+            End;
+            Set Global Variable(PlayerFirst, Event Player);
+            Set Global Variable(TimeFirst, (Event Player).TimeCurrent);
+            Big Message(All Players(All Teams), String("{0}: {1}", String("New Record", Null, Null, Null), Custom String("{0} - {1}", String("{0} sec", (Event Player).TimeBest, Null, Null), String("{0}!!!", Event Player, Null, Null), Null), Null));
+        Else;
+            Big Message(Event Player, String("{0}!!!", String("Finished", Null, Null, Null), Null, Null));
+        End;
+        Wait(0.016, Ignore Condition);
+        Set Player Variable(Event Player, Finished, True);
+    }
+}
+
+rule ("Finish (no LoS)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Finished == False;
+        (Event Player).Mode == 0;
+        Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))) <= 5;
+        Or(Not(Is In Line of Sight(Position Of(Event Player), Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player))), Barriers Do Not Block LOS)), Compare(Y Component Of(Eye Position(Event Player)), <, Y Component Of(Global.PosFinish))) == True;
+        (Event Player).TimeCurrent > 1;
+    }
+    actions {
+        Small Message(Event Player, Custom String("{0} {1}", String("Finish", Null, Null, Null), String("Out of View", Null, Null, Null), Null));
+    }
+}
+
+rule ("Finish (no Checkpoint)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Checkpoint != Count Of(Global.PosCheckpoint);
+        (Event Player).Finished == False;
+        (Event Player).Mode == 0;
+        Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))) <= 5;
+        (Event Player).TimeCurrent > 1;
+    }
+    actions {
+        Big Message(Event Player, Custom String("{0} {1}", String("No", Null, Null, Null), String("Checkpoint", Null, Null, Null), Null));
+    }
+}
+
+rule ("Floor") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Update Every Frame(Is On Ground(Event Player)) != False;
+        (Event Player).Mode == 0;
+        Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))) > 2;
+        Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))) > 5;
+        Is True For All(Global.PosCheckpoint, Compare(Distance Between(Current Array Element, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Current Array Element), Z Component Of(Position Of(Event Player)))), >, 3.5)) == True;
+    }
+    actions {
+        Kill(Event Player, Null);
+    }
+}
+
+rule ("Ult Reset") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Ultimate)) == True;
+        (Event Player).Mode == 0;
+        Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))) > 2;
+    }
+    actions {
+        Kill(Event Player, Null);
+    }
+}
+
+rule ("Velocity Counter (red)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) <= 6.88;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Red));
+    }
+}
+
+rule ("Velocity Counter (Orange)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) > 6.88;
+        Horizontal Speed Of(Event Player) < 11;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Orange));
+    }
+}
+
+rule ("Velocity Counter (Yellow)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) >= 11;
+        Horizontal Speed Of(Event Player) < 13.75;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Yellow));
+    }
+}
+
+rule ("Velocity Counter (Green)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) >= 13.75;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Green));
+    }
+}
+
+rule ("Toggle Invisibility (Host only)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Communicating(Event Player, Need Healing) == True;
+        Event Player == Host Player;
+    }
+    actions {
+        If(Global.Visible);
+            Small Message(Event Player, Custom String("{0} {1}", String("Players", Null, Null, Null), String("Invisible", Null, Null, Null), Null));
+            Set Invisible(All Players(All Teams), All);
+            Set Global Variable(Visible, False);
+            Abort;
+        End;
+        Small Message(Event Player, Custom String("{0} {1}", String("Players", Null, Null, Null), String("Visible", Null, Null, Null), Null));
+        Set Invisible(Filtered Array(All Players(All Teams), And(Compare((Event Player).Mode, ==, 0), Or(Compare(Distance Between(Global.PosStart, Position Of(Current Array Element)), >, 2), Not(Is On Ground(Event Player))))), None);
+        Set Global Variable(Visible, True);
+    }
+}
+
+rule ("Toggle Help") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Communicating(Event Player, Ultimate Status) == True;
+    }
+    actions {
+        If((Event Player).HideHelp);
+            Set Player Variable(Event Player, HideHelp, False);
+            Abort;
+        End;
+        Set Player Variable(Event Player, HideHelp, True);
+    }
+}
+
+rule ("Cycle Auto Reset") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 0;
+        Is Button Held(Event Player, Button(Secondary Fire)) == True;
+    }
+    actions {
+        Modify Player Variable(Event Player, AutoReset, Add, 1);
+        If(Compare((Event Player).AutoReset, ==, 3));
+            Set Player Variable(Event Player, AutoReset, 0);
+        End;
+        If(Compare((Event Player).AutoReset, ==, 0));
+            Small Message(Event Player, Custom String("Auto Reset - Disabled", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare((Event Player).AutoReset, ==, 1));
+            Small Message(Event Player, Custom String("Auto Reset - Personal Best", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare((Event Player).AutoReset, ==, 2));
+            Small Message(Event Player, Custom String("Auto Reset - Record", Null, Null, Null));
+    }
+}
+
+rule ("Auto Reset (Personal Best)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 0;
+        (Event Player).AutoReset == 1;
+        (Event Player).TimeCurrent > (Event Player).TimeBest;
+    }
+    actions {
+        Small Message(Event Player, Custom String("Reset by 'Auto Reset'", Null, Null, Null));
+        Kill(Event Player, Null);
+    }
+}
+
+rule ("Auto Reset (Record)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 0;
+        (Event Player).AutoReset == 2;
+        (Event Player).TimeCurrent > Global.TimeFirst;
+    }
+    actions {
+        Small Message(Event Player, Custom String("Reset by 'Auto Reset'", Null, Null, Null));
+        Kill(Event Player, Null);
+    }
+}
+
+rule ("Practice Mode (Enabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 0;
+        Is Button Held(Event Player, Button(Interact)) == True;
+    }
+    actions {
+        Stop Chasing Player Variable(Event Player, TimeCurrent);
+        Set Player Variable(Event Player, TimeCurrent, 0);
+        Set Player Variable(Event Player, Attempts, 0);
+        Set Player Variable(Event Player, Mode, 1);
+        Create Icon(Event Player, (Event Player).PosPracticeCheckpoint, Flag, Position, Color(Green), True);
+        Big Message(Event Player, Custom String("Entering Practice Mode", Null, Null, Null));
+        Set Invisible(Event Player, All);
+        Clear Status(Event Player, Phased Out);
+        Set Status(Event Player, Null, Phased Out, 9999);
+    }
+}
+
+rule ("Practice Mode (Button Held - Enabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 1;
+        Is Button Held(Event Player, Button(Interact)) == False;
+    }
+    actions {
+        Set Player Variable(Event Player, Mode, 2);
+    }
+}
+
+rule ("Fire status (Enabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode >= 1;
+        (Event Player).Mode <= 3;
+    }
+    actions {
+        Set Status(Event Player, Null, Burning, 9999);
+        Set Status(Event Player, Null, Invincible, 9999);
+    }
+}
+
+rule ("Practice Mode (disabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 2;
+        Is Button Held(Event Player, Button(Interact)) == True;
+    }
+    actions {
+        Set Player Variable(Event Player, Mode, 3);
+    }
+}
+
+rule ("Practice Mode (Button Held - disabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 3;
+        Is Button Held(Event Player, Button(Interact)) == False;
+    }
+    actions {
+        Destroy Icon(Last Created Entity);
+        Set Player Variable(Event Player, PosPracticeCheckpoint, 0);
+        Big Message(Event Player, Custom String("Leaving Practice Mode", Null, Null, Null));
+        Set Player Variable(Event Player, Attempts, -1);
+        Set Player Variable(Event Player, Mode, 0);
+        If(Or(Or(Or(Not(Is On Ground(Event Player)), Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))), <=, 2)), Compare(Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))), <=, 5)), Compare(Distance Between(Global.PosCheckpoint, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosCheckpoint), Z Component Of(Position Of(Event Player)))), <=, 3.5)));
+            Kill(Event Player, Null);
+    }
+}
+
+rule ("Fire status (Disabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode != 1;
+        (Event Player).Mode != 2;
+        (Event Player).Mode != 3;
+    }
+    actions {
+        Clear Status(Event Player, Burning);
+        Clear Status(Event Player, Invincible);
+    }
+}
+
+rule ("Practice Checkpoints") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 2;
+        Is Button Held(Event Player, Button(Secondary Fire)) == True;
+    }
+    actions {
+        Set Player Variable(Event Player, PosPracticeCheckpoint, Position Of(Event Player));
+        Set Player Variable(Event Player, FacingPracticeCheckpoint, Facing Direction Of(Event Player));
+        Set Player Variable(Event Player, VelocityPracticeCheckpoint, Velocity Of(Event Player));
+        Set Player Variable(Event Player, SpeedPracticeCheckpoint, Speed Of(Event Player));
+        Small Message(Event Player, Custom String("{0} {1}", String("Checkpoint", Null, Null, Null), String("Saved", Null, Null, Null), Null));
+    }
+}
+
+rule ("Ult Reset Checkpoint") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 2;
+        Is Button Held(Event Player, Button(Ultimate)) == True;
+    }
+    actions {
+        Kill(Event Player, Null);
+        Modify Player Variable(Event Player, Attempts, Add, 1);
+    }
+}
+
+rule ("Player Spectator Mode enabled") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 0;
+        Is Button Held(Event Player, Button(Ability 2)) == True;
+    }
+    actions {
+        Set Player Variable(Event Player, Mode, 4);
+        Stop Chasing Player Variable(Event Player, TimeCurrent);
+        Set Player Variable(Event Player, TimeCurrent, 0);
+        Set Respawn Max Time(Event Player, 9999);
+        Big Message(Event Player, Custom String("Entering Player Spectator Mode", Null, Null, Null));
+        Wait(0.1, Ignore Condition);
+        Kill(Event Player, Null);
+    }
+}
+
+rule ("Player Spectator Mode enabled (Button Held)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 4;
+        Is Button Held(Event Player, Button(Ability 2)) == False;
+    }
+    actions {
+        Stop Chasing Player Variable(Event Player, TimeCurrent);
+        Set Player Variable(Event Player, TimeCurrent, 0);
+        Set Player Variable(Event Player, Mode, 5);
+    }
+}
+
+rule ("Player Spectator Mode disabled") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 5;
+        Is Button Held(Event Player, Button(Ability 2)) == True;
+    }
+    actions {
+        Set Player Variable(Event Player, Mode, 6);
+    }
+}
+
+rule ("Player Specator Mode disabled (Button Held)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 6;
+        Is Button Held(Event Player, Button(Ability 2)) == False;
+    }
+    actions {
+        Teleport(Event Player, Global.PosStart);
+        Resurrect(Event Player);
+        Set Status(Event Player, Null, Rooted, 0.5);
+        Set Player Variable(Event Player, Attempts, 0);
+        Wait(0.1, Ignore Condition);
+        Set Player Variable(Event Player, Mode, 0);
+        Big Message(Event Player, Custom String("Leaving Player Spectator Mode", Null, Null, Null));
+    }
+}
+
+rule ("Spectator Mode enable") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Ability 1)) == True;
+        (Event Player).Mode == 0;
+    }
+    actions {
+        Set Player Variable(Event Player, Mode, 7);
+        Set Gravity(Event Player, 0);
+        Set Move Speed(Event Player, 250);
+        Set Invisible(Event Player, All);
+        Stop Chasing Player Variable(Event Player, TimeCurrent);
+        Set Player Variable(Event Player, TimeCurrent, 0);
+        Set Player Variable(Event Player, Attempts, 0);
+        Clear Status(Event Player, Phased Out);
+        Set Status(Event Player, Null, Phased Out, 9999);
+        Big Message(Event Player, Custom String("Entering Spectator Mode", Null, Null, Null));
+    }
+}
+
+rule ("Spectator Mode enable (Button Held)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Ability 1)) == False;
+        (Event Player).Mode == 7;
+    }
+    actions {
+        Set Player Variable(Event Player, Mode, 8);
+    }
+}
+
+rule ("Spectator Mode disabled") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Ability 1)) == True;
+        (Event Player).Mode == 8;
+    }
+    actions {
+        Set Player Variable(Event Player, Mode, 9);
+    }
+}
+
+rule ("Specator Mode disabled (Button Held)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Ability 1)) == False;
+        (Event Player).Mode == 9;
+    }
+    actions {
+        Set Gravity(Event Player, 100);
+        Set Move Speed(Event Player, 100);
+        Set Player Variable(Event Player, Attempts, -1);
+        Set Player Variable(Event Player, Mode, 0);
+        Big Message(Event Player, Custom String("Leaving Spectator Mode", Null, Null, Null));
+        If(Or(Or(Or(Not(Is On Ground(Event Player)), Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))), <=, 2)), Compare(Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))), <=, 5)), Compare(Distance Between(Global.PosCheckpoint, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosCheckpoint), Z Component Of(Position Of(Event Player)))), <=, 3.5)));
+            Kill(Event Player, Null);
+    }
+}
+
+rule ("Spectator Mode (move up enabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Jump)) == True;
+        (Event Player).Mode >= 7;
+        (Event Player).Mode <= 9;
+    }
+    actions {
+        Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
+    }
+}
+
+rule ("Spectator Mode (move up disabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Jump)) == False;
+        (Event Player).Mode >= 7;
+        (Event Player).Mode <= 9;
+    }
+    actions {
+        Apply Impulse(Event Player, Down, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Event Player, Up, 0.001, To World, Incorporate Contrary Motion);
+    }
+}
+
+rule ("Spectator Mode (move down enabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Crouch)) == True;
+        (Event Player).Mode >= 7;
+        (Event Player).Mode <= 9;
+    }
+    actions {
+        Apply Impulse(Event Player, Down, 10, To World, Cancel Contrary Motion);
+    }
+}
+
+rule ("Spectator Mode (move down disabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Crouch)) == False;
+        (Event Player).Mode >= 7;
+        (Event Player).Mode <= 9;
+    }
+    actions {
+        Apply Impulse(Event Player, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Event Player, Down, 0.001, To World, Incorporate Contrary Motion);
+    }
+}
+
+rule ("Spectator Mode (stop movement)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Primary Fire)) == True;
+        (Event Player).Mode >= 7;
+        (Event Player).Mode <= 9;
+    }
+    actions {
+        Apply Impulse(Event Player, Multiply(Velocity Of(Event Player), -0.001), 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Event Player, Multiply(Velocity Of(Event Player), 0.001), 0.001, To World, Incorporate Contrary Motion);
+    }
+}
+
+rule ("Spectator Mode (slow movement enabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Secondary Fire)) == True;
+        (Event Player).Mode >= 7;
+        (Event Player).Mode <= 9;
+    }
+    actions {
+        Set Move Speed(Event Player, 175);
+        Abort If(Compare(Horizontal Speed Of(Event Player), <=, 12.03));
+        Apply Impulse(Event Player, Multiply(Velocity Of(Event Player), -0.001), 1, To World, Cancel Contrary Motion);
+        Apply Impulse(Event Player, Velocity Of(Event Player), 12.03, To World, Cancel Contrary Motion);
+    }
+}
+
+rule ("Spectator Mode (slow movement disabled)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Secondary Fire)) == False;
+        (Event Player).Mode >= 7;
+        (Event Player).Mode <= 9;
+    }
+    actions {
+        Set Move Speed(Event Player, 250);
+    }
+}
+
+rule ("Circle Fix") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))) <= 1.89;
+        Is On Ground(Event Player) == True;
+        (Event Player).Checkpoint == False;
+        Horizontal Speed Of(Event Player) <= 6.88;
+    }
+    actions {
+        Stop Chasing Player Variable(Event Player, TimeCurrent);
+        Set Player Variable(Event Player, TimeCurrent, 0);
+        For Player Variable(Event Player, ForLoop, 0, Count Of(Global.PosTarget), 1);
+            Set Player Variable At Index(Event Player, StatusTargetPreHit, (Event Player).ForLoop, False);
+        End;
+        Disallow Button(Event Player, Button(Primary Fire));
+        Clear Status(Event Player, Phased Out);
+        Set Status(Event Player, Null, Phased Out, 9999);
+        Set Invisible(Event Player, All);
+        Wait(0.05, Ignore Condition);
+        Allow Button(Event Player, Button(Jump));
+    }
+}
+
+rule ("Match Time Frozen") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Wait(0.016, Ignore Condition);
+        While(True);
+            Wait(Subtract(Match Time, 10), Ignore Condition);
+            Set Match Time(3599);
+        End;
+    }
+}
+
+rule ("Respawn") {
+    event {
+        Player Died;
+        All;
+        All;
+    }
+    actions {
+        If(Compare((Event Player).Mode, ==, 0));
+            Disallow Button(Event Player, Button(Jump));
+            If(Not((Event Player).Finished));
+                Modify Player Variable(Event Player, Attempts, Add, 1);
+            End;
+            If((Event Player).NewBest);
+                Set Player Variable(Event Player, NewBest, False);
+                Set Player Variable(Event Player, Attempts, 0);
+            End;
+            Teleport(Event Player, Global.PosStart);
+            Resurrect(Event Player);
+            Set Status(Event Player, Null, Rooted, 0.5);
+            Wait(0.016, Ignore Condition);
+            Set Player Variable(Event Player, Finished, False);
+            Set Player Variable(Event Player, Checkpoint, 0);
+            For Player Variable(Event Player, ForLoop, 0, Count Of(Global.PosCheckpoint), 1);
+                Set Player Variable At Index(Event Player, StatusCheckpoint, (Event Player).ForLoop, False);
+            End;
+            For Player Variable(Event Player, ForLoop, 0, Count Of(Global.PosTarget), 1);
+                Set Player Variable At Index(Event Player, StatusTarget, (Event Player).ForLoop, False);
+            End;
+            Abort;
+        End;
+        If(Or(Or(Compare((Event Player).Mode, ==, 1), Compare((Event Player).Mode, ==, 2)), Compare((Event Player).Mode, ==, 3)));
+            If(Compare((Event Player).PosPracticeCheckpoint, ==, 0));
+                Disallow Button(Event Player, Button(Jump));
+                Teleport(Event Player, Global.PosStart);
+                Resurrect(Event Player);
+                Set Status(Event Player, Null, Rooted, 0.5);
+                Abort;
+            End;
+            Teleport(Event Player, (Event Player).PosPracticeCheckpoint);
+            Resurrect(Event Player);
+            Set Facing(Event Player, (Event Player).FacingPracticeCheckpoint, To World);
+            Apply Impulse(Event Player, Multiply(Velocity Of(Event Player), -0.001), 0.001, To World, Cancel Contrary Motion);
+            Apply Impulse(Event Player, (Event Player).VelocityPracticeCheckpoint, (Event Player).SpeedPracticeCheckpoint, To World, Cancel Contrary Motion);
+            Clear Status(Event Player, Phased Out);
+            Set Status(Event Player, Null, Phased Out, 9999);
+    }
+}
+

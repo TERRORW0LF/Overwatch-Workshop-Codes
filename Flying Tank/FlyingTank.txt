@@ -1,0 +1,229 @@
+variables {
+    global:
+        0: forloop
+        1: dmgStart
+    player:
+        0: partner
+}
+rule ("Setup") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Disable Built-In Game Mode Respawning(All Players(All Teams));
+        Set Match Time(300);
+    }
+}
+
+rule ("Preload Heros") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    actions {
+        Preload Hero(Event Player, Array(Hero(Bastion), Hero(Lúcio)));
+    }
+}
+
+rule ("Lucio Bastion Combo") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        For Global Variable(forloop, False, Number of Players(All Teams), True);
+            If(Compare(Modulo(Global.forloop, 2), ==, Null));
+                Start Forcing Player To Be Hero(Value In Array(All Players(All Teams), Global.forloop), Hero(Lúcio));
+                Set Invisible(Value In Array(All Players(All Teams), Global.forloop), All);
+                Set Healing Received(Value In Array(All Players(All Teams), Global.forloop), 0);
+            End;
+            If(Compare(Modulo(Global.forloop, 2), !=, Null));
+                Start Forcing Player To Be Hero(Value In Array(All Players(All Teams), Global.forloop), Hero(Bastion));
+                Disallow Button(Value In Array(All Players(All Teams), Global.forloop), Primary Fire);
+                Attach Players(Value In Array(All Players(All Teams), Global.forloop), Value In Array(All Players(All Teams), Subtract(Global.forloop, True)), Vector(False, 2, False));
+                Set Player Variable(Value In Array(All Players(All Teams), Global.forloop), partner, Value In Array(All Players(All Teams), Subtract(Global.forloop, True)));
+                Set Player Variable(Value In Array(All Players(All Teams), Subtract(Global.forloop, True)), partner, Value In Array(All Players(All Teams), Global.forloop));
+            End;
+        End;
+        For Global Variable(forloop, False, Number of Players(All Teams), True);
+            If(Not((Value In Array(All Players(All Teams), Global.forloop)).partner));
+                Kill(Value In Array(All Players(All Teams), Global.forloop), Null);
+                Big Message(Value In Array(All Players(All Teams), Global.forloop), Custom String("No Partner, wait for the next round.", Null, Null, Null));
+            End;
+        End;
+    }
+}
+
+rule ("Force Bastion into ult form") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Has Spawned(Event Player) == True;
+        Hero Of(Event Player) == Hero(Bastion);
+    }
+    actions {
+        Wait(0.016, Ignore Condition);
+        Press Button(Event Player, Ultimate);
+    }
+}
+
+rule ("5 secs time to get on wall") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Big Message(All Players(All Teams), Custom String("Get on a wall!", Null, Null, Null));
+        Wait(5, Ignore Condition);
+        Big Message(All Players(All Teams), Custom String("GO!", Null, Null, Null));
+        Set Global Variable(dmgStart, True);
+    }
+}
+
+rule ("Enable Primary fire (Bastion)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.dmgStart != False;
+        Hero Of(Event Player) == Hero(Bastion);
+    }
+    actions {
+        Allow Button(Event Player, Primary Fire);
+    }
+}
+
+rule ("Kill Partner") {
+    event {
+        Player Died;
+        All;
+        All;
+    }
+    actions {
+        Kill((Event Player).partner, Attacker);
+    }
+}
+
+rule ("Damage if on ground") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Global.dmgStart != False;
+        Is On Ground(Event Player) == True;
+        Hero Of(Event Player) == Hero(Lúcio);
+    }
+    actions {
+        Set Player Health(Event Player, Subtract(Health(Event Player), 10));
+        Set Player Health((Event Player).partner, Subtract(Health((Event Player).partner), 10));
+        Wait(True, Abort When False);
+        Start Damage Over Time(Event Player, Null, 9999, 10);
+        Start Damage Over Time((Event Player).partner, Null, 9999, 10);
+    }
+}
+
+rule ("Stop DoT if not on ground") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Is On Ground(Event Player) == False;
+        Hero Of(Event Player) == Hero(Lúcio);
+    }
+    actions {
+        Stop All Damage Over Time(Event Player);
+        Stop All Damage Over Time((Event Player).partner);
+    }
+}
+
+rule ("Dmg Lucio") {
+    event {
+        Player Took Damage;
+        All;
+        All;
+    }
+    conditions {
+        Hero Of(Event Player) == Hero(Bastion);
+    }
+    actions {
+        Set Player Health((Event Player).partner, Health(Event Player));
+    }
+}
+
+rule ("Enable outlines on 30 seconds left") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Match Time < 30;
+    }
+    actions {
+        Start Forcing Player Outlines(Filtered Array(All Living Players(All Teams), Compare(Hero Of(Current Array Element), ==, Hero(Bastion))), All Players(All Teams), True, Red);
+    }
+}
+
+rule ("Declare winner") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Count Of(Filtered Array(All Living Players(All Teams), Compare(Hero Of(Current Array Element), ==, Hero(Bastion)))) <= 1;
+    }
+    actions {
+        Declare Player Victory(First Of(Filtered Array(All Living Players(All Teams), Compare(Hero Of(Current Array Element), ==, Hero(Bastion)))));
+    }
+}
+
+rule ("Deal with leavers") {
+    event {
+        Player Left Match;
+        All;
+        All;
+    }
+    actions {
+        Abort If(Not((Event Player).partner));
+        Kill((Event Player).partner, Null);
+        Big Message((Event Player).partner, Custom String("Partner left, moving to spectators.", Null, Null, Null));
+    }
+}
+
+rule ("Disable player spawning in round") {
+    event {
+        Player Joined Match;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Match Time < 299;
+    }
+    actions {
+        Disable Built-In Game Mode Respawning(Event Player);
+        Set Player Score(Event Player, -100);
+        Kill(Event Player, Null);
+        Big Message(Event Player, Custom String("Wait for next round!", Null, Null, Null));
+    }
+}
+
