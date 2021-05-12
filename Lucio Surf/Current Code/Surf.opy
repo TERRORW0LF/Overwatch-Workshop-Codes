@@ -1300,12 +1300,6 @@ rule "Spectator Mode disabled (Button Held)":
     @Condition eventPlayer.Mode == 9
     @Condition not eventPlayer.isHoldingButton(Button.RELOAD)
     
-    if not Mode:
-        eventPlayer.setMoveSpeed(100)
-        eventPlayer.setGravity(100)
-    elif Mode == 1:
-        eventPlayer.setMoveSpeed(125)
-        eventPlayer.setGravity(80)
     bigMessage(eventPlayer, "Leaving Spectator Mode")
     async(Respawn, AsyncBehavior.NOOP)
 

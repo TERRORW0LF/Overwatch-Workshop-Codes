@@ -1766,13 +1766,6 @@ rule ("Spectator Mode disabled (Button Held)") {
         Is Button Held(Event Player, Button(Reload)) == False;
     }
     actions {
-        If(Not(Global.Mode));
-            Set Move Speed(Event Player, 100);
-            Set Gravity(Event Player, 100);
-        Else If(Compare(Global.Mode, ==, 1));
-            Set Move Speed(Event Player, 125);
-            Set Gravity(Event Player, 80);
-        End;
         Big Message(Event Player, Custom String("Leaving Spectator Mode", Null, Null, Null));
         Start Rule(Respawn, Do Nothing);
     }
