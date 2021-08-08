@@ -30,6 +30,7 @@ playervar Mode 7
 playervar Attempts 8
 playervar SpeedColor 9
 playervar Speed 10
+playervar Reset 11
 playervar PosPracticeCheckpoint 14
 playervar FacingPracticeCheckpoint 15
 playervar VelocityPracticeCheckpoint 16
@@ -788,7 +789,7 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.RING, Color.SKY_BLUE, PosCheckpoint, 3.5, EffectReeval.VISIBILITY)
         createIcon(getAllPlayers(), PosCheckpoint + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, true)
     #Seaons / Mode information
-    hudHeader(getAllPlayers(), "Lucio Surf Season {0} | {1}".format(Season + 1, "Standard" if not Mode else "Gravspeed"), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader(getAllPlayers(), "Lucio Surf v4.2 | Season {0} | {1}".format(Season + 1, "Standard" if not Mode else "Gravspeed"), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
     hudHeader(getAllPlayers(), l"{0} - {1} - {2}".format(l"Record", l"{0} sec".format(TimeFirst), PlayerFirst), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
     hudHeader(getAllPlayers(), l"{0} - {1} - {2}".format("2", l"{0} sec".format(TimeSecond), PlayerSecond), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
@@ -997,7 +998,6 @@ rule "Ult Reset":
     @Event eachPlayer
     @Condition eventPlayer.isHoldingButton(Button.ULTIMATE)
     @Condition not eventPlayer.Mode
-    @Condition distance(PosStart, vect(eventPlayer.getPosition().x, PosStart.y, eventPlayer.getPosition().z)) > 2
     
     async(Respawn, AsyncBehavior.NOOP)
 
@@ -1216,7 +1216,6 @@ rule "Ult Reset Checkpoint":
     @Event eachPlayer
     @Condition eventPlayer.Mode == 2
     @Condition eventPlayer.isHoldingButton(Button.ULTIMATE)
-    @Condition distance(PosStart, vect(eventPlayer.getPosition().x, PosStart.y, eventPlayer.getPosition().z)) > 2
     
     async(Respawn, AsyncBehavior.NOOP)
 
@@ -1376,7 +1375,9 @@ rule "Spectator Mode (slow movement disabled)":
 rule "Circle Fix":
     @Event eachPlayer
     @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) <= 2
+    @Condition not eventPlayer.Reset
     @Condition eventPlayer.Mode <= 2
+    @Condition not eventPlayer.PosPracticeCheckpoint
     @Condition not eventPlayer.Checkpoint
     @Condition not eventPlayer.Finished
     @Condition (not Mode and eventPlayer.getHorizontalSpeed() <= 6.88) or (Mode == 1 and eventPlayer.getHorizontalSpeed() <= 8.6)
@@ -1409,6 +1410,9 @@ def Respawn():
             eventPlayer.applyImpulse(eventPlayer.getVelocity() * -0.001, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
             eventPlayer.applyImpulse(eventPlayer.VelocityPracticeCheckpoint, eventPlayer.SpeedPracticeCheckpoint, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
             return
+        eventPlayer.Reset = true
+        wait()
+        eventPlayer.Reset = false
         if not eventPlayer.Finished:
             eventPlayer.Attempts += 1
         if eventPlayer.NewBest:

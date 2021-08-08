@@ -14,13 +14,16 @@ globalvar PlayerThirdGrav 10
 globalvar PlayerThirdStan 11
 globalvar Checkpoint 12
 globalvar Visible 13
-globalvar Season 14
-globalvar Category 15
-globalvar Time 16
-globalvar Infinite 17
+globalvar Mode 14
+globalvar Season 15
+globalvar Category 16
+globalvar Time 17
+globalvar Infinite 18
+globalvar Loop1 19
 globalvar PosStart 20
 globalvar PosCheckpoint 21
 globalvar PosFinish 22
+globalvar PosBarrier 23
 
 
 #Player variables
@@ -41,6 +44,7 @@ playervar ExecutingMenu 12
 playervar Speed 13
 playervar CurrCheckpoint 14
 playervar CheckpointLoop 15
+playervar Reset 16
 playervar PosPracticeCheckpoint 23
 playervar FacingPracticeCheckpoint 24
 playervar VelocityPracticeCheckpoint 25
@@ -66,8 +70,9 @@ rule "Debug (Player)":
 
 #Settings
 rule "Workshop Settings":
-    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 0, 0)
-    Category = createWorkshopSetting(enum["Standard", "Gravspeed"], "Combo", "Default Mode", 1, 1)
+    Mode = createWorkshopSetting(enum["Time trial", "Shootout"], "Combo", "Mode", 0, 0)
+    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 1, 0)
+    Category = createWorkshopSetting(enum["Standard", "Gravspeed"], "Combo", "Default Category", 2, 1)
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
     Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
 
@@ -783,14 +788,14 @@ rule "Start - Maps (Season 5)":
     Checkpoint = true
     #Assault
     if getCurrentMap() == Map.HANAMURA:
-        PosStart = vect(85.867, -2.02, 16.524)
-        PosCheckpoint = [vect(64.123, -3.4, 84.188)]
-        PosFinish = vect(30.542, 1.9, 40.845)
+        PosStart = vect(11.329, 0, -24.036)
+        PosCheckpoint = [vect(66.147, -2, -3.121), vect(-23.977, -0.95, -72.131)]
+        PosFinish = vect(12.963, 6.7, -23.213)
         return
     if getCurrentMap() == Map.HORIZON_LUNAR_COLONY:
-        PosStart = vect(-38.253, 10, -122.811)
-        PosCheckpoint = [vect(43.183, 13.9, -77.129)]
-        PosFinish = vect(25.671, 6.9, -15.62)
+        PosStart = vect(57.716, 8.77, -97.643)
+        PosCheckpoint = [vect(-32.413, 4.4, -135.156), vect(24.286, 6.9, -20.328), vect(94.019, 11, -57.378)]
+        PosFinish = vect(43.878, 13.5, -77.993)
         return
     if getCurrentMap() == Map.PARIS:
         PosStart = vect(-27.132, 13, 6.412)
@@ -798,25 +803,25 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(-58.73, 11, -13.232)
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
-        PosStart = vect(-47.474, 9.5, 18.968)
-        PosCheckpoint = [vect(-30.065, 3.6, 107.13), vect(17.017, 0.4, 97.256), vect(17.407, 0.2, 1.138), vect(-21.014, 4.5, 35.175), vect(-20.446, -2.5, -22.555)]
-        PosFinish = vect(-34.967, 1.3, 35.235)
+        PosStart = vect(-31.404, 1.3, 27.937)
+        PosCheckpoint = [vect(12.334, -2.6, -1.291), vect(15.76, 0.4, 98.839), vect(-20.635, 2.5, 104.372), vect(-8.628, -2.5, -15.143)]
+        PosFinish = vect(-21.014, 4.5, 35.175)
         return
     if getCurrentMap() == Map.VOLSKAYA:
-        PosStart = vect(-43.782, -3, 52.785)
-        PosCheckpoint = [vect(-98.926, -2.5, 23.314), vect(-104.674, -4, 68.186), vect(-32.689, -4, 72.356), vect(27.113, -4.1, 77.489), vect(-29.813, 1, 38.063)]
+        PosStart = vect(-38.235, -2.51, 54.73)
+        PosCheckpoint = [vect(-98.926, -2.5, 23.314), vect(-104.674, -4, 68.186), vect(23.227, -4.1, 100.796), vect(-23.84, -5, 38.582)]
         PosFinish = vect(-56.662, -4.2, 71.855)
         return
     #Escort
     if getCurrentMap() == Map.DORADO:
-        PosStart = vect(138.184, 11, 16.06)
-        PosCheckpoint = [vect(174.171, 10.9, 37.596), vect(127.679, 11.9, 52.141), vect(35.461, 9.7, -33.067), vect(110.839, 9.4, 1.102), vect(3.741, -0.6, -7.493)]
-        PosFinish = vect(107.157, 17.9, -3.186)
+        PosStart = vect(84.979, 20, 17.035)
+        PosCheckpoint = [vect(136.754, 10.9, 45.919), vect(35.461, 9.7, -33.067), vect(8.526, -2, 22.064), vect(193.551, 14, 43.411)]
+        PosFinish = vect(98.023, 17.9, 5.085)
         return
     if getCurrentMap() == Map.HAVANA:
-        PosStart = vect(-107.317, 4, -59.178)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(65.054, 10.82, -83.635)
+        PosStart = vect(25.471, 6, -70.081)
+        PosCheckpoint = [vect(145.539, 5.9, -46.249), vect(107.194, 1.2, -26.704), vect(-30.023, 9.9, -98.164), vect(-84.714, 3.8, -55.305)]
+        PosFinish = vect(27.096, 9.9, -78.649)
         return
     if getCurrentMap() == Map.JUNKERTOWN:
         PosStart = vect(-49.399, 9.49, -42.145)
@@ -834,9 +839,10 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(-100.763, 8.4, 8.128)
         return
     if getCurrentMap() == Map.WATCHPOINT_GIBRALTAR:
-        PosStart = vect(41.299, -4.837, -47.009)
-        PosCheckpoint = [vect(82.004, -0.3, 39.69), vect(88.537, 3.175, -26.408), vect(28.308, -5.595, -158.458), vect(66.1, -1.825, -114.92)]
-        PosFinish = vect(60.147, 10.201, -38.682)
+        PosStart = vect(70.129, 3, -44.346)
+        PosCheckpoint = [vect(94.532, -1, 42.21), vect(96.233, 1, 15.036), vect(28.308, -6.1, -158.458), vect(66.1, -2.6, -114.92), vect(64.438, 0.3, 13.364)]
+        PosFinish = vect(59.279, -3.2, -39.483)
+        PosBarrier = [vect(38.005, 4.175, -76.422), vect(38.619, -3.844, -76.96)]
         return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -855,14 +861,14 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(-38.232, 9.7, -116.867)
         return
     if getCurrentMap() == Map.KINGS_ROW:
-        PosStart = vect(-56.613, -0.1, -42.469)
-        PosCheckpoint = [vect(-154.342, -2.983, 24.929), vect(-80.861, 0.314, 2.81), vect(5.901, 6.285, -28.012), vect(-25.228, 0.061, 15.6)]
-        PosFinish = vect(-77.907, 0.294, -22.495)
+        PosStart = vect(-56.613, -0.3, -42.469)
+        PosCheckpoint = [vect(-154.342, -3.3, 24.929), vect(-3.844, -0.2, -23.853), vect(-25.912, -0.2, 10.967)]
+        PosFinish = vect(-70.902, 4.4, -36.354)
         return
     if getCurrentMap() == Map.NUMBANI:
-        PosStart = vect(155.325, -3.575, 23.509)
-        PosCheckpoint = [vect(219.739, 0.367, 22.441), vect(205.1, -3.626, -5.822), vect(120.67, -5.59, -17.039), vect(131.903, -3.575, 40.896), vect(59.889, -0.75, -25.254), vect(8.506, 0.425, 37.804)]
-        PosFinish = vect(139.784, -4.005, 17.222)
+        PosStart = vect(161.121, -4, 6.575)
+        PosCheckpoint = [vect(207.578, -2.2, 31.463), vect(203.656, -3.9, 1.168), vect(120.67, -5.8, -17.039), vect(131.903, -3.8, 40.896), vect(59.889, -0.8, -25.254), vect(8.506, 0.2, 37.804)]
+        PosFinish = vect(169.395, 4.2, 6.428)
         return
     #Control
     if getCurrentMap() == Map.BUSAN:
@@ -963,7 +969,7 @@ rule "Start - Maps (Season 5)":
 #Gamemode
 rule "Start - Global":
     #Vars
-    setMatchTime(Time)
+    setMatchTime(Time + 10)
     TimeFirstStan = 9999
     TimeFirstGrav = 9999
     TimeSecondStan = 9999
@@ -971,7 +977,7 @@ rule "Start - Global":
     TimeThirdStan = 9999
     TimeThirdGrav = 9999
     Visible = true
-    #Start / Checkpoint / Finish effects
+    #Start / Checkpoint / Finish / Barrier effects
     createEffect(getAllPlayers(), Effect.RING, Color.GREEN, PosStart, 2, EffectReeval.VISIBILITY)
     createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY)
     createEffect(getAllPlayers(), Effect.RING, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY)
@@ -1049,11 +1055,12 @@ rule "Start - Global":
         createEffect([player for player in getAllPlayers() if player.Checkpoint[9]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[9], 3.5, EffectReeval.VISIBILITY)
         createEffect([player for player in getAllPlayers() if player.Checkpoint[9]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[9], 3.5, EffectReeval.VISIBILITY)
         createIcon([player for player in getAllPlayers() if player.Checkpoint[9]], PosCheckpoint[9] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-
+    for Loop1 in range(0, len(PosBarrier), 1):
+        createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.0 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.0 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
     hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("3", l"{0} sec".format(TimeThirdStan), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("2", l"{0} sec".format(TimeSecondStan), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
@@ -1238,7 +1245,6 @@ rule "Finish":
 
 rule "Finish (no LoS)":
     @Event eachPlayer
-    @Condition all([checkpoint for checkpoint in eventPlayer.Checkpoint])
     @Condition not eventPlayer.Finished
     @Condition not eventPlayer.Mode
     @Condition distance(PosFinish, vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z)) <= 5
@@ -1253,6 +1259,7 @@ rule "Finish (no Checkpoint)":
     @Condition not eventPlayer.Finished
     @Condition not eventPlayer.Mode
     @Condition distance(PosFinish, vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z)) <= 5
+    @Condition eventPlayer.getPosition().y >= PosFinish.y
 
     bigMessage(eventPlayer, l"{0} {1}".format(l"No", l"Checkpoint"))
 
@@ -1261,6 +1268,7 @@ rule "Finish Message (Best Time)":
     @Event eachPlayer
     @Condition eventPlayer.Finished
     @Condition eventPlayer.NewBest
+    @Condition not Mode
     @Condition (not eventPlayer.Category and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer != PlayerFirstGrav)
     
     bigMessage(eventPlayer, "New PB: {0} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav))
@@ -1270,6 +1278,7 @@ rule "Finish Message (Record Time)":
     @Event eachPlayer
     @Condition eventPlayer.Finished
     @Condition eventPlayer.NewBest
+    @Condition not Mode
     @Condition (not eventPlayer.Category and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer == PlayerFirstGrav)
     
     bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], l"{0}: {1}".format(l"New Record", l"{0} - {1}".format(l"{0} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav), l"{0}!!!".format(eventPlayer))))
@@ -1300,6 +1309,13 @@ rule "Death":
     @Condition eventPlayer.Mode != 2
     
     eventPlayer.resurrect()
+    async(Respawn, AsyncBehavior.NOOP)
+
+
+rule "Barrier":
+    @Event eachPlayer
+    @Condition any([distance(eventPlayer, barrier) <= 5 for barrier in PosBarrier])
+
     async(Respawn, AsyncBehavior.NOOP)
 
 
@@ -1388,6 +1404,7 @@ rule "Toggle Invisibility (Host only)":
         Visible = true
     waitUntil(not eventPlayer.isHoldingButton(Button.RELOAD), 9999)
     eventPlayer.ExecutingMenu = false
+
 
 rule "Toggle Help":
     @Event eachPlayer
@@ -1678,7 +1695,9 @@ rule "Spectator Mode (slow movement disabled)":
 rule "Circle Fix":
     @Event eachPlayer
     @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) <= 2
+    @Condition not eventPlayer.Reset
     @Condition eventPlayer.Mode <= 1
+    @Condition not eventPlayer.PosPracticeCheckpoint
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
     @Condition (not eventPlayer.Category and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 8.6)
     
@@ -1692,11 +1711,10 @@ rule "Circle Fix":
 rule "Match Time Frozen":
     @Condition isGameInProgress()
     @Condition Infinite
+    @Condition getMatchTime() < 10
     
     wait()
-    while true:
-        wait(getMatchTime() - 10)
-        setMatchTime(Time)
+    setMatchTime(Time + 10)
 
 
 def Respawn():
@@ -1710,6 +1728,9 @@ def Respawn():
             eventPlayer.applyImpulse(eventPlayer.getVelocity() * -0.001, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
             eventPlayer.applyImpulse(eventPlayer.VelocityPracticeCheckpoint, eventPlayer.SpeedPracticeCheckpoint, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
             return
+        eventPlayer.Reset = true
+        wait()
+        eventPlayer.Reset = false
         if not eventPlayer.Finished:
             eventPlayer.Attempts += 1
         if eventPlayer.NewBest:

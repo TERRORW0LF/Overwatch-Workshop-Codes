@@ -1,0 +1,1097 @@
+rule("Start - Assault - Every Map Is In Order (a - z)")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(0)), Up), Round To Integer(Y Component Of(Objective Position(
+			0)), Up), Round To Integer(Z Component Of(Objective Position(0)), Up));
+		Skip If(Global.L != Vector(-4, 2, 1), 2);
+		Global.Y = Vector(-10.570, -0.720, -84.710);
+		Global.Z = Vector(58, -1.500, 34);
+		Skip If(Global.L != Vector(55, 9, -89), 2);
+		Global.Y = Vector(-24.740, 2.700, -121);
+		Global.Z = Vector(19, 13, -45.500);
+		Skip If(Global.L != Vector(-54, 12, 15), 2);
+		Global.Y = Vector(-104, 14.750, -100);
+		Global.Z = Vector(-14.400, 14, -35.750);
+		Skip If(Global.L != Vector(-45, 2, 44), 2);
+		Global.Y = Vector(-7.500, 4.700, 111.300);
+		Global.Z = Vector(-1, -2, -9);
+		Skip If(Global.L != Vector(-13, -3, 91), 2);
+		Global.Y = Vector(-94.240, -1.980, 49.300);
+		Global.Z = Vector(18, -4.500, 23);
+	}
+}
+
+rule("Start - Escort")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(0)), Up), Round To Integer(Y Component Of(Objective Position(
+			0)), Up), Round To Integer(Z Component Of(Objective Position(0)), Up));
+		Skip If(Global.L != Vector(74, 7, -11), 2);
+		Global.Y = Vector(184.190, 13.940, 40.320);
+		Global.Z = Vector(12.500, 0, 6);
+		Skip If(Global.L != Vector(-10, 6, -79), 2);
+		Global.Y = Vector(140.140, 6.090, -46.380);
+		Global.Z = Vector(-98, 4, -93);
+		Skip If(Global.L != Vector(-33, 5, -53), 2);
+		Global.Y = Vector(-92.820, 5.840, -119.060);
+		Global.Z = Vector(46.549, 10.207, -99.638);
+		Skip If(Global.L != Vector(39, 0, -68), 2);
+		Global.Y = Vector(-57, 2.500, -131.670);
+		Global.Z = Vector(106.500, -1, -15.500);
+		Skip If(Global.L != Vector(15, 3, -7), 2);
+		Global.Y = Vector(-92.490, 6.630, -23.250);
+		Global.Z = Vector(38.500, 5.750, 36.500);
+		Skip If(Global.L != Vector(26, -4, -73), 2);
+		Global.Y = Vector(82.460, -0.910, 39.990);
+		Global.Z = Vector(39, 4, -124.500);
+	}
+}
+
+rule("Start - Hybrid")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(0)), Up), Round To Integer(Y Component Of(Objective Position(
+			0)), Up), Round To Integer(Z Component Of(Objective Position(0)), Up));
+		Skip If(Global.L != Vector(4, 2, 75), 2);
+		Global.Y = Vector(-122.140, -0.150, 110.640);
+		Global.Z = Vector(3, 0, 21.500);
+		Skip If(Global.L != Vector(11, 7, -71), 2);
+		Global.Y = Vector(123.630, 8.850, -27.050);
+		Global.Z = Vector(2, 6, 0.500);
+		Skip If(Global.L != Vector(-23, 2, 1), 2);
+		Global.Y = Vector(-35.080, 1.750, -134.970);
+		Global.Z = Vector(-52, 0, 12.500);
+		Skip If(Global.L != Vector(-18, 1, -33), 2);
+		Global.Y = Vector(-149.090, -2.780, 24.250);
+		Global.Z = Vector(-12, 0, 12.500);
+		Skip If(Global.L != Vector(86, 1, -1), 2);
+		Global.Y = Vector(206.990, -2.090, 22.140);
+		Global.Z = Vector(18, 0, 13);
+	}
+}
+
+rule("Start - Control - Busan - Control Levels Are Randomly Ordered")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(Objective Index)), Up), Round To Integer(Y Component Of(
+			Objective Position(Objective Index)), Up), Round To Integer(Z Component Of(Objective Position(Objective Index)), Up));
+		Skip If(Global.L != Vector(-328, 9, 141), 2);
+		Global.Y = Vector(-397, 9.500, 171);
+		Global.Z = Vector(-255.500, 9, 147);
+		Skip If(Global.L != Vector(223, 10, 243), 2);
+		Global.Y = Vector(275.500, 10, 210.500);
+		Global.Z = Vector(165, 10, 255);
+		Skip If(Global.L != Vector(52, 7, -92), 2);
+		Global.Y = Vector(-3.500, 16, -125);
+		Global.Z = Vector(99, 16, -125.500);
+	}
+}
+
+rule("Start - Control - Ilios")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(Objective Index)), Up), Round To Integer(Y Component Of(
+			Objective Position(Objective Index)), Up), Round To Integer(Z Component Of(Objective Position(Objective Index)), Up));
+		Skip If(Global.L != Vector(358, -25, -51), 2);
+		Global.Y = Vector(290, -25.750, -89);
+		Global.Z = Vector(329, -25, 22);
+		Skip If(Global.L != Vector(-208, 1, -16), 2);
+		Global.Y = Vector(-264.500, -5, 29.500);
+		Global.Z = Vector(-159, -5, -75.500);
+		Skip If(Global.L != Vector(29, 58, -157), 2);
+		Global.Y = Vector(-58.500, 60, -150);
+		Global.Z = Vector(112, 65.500, -178);
+	}
+}
+
+rule("Start - Control - Lijiang Tower")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(Objective Index)), Up), Round To Integer(Y Component Of(
+			Objective Position(Objective Index)), Up), Round To Integer(Z Component Of(Objective Position(Objective Index)), Up));
+		Skip If(Global.L != Vector(1, 95, 151), 2);
+		Global.Y = Vector(-61, 94, 148);
+		Global.Z = Vector(64.500, 94, 145.500);
+		Skip If(Global.L != Vector(1, 0, -60), 2);
+		Global.Y = Vector(-54.250, 6, -11.750);
+		Global.Z = Vector(61, 2, -34);
+		Skip If(Global.L != Vector(1, 268, 280), 2);
+		Global.Y = Vector(-35.500, 267, 316.750);
+		Global.Z = Vector(44, 265, 327);
+	}
+}
+
+rule("Start - Control - Nepal")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(Objective Index)), Up), Round To Integer(Y Component Of(
+			Objective Position(Objective Index)), Up), Round To Integer(Z Component Of(Objective Position(Objective Index)), Up));
+		Skip If(Global.L != Vector(-195, -93, 0), 2);
+		Global.Y = Vector(-176.500, -99, -71);
+		Global.Z = Vector(-191, -98, 60);
+		Skip If(Global.L != Vector(84, 129, 1), 2);
+		Global.Y = Vector(81, 132, -35.500);
+		Global.Z = Vector(81, 132, 36);
+		Skip If(Global.L != Vector(-49, 14, 0), 2);
+		Global.Y = Vector(-49, 15, -74);
+		Global.Z = Vector(-38.500, 15, 60);
+	}
+}
+
+rule("Start - Control - Oasis")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.L = Vector(Round To Integer(X Component Of(Objective Position(Objective Index)), Up), Round To Integer(Y Component Of(
+			Objective Position(Objective Index)), Up), Round To Integer(Z Component Of(Objective Position(Objective Index)), Up));
+		Skip If(Global.L != Vector(144, 3, 248), 2);
+		Global.Y = Vector(195, 1, 200);
+		Global.Z = Vector(101, 1, 309.500);
+		Skip If(Global.L != Vector(-188, 16, 0), 2);
+		Global.Y = Vector(-188.250, 18, -58);
+		Global.Z = Vector(-188, 18, 50.500);
+		Skip If(Global.L != Vector(122, 6, -227), 2);
+		Global.Y = Vector(103, 8, -285.500);
+		Global.Z = Vector(182, 8, -223.500);
+	}
+}
+
+rule("Start - Global")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Create Effect(All Players(All Teams), Ring, Color(Green), Global.Z, 2, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Light Shaft, Color(White), Global.Y, 5, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Ring, Color(White), Global.Y, 5, Visible To Position and Radius);
+		Set Match Time(3599);
+		Global.A = 9999;
+		Global.G = 9999;
+		Global.H = 9999;
+		Create HUD Text(All Players(All Teams), String("{0} - {1} - {2}", 3, String("{0} sec", String("{0} {1}", Global.H,
+			Round To Integer(Global.H % 0.010 * 1000, Down))), Global.J), Null, Null, Right, 2, Color(White), Color(White), Color(White),
+			Visible To and String, Default Visibility);
+		Create HUD Text(All Players(All Teams), String("{0} - {1} - {2}", 2, String("{0} sec", String("{0} {1}", Global.G,
+			Round To Integer(Global.G % 0.010 * 1000, Down))), Global.I), Null, Null, Right, 1, Color(White), Color(White), Color(White),
+			Visible To and String, Default Visibility);
+		Create HUD Text(All Players(All Teams), String("{0} - {1} - {2}", String("Record"), String("{0} sec", String("{0} {1}", Global.A,
+			Round To Integer(Global.A % 0.010 * 1000, Down))), Global.B), Null, Null, Right, 0, Color(White), Color(White), Color(White),
+			Visible To and String, Default Visibility);
+	}
+}
+
+rule("Start - Player")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	actions
+	{
+		Create HUD Text(Event Player, String("{0} {1}", Event Player.A, Round To Integer(Event Player.A % 0.010 * 1000, Down)), Null, Null,
+			Top, 0, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
+		Event Player.I = Last Text ID;
+		Create HUD Text(Event Player, String("{0} - {1}", String("Best"), String("{0} sec", String("{0} {1}", Event Player.B,
+			Round To Integer(Event Player.B % 0.010 * 1000, Down)))), Null, Null, Left, 1, Color(White), Color(White), Color(White),
+			Visible To and String, Default Visibility);
+		Event Player.J = Last Text ID;
+		Event Player.K = Last Text ID;
+		Create In-World Text(Event Player, String("{0} m", Distance Between(Global.Y, Event Player)), Global.Y + Vector(0, 5, 0), 2,
+			Do Not Clip, Visible To Position and String, Color(White), Default Visibility);
+		Create Icon(Event Player, Global.Y + Vector(0, 6, 0), Flag, Visible To and Position, Color(White), True);
+		Event Player.B = 9999;
+		Event Player.F = False;
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Status(Event Player, Null, Stunned, 0.500);
+		Event Player.F = False;
+		Teleport(Event Player, Global.Z);
+	}
+}
+
+rule("Floor")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == True;
+		Distance Between(Global.Z, Event Player) > 4;
+		Distance Between(Global.Y, Event Player) > 6;
+		Event Player.M == 0;
+	}
+
+	actions
+	{
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Status(Event Player, Null, Stunned, 0.250);
+		Teleport(Event Player, Global.Z);
+		Event Player.F = False;
+		Set Invisible(Event Player, All);
+		Stop Chasing Player Variable(Event Player, A);
+		Event Player.V[7] = 0;
+		Wait(0.250, Ignore Condition);
+		Event Player.A = 0;
+	}
+}
+
+rule("Finish")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Distance Between(Global.Y, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.Y), Z Component Of(Position Of(
+			Event Player)))) <= 5;
+		Event Player.F == False;
+		Event Player.M == 0;
+	}
+
+	actions
+	{
+		Event Player.F = True;
+		Stop Chasing Player Variable(Event Player, A);
+		Abort If(Event Player.A <= 1);
+		Skip If(Event Player.A >= Global.A, 15);
+		Skip If(Global.B == Event Player, 8);
+		Skip If(Global.I != Event Player, 3);
+		Global.I = Global.B;
+		Global.G = Global.A;
+		Skip(4);
+		Global.J = Global.I;
+		Global.I = Global.B;
+		Global.H = Global.G;
+		Global.G = Global.A;
+		Global.A = Event Player.A;
+		Global.B = Event Player;
+		Event Player.B = Event Player.A;
+		Abort;
+		Skip If(Event Player.A >= Event Player.B, 3);
+		Event Player.B = Event Player.A;
+		Skip If(Event Player.A >= Global.G, 7);
+		Skip If(Global.B == Event Player, 6);
+		Skip If(Global.I == Event Player, 2);
+		Global.H = Global.G;
+		Global.J = Global.I;
+		Global.G = Event Player.A;
+		Global.I = Event Player;
+		Abort;
+		Skip If(Event Player.A >= Global.H, 5);
+		Skip If(Global.B == Event Player, 4);
+		Skip If(Global.I == Event Player, 3);
+		Global.J = Event Player;
+		Global.H = Event Player.A;
+		Abort;
+		Big Message(Event Player, String("{0}!!!", String("Finished")));
+		Set Invisible(Event Player, None);
+		Abort;
+	}
+}
+
+rule("Finish Message (Best Time)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.F == True;
+		Event Player.M == 0;
+		Event Player.A < Event Player.B;
+		Event Player.A != Global.A;
+	}
+
+	actions
+	{
+		Event Player.B = Event Player.A;
+		Wait(0.250, Ignore Condition);
+		Big Message(Event Player, String("{0} - {1}", String("{0} {1}", String("Best"), String("Time")), String("{0} sec", String(
+			"{0} {1}", Event Player.B, Round To Integer(Event Player.B % 0.010 * 1000, Down)))));
+	}
+}
+
+rule("Finish Message (Record Time)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.F == True;
+		Event Player.M == 0;
+		Event Player.A == Global.A;
+	}
+
+	actions
+	{
+		Wait(0.250, Ignore Condition);
+		Big Message(Event Player, String("{0} - {1}", String("New Record"), String("{0} sec", String("{0} {1}", Event Player.B,
+			Round To Integer(Event Player.B % 0.010 * 1000, Down)))));
+	}
+}
+
+rule("Ult Reset")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Event Player.M == 0;
+	}
+
+	actions
+	{
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Status(Event Player, Null, Stunned, 0.500);
+		Teleport(Event Player, Global.Z);
+		Event Player.F = False;
+		Stop Chasing Player Variable(Event Player, A);
+		Set Invisible(Event Player, All);
+		Wait(0.250, Ignore Condition);
+		Event Player.A = 0;
+	}
+}
+
+rule("Ult Reset Checkpoint")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Event Player.M >= 1;
+		Event Player.O != 0;
+	}
+
+	actions
+	{
+		Teleport(Event Player, Event Player.O);
+		Set Facing(Event Player, Direction From Angles(Event Player.P, Event Player.Q), To World);
+	}
+}
+
+rule("Start timer")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Distance Between(Global.Z, Event Player) > 2;
+		Event Player.M == 0;
+	}
+
+	actions
+	{
+		Chase Player Variable At Rate(Event Player, A, 5000, 1, None);
+		Event Player.F = False;
+		Set Invisible(Event Player, None);
+	}
+}
+
+rule("Spawn")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is In Spawn Room(Event Player) == True;
+	}
+
+	actions
+	{
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Status(Event Player, Null, Stunned, 0.500);
+		Stop Chasing Player Variable(Event Player, A);
+		Event Player.A = 0;
+		Teleport(Event Player, Global.Z);
+		Event Player.F = False;
+		Set Invisible(Event Player, All);
+	}
+}
+
+rule("Circle Fix")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Distance Between(Global.Z, Event Player) <= 2;
+		Is On Ground(Event Player) == True;
+	}
+
+	actions
+	{
+		Event Player.V[7] = 0;
+		Stop Chasing Player Variable(Event Player, A);
+		Event Player.A = 0;
+		Event Player.F = False;
+		Set Invisible(Event Player, All);
+	}
+}
+
+rule("DISABLE PREHOP")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Distance Between(Global.Z, Event Player) <= 2.100;
+		Is On Ground(Event Player) == True;
+		Horizontal Speed Of(Event Player) > 8.251;
+	}
+
+	actions
+	{
+		Set Status(Event Player, Null, Knocked Down, 1);
+		Set Status(Event Player, Null, Stunned, 0.500);
+	}
+}
+
+rule("Interact Spectating (Enabled)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == True;
+		Event Player.M == 0;
+	}
+
+	actions
+	{
+		Event Player.M = 1;
+		Big Message(Event Player, String("{0} {1}", String("Exit"), String("Current Game")));
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Status(Event Player, Null, Stunned, 0.250);
+		Stop Chasing Player Variable(Event Player, A);
+		Event Player.A = 0;
+		Teleport(Event Player, Global.Z);
+		Event Player.F = False;
+		Set Invisible(Event Player, All);
+	}
+}
+
+rule("Interact Spectating (Button Held - Enabled)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == False;
+		Event Player.M == 1;
+	}
+
+	actions
+	{
+		Event Player.M = 2;
+	}
+}
+
+rule("Interact Spectating (disabled)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == True;
+		Event Player.M == 2;
+	}
+
+	actions
+	{
+		Event Player.M = 3;
+		Big Message(Event Player, String("{0} {1}", String("Join"), String("Current Game")));
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Status(Event Player, Null, Stunned, 0.250);
+		Stop Chasing Player Variable(Event Player, A);
+		Event Player.A = 0;
+		Teleport(Event Player, Global.Z);
+		Event Player.F = False;
+		Set Invisible(Event Player, All);
+	}
+}
+
+rule("Interact Spectating (Button Held - disabled)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == False;
+		Event Player.M == 3;
+	}
+
+	actions
+	{
+		Event Player.M = 0;
+	}
+}
+
+rule("Fire status (Disabled)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.M == 0;
+	}
+
+	actions
+	{
+		Destroy Icon(Last Created Entity);
+		Clear Status(Event Player, Burning);
+		Clear Status(Event Player, Invincible);
+		Destroy Icon(Event Player);
+	}
+}
+
+rule("Fire status (Enabled)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.M >= 1;
+	}
+
+	actions
+	{
+		Set Status(Event Player, Null, Burning, 9999);
+		Set Status(Event Player, Null, Invincible, 9999);
+	}
+}
+
+rule("Practice Checkpoints")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.M >= 1;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
+		Event Player.O = Position Of(Event Player);
+		Event Player.P = Horizontal Facing Angle Of(Event Player);
+		Event Player.Q = Vertical Facing Angle Of(Event Player);
+		Event Player.R = Velocity Of(Event Player);
+		Create Icon(Event Player, Event Player.O, Flag, Visible To and Position, Color(Green), True);
+		Abort;
+	}
+}
+
+rule("Velocity Counter (red)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Speed Of(Event Player) < 8.500;
+		Hero Of(Event Player) == Hero(Baptiste);
+		Event Player.S == True;
+	}
+
+	actions
+	{
+		Destroy HUD Text(Last Text ID);
+		Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player)), Null, Null, Top, 2, Color(Red), Color(White),
+			Color(Red), Visible To and String, Default Visibility);
+	}
+}
+
+rule("Velocity Counter (Yellow)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Speed Of(Event Player) >= 8.500;
+		Speed Of(Event Player) < 15;
+		Hero Of(Event Player) == Hero(Baptiste);
+		Event Player.S == True;
+	}
+
+	actions
+	{
+		Destroy HUD Text(Last Text ID);
+		Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player)), Null, Null, Top, 2, Color(Yellow), Color(
+			White), Color(Yellow), Visible To and String, Default Visibility);
+	}
+}
+
+rule("Velocity Counter (Green)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Speed Of(Event Player) >= 15;
+		Hero Of(Event Player) == Hero(Baptiste);
+		Event Player.S == True;
+	}
+
+	actions
+	{
+		Destroy HUD Text(Last Text ID);
+		Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player)), Null, Null, Top, 2, Color(Green), Color(White),
+			Color(Green), Visible To and String, Default Visibility);
+	}
+}
+
+rule("No damage rule")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	actions
+	{
+		Heal(Event Player, Null, 200);
+	}
+}
+
+rule("========== Everything below was edited by ĴewelƁutt for baptiste pogo ==========")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+}
+
+rule("Baptiste hud tag verification")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Baptiste);
+	}
+
+	actions
+	{
+		Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Color(White), Color(Yellow), Visible To and String,
+			Default Visibility);
+		Create HUD Text(Event Player, String("{0} m/s", Event Player.V[5]), Null, Null, Left, 2, Color(White), Color(White), Color(Yellow),
+			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, String("{0}!", Event Player.V[7]), Null, Null, Top, 3, Color(White), Color(White), Color(Yellow),
+			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player)), Null, Null, Top, 2, Color(Red), Color(White),
+			Color(Red), Visible To and String, Default Visibility);
+		Event Player.S = True;
+		Abort;
+	}
+}
+
+rule("Pogo")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Baptiste;
+	}
+
+	conditions
+	{
+		Is Firing Secondary(Event Player) == True;
+	}
+
+	actions
+	{
+		Event Player.V[2] = Horizontal Speed Of(Event Player);
+		Event Player.V[3] = Velocity Of(Event Player);
+		Event Player.V[0] = Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(
+			Event Player) * 100, All Players(All Teams), Event Player, True);
+		Event Player.V[1] = Distance Between(Event Player, Event Player.V[0]);
+		Event Player.V[11] = Distance Between(Eye Position(Event Player), Event Player.V[0]);
+		Event Player.V[5] = 0;
+		Abort If(Event Player.V[1] > 4.350);
+		Event Player.V[5] = 5.500;
+		Skip If(Is Button Held(Event Player, Button(Crouch)), 1);
+		Event Player.V[5] = 21;
+		Skip If(Event Player.V[1] < 0.600 || Is Button Held(Event Player, Button(Crouch)) == True, 3);
+		Event Player.V[5] = 22;
+		Skip If(Event Player.V[11] < 0.900, 1);
+		Event Player.V[5] = 22 - Event Player.V[1] * 4;
+		Apply Impulse(Event Player, Direction Towards(Event Player.V[0], Eye Position(Event Player)), Event Player.V[5], To World,
+			Cancel Contrary Motion);
+		Apply Impulse(Event Player, Vector(X Component Of(Event Player.V[3]), 0, Z Component Of(Event Player.V[3])), Event Player.V[2],
+			To World, Cancel Contrary Motion);
+		Wait(0.250, Ignore Condition);
+		Set Move Speed(Event Player, Round To Integer(150 + Horizontal Speed Of(Event Player) * (Horizontal Speed Of(Event Player) / 2),
+			Up));
+	}
+}
+
+rule("Practice raycast")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.M >= 1;
+		Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 100,
+			All Players(All Teams), Event Player, True) != Event Player.V[13];
+	}
+
+	actions
+	{
+		Event Player.V[13] = Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(
+			Event Player) * 100, All Players(All Teams), Event Player, True);
+		Wait(0.005, Ignore Condition);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Pogo practice")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.M >= 1;
+	}
+
+	actions
+	{
+		Create Effect(Event Player, Sphere, Color(Red), Event Player.V[13], 4.350, Visible To Position and Radius);
+		Event Player.V[6] = Last Created Entity;
+		Wait(0.250, Ignore Condition);
+		Create Effect(Event Player, Sphere, Color(Green), Event Player.V[13], 0.600, Visible To Position and Radius);
+		Event Player.V[10] = Last Created Entity;
+		Create Effect(Event Player, Sphere, Color(Purple), Event Player.V[13], 0.900, Visible To Position and Radius);
+		Event Player.V[12] = Last Created Entity;
+	}
+}
+
+rule("Pogo exit practice")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.M == 0;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.V[6]);
+		Destroy Effect(Event Player.V[10]);
+		Destroy Effect(Event Player.V[12]);
+	}
+}
+
+rule("Pogo number of shots")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Firing Secondary(Event Player) == True;
+		Event Player.F != True;
+	}
+
+	actions
+	{
+		Event Player.V[7] = Event Player.V[7] + 1;
+	}
+}
+
+rule("Baptiste speed in air")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == False;
+	}
+
+	actions
+	{
+		Set Move Speed(Event Player, 150);
+	}
+}
+
+rule("Set speed to 150 if below 8.25")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == False;
+		Horizontal Speed Of(Event Player) < 8.250;
+	}
+
+	actions
+	{
+		Set Move Speed(Event Player, 150);
+	}
+}
+
+rule("track speed")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Horizontal Speed Of(Event Player) > Event Player.V[9];
+	}
+
+	actions
+	{
+		Wait(0.500, Ignore Condition);
+		Abort If Condition Is False;
+		Event Player.V[9] = Horizontal Speed Of(Event Player);
+		Wait(0.016, Ignore Condition);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Slow down if too slow")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == False;
+		Horizontal Speed Of(Event Player) > 8.250;
+		Horizontal Speed Of(Event Player) < 19;
+		Horizontal Speed Of(Event Player) < Event Player.V[9] - 2;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Abort If Condition Is False;
+		Event Player.V[9] = Horizontal Speed Of(Event Player);
+		Set Move Speed(Event Player, Round To Integer(Round To Integer(Horizontal Speed Of(Event Player), Up) * 16.666, Up));
+		Wait(0.250, Ignore Condition);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Baptiste speed on ground to avoid insta stun when moving in circle")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == True;
+	}
+
+	actions
+	{
+		Set Move Speed(Event Player, 125);
+		Event Player.V[8] = 150;
+		Event Player.V[9] = 0;
+		Wait(1, Ignore Condition);
+		Loop If Condition Is True;
+	}
+}

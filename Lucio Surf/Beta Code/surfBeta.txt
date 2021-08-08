@@ -14,13 +14,16 @@ variables {
         11: PlayerThirdStan
         12: Checkpoint
         13: Visible
-        14: Season
-        15: Category
-        16: Time
-        17: Infinite
+        14: Mode
+        15: Season
+        16: Category
+        17: Time
+        18: Infinite
+        19: Loop1
         20: PosStart
         21: PosCheckpoint
         22: PosFinish
+        23: PosBarrier
     player:
         0: TimeCurrent
         1: TimeBestGrav
@@ -38,6 +41,7 @@ variables {
         13: Speed
         14: CurrCheckpoint
         15: CheckpointLoop
+        16: Reset
         23: PosPracticeCheckpoint
         24: FacingPracticeCheckpoint
         25: VelocityPracticeCheckpoint
@@ -62,8 +66,9 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 0, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
-        Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Mode", Null, Null, Null), 1, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
+        Set Global Variable(Mode, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Mode", Null, Null, Null), 0, Array(Custom String("Time trial", Null, Null, Null), Custom String("Shootout", Null, Null, Null)), 0));
+        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 1, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
+        Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 2, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
     }
@@ -950,15 +955,15 @@ rule ("Start - Maps (Season 5)") {
         Set Global Variable(Checkpoint, True);
         "Assault"
         If(Compare(Current Map, ==, Map(Hanamura)));
-            Set Global Variable(PosStart, Vector(85.867, -2.02, 16.524));
-            Set Global Variable(PosCheckpoint, Array(Vector(64.123, -3.4, 84.188)));
-            Set Global Variable(PosFinish, Vector(30.542, 1.9, 40.845));
+            Set Global Variable(PosStart, Vector(11.329, 0, -24.036));
+            Set Global Variable(PosCheckpoint, Array(Vector(66.147, -2, -3.121), Vector(-23.977, -0.95, -72.131)));
+            Set Global Variable(PosFinish, Vector(12.963, 6.7, -23.213));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Horizon Lunar Colony)));
-            Set Global Variable(PosStart, Vector(-38.253, 10, -122.811));
-            Set Global Variable(PosCheckpoint, Array(Vector(43.183, 13.9, -77.129)));
-            Set Global Variable(PosFinish, Vector(25.671, 6.9, -15.62));
+            Set Global Variable(PosStart, Vector(57.716, 8.77, -97.643));
+            Set Global Variable(PosCheckpoint, Array(Vector(-32.413, 4.4, -135.156), Vector(24.286, 6.9, -20.328), Vector(94.019, 11, -57.378)));
+            Set Global Variable(PosFinish, Vector(43.878, 13.5, -77.993));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Paris)));
@@ -968,28 +973,28 @@ rule ("Start - Maps (Season 5)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Temple of Anubis)));
-            Set Global Variable(PosStart, Vector(-47.474, 9.5, 18.968));
-            Set Global Variable(PosCheckpoint, Array(Vector(-30.065, 3.6, 107.13), Vector(17.017, 0.4, 97.256), Vector(17.407, 0.2, 1.138), Vector(-21.014, 4.5, 35.175), Vector(-20.446, -2.5, -22.555)));
-            Set Global Variable(PosFinish, Vector(-34.967, 1.3, 35.235));
+            Set Global Variable(PosStart, Vector(-31.404, 1.3, 27.937));
+            Set Global Variable(PosCheckpoint, Array(Vector(12.334, -2.6, -1.291), Vector(15.76, 0.4, 98.839), Vector(-20.635, 2.5, 104.372), Vector(-8.628, -2.5, -15.143)));
+            Set Global Variable(PosFinish, Vector(-21.014, 4.5, 35.175));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Volskaya Industries)));
-            Set Global Variable(PosStart, Vector(-43.782, -3, 52.785));
-            Set Global Variable(PosCheckpoint, Array(Vector(-98.926, -2.5, 23.314), Vector(-104.674, -4, 68.186), Vector(-32.689, -4, 72.356), Vector(27.113, -4.1, 77.489), Vector(-29.813, 1, 38.063)));
+            Set Global Variable(PosStart, Vector(-38.235, -2.51, 54.73));
+            Set Global Variable(PosCheckpoint, Array(Vector(-98.926, -2.5, 23.314), Vector(-104.674, -4, 68.186), Vector(23.227, -4.1, 100.796), Vector(-23.84, -5, 38.582)));
             Set Global Variable(PosFinish, Vector(-56.662, -4.2, 71.855));
             Abort;
         End;
         "Escort"
         If(Compare(Current Map, ==, Map(Dorado)));
-            Set Global Variable(PosStart, Vector(138.184, 11, 16.06));
-            Set Global Variable(PosCheckpoint, Array(Vector(174.171, 10.9, 37.596), Vector(127.679, 11.9, 52.141), Vector(35.461, 9.7, -33.067), Vector(110.839, 9.4, 1.102), Vector(3.741, -0.6, -7.493)));
-            Set Global Variable(PosFinish, Vector(107.157, 17.9, -3.186));
+            Set Global Variable(PosStart, Vector(84.979, 20, 17.035));
+            Set Global Variable(PosCheckpoint, Array(Vector(136.754, 10.9, 45.919), Vector(35.461, 9.7, -33.067), Vector(8.526, -2, 22.064), Vector(193.551, 14, 43.411)));
+            Set Global Variable(PosFinish, Vector(98.023, 17.9, 5.085));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Havana)));
-            Set Global Variable(PosStart, Vector(-107.317, 4, -59.178));
-            Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-            Set Global Variable(PosFinish, Vector(65.054, 10.82, -83.635));
+            Set Global Variable(PosStart, Vector(25.471, 6, -70.081));
+            Set Global Variable(PosCheckpoint, Array(Vector(145.539, 5.9, -46.249), Vector(107.194, 1.2, -26.704), Vector(-30.023, 9.9, -98.164), Vector(-84.714, 3.8, -55.305)));
+            Set Global Variable(PosFinish, Vector(27.096, 9.9, -78.649));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Junkertown)));
@@ -1011,9 +1016,10 @@ rule ("Start - Maps (Season 5)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Watchpoint: Gibraltar)));
-            Set Global Variable(PosStart, Vector(41.299, -4.837, -47.009));
-            Set Global Variable(PosCheckpoint, Array(Vector(82.004, -0.3, 39.69), Vector(88.537, 3.175, -26.408), Vector(28.308, -5.595, -158.458), Vector(66.1, -1.825, -114.92)));
-            Set Global Variable(PosFinish, Vector(60.147, 10.201, -38.682));
+            Set Global Variable(PosStart, Vector(70.129, 3, -44.346));
+            Set Global Variable(PosCheckpoint, Array(Vector(94.532, -1, 42.21), Vector(96.233, 1, 15.036), Vector(28.308, -6.1, -158.458), Vector(66.1, -2.6, -114.92), Vector(64.438, 0.3, 13.364)));
+            Set Global Variable(PosFinish, Vector(59.279, -3.2, -39.483));
+            Set Global Variable(PosBarrier, Array(Vector(38.005, 4.175, -76.422), Vector(38.619, -3.844, -76.96)));
             Abort;
         End;
         "Hybrid"
@@ -1036,15 +1042,15 @@ rule ("Start - Maps (Season 5)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(King's Row)));
-            Set Global Variable(PosStart, Vector(-56.613, -0.1, -42.469));
-            Set Global Variable(PosCheckpoint, Array(Vector(-154.342, -2.983, 24.929), Vector(-80.861, 0.314, 2.81), Vector(5.901, 6.285, -28.012), Vector(-25.228, 0.061, 15.6)));
-            Set Global Variable(PosFinish, Vector(-77.907, 0.294, -22.495));
+            Set Global Variable(PosStart, Vector(-56.613, -0.3, -42.469));
+            Set Global Variable(PosCheckpoint, Array(Vector(-154.342, -3.3, 24.929), Vector(-3.844, -0.2, -23.853), Vector(-25.912, -0.2, 10.967)));
+            Set Global Variable(PosFinish, Vector(-70.902, 4.4, -36.354));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Numbani)));
-            Set Global Variable(PosStart, Vector(155.325, -3.575, 23.509));
-            Set Global Variable(PosCheckpoint, Array(Vector(219.739, 0.367, 22.441), Vector(205.1, -3.626, -5.822), Vector(120.67, -5.59, -17.039), Vector(131.903, -3.575, 40.896), Vector(59.889, -0.75, -25.254), Vector(8.506, 0.425, 37.804)));
-            Set Global Variable(PosFinish, Vector(139.784, -4.005, 17.222));
+            Set Global Variable(PosStart, Vector(161.121, -4, 6.575));
+            Set Global Variable(PosCheckpoint, Array(Vector(207.578, -2.2, 31.463), Vector(203.656, -3.9, 1.168), Vector(120.67, -5.8, -17.039), Vector(131.903, -3.8, 40.896), Vector(59.889, -0.8, -25.254), Vector(8.506, 0.2, 37.804)));
+            Set Global Variable(PosFinish, Vector(169.395, 4.2, 6.428));
             Abort;
         End;
         "Control"
@@ -1168,7 +1174,7 @@ rule ("Start - Global") {
     }
     actions {
         "Vars"
-        Set Match Time(Global.Time);
+        Set Match Time(Add(Global.Time, 10));
         Set Global Variable(TimeFirstStan, 9999);
         Set Global Variable(TimeFirstGrav, 9999);
         Set Global Variable(TimeSecondStan, 9999);
@@ -1176,7 +1182,7 @@ rule ("Start - Global") {
         Set Global Variable(TimeThirdStan, 9999);
         Set Global Variable(TimeThirdGrav, 9999);
         Set Global Variable(Visible, True);
-        "Start / Checkpoint / Finish effects"
+        "Start / Checkpoint / Finish / Barrier effects"
         Create Effect(All Players(All Teams), Ring, Color(Green), Global.PosStart, 2, Visible To);
         Create Effect(All Players(All Teams), Light Shaft, Color(White), Global.PosFinish, 5, Visible To);
         Create Effect(All Players(All Teams), Ring, Color(White), Global.PosFinish, 5, Visible To);
@@ -1264,9 +1270,12 @@ rule ("Start - Global") {
             Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 9)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 9), 3.5, Visible To);
             Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 9)), Add(Value In Array(Global.PosCheckpoint, 9), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
         End;
+        For Global Variable(Loop1, 0, Count Of(Global.PosBarrier), 1);
+            Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Global.Loop1), 5, Visible To);
+        End;
         "Seaons / Mode information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Lucio Surf Season {0} | Standard", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf Season {0} | Gravspeed", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Lucio Surf v5.0 | Season {0} | Standard", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.0 | Season {0} | Gravspeed", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
         Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), String("{0} - {1} - {2}", Custom String("3", Null, Null, Null), String("{0} sec", Global.TimeThirdStan, Null, Null), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), String("{0} - {1} - {2}", Custom String("2", Null, Null, Null), String("{0} sec", Global.TimeSecondStan, Null, Null), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
@@ -1503,7 +1512,6 @@ rule ("Finish (no LoS)") {
         All;
     }
     conditions {
-        Is True For All((Event Player).Checkpoint, Current Array Element) == True;
         (Event Player).Finished == False;
         (Event Player).Mode == False;
         Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))) <= 5;
@@ -1525,6 +1533,7 @@ rule ("Finish (no Checkpoint)") {
         (Event Player).Finished == False;
         (Event Player).Mode == False;
         Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))) <= 5;
+        Y Component Of(Position Of(Event Player)) >= Y Component Of(Global.PosFinish);
     }
     actions {
         Big Message(Event Player, Custom String("{0} {1}", String("No", Null, Null, Null), String("Checkpoint", Null, Null, Null), Null));
@@ -1540,6 +1549,7 @@ rule ("Finish Message (Best Time)") {
     conditions {
         (Event Player).Finished != False;
         (Event Player).NewBest != False;
+        Global.Mode == False;
         Or(And(Not((Event Player).Category), Compare(Event Player, !=, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, !=, Global.PlayerFirstGrav))) == True;
     }
     actions {
@@ -1556,6 +1566,7 @@ rule ("Finish Message (Record Time)") {
     conditions {
         (Event Player).Finished != False;
         (Event Player).NewBest != False;
+        Global.Mode == False;
         Or(And(Not((Event Player).Category), Compare(Event Player, ==, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, ==, Global.PlayerFirstGrav))) == True;
     }
     actions {
@@ -1608,6 +1619,20 @@ rule ("Death") {
     }
     actions {
         Resurrect(Event Player);
+        Start Rule(Respawn, Do Nothing);
+    }
+}
+
+rule ("Barrier") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is True For Any(Global.PosBarrier, Compare(Distance Between(Event Player, Current Array Element), <=, 5)) == True;
+    }
+    actions {
         Start Rule(Respawn, Do Nothing);
     }
 }
@@ -2139,7 +2164,7 @@ rule ("Spectator Mode (move up disabled)") {
     }
 }
 
-rule ("Spectator Mode (move down enabled)") {
+rule ("Spectator Mode (move do﻿wn enabled)") {
     event {
         Ongoing - Each Player;
         All;
@@ -2154,7 +2179,7 @@ rule ("Spectator Mode (move down enabled)") {
     }
 }
 
-rule ("Spectator Mode (move down disabled)") {
+rule ("Spectator Mode (move do﻿wn disabled)") {
     event {
         Ongoing - Each Player;
         All;
@@ -2227,7 +2252,9 @@ rule ("Circle Fix") {
     }
     conditions {
         Distance Between(Global.PosStart, Update Every Frame(Position Of(Event Player))) <= 2;
+        (Event Player).Reset == False;
         (Event Player).Mode <= 1;
+        (Event Player).PosPracticeCheckpoint == False;
         Is True For Any((Event Player).Checkpoint, Current Array Element) == False;
         Or(And(Not((Event Player).Category), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 8.6))) == True;
     }
@@ -2247,13 +2274,11 @@ rule ("Match Time Frozen") {
     conditions {
         Is Game In Progress == True;
         Global.Infinite != False;
+        Match Time < 10;
     }
     actions {
         Wait(0.016, Ignore Condition);
-        While(True);
-            Wait(Subtract(Match Time, 10), Ignore Condition);
-            Set Match Time(Global.Time);
-        End;
+        Set Match Time(Add(Global.Time, 10));
     }
 }
 
@@ -2272,6 +2297,9 @@ rule ("Respawn") {
                 Apply Impulse(Event Player, (Event Player).VelocityPracticeCheckpoint, (Event Player).SpeedPracticeCheckpoint, To World, Cancel Contrary Motion);
                 Abort;
             End;
+            Set Player Variable(Event Player, Reset, True);
+            Wait(0.016, Ignore Condition);
+            Set Player Variable(Event Player, Reset, False);
             If(Not((Event Player).Finished));
                 Modify Player Variable(Event Player, Attempts, Add, 1);
             End;
