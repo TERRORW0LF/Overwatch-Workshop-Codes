@@ -789,7 +789,7 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.RING, Color.SKY_BLUE, PosCheckpoint, 3.5, EffectReeval.VISIBILITY)
         createIcon(getAllPlayers(), PosCheckpoint + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, true)
     #Seaons / Mode information
-    hudHeader(getAllPlayers(), "Lucio Surf v4.2 | Season {0} | {1}".format(Season + 1, "Standard" if not Mode else "Gravspeed"), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader(getAllPlayers(), "Lucio Surf v4.3 | Season {0} | {1}".format(Season + 1, "Standard" if not Mode else "Gravspeed"), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
     hudHeader(getAllPlayers(), l"{0} - {1} - {2}".format(l"Record", l"{0} sec".format(TimeFirst), PlayerFirst), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
     hudHeader(getAllPlayers(), l"{0} - {1} - {2}".format("2", l"{0} sec".format(TimeSecond), PlayerSecond), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
