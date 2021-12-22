@@ -820,23 +820,23 @@ rule "Start - Maps (Season 5)":
         return
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(25.471, 6, -70.081)
-        PosCheckpoint = [vect(145.539, 5.9, -46.249), vect(107.194, 1.2, -26.704), vect(-30.023, 9.9, -98.164), vect(-84.714, 3.8, -55.305)]
+        PosCheckpoint = [vect(-49.749, 7.3, -118.869), vect(107.194, 1.2, -26.704), vect(-30.023, 9.9, -98.164), vect(-84.714, 3.8, -55.305)]
         PosFinish = vect(27.096, 9.9, -78.649)
         return
     if getCurrentMap() == Map.JUNKERTOWN:
-        PosStart = vect(-49.399, 9.49, -42.145)
-        PosCheckpoint = [vect(-46.378, 17.6, -90.257)]
-        PosFinish = vect(40.235, 8.7, -51.024)
+        PosStart = vect(-43.021, 12.48, -61.452)
+        PosCheckpoint = [vect(4.734, 6.4, -52.832), vect(37.373, 8.8, -74.34), vect(-84.607, 13.4, -159.448), vect(-49.728, 7.3, -118.016)]
+        PosFinish = vect(-36.35, 4.2, -68.046)
         return
     if getCurrentMap() == Map.RIALTO:
-        PosStart = vect(-31.663, 1.75, -115.564)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(160.704, -3.678, -62.886)
+        PosStart = vect(46.435, 0.65, -36.57)
+        PosCheckpoint = [vect(85.068, -0.5, -49.805), vect(107.15, -1.3, -1.272), vect(-25.075, -1.8, -60.92), vect(-57.09, 4.7, -145.623)]
+        PosFinish = vect(37.136, -0.3, -55.023)
         return
     if getCurrentMap() == Map.ROUTE66:
-        PosStart = vect(71.704, -0.06, 11.87)
-        PosCheckpoint = [vect(-42.605, 3.3, 5.206)]
-        PosFinish = vect(-100.763, 8.4, 8.128)
+        PosStart = vect(-10.146, 8.13, -8.694)
+        PosCheckpoint = [vect(-43.069, 3.3, 5.652), vect(-68.091, 6.4, -14.181), vect(44.356, 2.3, 62.423)]
+        PosFinish = vect(-23.554, 3.2, -15.238)
         return
     if getCurrentMap() == Map.WATCHPOINT_GIBRALTAR:
         PosStart = vect(70.129, 3, -44.346)
@@ -846,19 +846,19 @@ rule "Start - Maps (Season 5)":
         return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
-        PosStart = vect(52.118, -0.81, -7.795)
-        PosCheckpoint = [vect(53.816, -6.5, -87.717)]
-        PosFinish = vect(-57.568, -3.9, -5.401)
+        PosStart = vect(-46.717, 4.7, 86.88)
+        PosCheckpoint = [vect(0.922, -1, 107.766), vect(2.998, -4.2, -18.814), vect(-122.15, -0.3, 110.5)]
+        PosFinish = vect(-50.14, -0.3, 93.171)
         return
     if getCurrentMap() == Map.EICHENWALDE:
-        PosStart = vect(2.656, 6, 0.346)
-        PosCheckpoint = [vect(31.753, 13.5, -79.386)]
-        PosFinish = vect(83.903, 12.6, -87.977)
+        PosStart = vect(69.737, 18.36, -66.742)
+        PosCheckpoint = [vect(31.753, 13.5, -79.386), vect(142.5, 11.7, -38.836), vect(3.39, -0.1, -8.241)]
+        PosFinish = vect(73.816, 13, -75.982)
         return
     if getCurrentMap() == Map.HOLLYWOOD:
-        PosStart = vect(-25.875, 1.75, 21.201)
-        PosCheckpoint = [vect(12.661, 1.6, -86.28)]
-        PosFinish = vect(-38.232, 9.7, -116.867)
+        PosStart = vect(7.65, 6, -55.154)
+        PosCheckpoint = [vect(16.595, -0.1, 62.76), vect(-12.548, -0.1, 64.54), vect(-37.391, 1.7, -140.414), vect(-4.969, 1.5, -99.506), vect(-47.322, -0.5, 12.226)]
+        PosFinish = vect(8.044, 1.5, -48.109)
         return
     if getCurrentMap() == Map.KINGS_ROW:
         PosStart = vect(-56.613, -0.3, -42.469)
@@ -1078,17 +1078,17 @@ rule "Start - Global":
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and not player.Mode], "Player Spectator Mode - Ability 2", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and not player.Mode], "Spectator Mode - Reload", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     #Help text practice
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 1 and player.Mode <= 3], "Standard Mode - Interact", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 1 and player.Mode <= 3], "Ult Reset (Checkpoint) - Ultimate", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 1 and player.Mode <= 3], "Set Checkpoint - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 1], "Standard Mode - Interact", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 1], "Ult Reset (Checkpoint) - Ultimate", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 1], "Set Checkpoint - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     #Help text playerspec
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 4 and player.Mode <= 6], "Standard Mode - Ability 2", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 4 and player.Mode <= 6], "Spectate next - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 4 and player.Mode <= 6], "Spectate previous - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)    
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 2], "Standard Mode - Ability 2", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 2], "Spectate next - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 2], "Spectate previous - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)    
     #Help text spectator
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 7 and player.Mode <= 9], "Standard Mode - Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 7 and player.Mode <= 9], "Stop - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode >= 7 and player.Mode <= 9], "Slow Move - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 3], "Standard Mode - Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 3], "Stop - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 3], "Slow Move - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
 
 
 rule "Start - Player":
