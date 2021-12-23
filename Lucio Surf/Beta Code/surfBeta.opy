@@ -893,21 +893,22 @@ rule "Start - Maps (Season 5)":
     if getCurrentMap() == Map.ILIOS:
         #Lighthouse
         if not getCurrentObjective():
-            PosStart = vect(284.738, -17.94, -75.819)
-            PosCheckpoint = [vect(363.517, -18.4, -53.426)]
-            PosFinish = vect(336.947, -25.7, 22.725)
+            PosStart = vect(336.294, -23.7, -42.507)
+            PosCheckpoint = [vect(336.182, -25.7, 22.951), vect(290.258, -25.7, -88.687), vect(357.797, -25.7, -50.871), vect(322.5, -23.7, -36.7)]
+            PosFinish = vect(338.282, -25.7, -43.21)
             return
         #Ruins
         if getCurrentObjective() == 2:
-            PosStart = vect(111.647, 65.39, -177.77)
-            PosCheckpoint = [vect(28.446, 61.39, -143.87)]
-            PosFinish = vect(-55.178, 65.3, -178.229)
+            PosStart = vect(28.463, 57.37, -163.093)
+            PosCheckpoint = [vect(87.767, 58.3, -148.654), vect(113.185, 65.3, -178.097), vect(-55.96, 60.3, -158.273)]
+            PosFinish = vect(28.411, 57.3, -156.448)
             return
         #Well
         if getCurrentObjective() == 1:
-            PosStart = vect(-258.986, -0.5, 48.481)
-            PosCheckpoint = [vect(-224.969, 5.3, -33.21)]
-            PosFinish = vect(-141.105, 10.5, -87.497)
+            PosStart = vect(-201.811, 0.8, -10.588)
+            PosCheckpoint = [vect(-155.044, -4, -58.727), vect(-179.473, -0.5, -87.438), vect(-258.817, -5.2, 21.142)]
+            PosFinish = vect(-199.735, 9.8, -7.602)
+            return
     if getCurrentMap() == Map.LIJIANG_TOWER:
         #Control Tower
         if getCurrentObjective() == 2:

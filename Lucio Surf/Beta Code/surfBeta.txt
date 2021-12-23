@@ -1080,23 +1080,24 @@ rule ("Start - Maps (Season 5)") {
         If(Compare(Current Map, ==, Map(Ilios)));
             "Lighthouse"
             If(Not(Objective Index));
-                Set Global Variable(PosStart, Vector(284.738, -17.94, -75.819));
-                Set Global Variable(PosCheckpoint, Array(Vector(363.517, -18.4, -53.426)));
-                Set Global Variable(PosFinish, Vector(336.947, -25.7, 22.725));
+                Set Global Variable(PosStart, Vector(336.294, -23.7, -42.507));
+                Set Global Variable(PosCheckpoint, Array(Vector(336.182, -25.7, 22.951), Vector(290.258, -25.7, -88.687), Vector(357.797, -25.7, -50.871), Vector(322.5, -23.7, -36.7)));
+                Set Global Variable(PosFinish, Vector(338.282, -25.7, -43.21));
                 Abort;
             End;
             "Ruins"
             If(Compare(Objective Index, ==, 2));
-                Set Global Variable(PosStart, Vector(111.647, 65.39, -177.77));
-                Set Global Variable(PosCheckpoint, Array(Vector(28.446, 61.39, -143.87)));
-                Set Global Variable(PosFinish, Vector(-55.178, 65.3, -178.229));
+                Set Global Variable(PosStart, Vector(28.463, 57.37, -163.093));
+                Set Global Variable(PosCheckpoint, Array(Vector(87.767, 58.3, -148.654), Vector(113.185, 65.3, -178.097), Vector(-55.96, 60.3, -158.273)));
+                Set Global Variable(PosFinish, Vector(28.411, 57.3, -156.448));
                 Abort;
             End;
             "Well"
             If(Compare(Objective Index, ==, 1));
-                Set Global Variable(PosStart, Vector(-258.986, -0.5, 48.481));
-                Set Global Variable(PosCheckpoint, Array(Vector(-224.969, 5.3, -33.21)));
-                Set Global Variable(PosFinish, Vector(-141.105, 10.5, -87.497));
+                Set Global Variable(PosStart, Vector(-201.811, 0.8, -10.588));
+                Set Global Variable(PosCheckpoint, Array(Vector(-155.044, -4, -58.727), Vector(-179.473, -0.5, -87.438), Vector(-258.817, -5.2, 21.142)));
+                Set Global Variable(PosFinish, Vector(-199.735, 9.8, -7.602));
+                Abort;
             End;
         End;
         If(Compare(Current Map, ==, Map(Lijiang Tower)));
