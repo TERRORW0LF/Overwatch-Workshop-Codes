@@ -874,21 +874,21 @@ rule "Start - Maps (Season 5)":
     if getCurrentMap() == Map.BUSAN:
         #Downtown
         if not getCurrentObjective():
-            PosStart = vect(84.198, 15, -142.989)
-            PosCheckpoint = [vect(22.583, 7.9, -81.736)]
-            PosFinish = vect(-12.436, 15.9, -117.693)
+            PosStart = vect(52.012, 10, -117.491)
+            PosCheckpoint = [vect(51.837, 4.8, -77.729), vect(-10.418, 15.9, -125.283), vect(114.197, 15.9, -125.294)]
+            PosFinish = vect(52.012, 14.4, -117.491)
             return
         #MEKA Base
         if getCurrentObjective() == 2:
-            PosStart = vect(165.682, 10.09, 271.056)
-            PosCheckpoint = [vect(0, 0, 0)]
-            PosFinish = vect(247.878, 13, 199.614)
+            PosStart = vect(217.009, 10.09, 228.832)
+            PosCheckpoint = [vect(272.082, 10, 212.348), vect(167.216, 10, 257.301), vect(217.798, 17, 230.83)]
+            PosFinish = vect(222.709, 9, 242.021)
             return
         #Sanctuary
         if getCurrentObjective() == 1:
-            PosStart = vect(-284.514, 12.05, 174.822)
-            PosCheckpoint = [vect(-382.463, 9, 138.889)]
-            PosFinish = vect(-271.677, 9, 137.999)
+            PosStart = vect(-328.384, 8.8, 144.334)
+            PosCheckpoint = [vect(-389.913, 9, 139.646), vect(-328.561, 8, 180.59), vect(-266.552, 9, 138.877), vect(-327.941, 9.7, 117.976)]
+            PosFinish = vect(-328.184, 13.5, 140.64)
             return
     if getCurrentMap() == Map.ILIOS:
         #Lighthouse

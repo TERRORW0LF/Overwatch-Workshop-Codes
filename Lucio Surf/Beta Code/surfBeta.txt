@@ -1057,23 +1057,23 @@ rule ("Start - Maps (Season 5)") {
         If(Compare(Current Map, ==, Map(Busan)));
             "Downtown"
             If(Not(Objective Index));
-                Set Global Variable(PosStart, Vector(84.198, 15, -142.989));
-                Set Global Variable(PosCheckpoint, Array(Vector(22.583, 7.9, -81.736)));
-                Set Global Variable(PosFinish, Vector(-12.436, 15.9, -117.693));
+                Set Global Variable(PosStart, Vector(52.012, 10, -117.491));
+                Set Global Variable(PosCheckpoint, Array(Vector(51.837, 4.8, -77.729), Vector(-10.418, 15.9, -125.283), Vector(114.197, 15.9, -125.294)));
+                Set Global Variable(PosFinish, Vector(52.012, 14.4, -117.491));
                 Abort;
             End;
             "MEKA Base"
             If(Compare(Objective Index, ==, 2));
-                Set Global Variable(PosStart, Vector(165.682, 10.09, 271.056));
-                Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-                Set Global Variable(PosFinish, Vector(247.878, 13, 199.614));
+                Set Global Variable(PosStart, Vector(217.009, 10.09, 228.832));
+                Set Global Variable(PosCheckpoint, Array(Vector(272.082, 10, 212.348), Vector(167.216, 10, 257.301), Vector(217.798, 17, 230.83)));
+                Set Global Variable(PosFinish, Vector(222.709, 9, 242.021));
                 Abort;
             End;
             "Sanctuary"
             If(Compare(Objective Index, ==, 1));
-                Set Global Variable(PosStart, Vector(-284.514, 12.05, 174.822));
-                Set Global Variable(PosCheckpoint, Array(Vector(-382.463, 9, 138.889)));
-                Set Global Variable(PosFinish, Vector(-271.677, 9, 137.999));
+                Set Global Variable(PosStart, Vector(-328.384, 8.8, 144.334));
+                Set Global Variable(PosCheckpoint, Array(Vector(-389.913, 9, 139.646), Vector(-328.561, 8, 180.59), Vector(-266.552, 9, 138.877), Vector(-327.941, 9.7, 117.976)));
+                Set Global Variable(PosFinish, Vector(-328.184, 13.5, 140.64));
                 Abort;
             End;
         End;
