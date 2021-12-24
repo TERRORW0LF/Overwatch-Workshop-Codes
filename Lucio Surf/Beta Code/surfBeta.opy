@@ -45,6 +45,7 @@ playervar Speed 13
 playervar CurrCheckpoint 14
 playervar CheckpointLoop 15
 playervar Reset 16
+playervar PracticeCheckpoint 22
 playervar PosPracticeCheckpoint 23
 playervar FacingPracticeCheckpoint 24
 playervar VelocityPracticeCheckpoint 25
@@ -1082,6 +1083,7 @@ rule "Start - Global":
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 1], "Standard Mode - Interact", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 1], "Ult Reset (Checkpoint) - Ultimate", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 1], "Set Checkpoint - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 1], "Delete Checkpoint - Ability 2", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     #Help text playerspec
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 2], "Standard Mode - Ability 2", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 2], "Spectate next - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
@@ -1101,6 +1103,7 @@ rule "Start - Player":
     eventPlayer.TimeBestStan = 9999
     eventPlayer.TimeBestGrav = 9999
     eventPlayer.Finished = false
+    eventPlayer.PracticeCheckpoint = false
     eventPlayer.Checkpoint = []
     for eventPlayer.CheckpointLoop in range(0, len(PosCheckpoint), 1):
         eventPlayer.Checkpoint.append(false)
@@ -1300,7 +1303,6 @@ rule "Ult Reset":
     @Event eachPlayer
     @Condition eventPlayer.isHoldingButton(Button.ULTIMATE)
     @Condition not eventPlayer.Mode
-    @Condition distance(PosStart, vect(eventPlayer.getPosition().x, PosStart.y, eventPlayer.getPosition().z)) > 2
     
     async(Respawn, AsyncBehavior.NOOP)
 
@@ -1497,7 +1499,6 @@ rule "Enable Practice Mode":
     eventPlayer.TimeCurrent = 0
     eventPlayer.Attempts = 0
     eventPlayer.Mode = 1
-    createIcon(eventPlayer, eventPlayer.PosPracticeCheckpoint, Icon.FLAG, IconReeval.POSITION, Color.GREEN, true)
     bigMessage(eventPlayer, "Entering Practice Mode")
     eventPlayer.setInvisibility(Invis.ALL)
     waitUntil(not eventPlayer.isHoldingButton(Button.INTERACT), 9999)
@@ -1519,8 +1520,9 @@ rule "Disable Practice Mode":
     @Condition not eventPlayer.ExecutingMenu
     
     eventPlayer.ExecutingMenu = true
-    destroyIcon(getLastCreatedEntity())
-    eventPlayer.PosPracticeCheckpoint = 0
+    if (eventPlayer.PracticeCheckpoint):
+        destroyIcon(getLastCreatedEntity())
+        eventPlayer.PracticeCheckpoint = false
     eventPlayer.Mode = 99
     bigMessage(eventPlayer, "Leaving Practice Mode")
     async(Respawn, AsyncBehavior.NOOP)
@@ -1536,9 +1538,8 @@ rule "Disable Fire status":
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
 
 
-rule "Practice Checkpoints":
+rule "Set Practice Checkpoint":
     @Event eachPlayer
-    
     @Condition eventPlayer.Mode == 1
     @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE)
     
@@ -1546,14 +1547,27 @@ rule "Practice Checkpoints":
     eventPlayer.FacingPracticeCheckpoint = eventPlayer.getFacingDirection()
     eventPlayer.VelocityPracticeCheckpoint = eventPlayer.getVelocity()
     eventPlayer.SpeedPracticeCheckpoint = eventPlayer.getSpeed()
+    if (not eventPlayer.PracticeCheckpoint):
+        eventPlayer.PracticeCheckpoint = true
+        createIcon(eventPlayer, eventPlayer.PosPracticeCheckpoint, Icon.FLAG, IconReeval.POSITION, Color.GREEN, true)
     smallMessage(eventPlayer, l"{0} {1}".format(l"Checkpoint", l"Saved"))
+
+
+rule "Delete Practice Checkpoint":
+    @Event eachPlayer
+    @Condition eventPlayer.Mode == 1
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2)
+
+    if (eventPlayer.PracticeCheckpoint):
+        eventPlayer.PracticeCheckpoint = false
+        destroyIcon(getLastCreatedEntity())
+        smallMessage(eventPlayer, "{0} {1}".format(l"Checkpoint", l"Destroyed"))
 
 
 rule "Ult Reset Checkpoint":
     @Event eachPlayer
     @Condition eventPlayer.Mode == 1
     @Condition eventPlayer.isHoldingButton(Button.ULTIMATE)
-    @Condition distance(PosStart, vect(eventPlayer.getPosition().x, PosStart.y, eventPlayer.getPosition().z)) > 2
     
     async(Respawn, AsyncBehavior.NOOP)
 
@@ -1698,7 +1712,7 @@ rule "Circle Fix":
     @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) <= 2
     @Condition not eventPlayer.Reset
     @Condition eventPlayer.Mode <= 1
-    @Condition not eventPlayer.PosPracticeCheckpoint
+    @Condition not eventPlayer.PracticeCheckpoint
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
     @Condition (not eventPlayer.Category and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 8.6)
     
@@ -1722,7 +1736,7 @@ def Respawn():
     @Name "Respawn"
     
     if eventPlayer.Mode <= 1:
-        if eventPlayer.PosPracticeCheckpoint:
+        if eventPlayer.PracticeCheckpoint:
             eventPlayer.Attempts += 1
             eventPlayer.teleport(eventPlayer.PosPracticeCheckpoint)
             eventPlayer.setFacing(eventPlayer.FacingPracticeCheckpoint, Relativity.TO_WORLD)

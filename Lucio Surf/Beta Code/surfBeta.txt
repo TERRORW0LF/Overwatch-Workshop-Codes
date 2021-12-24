@@ -42,6 +42,7 @@ variables {
         14: CurrCheckpoint
         15: CheckpointLoop
         16: Reset
+        22: PracticeCheckpoint
         23: PosPracticeCheckpoint
         24: FacingPracticeCheckpoint
         25: VelocityPracticeCheckpoint
@@ -1297,6 +1298,7 @@ rule ("Start - Global") {
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Standard Mode - Interact", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Ult Reset (Checkpoint) - Ultimate", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Set Checkpoint - Secondary Fire", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Delete Checkpoint - Ability 2", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
         "Help text playerspec"
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Standard Mode - Ability 2", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHelp), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate next - Primary Fire", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
@@ -1323,6 +1325,7 @@ rule ("Start - Player") {
         Set Player Variable(Event Player, TimeBestStan, 9999);
         Set Player Variable(Event Player, TimeBestGrav, 9999);
         Set Player Variable(Event Player, Finished, False);
+        Set Player Variable(Event Player, PracticeCheckpoint, False);
         Set Player Variable(Event Player, Checkpoint, Empty Array);
         For Player Variable(Event Player, CheckpointLoop, 0, Count Of(Global.PosCheckpoint), 1);
             Modify Player Variable(Event Player, Checkpoint, Append To Array, False);
@@ -1602,7 +1605,6 @@ rule ("Ult Reset") {
     conditions {
         Is Button Held(Event Player, Button(Ultimate)) == True;
         (Event Player).Mode == False;
-        Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))) > 2;
     }
     actions {
         Start Rule(Respawn, Do Nothing);
@@ -1930,7 +1932,6 @@ rule ("Enable Practice Mode") {
         Set Player Variable(Event Player, TimeCurrent, 0);
         Set Player Variable(Event Player, Attempts, 0);
         Set Player Variable(Event Player, Mode, 1);
-        Create Icon(Event Player, (Event Player).PosPracticeCheckpoint, Flag, Position, Color(Green), True);
         Big Message(Event Player, Custom String("Entering Practice Mode", Null, Null, Null));
         Set Invisible(Event Player, All);
         Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 9999);
@@ -1967,8 +1968,10 @@ rule ("Disable Practice Mode") {
     }
     actions {
         Set Player Variable(Event Player, ExecutingMenu, True);
-        Destroy Icon(Last Created Entity);
-        Set Player Variable(Event Player, PosPracticeCheckpoint, 0);
+        If((Event Player).PracticeCheckpoint);
+            Destroy Icon(Last Created Entity);
+            Set Player Variable(Event Player, PracticeCheckpoint, False);
+        End;
         Set Player Variable(Event Player, Mode, 99);
         Big Message(Event Player, Custom String("Leaving Practice Mode", Null, Null, Null));
         Start Rule(Respawn, Do Nothing);
@@ -1992,7 +1995,7 @@ rule ("Disable Fire status") {
     }
 }
 
-rule ("Practice Checkpoints") {
+rule ("Set Practice Checkpoint") {
     event {
         Ongoing - Each Player;
         All;
@@ -2007,7 +2010,29 @@ rule ("Practice Checkpoints") {
         Set Player Variable(Event Player, FacingPracticeCheckpoint, Facing Direction Of(Event Player));
         Set Player Variable(Event Player, VelocityPracticeCheckpoint, Velocity Of(Event Player));
         Set Player Variable(Event Player, SpeedPracticeCheckpoint, Speed Of(Event Player));
+        If(Not((Event Player).PracticeCheckpoint));
+            Set Player Variable(Event Player, PracticeCheckpoint, True);
+            Create Icon(Event Player, (Event Player).PosPracticeCheckpoint, Flag, Position, Color(Green), True);
+        End;
         Small Message(Event Player, Custom String("{0} {1}", String("Checkpoint", Null, Null, Null), String("Saved", Null, Null, Null), Null));
+    }
+}
+
+rule ("Delete Practice Checkpoint") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        (Event Player).Mode == 1;
+        Is Button Held(Event Player, Button(Ability 2)) == True;
+    }
+    actions {
+        If((Event Player).PracticeCheckpoint);
+            Set Player Variable(Event Player, PracticeCheckpoint, False);
+            Destroy Icon(Last Created Entity);
+            Small Message(Event Player, Custom String("{0} {1}", String("Checkpoint", Null, Null, Null), String("Destroyed", Null, Null, Null), Null));
     }
 }
 
@@ -2020,7 +2045,6 @@ rule ("Ult Reset Checkpoint") {
     conditions {
         (Event Player).Mode == 1;
         Is Button Held(Event Player, Button(Ultimate)) == True;
-        Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))) > 2;
     }
     actions {
         Start Rule(Respawn, Do Nothing);
@@ -2255,7 +2279,7 @@ rule ("Circle Fix") {
         Distance Between(Global.PosStart, Update Every Frame(Position Of(Event Player))) <= 2;
         (Event Player).Reset == False;
         (Event Player).Mode <= 1;
-        (Event Player).PosPracticeCheckpoint == False;
+        (Event Player).PracticeCheckpoint == False;
         Is True For Any((Event Player).Checkpoint, Current Array Element) == False;
         Or(And(Not((Event Player).Category), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 8.6))) == True;
     }
@@ -2290,7 +2314,7 @@ rule ("Respawn") {
     }
     actions {
         If(Compare((Event Player).Mode, <=, 1));
-            If((Event Player).PosPracticeCheckpoint);
+            If((Event Player).PracticeCheckpoint);
                 Modify Player Variable(Event Player, Attempts, Add, 1);
                 Teleport(Event Player, (Event Player).PosPracticeCheckpoint);
                 Set Facing(Event Player, (Event Player).FacingPracticeCheckpoint, To World);
