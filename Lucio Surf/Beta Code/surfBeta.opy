@@ -913,21 +913,21 @@ rule "Start - Maps (Season 5)":
     if getCurrentMap() == Map.LIJIANG_TOWER:
         #Control Tower
         if getCurrentObjective() == 2:
-            PosStart = vect(-26.497, 270, 340.286)
-            PosCheckpoint = [vect(10.656, 269.9, 261.943)]
-            PosFinish = vect(27.763, 269.9, 355.578)
+            PosStart = vect(0.023, 270, 301.513)
+            PosCheckpoint = [vect(36.745, 264.9, 336.094), vect(-36.683, 264.9, 336.086), vect(0.125, 269.9, 260.847)]
+            PosFinish = vect(-0.021, 267.3, 280)
             return
         #Garden
         if getCurrentObjective() == 1:
-            PosStart = vect(61.321, 98, 161.408)
-            PosCheckpoint = [vect(-0.067, 95.9, 107.872)]
-            PosFinish = vect(-68.698, 97.9, 163.209)
+            PosStart = vect(-0.178, 94, 140.449)
+            PosCheckpoint = [vect(0, 95.9, 110), vect(56.906, 93.9, 145.431), vect(-64.365, 97.9, 162.007)]
+            PosFinish = vect(0, 93.9, 150)
             return
         #Night Market
         if not getCurrentObjective():
-            PosStart = vect(61.03, 6, -10.232)
-            PosCheckpoint = [vect(1.479, -1.1, -59.482)]
-            PosFinish = vect(-58.911, 5.9, -10.302)
+            PosStart = vect(1.155, 0, -20.142)
+            PosCheckpoint = [vect(1.061, -1.1, -73.3), vect(27.511, -0.1, -18.133), vect(-56.438, 1.8, -29.101)]
+            PosFinish = vect(0.84, -1.2, -29.825)
             return
     if getCurrentMap() == Map.NEPAL:
         #Sanctum
