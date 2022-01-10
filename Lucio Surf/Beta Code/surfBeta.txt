@@ -1044,7 +1044,7 @@ rule ("Start - Maps (Season 5)") {
         End;
         If(Compare(Current Map, ==, Map(King's Row)));
             Set Global Variable(PosStart, Vector(-56.613, -0.3, -42.469));
-            Set Global Variable(PosCheckpoint, Array(Vector(-154.342, -3.3, 24.929), Vector(-3.844, -0.2, -23.853), Vector(-25.912, -0.2, 10.967)));
+            Set Global Variable(PosCheckpoint, Array(Vector(-154.342, -3.3, 24.929), Vector(6.499, -0.2, -28.248), Vector(-25.912, -0.2, 10.967)));
             Set Global Variable(PosFinish, Vector(-70.902, 4.4, -36.354));
             Abort;
         End;
@@ -1127,23 +1127,23 @@ rule ("Start - Maps (Season 5)") {
         If(Compare(Current Map, ==, Map(Nepal)));
             "Sanctum"
             If(Compare(Objective Index, ==, 2));
-                Set Global Variable(PosStart, Vector(107.495, 133.1, -73.174));
-                Set Global Variable(PosCheckpoint, Array(Vector(55.295, 129.7, 0.52)));
-                Set Global Variable(PosFinish, Vector(102.618, 135.9, 78.165));
+                Set Global Variable(PosStart, Vector(67.643, 132, 0.073));
+                Set Global Variable(PosCheckpoint, Array(Vector(97.8, 131.7, 73.715), Vector(96.973, 131.7, -0.008), Vector(56.276, 129.7, -0.025), Vector(70.755, 127.7, -63.246)));
+                Set Global Variable(PosFinish, Vector(83.1, 127.9, 0.05));
                 Abort;
             End;
             "Shrine"
             If(Compare(Objective Index, ==, 1));
-                Set Global Variable(PosStart, Vector(-22.294, 22, 76.936));
-                Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-                Set Global Variable(PosFinish, Vector(-50.994, 14.9, -77.311));
+                Set Global Variable(PosStart, Vector(-52.552, 13.13, 0));
+                Set Global Variable(PosCheckpoint, Array(Vector(-53.696, 14.7, -63.339), Vector(-53.662, 14.7, 63.728)));
+                Set Global Variable(PosFinish, Vector(-50, 12.7, 0));
                 Abort;
             End;
             "Village"
             If(Not(Objective Index));
-                Set Global Variable(PosStart, Vector(-168.653, -97.53, -48.431));
-                Set Global Variable(PosCheckpoint, Array(Vector(-221.123, -88.3, 0.323)));
-                Set Global Variable(PosFinish, Vector(-147.782, -92.5, 62.105));
+                Set Global Variable(PosStart, Vector(-183.773, -94.08, 0));
+                Set Global Variable(PosCheckpoint, Array(Vector(-171.284, -99.3, -62.016), Vector(-155.566, -91.2, 45.98), Vector(-186.996, -96.6, 72.119)));
+                Set Global Variable(PosFinish, Vector(-181.606, -88, 0));
                 Abort;
             End;
         End;

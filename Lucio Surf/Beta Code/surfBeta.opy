@@ -863,7 +863,7 @@ rule "Start - Maps (Season 5)":
         return
     if getCurrentMap() == Map.KINGS_ROW:
         PosStart = vect(-56.613, -0.3, -42.469)
-        PosCheckpoint = [vect(-154.342, -3.3, 24.929), vect(-3.844, -0.2, -23.853), vect(-25.912, -0.2, 10.967)]
+        PosCheckpoint = [vect(-154.342, -3.3, 24.929), vect(6.499, -0.2, -28.248), vect(-25.912, -0.2, 10.967)]
         PosFinish = vect(-70.902, 4.4, -36.354)
         return
     if getCurrentMap() == Map.NUMBANI:
@@ -932,21 +932,21 @@ rule "Start - Maps (Season 5)":
     if getCurrentMap() == Map.NEPAL:
         #Sanctum
         if getCurrentObjective() == 2:
-            PosStart = vect(107.495, 133.1, -73.174)
-            PosCheckpoint = [vect(55.295, 129.7, 0.52)]
-            PosFinish = vect(102.618, 135.9, 78.165)
+            PosStart = vect(67.643, 132, 0.073)
+            PosCheckpoint = [vect(97.8, 131.7, 73.715), vect(96.973, 131.7, -0.008), vect(56.276, 129.7, -0.025), vect(70.755, 127.7, -63.246)]
+            PosFinish = vect(83.1, 127.9, 0.05)
             return
         #Shrine
         if getCurrentObjective() == 1:
-            PosStart = vect(-22.294, 22, 76.936)
-            PosCheckpoint = [vect(0, 0, 0)]
-            PosFinish = vect(-50.994, 14.9, -77.311)
+            PosStart = vect(-52.552, 13.13, 0)
+            PosCheckpoint = [vect(-53.696, 14.7, -63.339), vect(-53.662, 14.7, 63.728)]
+            PosFinish = vect(-50, 12.7, 0)
             return
         #Village
         if not getCurrentObjective():
-            PosStart = vect(-168.653, -97.53, -48.431)
-            PosCheckpoint = [vect(-221.123, -88.3, 0.323)]
-            PosFinish = vect(-147.782, -92.5, 62.105)
+            PosStart = vect(-183.773, -94.08, 0)
+            PosCheckpoint = [vect(-171.284, -99.3, -62.016), vect(-155.566, -91.2, 45.98), vect(-186.996, -96.6, 72.119)]
+            PosFinish = vect(-181.606, -88, 0)
             return
     if getCurrentMap() == Map.OASIS:
         #City Center
