@@ -1,3 +1,5 @@
+settings "settings.opy.json"
+
 #Global variables
 
 globalvar TimeFirstGrav 0
@@ -14,11 +16,10 @@ globalvar PlayerThirdGrav 10
 globalvar PlayerThirdStan 11
 globalvar Checkpoint 12
 globalvar Visible 13
-globalvar Mode 14
-globalvar Season 15
-globalvar Category 16
-globalvar Time 17
-globalvar Infinite 18
+globalvar Season 14
+globalvar Category 15
+globalvar Time 16
+globalvar Infinite 17
 globalvar Loop1 19
 globalvar PosStart 20
 globalvar PosCheckpoint 21
@@ -71,18 +72,10 @@ rule "Debug (Player)":
 
 #Settings
 rule "Workshop Settings":
-    Mode = createWorkshopSetting(enum["Time trial", "Shootout"], "Combo", "Mode", 0, 0)
-    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 1, 0)
-    Category = createWorkshopSetting(enum["Standard", "Gravspeed"], "Combo", "Default Category", 2, 1)
+    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 0, 0)
+    Category = createWorkshopSetting(enum["Standard", "Gravspeed"], "Combo", "Default Category", 1, 1)
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
     Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
-
-
-rule "Apply Settings":
-    @Event eachPlayer
-    @Condition eventPlayer.hasSpawned()
-
-    eventPlayer.Category = Category
 
 
 #Maps
@@ -336,7 +329,7 @@ rule "Start - Maps (Season 2)":
         #Ruins
         if getCurrentObjective() == 2:
             PosStart = vect(-58.5, 60.58, -150)
-            PosFinish = vect(112, 64.8, -178)
+            PosFinish = vect(112, 60.3, -178)
             return
         #Well
         if getCurrentObjective() == 1:
@@ -465,7 +458,7 @@ rule "Start - Maps (Season 3)":
         return
     if getCurrentMap() == Map.HOLLYWOOD:
         PosStart = vect(-29.04, 13.86, -12.75)
-        PosCheckpoint = [vect(19.77, 5.9, 59.12)]
+        PosCheckpoint = [vect(19.77, 4.8, 59.12)]
         PosFinish = vect(-42.39, -0.25, 54.98)
         return
     if getCurrentMap() == Map.KINGS_ROW:
@@ -528,7 +521,7 @@ rule "Start - Maps (Season 3)":
         if getCurrentObjective() == 1:
             PosStart = vect(-65, 94, 145)
             PosCheckpoint = [vect(0, 94.9, 125)]
-            PosFinish = vect(52, 94, 182)
+            PosFinish = vect(52, 90, 182)
             return
         #Night Market
         if getCurrentObjective() == 0:
@@ -560,7 +553,7 @@ rule "Start - Maps (Season 3)":
         if getCurrentObjective() == 0:
             PosStart = vect(166, 4, 270)
             PosCheckpoint = [vect(102, -2, 288)]
-            PosFinish = vect(119, 0.9, 223)
+            PosFinish = vect(119, 0.5, 223)
             return
         #Gardens
         if getCurrentObjective() == 1:
@@ -573,9 +566,8 @@ rule "Start - Maps (Season 3)":
             PosStart = vect(-198, 9, 0)
             PosCheckpoint = [vect(-220, 18.9, 0)]
             PosFinish = vect(-175, 15.9, 61.5)
-            
-            
-            
+
+
 rule "Start - Maps (Season 4)":
     @Condition Season == 3
     
@@ -660,7 +652,7 @@ rule "Start - Maps (Season 4)":
     if getCurrentMap() == Map.HOLLYWOOD:
         PosStart = vect(-25.875, 1.75, 21.201)
         PosCheckpoint = [vect(12.661, 1.6, -86.28)]
-        PosFinish = vect(-38.232, 9.7, -116.867)
+        PosFinish = vect(-38.232, 8.62, -116.867)
         Checkpoint = true
         return
     if getCurrentMap() == Map.KINGS_ROW:
@@ -757,7 +749,7 @@ rule "Start - Maps (Season 4)":
         #Village
         if not getCurrentObjective():
             PosStart = vect(-168.653, -97.53, -48.431)
-            PosCheckpoint = [vect(-221.123, -88.3, 0.323)]
+            PosCheckpoint = [vect(-221.123, -89.5, 0.323)]
             PosFinish = vect(-147.782, -92.5, 62.105)
             Checkpoint = true
             return
@@ -781,8 +773,8 @@ rule "Start - Maps (Season 4)":
             PosCheckpoint = [vect(-172.403, 16.9, 2.078)]
             PosFinish = vect(-188.53, 17.9, 60.728)
             Checkpoint = true
-
-
+            
+            
 rule "Start - Maps (Season 5)":
     @Condition Season == 4
     
@@ -951,21 +943,21 @@ rule "Start - Maps (Season 5)":
     if getCurrentMap() == Map.OASIS:
         #City Center
         if not getCurrentObjective():
-            PosStart = vect(84.599, 1, 298.498)
-            PosCheckpoint = [vect(157.26, 3.9, 264.225)]
-            PosFinish = vect(157.23, 0.8, 205.119)
+            PosStart = vect(143.522, 2.15, 247.456)
+            PosCheckpoint = [vect(125.589, 0.9, 229.793), vect(91.966, 0.9, 305.984), vect(158.681, 3.9, 262.665), vect(183.478, -3.5, 207.761)]
+            PosFinish = vect(143.522, 9.9, 247.456)
             return
         #Gardens
         if getCurrentObjective() == 1:
-            PosStart = vect(73.282, 7.5, -285.746)
-            PosCheckpoint = [vect(0, 0, 0)]
-            PosFinish = vect(155.223, 9.9, -186.502)
+            PosStart = vect(122.619, 6.27, -228.847)
+            PosCheckpoint = [vect(186.331, 8.3, -195.651), vect(83.077, 5.4, -262.511), vect(120.717, 7.4, -267.995)]
+            PosFinish = vect(121.375, 11.4, -227.604)
             return
         #University
         if getCurrentObjective() == 2:
-            PosStart = vect(-208.867, 20.33, -71.688)
-            PosCheckpoint = [vect(-172.403, 16.9, 2.078)]
-            PosFinish = vect(-188.53, 17.9, 60.728)
+            PosStart = vect(-196.495, 15, 0)
+            PosCheckpoint = [vect(-188.089, 19.9, 115.294), vect(-171.972, 14.9, -44.885), vect(-207.617, 17.9, -62.585)]
+            PosFinish = vect(-202.067, 18.9, -0.002)
 
 
 #Gamemode
@@ -1111,6 +1103,7 @@ rule "Start - Player":
     eventPlayer.SpeedColor = Color.RED
     eventPlayer.HideHelp = true
     #Category setup
+    eventPlayer.Category = Category
     if not Category:
         eventPlayer.setMoveSpeed(100)
         eventPlayer.setGravity(100)
@@ -1272,7 +1265,6 @@ rule "Finish Message (Best Time)":
     @Event eachPlayer
     @Condition eventPlayer.Finished
     @Condition eventPlayer.NewBest
-    @Condition not Mode
     @Condition (not eventPlayer.Category and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer != PlayerFirstGrav)
     
     bigMessage(eventPlayer, "New PB: {0} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav))
@@ -1282,7 +1274,6 @@ rule "Finish Message (Record Time)":
     @Event eachPlayer
     @Condition eventPlayer.Finished
     @Condition eventPlayer.NewBest
-    @Condition not Mode
     @Condition (not eventPlayer.Category and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer == PlayerFirstGrav)
     
     bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], l"{0}: {1}".format(l"New Record", l"{0} - {1}".format(l"{0} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav), l"{0}!!!".format(eventPlayer))))

@@ -1,3 +1,72 @@
+settings
+{
+	main
+	{
+		Description: "Lucio Surf v5.0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
+		Mode Name: "Lucio Surf Beta"
+	}
+	lobby
+	{
+		Allow Players Who Are In Queue: Yes
+		Map Rotation: After A Game
+		Match Voice Chat: Enabled
+		Max Spectators: 6
+		Max Team 1 Players: 12
+		Max Team 2 Players: 0
+		Return To Lobby: Never
+		Swap Teams After Match: No
+	}
+	modes
+	{
+		Skirmish
+		{
+			disabled maps
+			{
+				Blizzard World Winter
+				Eichenwalde Halloween
+				Hanamura Winter
+				Hollywood Halloween
+				King's Row Winter
+				Lijiang Tower Lunar New Year
+				Workshop Chamber
+				Workshop Expanse
+				Workshop Expanse Night
+				Workshop Green Screen
+				Workshop Island
+				Workshop Island Night
+			}
+		}
+		General
+		{
+			Allow Hero Switching: Off
+			Enemy Health Bars: Off
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Kill Cam: Off
+			Kill Feed: Off
+			Respawn As Random Hero: On
+			Spawn Health Packs: Disabled
+		}
+	}
+	heroes
+	{
+		General
+		{
+			No Ammunition Requirement: On
+			Primary Fire: Off
+			Receive Headshots Only: On
+			Ultimate Ability: Off
+			Lúcio
+			{
+				Soundwave: Off
+			}
+			enabled heroes
+			{
+				Lúcio
+			}
+		}
+	}
+}
 variables {
     global:
         0: TimeFirstGrav
@@ -14,11 +83,10 @@ variables {
         11: PlayerThirdStan
         12: Checkpoint
         13: Visible
-        14: Mode
-        15: Season
-        16: Category
-        17: Time
-        18: Infinite
+        14: Season
+        15: Category
+        16: Time
+        17: Infinite
         19: Loop1
         20: PosStart
         21: PosCheckpoint
@@ -67,25 +135,10 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Mode, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Mode", Null, Null, Null), 0, Array(Custom String("Time trial", Null, Null, Null), Custom String("Shootout", Null, Null, Null)), 0));
-        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 1, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
-        Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 2, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
+        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 0, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
+        Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 1, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
-    }
-}
-
-rule ("Apply Settings") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Has Spawned(Event Player) == True;
-    }
-    actions {
-        Set Player Variable(Event Player, Category, Global.Category);
     }
 }
 
@@ -405,7 +458,7 @@ rule ("Start - Maps (Season 2)") {
             "Ruins"
             If(Compare(Objective Index, ==, 2));
                 Set Global Variable(PosStart, Vector(-58.5, 60.58, -150));
-                Set Global Variable(PosFinish, Vector(112, 64.8, -178));
+                Set Global Variable(PosFinish, Vector(112, 60.3, -178));
                 Abort;
             End;
             "Well"
@@ -566,7 +619,7 @@ rule ("Start - Maps (Season 3)") {
         End;
         If(Compare(Current Map, ==, Map(Hollywood)));
             Set Global Variable(PosStart, Vector(-29.04, 13.86, -12.75));
-            Set Global Variable(PosCheckpoint, Array(Vector(19.77, 5.9, 59.12)));
+            Set Global Variable(PosCheckpoint, Array(Vector(19.77, 4.8, 59.12)));
             Set Global Variable(PosFinish, Vector(-42.39, -0.25, 54.98));
             Abort;
         End;
@@ -641,7 +694,7 @@ rule ("Start - Maps (Season 3)") {
             If(Compare(Objective Index, ==, 1));
                 Set Global Variable(PosStart, Vector(-65, 94, 145));
                 Set Global Variable(PosCheckpoint, Array(Vector(0, 94.9, 125)));
-                Set Global Variable(PosFinish, Vector(52, 94, 182));
+                Set Global Variable(PosFinish, Vector(52, 90, 182));
                 Abort;
             End;
             "Night Market"
@@ -680,7 +733,7 @@ rule ("Start - Maps (Season 3)") {
             If(Compare(Objective Index, ==, 0));
                 Set Global Variable(PosStart, Vector(166, 4, 270));
                 Set Global Variable(PosCheckpoint, Array(Vector(102, -2, 288)));
-                Set Global Variable(PosFinish, Vector(119, 0.9, 223));
+                Set Global Variable(PosFinish, Vector(119, 0.5, 223));
                 Abort;
             End;
             "Gardens"
@@ -800,7 +853,7 @@ rule ("Start - Maps (Season 4)") {
         If(Compare(Current Map, ==, Map(Hollywood)));
             Set Global Variable(PosStart, Vector(-25.875, 1.75, 21.201));
             Set Global Variable(PosCheckpoint, Array(Vector(12.661, 1.6, -86.28)));
-            Set Global Variable(PosFinish, Vector(-38.232, 9.7, -116.867));
+            Set Global Variable(PosFinish, Vector(-38.232, 8.62, -116.867));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
@@ -914,7 +967,7 @@ rule ("Start - Maps (Season 4)") {
             "Village"
             If(Not(Objective Index));
                 Set Global Variable(PosStart, Vector(-168.653, -97.53, -48.431));
-                Set Global Variable(PosCheckpoint, Array(Vector(-221.123, -88.3, 0.323)));
+                Set Global Variable(PosCheckpoint, Array(Vector(-221.123, -89.5, 0.323)));
                 Set Global Variable(PosFinish, Vector(-147.782, -92.5, 62.105));
                 Set Global Variable(Checkpoint, True);
                 Abort;
@@ -1150,23 +1203,23 @@ rule ("Start - Maps (Season 5)") {
         If(Compare(Current Map, ==, Map(Oasis)));
             "City Center"
             If(Not(Objective Index));
-                Set Global Variable(PosStart, Vector(84.599, 1, 298.498));
-                Set Global Variable(PosCheckpoint, Array(Vector(157.26, 3.9, 264.225)));
-                Set Global Variable(PosFinish, Vector(157.23, 0.8, 205.119));
+                Set Global Variable(PosStart, Vector(143.522, 2.15, 247.456));
+                Set Global Variable(PosCheckpoint, Array(Vector(125.589, 0.9, 229.793), Vector(91.966, 0.9, 305.984), Vector(158.681, 3.9, 262.665), Vector(183.478, -3.5, 207.761)));
+                Set Global Variable(PosFinish, Vector(143.522, 9.9, 247.456));
                 Abort;
             End;
             "Gardens"
             If(Compare(Objective Index, ==, 1));
-                Set Global Variable(PosStart, Vector(73.282, 7.5, -285.746));
-                Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-                Set Global Variable(PosFinish, Vector(155.223, 9.9, -186.502));
+                Set Global Variable(PosStart, Vector(122.619, 6.27, -228.847));
+                Set Global Variable(PosCheckpoint, Array(Vector(186.331, 8.3, -195.651), Vector(83.077, 5.4, -262.511), Vector(120.717, 7.4, -267.995)));
+                Set Global Variable(PosFinish, Vector(121.375, 11.4, -227.604));
                 Abort;
             End;
             "University"
             If(Compare(Objective Index, ==, 2));
-                Set Global Variable(PosStart, Vector(-208.867, 20.33, -71.688));
-                Set Global Variable(PosCheckpoint, Array(Vector(-172.403, 16.9, 2.078)));
-                Set Global Variable(PosFinish, Vector(-188.53, 17.9, 60.728));
+                Set Global Variable(PosStart, Vector(-196.495, 15, 0));
+                Set Global Variable(PosCheckpoint, Array(Vector(-188.089, 19.9, 115.294), Vector(-171.972, 14.9, -44.885), Vector(-207.617, 17.9, -62.585)));
+                Set Global Variable(PosFinish, Vector(-202.067, 18.9, -0.002));
     }
 }
 
@@ -1334,6 +1387,7 @@ rule ("Start - Player") {
         Set Player Variable(Event Player, SpeedColor, Color(Red));
         Set Player Variable(Event Player, HideHelp, True);
         "Category setup"
+        Set Player Variable(Event Player, Category, Global.Category);
         If(Not(Global.Category));
             Set Move Speed(Event Player, 100);
             Set Gravity(Event Player, 100);
@@ -1553,7 +1607,6 @@ rule ("Finish Message (Best Time)") {
     conditions {
         (Event Player).Finished != False;
         (Event Player).NewBest != False;
-        Global.Mode == False;
         Or(And(Not((Event Player).Category), Compare(Event Player, !=, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, !=, Global.PlayerFirstGrav))) == True;
     }
     actions {
@@ -1570,7 +1623,6 @@ rule ("Finish Message (Record Time)") {
     conditions {
         (Event Player).Finished != False;
         (Event Player).NewBest != False;
-        Global.Mode == False;
         Or(And(Not((Event Player).Category), Compare(Event Player, ==, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, ==, Global.PlayerFirstGrav))) == True;
     }
     actions {
