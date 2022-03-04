@@ -2,8 +2,8 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
-		Mode Name: "Lucio Surf Beta"
+		Description: "Lucio Surf v5.0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR"
+		Mode Name: "Lucio Surf"
 	}
 	lobby
 	{
@@ -119,7 +119,7 @@ variables {
 subroutines {
     0: Respawn
 }
-rule ("Debug (Player)") {
+disabled rule ("Debug (Player)") {
     event {
         Ongoing - Each Player;
         All;

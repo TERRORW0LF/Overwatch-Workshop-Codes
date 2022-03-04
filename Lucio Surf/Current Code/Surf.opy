@@ -64,7 +64,7 @@ rule "Debug (Global)":
 
 
 rule "Debug (Player)":
-    #@Disabled
+    @Disabled
     @Event eachPlayer
 
     hudHeader(eventPlayer, "{0}".format(eventPlayer.getPosition()), HudPosition.TOP, 4, Color.WHITE, HudReeval.STRING)
