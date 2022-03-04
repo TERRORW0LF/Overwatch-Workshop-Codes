@@ -119,7 +119,7 @@ variables {
 subroutines {
     0: Respawn
 }
-disabled rule ("Debug (Player)") {
+rule ("Debug (Player)") {
     event {
         Ongoing - Each Player;
         All;
