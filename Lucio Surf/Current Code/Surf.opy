@@ -813,7 +813,7 @@ rule "Start - Maps (Season 5)":
         return
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(25.471, 6, -70.081)
-        PosCheckpoint = [vect(-49.749, 7.3, -118.869), vect(107.194, 1.2, -26.704), vect(-30.023, 9.9, -98.164), vect(-84.714, 3.8, -55.305)]
+        PosCheckpoint = [vect(138.605, 4.8, -25.422), vect(107.194, 1.2, -26.704), vect(-30.023, 9.9, -98.164), vect(-84.714, 3.8, -55.305)]
         PosFinish = vect(27.096, 9.9, -78.649)
         return
     if getCurrentMap() == Map.JUNKERTOWN:
