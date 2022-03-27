@@ -1,126 +1,128 @@
-#global varibles
-globalvar forloop 0
-globalvar dmgStart 1
+#Global variables
 
-#player variables
-playervar partner 0
-
-#subroutines
-
-#Setup
-rule "Setup":
-    @Condition isGameInProgress()
-    getAllPlayers().disableRespawn()
-    setMatchTime(300)
+globalvar Setup 0
+globalvar ForLoop 1
+globalvar GameStart 2
+globalvar Mode 3
+globalvar ForPlayer 4
 
 
-rule "Preload Heros":
-    @Event eachPlayer
-    eventPlayer.preloadHero([Hero.BASTION, Hero.LUCIO])
+#Player variables
+
+playervar Partner 0
 
 
-#Gamemode
-rule "Lucio Bastion Combo":
-    @Condition isGameInProgress()
-    for forloop in range(0, len(getAllPlayers())):
-        if forloop % 2 == 0:
-            getAllPlayers()[forloop].startForcingHero(Hero.LUCIO)
-            getAllPlayers()[forloop].setInvisibility(Invis.ALL)
-            getAllPlayers()[forloop].setHealingReceived(0)
-        if forloop % 2 != 0:
-            getAllPlayers()[forloop].startForcingHero(Hero.BASTION)
-            getAllPlayers()[forloop].disallowButton(Button.PRIMARY_FIRE)
-            getAllPlayers()[forloop].attachTo(getAllPlayers()[forloop-1], vect(0,2,0))
-            getAllPlayers()[forloop].partner = getAllPlayers()[forloop-1]
-            getAllPlayers()[forloop-1].partner = getAllPlayers()[forloop]
-    for forloop in range (0, len(getAllPlayers())):
-        if not getAllPlayers()[forloop].partner:
-            kill(getAllPlayers()[forloop], null)
-            bigMessage(getAllPlayers()[forloop], "No Partner, wait for the next round.")
+rule "Workshop Settings":
+    Mode = createWorkshopSetting(enum["Random Partner", "Fixed Partner"], "Mode", "Game Type", 0, 0)
 
 
-rule "Force Bastion into ult form":
-    @Event eachPlayer
-    @Condition isGameInProgress()
-    @Condition eventPlayer.hasSpawned()
-    @Condition eventPlayer.getCurrentHero() == Hero.BASTION
+rule "Pre Setup":
+    GameStart = false
+    setMatchTime(0)
+
+
+rule "Setup - Global":
+    @Condition isGameInProgress() == true
+    
+    waitUntil(all([player.hasSpawned() for player in getAllPlayers()]), 10)
+    
+    for ForLoop in range(12 if Mode else len(getAllPlayers())):
+        ForPlayer = getPlayersInSlot(ForLoop, Team.ALL) if Mode else ForPlayer
+        if ForLoop % 2 == 0:
+            ForPlayer.startForcingHero(Hero.LUCIO)
+            ForPlayer.setStatusEffect(null, Status.PHASED_OUT, 9999)
+            ForPlayer.Partner = getPlayersInSlot(ForLoop + 1, Team.ALL) if Mode else getAllPlayers()[ForLoop + 1]
+        else:
+            ForPlayer.startForcingHero(Hero.BASTION)
+            ForPlayer.disallowButton(Button.PRIMARY_FIRE)
+            ForPlayer.setKnockbackDealt(0)
+            ForPlayer.Partner = getPlayersInSlot(ForLoop - 1, Team.ALL) if Mode else getAllPlayers()[ForLoop - 1]
+            ForPlayer.attachTo(getPlayersInSlot(ForLoop - 1, Team.ALL) if Mode else getAllPlayers()[ForLoop - 1], vect(0, 1.5, 0))
     wait()
-    eventPlayer.forceButtonPress(Button.ULTIMATE)
+    Setup = true
+    bigMessage(getAllPlayers(), "Game starts in 10 seconds.")
+    wait(10)
+    bigMessage(getAllPlayers(), "START!")
+    GameStart = true
 
 
-rule "5 secs time to get on wall":
-    @Condition isGameInProgress()
-    bigMessage(getAllPlayers(), "Get on a wall!")
-        wait(5)
-    bigMessage(getAllPlayers(), "GO!")
-    dmgStart = true
-
-
-rule "Enable Primary fire (Bastion)":
+rule "Setup - Player":
     @Event eachPlayer
-    @Condition dmgStart
-    @Condition eventPlayer.getCurrentHero() == Hero.BASTION
+    @Condition isGameInProgress() == true
+    
+    eventPlayer.enableDeathSpectateAllPlayers()
+    eventPlayer.enableDeathSpectateTargetHud()
+    eventPlayer.disableRespawn()
+    eventPlayer.setHealingReceived(0)
+
+
+rule "Late Join":
+    @Event playerJoined
+    @Condition Setup == true
+    
+    waitUntil(eventPlayer.hasSpawned() and eventPlayer.isAlive(), 30)
+    kill(eventPlayer, null)
+    bigMessage(eventPlayer, "Joined while game active")
+
+
+rule "Kill player if no partner":
+    @Event eachPlayer
+    @Condition eventPlayer.Partner == null
+    @Condition Setup == true
+    
+    waitUntil(eventPlayer.hasSpawned() and eventPlayer.isAlive(), 30)
+    kill(eventPlayer, null)
+    bigMessage(eventPlayer, "No partner assigned")
+
+
+rule "Kill partner on death":
+    @Event playerDied
+    
+    kill(eventPlayer.Partner, attacker)
+
+
+rule "Victory":
+    @Disabled
+    @Condition len(getLivingPlayers(Team.ALL)) <= 2
+    @Condition isGameInProgress() == true
+    
+    declarePlayerVictory(random.choice(getLivingPlayers(Team.ALL)))
+
+
+rule "Lucio on ground":
+    @Event eachPlayer
+    @Hero lucio
+    @Condition eventPlayer.isOnGround() == true
+    @Condition GameStart == true
+    
+    eventPlayer.setStatusEffect(null, Status.BURNING, 9999)
+    eventPlayer.Partner.setStatusEffect(null, Status.BURNING, 9999)
+    while true:
+        damage(eventPlayer.Partner, eventPlayer, 2.5)
+        wait(0.016, Wait.ABORT_WHEN_FALSE)
+
+
+rule "Lucio off ground":
+    @Event eachPlayer
+    @Hero lucio
+    @Condition eventPlayer.isOnGround() == false
+    @Condition GameStart == true
+    
+    eventPlayer.clearStatusEffect(Status.BURNING)
+    eventPlayer.Partner.clearStatusEffect(Status.BURNING)
+
+
+rule "Link partner health":
+    @Event playerTookDamage
+    @Hero bastion
+    
+    eventPlayer.Partner.setHealth(eventPlayer.getHealth())
+
+
+rule "Bastion allow shooting":
+    @Event eachPlayer
+    @Hero bastion
+    @Condition GameStart == true
+    
     eventPlayer.allowButton(Button.PRIMARY_FIRE)
 
-
-rule "Kill Partner":
-    @Event playerDied
-    kill(eventPlayer.partner, attacker)
-
-
-rule "Damage if on ground":
-    @Event eachPlayer
-    @Condition isGameInProgress()
-    @Condition dmgStart
-    @Condition eventPlayer.isOnGround()
-    @Condition eventPlayer.getCurrentHero() == Hero.LUCIO
-    eventPlayer.setHealth(eventPlayer.getHealth()-10)
-    eventPlayer.partner.setHealth(eventPlayer.partner.getHealth()-10)
-    wait(1, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.startDoT(null, 9999, 10)
-    eventPlayer.partner.startDoT(null, 9999, 10)
-
-
-rule "Stop DoT if not on ground":
-    @Event eachPlayer
-    @Condition isGameInProgress()
-    @Condition not eventPlayer.isOnGround()
-    @Condition eventPlayer.getCurrentHero() == Hero.LUCIO
-    eventPlayer.stopAllDoT()
-    eventPlayer.partner.stopAllDoT()
-
-
-rule "Dmg Lucio":
-    @Event playerTookDamage
-    @Condition eventPlayer.getCurrentHero() == Hero.BASTION
-    eventPlayer.partner.setHealth(eventPlayer.getHealth())
-
-
-rule "Enable outlines on 30 seconds left":
-    @Condition isGameInProgress()
-    @Condition getMatchTime() < 30
-    [player for player in getLivingPlayers(Team.ALL) if player.getCurrentHero() == Hero.BASTION].startForcingOutlineFor(getAllPlayers(), true, Color.RED)
-
-
-rule "Declare winner":
-    @Condition isGameInProgress()
-    @Condition len([player for player in getLivingPlayers(Team.ALL) if player.getCurrentHero() == Hero.BASTION]) <= 1
-    declarePlayerVictory([player for player in getLivingPlayers(Team.ALL) if player.getCurrentHero() == Hero.BASTION][0])
-
-
-rule "Deal with leavers":
-    @Event playerLeft
-    if not eventPlayer.partner:
-        return
-    kill(eventPlayer.partner, null)
-    bigMessage(eventPlayer.partner, "Partner left, moving to spectators.")
-
-
-rule "Disable player spawning in round":
-    @Event playerJoined
-    @Condition isGameInProgress()
-    @Condition getMatchTime() < 299
-    eventPlayer.disableRespawn()
-    eventPlayer.setScore(-100)
-    kill(eventPlayer, null)
-    bigMessage(eventPlayer, "Wait for next round!")
