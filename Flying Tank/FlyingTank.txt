@@ -124,9 +124,11 @@ rule ("Setup - Global") {
         Is Game In Progress == True;
     }
     actions {
-        Wait Until(Is True For All(All Players(All Teams), Has Spawned(Current Array Element)), 10);
+        Wait(5, Ignore Condition);
         For Global Variable(ForLoop, 0, If-Then-Else(Global.Mode, 12, Number Of Players(All Teams)), 1);
-            Set Global Variable(ForPlayer, If-Then-Else(Global.Mode, Players In Slot(Global.ForLoop, All Teams), Global.ForPlayer));
+            Set Global Variable(ForPlayer, If-Then-Else(Global.Mode, Players In Slot(Global.ForLoop, All Teams), Value In Array(All Players(All Teams), Global.ForLoop)));
+            Wait(0.016, Ignore Condition);
+            Log To Inspector(Global.ForPlayer);
             If(Compare(Modulo(Global.ForLoop, 2), ==, 0));
                 Start Forcing Player To Be Hero(Global.ForPlayer, Hero(Lúcio));
                 Set Status(Global.ForPlayer, Null, Phased Out, 9999);

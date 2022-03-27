@@ -26,10 +26,11 @@ rule "Pre Setup":
 rule "Setup - Global":
     @Condition isGameInProgress() == true
     
-    waitUntil(all([player.hasSpawned() for player in getAllPlayers()]), 10)
-    
+    wait(5)
     for ForLoop in range(12 if Mode else len(getAllPlayers())):
-        ForPlayer = getPlayersInSlot(ForLoop, Team.ALL) if Mode else ForPlayer
+        ForPlayer = getPlayersInSlot(ForLoop, Team.ALL) if Mode else getAllPlayers()[ForLoop]
+        wait()
+        printLog(ForPlayer)
         if ForLoop % 2 == 0:
             ForPlayer.startForcingHero(Hero.LUCIO)
             ForPlayer.setStatusEffect(null, Status.PHASED_OUT, 9999)
