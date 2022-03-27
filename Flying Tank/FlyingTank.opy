@@ -1,3 +1,5 @@
+settings "settings.opy.json"
+
 #Global variables
 
 globalvar Setup 0

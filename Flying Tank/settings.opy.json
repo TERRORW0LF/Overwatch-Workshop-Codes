@@ -1,0 +1,77 @@
+{
+    "main": {
+        "description": "Play in a team of Bastion and Lucio. Lucio is responsible for movement, Bastion for killing the enemy.",
+        "modeName": "Flying Tank"
+    },
+    "lobby": {
+        "mapRotation": "afterGame",
+        "returnToLobby": "never"
+    },
+    "gamemodes": {
+        "ffa": {
+            "disabledMaps": [
+                "blackForest",
+                "blackForestWinter",
+                "blizzWorldWinter",
+                "castillo",
+                "chateauGuillardHalloween",
+                "ecopointAntarctica",
+                "ecopointAntarcticaWinter",
+                "eichenwaldeHalloween",
+                "hanamuraWinter",
+                "hollywoodHalloween",
+                "kingsRowWinter",
+                "lijiangControlCenterLny",
+                "lijiangGardenLny",
+                "lijiangNightMarketLny",
+                "necropolis",
+                "petra",
+                "workshopChamber",
+                "workshopExpanse",
+                "workshopExpanseNight",
+                "workshopGreenScreen",
+                "workshopIsland",
+                "workshopIslandNight"
+            ],
+            "gameLengthInMn": 5,
+            "scoreToWin": 5000,
+            "enableSelfInitiatedRespawn": false
+        },
+        "general": {
+            "gamemodeStartTrigger": "immediately",
+            "heroLimit": "off",
+            "enableRandomHeroes": true,
+            "spawnHealthPacks": "disabled"
+        }
+    },
+    "heroes": {
+        "allTeams": {
+            "bastion": {
+                "damageDealt%": 60,
+                "enableInfiniteUlt": true,
+                "enableInfiniteAmmo": true,
+                "enablePrimaryFire": false,
+                "enableMelee": false,
+                "enableAbility1": false,
+                "enableSecondaryFire": false,
+                "enableSpawningWithUlt": true
+            },
+            "lucio": {
+                "health%": 150,
+                "movementGravity%": 80,
+                "movementSpeed%": 125,
+                "enableInfiniteAmmo": true,
+                "enablePrimaryFire": false,
+                "enableMelee": false,
+                "enableHeadshotsOnly": true,
+                "secondaryFireCooldown%": 150,
+                "secondaryFireKb%": 120,
+                "enableUlt": false
+            },
+            "enabledHeroes": [
+                "bastion",
+                "lucio"
+            ]
+        }
+    }
+}
