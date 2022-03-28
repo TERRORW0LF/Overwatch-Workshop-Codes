@@ -117,7 +117,7 @@ rule "Lucio on ground":
     eventPlayer.setStatusEffect(null, Status.BURNING, 9999)
     eventPlayer.Partner.setStatusEffect(null, Status.BURNING, 9999)
     while true:
-        damage(eventPlayer.Partner, eventPlayer, 2.5)
+        damage(eventPlayer.Partner, eventPlayer.Partner, 2.5)
         wait(0.016, Wait.ABORT_WHEN_FALSE)
 
 

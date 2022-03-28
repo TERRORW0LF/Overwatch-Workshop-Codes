@@ -235,7 +235,7 @@ rule ("Lucio on ground") {
         Set Status(Event Player, Null, Burning, 9999);
         Set Status((Event Player).Partner, Null, Burning, 9999);
         While(True);
-            Damage((Event Player).Partner, Event Player, 2.5);
+            Damage((Event Player).Partner, (Event Player).Partner, 2.5);
             Wait(0.016, Abort When False);
         End;
     }
