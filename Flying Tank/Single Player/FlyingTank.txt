@@ -1,0 +1,300 @@
+settings
+{
+	main
+	{
+		Description: "Epic Lucio battle.\nYou shoot Bastion tank projectiles.\nTouching the ground hurts you."
+		Mode Name: "Flying Tank - Single Player"
+	}
+	lobby
+	{
+		Allow Players Who Are In Queue: Yes
+		Map Rotation: After A Game
+		Max FFA Players: 8
+		Return To Lobby: Never
+	}
+	modes
+	{
+		Deathmatch
+		{
+			disabled maps
+			{
+				Black Forest
+				Black Forest Winter
+				Blizzard World Winter
+				Castillo
+				Château Guillard Halloween
+				Ecopoint: Antarctica
+				Ecopoint: Antarctica Winter
+				Eichenwalde Halloween
+				Hanamura Winter
+				Hollywood Halloween
+				King's Row Winter
+				Lijiang Control Center Lunar New Year
+				Lijiang Garden Lunar New Year
+				Lijiang Night Market Lunar New Year
+				Necropolis
+				Petra
+				Workshop Chamber
+				Workshop Expanse
+				Workshop Expanse Night
+				Workshop Green Screen
+				Workshop Island
+				Workshop Island Night
+			}
+		}
+		General
+		{
+			Game Length In Minutes: 5
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Respawn As Random Hero: On
+			Score To Win: 20
+			Self Initiated Respawn: Off
+			Spawn Health Packs: Disabled
+		}
+	}
+	heroes
+	{
+		General
+		{
+			Bastion
+			{
+				Damage Dealt: 60%
+				Infinite Ultimate Duration: On
+				No Ammunition Requirement: On
+				Primary Fire: Off
+				Quick Melee: Off
+				Reconfigure: Off
+				Self-Repair: Off
+				Spawn With Ultimate Ready: On
+			}
+			Lúcio
+			{
+				Health: 150%
+				Movement Gravity: 80%
+				Movement Speed: 125%
+				No Ammunition Requirement: On
+				Primary Fire: Off
+				Quick Melee: Off
+				Receive Headshots Only: On
+				Soundwave Cooldown Time: 150%
+				Soundwave Knockback Scalar: 120%
+				Ultimate Ability Sound Barrier: Off
+			}
+			enabled heroes
+			{
+				Bastion
+				Lúcio
+			}
+		}
+	}
+	extensions
+	{
+		Spawn More Dummy Bots
+	}
+}
+variables {
+    global:
+        0: Setup
+        1: ForLoop
+        2: GameStart
+        3: Players
+        4: ForPlayer
+    player:
+        0: Partner
+        1: Protected
+}
+rule ("Pre Setup") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Set Global Variable(GameStart, False);
+        Set Match Time(0);
+    }
+}
+
+rule ("Setup - Global") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Wait(5, Ignore Condition);
+        Set Global Variable(Players, All Players(All Teams));
+        For Global Variable(ForLoop, 0, Count Of(Global.Players), 1);
+            Set Global Variable(ForPlayer, Value In Array(Global.Players, Global.ForLoop));
+            Wait(0.016, Ignore Condition);
+            Start Forcing Player To Be Hero(Global.ForPlayer, Hero(Lúcio));
+            Set Invisible(Global.ForPlayer, All);
+            Set Status(Global.ForPlayer, Null, Phased Out, 9999);
+            Create Dummy Bot(Hero(Bastion), All Teams, Add(Global.ForLoop, 8), Vector(0, 0.5, 0), Facing Direction Of(Global.ForPlayer));
+            Wait(0.016, Ignore Condition);
+            Set Player Variable(Global.ForPlayer, Partner, Players In Slot(Add(Global.ForLoop, 8), All Teams));
+            Wait(0.016, Ignore Condition);
+            Set Player Variable((Global.ForPlayer).Partner, Partner, Global.ForPlayer);
+            Start Forcing Player To Be Hero((Global.ForPlayer).Partner, Hero(Bastion));
+            Set Invisible((Global.ForPlayer).Partner, All);
+            Set Knockback Dealt((Global.ForPlayer).Partner, 0);
+            Attach Players((Global.ForPlayer).Partner, Global.ForPlayer, Null);
+            Start Facing((Global.ForPlayer).Partner, Facing Direction Of(Global.ForPlayer), 9999, To World, Direction and Turn Rate);
+        End;
+        Big Message(All Players(All Teams), Custom String("Game starts in 10 seconds.", Null, Null, Null));
+        Wait(3, Ignore Condition);
+        For Global Variable(ForLoop, 0, Count Of(Global.Players), 1);
+            Set Global Variable(ForPlayer, Value In Array(Global.Players, Global.ForLoop));
+            Disallow Button((Global.ForPlayer).Partner, Button(Primary Fire));
+            Press Button((Global.ForPlayer).Partner, Button(Ultimate));
+        End;
+        Wait(0.016, Ignore Condition);
+        Set Global Variable(Setup, True);
+        Wait(7, Ignore Condition);
+        Big Message(All Players(All Teams), Custom String("START!", Null, Null, Null));
+        Set Global Variable(GameStart, True);
+    }
+}
+
+rule ("Setup - Player") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Enable Death Spectate All Players(Event Player);
+        Enable Death Spectate Target HUD(Event Player);
+        Set Healing Received(Event Player, 0);
+    }
+}
+
+rule ("Late Join") {
+    event {
+        Player Joined Match;
+        All;
+        All;
+    }
+    conditions {
+        Global.Setup == True;
+    }
+    actions {
+        Wait Until(And(Has Spawned(Event Player), Is Alive(Event Player)), 30);
+        Disable Built-In Game Mode Respawning(Event Player);
+        Kill(Event Player, Null);
+        Big Message(Event Player, Custom String("Joined while game active", Null, Null, Null));
+    }
+}
+
+rule ("Respawn on death") {
+    event {
+        Player Died;
+        All;
+        Bastion;
+    }
+    actions {
+        Destroy Icon(Last Created Entity);
+        Create Icon(All Players(All Teams), Add(Position Of(Event Player), Vector(0, 1.5, 0)), Halo, Visible To and Position, Color(Orange), False);
+        Clear Status(Event Player, Burning);
+        Clear Status((Event Player).Partner, Burning);
+        Set Player Variable((Event Player).Partner, Protected, True);
+        Detach Players(Event Player);
+        Respawn((Event Player).Partner);
+        Respawn(Event Player);
+        Set Status(Event Player, Null, Phased Out, 5);
+        Disallow Button(Event Player, Button(Primary Fire));
+        Big Message(Array(Event Player, (Event Player).Partner), Custom String("5 sec spawn protection!", Null, Null, Null));
+        Wait Until(And(Is Alive(Event Player), Is Alive((Event Player).Partner)), 3);
+        Teleport((Event Player).Partner, Position Of(Event Player));
+        Attach Players(Event Player, (Event Player).Partner, Vector(0, 0.5, 0));
+        Wait(3, Ignore Condition);
+        Press Button(Event Player, Button(Ultimate));
+        Wait(2, Ignore Condition);
+        Set Player Variable((Event Player).Partner, Protected, False);
+        Allow Button(Event Player, Button(Primary Fire));
+        Destroy Icon(Last Created Entity);
+        Big Message(Array(Event Player, (Event Player).Partner), Custom String("GO!", Null, Null, Null));
+    }
+}
+
+rule ("Lucio on ground") {
+    event {
+        Ongoing - Each Player;
+        All;
+        Lúcio;
+    }
+    conditions {
+        Is On Ground(Event Player) == True;
+        (Event Player).Protected == False;
+        Global.GameStart == True;
+    }
+    actions {
+        Set Status(Event Player, Null, Burning, 9999);
+        Set Status((Event Player).Partner, Null, Burning, 9999);
+        While(True);
+            Damage((Event Player).Partner, Event Player, 2.5);
+            Wait(0.016, Abort When False);
+        End;
+    }
+}
+
+rule ("Lucio off ground") {
+    event {
+        Ongoing - Each Player;
+        All;
+        Lúcio;
+    }
+    conditions {
+        Is On Ground(Event Player) == False;
+        Global.GameStart == True;
+    }
+    actions {
+        Clear Status(Event Player, Burning);
+        Clear Status((Event Player).Partner, Burning);
+    }
+}
+
+rule ("Link partner health") {
+    event {
+        Player Took Damage;
+        All;
+        Bastion;
+    }
+    actions {
+        Set Player Health((Event Player).Partner, Health(Event Player));
+    }
+}
+
+rule ("Bastion allow shooting") {
+    event {
+        Ongoing - Each Player;
+        All;
+        Bastion;
+    }
+    conditions {
+        Global.GameStart == True;
+    }
+    actions {
+        Allow Button(Event Player, Button(Primary Fire));
+    }
+}
+
+rule ("Make Dummy shoot") {
+    event {
+        Ongoing - Each Player;
+        All;
+        Lúcio;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Primary Fire)) == True;
+    }
+    actions {
+        Start Holding Button((Event Player).Partner, Button(Primary Fire));
+        Wait Until(Not(Is Button Held(Event Player, Button(Primary Fire))), 9999);
+        Stop Holding Button((Event Player).Partner, Button(Primary Fire));
+    }
+}
+
