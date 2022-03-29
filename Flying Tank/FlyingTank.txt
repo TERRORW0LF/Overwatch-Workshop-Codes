@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Play in a team of Bastion and Lucio. Lucio is responsible for movement, Bastion for killing the enemy."
+		Description: "Play in a team of Bastion and Lucio.\nLucio is responsible for movement, Bastion for killing the enemy.\nTouching the ground hurts you."
 		Mode Name: "Flying Tank"
 	}
 	lobby
@@ -39,8 +39,8 @@ settings
 				Workshop Island
 				Workshop Island Night
 			}
-			Game Length In Minutes: 5
-			Score To Win: 5000
+			Game Length In Minutes: 10
+			Score To Win: 20
 			Self Initiated Respawn: Off
 		}
 		General
@@ -89,13 +89,14 @@ settings
 }
 variables {
     global:
-        0: Setup
+        0: NotSetup
         1: ForLoop
         2: GameStart
         3: Mode
         4: ForPlayer
     player:
         0: Partner
+        1: Protected
 }
 rule ("Workshop Settings") {
     event {
@@ -132,6 +133,8 @@ rule ("Setup - Global") {
             If(Compare(Modulo(Global.ForLoop, 2), ==, 0));
                 Start Forcing Player To Be Hero(Global.ForPlayer, Hero(Lúcio));
                 Set Status(Global.ForPlayer, Null, Phased Out, 9999);
+                Set Invisible(Global.ForPlayer, All);
+                Set Player Score(Global.ForPlayer, -9999);
                 Set Player Variable(Global.ForPlayer, Partner, If-Then-Else(Global.Mode, Players In Slot(Add(Global.ForLoop, 1), All Teams), Value In Array(All Players(All Teams), Add(Global.ForLoop, 1))));
             Else;
                 Start Forcing Player To Be Hero(Global.ForPlayer, Hero(Bastion));
@@ -142,9 +145,13 @@ rule ("Setup - Global") {
             End;
         End;
         Wait(0.016, Ignore Condition);
-        Set Global Variable(Setup, True);
+        Set Global Variable(NotSetup, True);
         Big Message(All Players(All Teams), Custom String("Game starts in 10 seconds.", Null, Null, Null));
-        Wait(10, Ignore Condition);
+        Wait(3, Ignore Condition);
+        For Global Variable(ForLoop, 0, Number Of Players(All Teams), 1);
+            Press Button(Value In Array(All Players(All Teams), Global.ForLoop), Button(Ultimate));
+        End;
+        Wait(7, Ignore Condition);
         Big Message(All Players(All Teams), Custom String("START!", Null, Null, Null));
         Set Global Variable(GameStart, True);
     }
@@ -174,7 +181,7 @@ rule ("Late Join") {
         All;
     }
     conditions {
-        Global.Setup == True;
+        Global.NotSetup == True;
     }
     actions {
         Wait Until(And(Has Spawned(Event Player), Is Alive(Event Player)), 30);
@@ -191,7 +198,7 @@ rule ("Kill player if no partner") {
     }
     conditions {
         (Event Player).Partner == Null;
-        Global.Setup == True;
+        Global.NotSetup == True;
     }
     actions {
         Wait Until(And(Has Spawned(Event Player), Is Alive(Event Player)), 30);
@@ -200,27 +207,33 @@ rule ("Kill player if no partner") {
     }
 }
 
-rule ("Kill partner on death") {
+rule ("Respawn on death") {
     event {
         Player Died;
         All;
-        All;
+        Bastion;
     }
     actions {
-        Kill((Event Player).Partner, Attacker);
-    }
-}
-
-disabled rule ("Victory") {
-    event {
-        Ongoing - Global;
-    }
-    conditions {
-        Number Of Living Players(All Teams) <= 2;
-        Is Game In Progress == True;
-    }
-    actions {
-        Declare Player Victory(Random Value In Array(All Living Players(All Teams)));
+        Destroy Icon(Last Created Entity);
+        Create Icon(All Players(All Teams), Add(Position Of(Event Player), Vector(0, 1.5, 0)), Halo, Visible To and Position, Color(Orange), False);
+        Clear Status(Event Player, Burning);
+        Clear Status((Event Player).Partner, Burning);
+        Set Player Variable((Event Player).Partner, Protected, True);
+        Detach Players(Event Player);
+        Respawn((Event Player).Partner);
+        Respawn(Event Player);
+        Set Status(Event Player, Null, Phased Out, 5);
+        Disallow Button(Event Player, Button(Primary Fire));
+        Big Message(Array(Event Player, (Event Player).Partner), Custom String("5 sec spawn protection!", Null, Null, Null));
+        Wait Until(And(Is Alive(Event Player), Is Alive((Event Player).Partner)), 3);
+        Attach Players(Event Player, (Event Player).Partner, Vector(0, 0.5, 0));
+        Wait(3, Ignore Condition);
+        Press Button(Event Player, Button(Ultimate));
+        Wait(2, Ignore Condition);
+        Set Player Variable((Event Player).Partner, Protected, False);
+        Allow Button(Event Player, Button(Primary Fire));
+        Destroy Icon(Last Created Entity);
+        Big Message(Array(Event Player, (Event Player).Partner), Custom String("GO!", Null, Null, Null));
     }
 }
 
@@ -232,13 +245,14 @@ rule ("Lucio on ground") {
     }
     conditions {
         Is On Ground(Event Player) == True;
+        (Event Player).Protected == False;
         Global.GameStart == True;
     }
     actions {
         Set Status(Event Player, Null, Burning, 9999);
         Set Status((Event Player).Partner, Null, Burning, 9999);
         While(True);
-            Damage((Event Player).Partner, Event Player, 2.5);
+            Damage((Event Player).Partner, (Event Player).Partner, 2.5);
             Wait(0.016, Abort When False);
         End;
     }

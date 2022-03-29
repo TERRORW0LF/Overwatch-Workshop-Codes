@@ -1,6 +1,6 @@
 {
     "main": {
-        "description": "Play in a team of Bastion and Lucio. Lucio is responsible for movement, Bastion for killing the enemy.",
+        "description": "Play in a team of Bastion and Lucio.\nLucio is responsible for movement, Bastion for killing the enemy.\nTouching the ground hurts you.",
         "modeName": "Flying Tank"
     },
     "lobby": {
@@ -33,8 +33,8 @@
                 "workshopIsland",
                 "workshopIslandNight"
             ],
-            "gameLengthInMn": 5,
-            "scoreToWin": 5000,
+            "gameLengthInMn": 10,
+            "scoreToWin": 20,
             "enableSelfInitiatedRespawn": false
         },
         "general": {

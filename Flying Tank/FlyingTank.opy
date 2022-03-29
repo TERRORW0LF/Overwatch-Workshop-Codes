@@ -2,7 +2,7 @@ settings "settings.opy.json"
 
 #Global variables
 
-globalvar Setup 0
+globalvar NotSetup 0
 globalvar ForLoop 1
 globalvar GameStart 2
 globalvar Mode 3
@@ -12,6 +12,7 @@ globalvar ForPlayer 4
 #Player variables
 
 playervar Partner 0
+playervar Protected 1
 
 
 rule "Workshop Settings":
@@ -34,6 +35,8 @@ rule "Setup - Global":
         if ForLoop % 2 == 0:
             ForPlayer.startForcingHero(Hero.LUCIO)
             ForPlayer.setStatusEffect(null, Status.PHASED_OUT, 9999)
+            ForPlayer.setInvisibility(Invis.ALL)
+            ForPlayer.setScore(-9999)
             ForPlayer.Partner = getPlayersInSlot(ForLoop + 1, Team.ALL) if Mode else getAllPlayers()[ForLoop + 1]
         else:
             ForPlayer.startForcingHero(Hero.BASTION)
@@ -42,9 +45,12 @@ rule "Setup - Global":
             ForPlayer.Partner = getPlayersInSlot(ForLoop - 1, Team.ALL) if Mode else getAllPlayers()[ForLoop - 1]
             ForPlayer.attachTo(getPlayersInSlot(ForLoop - 1, Team.ALL) if Mode else getAllPlayers()[ForLoop - 1], vect(0, 1.5, 0))
     wait()
-    Setup = true
+    NotSetup = true
     bigMessage(getAllPlayers(), "Game starts in 10 seconds.")
-    wait(10)
+    wait(3)
+    for ForLoop in range(len(getAllPlayers())):
+        getAllPlayers()[ForLoop].forceButtonPress(Button.ULTIMATE)
+    wait(7)
     bigMessage(getAllPlayers(), "START!")
     GameStart = true
 
@@ -61,7 +67,7 @@ rule "Setup - Player":
 
 rule "Late Join":
     @Event playerJoined
-    @Condition Setup == true
+    @Condition NotSetup == true
     
     waitUntil(eventPlayer.hasSpawned() and eventPlayer.isAlive(), 30)
     kill(eventPlayer, null)
@@ -71,37 +77,50 @@ rule "Late Join":
 rule "Kill player if no partner":
     @Event eachPlayer
     @Condition eventPlayer.Partner == null
-    @Condition Setup == true
+    @Condition NotSetup == true
     
     waitUntil(eventPlayer.hasSpawned() and eventPlayer.isAlive(), 30)
     kill(eventPlayer, null)
     bigMessage(eventPlayer, "No partner assigned")
 
 
-rule "Kill partner on death":
+rule "Respawn on death":
     @Event playerDied
+    @Hero bastion
     
-    kill(eventPlayer.Partner, attacker)
-
-
-rule "Victory":
-    @Disabled
-    @Condition len(getLivingPlayers(Team.ALL)) <= 2
-    @Condition isGameInProgress() == true
-    
-    declarePlayerVictory(random.choice(getLivingPlayers(Team.ALL)))
+    destroyIcon(getLastCreatedEntity())
+    createIcon(getAllPlayers(), eventPlayer.getPosition() + vect(0, 1.5, 0), Icon.HALO, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, false)
+    eventPlayer.clearStatusEffect(Status.BURNING)
+    eventPlayer.Partner.clearStatusEffect(Status.BURNING)
+    eventPlayer.Partner.Protected = true
+    eventPlayer.detach()
+    eventPlayer.Partner.respawn()
+    eventPlayer.respawn()
+    eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 5)
+    eventPlayer.disallowButton(Button.PRIMARY_FIRE)
+    bigMessage([eventPlayer, eventPlayer.Partner], "5 sec spawn protection!")
+    waitUntil(eventPlayer.isAlive() and eventPlayer.Partner.isAlive(), 3)
+    eventPlayer.attachTo(eventPlayer.Partner, vect(0, 0.5, 0))
+    wait(3)
+    eventPlayer.forceButtonPress(Button.ULTIMATE)
+    wait(2)
+    eventPlayer.Partner.Protected = false
+    eventPlayer.allowButton(Button.PRIMARY_FIRE)
+    destroyIcon(getLastCreatedEntity())
+    bigMessage([eventPlayer, eventPlayer.Partner], "GO!")
 
 
 rule "Lucio on ground":
     @Event eachPlayer
     @Hero lucio
     @Condition eventPlayer.isOnGround() == true
+    @Condition eventPlayer.Protected == false
     @Condition GameStart == true
     
     eventPlayer.setStatusEffect(null, Status.BURNING, 9999)
     eventPlayer.Partner.setStatusEffect(null, Status.BURNING, 9999)
     while true:
-        damage(eventPlayer.Partner, eventPlayer, 2.5)
+        damage(eventPlayer.Partner, eventPlayer.Partner, 2.5)
         wait(0.016, Wait.ABORT_WHEN_FALSE)
 
 

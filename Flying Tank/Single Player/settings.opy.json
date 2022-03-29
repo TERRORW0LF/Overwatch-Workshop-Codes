@@ -37,7 +37,7 @@
             ]
         },
         "general": {
-            "gameLengthInMn": 5,
+            "gameLengthInMn": 10,
             "gamemodeStartTrigger": "immediately",
             "heroLimit": "off",
             "enableRandomHeroes": true,

@@ -2,7 +2,7 @@ settings "settings.opy.json"
 
 #Global variables
 
-globalvar Setup 0
+globalvar NotSetup 0
 globalvar ForLoop 1
 globalvar GameStart 2
 globalvar Players 3
@@ -31,6 +31,7 @@ rule "Setup - Global":
     @Condition isGameInProgress() == true
     
     wait(5)
+    disableScoring()
     Players = getAllPlayers()
     for ForLoop in range(len(Players)):
         ForPlayer = Players[ForLoop]
@@ -38,24 +39,25 @@ rule "Setup - Global":
         ForPlayer.startForcingHero(Hero.LUCIO)
         ForPlayer.setInvisibility(Invis.ALL)
         ForPlayer.setStatusEffect(null, Status.PHASED_OUT, 9999)
+        ForPlayer.setInvisibility(Invis.ALL)
         createDummy(Hero.BASTION, Team.ALL, ForLoop + 8, vect(0, 0.5, 0), ForPlayer.getFacingDirection())
         wait()
         ForPlayer.Partner = getPlayersInSlot(ForLoop + 8, Team.ALL)
         wait()
         ForPlayer.Partner.Partner = ForPlayer
+        ForPlayer.Partner.setScore(-9999)
         ForPlayer.Partner.startForcingHero(Hero.BASTION)
-        ForPlayer.Partner.setInvisibility(Invis.ALL)
         ForPlayer.Partner.setKnockbackDealt(0)
+        ForPlayer.Partner.disallowButton(Button.PRIMARY_FIRE)
         ForPlayer.Partner.attachTo(ForPlayer, null)
         ForPlayer.Partner.startFacing(ForPlayer.getFacingDirection(), 9999, Relativity.TO_WORLD, FacingReeval.DIRECTION_AND_TURN_RATE)
     bigMessage(getAllPlayers(), "Game starts in 10 seconds.")
     wait(3)
     for ForLoop in range(len(Players)):
         ForPlayer = Players[ForLoop]
-        ForPlayer.Partner.disallowButton(Button.PRIMARY_FIRE)
         ForPlayer.Partner.forceButtonPress(Button.ULTIMATE)
     wait()
-    Setup = true
+    NotSetup = true
     wait(7)
     bigMessage(getAllPlayers(), "START!")
     GameStart = true
@@ -67,15 +69,15 @@ rule "Setup - Player":
     
     eventPlayer.enableDeathSpectateAllPlayers()
     eventPlayer.enableDeathSpectateTargetHud()
+    eventPlayer.disableRespawn()
     eventPlayer.setHealingReceived(0)
 
 
 rule "Late Join":
     @Event playerJoined
-    @Condition Setup == true
+    @Condition NotSetup == true
     
     waitUntil(eventPlayer.hasSpawned() and eventPlayer.isAlive(), 30)
-    eventPlayer.disableRespawn()
     kill(eventPlayer, null)
     bigMessage(eventPlayer, "Joined while game active")
 
@@ -84,6 +86,7 @@ rule "Respawn on death":
     @Event playerDied
     @Hero bastion
     
+    eventPlayer.Partner.addToScore(1 if attacker != eventPlayer else -1)
     destroyIcon(getLastCreatedEntity())
     createIcon(getAllPlayers(), eventPlayer.getPosition() + vect(0, 1.5, 0), Icon.HALO, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, false)
     eventPlayer.clearStatusEffect(Status.BURNING)
@@ -96,7 +99,6 @@ rule "Respawn on death":
     eventPlayer.disallowButton(Button.PRIMARY_FIRE)
     bigMessage([eventPlayer, eventPlayer.Partner], "5 sec spawn protection!")
     waitUntil(eventPlayer.isAlive() and eventPlayer.Partner.isAlive(), 3)
-    eventPlayer.Partner.teleport(eventPlayer.getPosition())
     eventPlayer.attachTo(eventPlayer.Partner, vect(0, 0.5, 0))
     wait(3)
     eventPlayer.forceButtonPress(Button.ULTIMATE)
