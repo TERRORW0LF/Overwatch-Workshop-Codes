@@ -43,7 +43,7 @@ rule "Setup - Global":
             ForPlayer.disallowButton(Button.PRIMARY_FIRE)
             ForPlayer.setKnockbackDealt(0)
             ForPlayer.Partner = getPlayersInSlot(ForLoop - 1, Team.ALL) if Mode else getAllPlayers()[ForLoop - 1]
-            ForPlayer.attachTo(getPlayersInSlot(ForLoop - 1, Team.ALL) if Mode else getAllPlayers()[ForLoop - 1], vect(0, 1.5, 0))
+            ForPlayer.attachTo(getPlayersInSlot(ForLoop - 1, Team.ALL) if Mode else getAllPlayers()[ForLoop - 1], vect(0, 2, 0))
     wait()
     NotSetup = true
     bigMessage(getAllPlayers(), "Game starts in 10 seconds.")
@@ -89,7 +89,7 @@ rule "Respawn on death":
     @Hero bastion
     
     destroyIcon(getLastCreatedEntity())
-    createIcon(getAllPlayers(), eventPlayer.getPosition() + vect(0, 1.5, 0), Icon.HALO, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, false)
+    createIcon(getAllPlayers(), eventPlayer.getPosition() + vect(0, 2, 0), Icon.HALO, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, false)
     eventPlayer.clearStatusEffect(Status.BURNING)
     eventPlayer.Partner.clearStatusEffect(Status.BURNING)
     eventPlayer.Partner.Protected = true
@@ -148,3 +148,10 @@ rule "Bastion allow shooting":
     
     eventPlayer.allowButton(Button.PRIMARY_FIRE)
 
+
+rule "Lucio got a kill":
+    @Event playerEarnedElimination
+    @Hero lucio
+    @Condition victim != attacker
+
+    eventPlayer.Partner.addToScore(1)

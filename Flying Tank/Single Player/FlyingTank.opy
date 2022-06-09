@@ -37,19 +37,20 @@ rule "Setup - Global":
         ForPlayer = Players[ForLoop]
         wait()
         ForPlayer.startForcingHero(Hero.LUCIO)
-        ForPlayer.setInvisibility(Invis.ALL)
-        ForPlayer.setStatusEffect(null, Status.PHASED_OUT, 9999)
-        ForPlayer.setInvisibility(Invis.ALL)
-        createDummy(Hero.BASTION, Team.ALL, ForLoop + 8, vect(0, 0.5, 0), ForPlayer.getFacingDirection())
         wait()
-        ForPlayer.Partner = getPlayersInSlot(ForLoop + 8, Team.ALL)
+        ForPlayer.setStatusEffect(null, Status.PHASED_OUT, 9999)
+        createDummy(Hero.BASTION, Team.ALL, ForLoop + 12, null, ForPlayer.getFacingDirection())
+        wait()
+        ForPlayer.Partner = getPlayersInSlot(ForLoop + 12, Team.ALL)
         wait()
         ForPlayer.Partner.Partner = ForPlayer
         ForPlayer.Partner.setScore(-9999)
         ForPlayer.Partner.startForcingHero(Hero.BASTION)
+        wait()
         ForPlayer.Partner.setKnockbackDealt(0)
         ForPlayer.Partner.disallowButton(Button.PRIMARY_FIRE)
         ForPlayer.Partner.attachTo(ForPlayer, null)
+        ForPlayer.Partner.setInvisibility(Invis.ALL)
         ForPlayer.Partner.startFacing(ForPlayer.getFacingDirection(), 9999, Relativity.TO_WORLD, FacingReeval.DIRECTION_AND_TURN_RATE)
     bigMessage(getAllPlayers(), "Game starts in 10 seconds.")
     wait(3)
@@ -86,22 +87,25 @@ rule "Respawn on death":
     @Event playerDied
     @Hero bastion
     
-    eventPlayer.Partner.addToScore(1 if attacker != eventPlayer else -1)
+    eventPlayer.Partner.addToScore(0 if attacker != eventPlayer else -1)
+    attacker.Partner.addToScore(1 if attacker != eventPlayer else 0)
     destroyIcon(getLastCreatedEntity())
-    createIcon(getAllPlayers(), eventPlayer.getPosition() + vect(0, 1.5, 0), Icon.HALO, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, false)
+    createIcon(getAllPlayers(), eventPlayer.getPosition() + vect(0, 0.5, 0), Icon.HALO, IconReeval.VISIBILITY_AND_POSITION, Color.ORANGE, false)
     eventPlayer.clearStatusEffect(Status.BURNING)
     eventPlayer.Partner.clearStatusEffect(Status.BURNING)
     eventPlayer.Partner.Protected = true
     eventPlayer.detach()
     eventPlayer.Partner.respawn()
     eventPlayer.respawn()
-    eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 5)
     eventPlayer.disallowButton(Button.PRIMARY_FIRE)
     bigMessage([eventPlayer, eventPlayer.Partner], "5 sec spawn protection!")
     waitUntil(eventPlayer.isAlive() and eventPlayer.Partner.isAlive(), 3)
-    eventPlayer.attachTo(eventPlayer.Partner, vect(0, 0.5, 0))
+    eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 5)
+    eventPlayer.Partner.setStatusEffect(null, Status.PHASED_OUT, 9999)
+    eventPlayer.attachTo(eventPlayer.Partner, null)
     wait(3)
     eventPlayer.forceButtonPress(Button.ULTIMATE)
+    eventPlayer.startFacing(eventPlayer.Partner.getFacingDirection(), 9999, Relativity.TO_WORLD, FacingReeval.DIRECTION_AND_TURN_RATE)
     wait(2)
     eventPlayer.Partner.Protected = false
     eventPlayer.allowButton(Button.PRIMARY_FIRE)
@@ -146,6 +150,14 @@ rule "Bastion allow shooting":
     @Condition GameStart == true
     
     eventPlayer.allowButton(Button.PRIMARY_FIRE)
+
+
+rule "Lucio got a kill":
+    @Event playerEarnedElimination
+    @Hero lucio
+    @Condition victim != attacker
+
+    eventPlayer.addToScore(1)
 
 
 rule "Make Dummy shoot":

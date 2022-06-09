@@ -1,0 +1,66 @@
+{
+    "main": {
+        "description": "Lucio Surf v5.2.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR",
+        "modeName": "Lucio Surf"
+    },
+    "lobby": {
+        "allowPlayersInQueue": true,
+        "mapRotation": "afterGame",
+        "enableMatchVoiceChat": true,
+        "spectatorSlots": 6,
+        "team1Slots": 12,
+        "team2Slots": 0,
+        "returnToLobby": "never",
+        "swapTeamsAfterMatch": false
+    },
+    "gamemodes": {
+        "skirmish": {
+            "disabledMaps": [
+                "blizzWorldWinter",
+                "eichenwaldeHalloween",
+                "hanamuraWinter",
+                "hollywoodHalloween",
+                "kingsRowWinter",
+                "lijiangTowerLny",
+                "workshopChamber",
+                "workshopExpanse",
+                "workshopExpanseNight",
+                "workshopGreenScreen",
+                "workshopIsland",
+                "workshopIslandNight"
+            ]
+        },
+        "general": {
+            "enableHeroSwitching": false,
+            "enableEnemyHealthBars": false,
+            "gamemodeStartTrigger": "immediately",
+            "heroLimit": "off",
+            "enableKillCam": false,
+            "enableKillFeed": false,
+            "enableRandomHeroes": true,
+            "spawnHealthPacks": "disabled"
+        }
+    },
+    "heroes": {
+        "allTeams": {
+            "baptiste": {
+                "enableAbility1": false,
+                "enableAbility2": false
+            },
+            "lucio": {
+                "enableSecondaryFire": false,
+                "enableAbility2": false
+            },
+            "enabledHeroes": [
+                "baptiste",
+                "lucio"
+            ],
+            "general": {
+                "enableInfiniteAmmo": true,
+                "enablePrimaryFire": false,
+                "enableHeadshotsOnly": true,
+                "enableUlt": false
+            }
+        }
+    }
+}

@@ -129,19 +129,20 @@ rule ("Setup - Global") {
             Set Global Variable(ForPlayer, Value In Array(Global.Players, Global.ForLoop));
             Wait(0.016, Ignore Condition);
             Start Forcing Player To Be Hero(Global.ForPlayer, Hero(Lúcio));
-            Set Invisible(Global.ForPlayer, All);
-            Set Status(Global.ForPlayer, Null, Phased Out, 9999);
-            Set Invisible(Global.ForPlayer, All);
-            Create Dummy Bot(Hero(Bastion), All Teams, Add(Global.ForLoop, 8), Vector(0, 0.5, 0), Facing Direction Of(Global.ForPlayer));
             Wait(0.016, Ignore Condition);
-            Set Player Variable(Global.ForPlayer, Partner, Players In Slot(Add(Global.ForLoop, 8), All Teams));
+            Set Status(Global.ForPlayer, Null, Phased Out, 9999);
+            Create Dummy Bot(Hero(Bastion), All Teams, Add(Global.ForLoop, 12), Null, Facing Direction Of(Global.ForPlayer));
+            Wait(0.016, Ignore Condition);
+            Set Player Variable(Global.ForPlayer, Partner, Players In Slot(Add(Global.ForLoop, 12), All Teams));
             Wait(0.016, Ignore Condition);
             Set Player Variable((Global.ForPlayer).Partner, Partner, Global.ForPlayer);
             Set Player Score((Global.ForPlayer).Partner, -9999);
             Start Forcing Player To Be Hero((Global.ForPlayer).Partner, Hero(Bastion));
+            Wait(0.016, Ignore Condition);
             Set Knockback Dealt((Global.ForPlayer).Partner, 0);
             Disallow Button((Global.ForPlayer).Partner, Button(Primary Fire));
             Attach Players((Global.ForPlayer).Partner, Global.ForPlayer, Null);
+            Set Invisible((Global.ForPlayer).Partner, All);
             Start Facing((Global.ForPlayer).Partner, Facing Direction Of(Global.ForPlayer), 9999, To World, Direction and Turn Rate);
         End;
         Big Message(All Players(All Teams), Custom String("Game starts in 10 seconds.", Null, Null, Null));
@@ -198,22 +199,25 @@ rule ("Respawn on death") {
         Bastion;
     }
     actions {
-        Modify Player Score((Event Player).Partner, If-Then-Else(Compare(Attacker, !=, Event Player), 1, -1));
+        Modify Player Score((Event Player).Partner, If-Then-Else(Compare(Attacker, !=, Event Player), 0, -1));
+        Modify Player Score((Attacker).Partner, If-Then-Else(Compare(Attacker, !=, Event Player), 1, 0));
         Destroy Icon(Last Created Entity);
-        Create Icon(All Players(All Teams), Add(Position Of(Event Player), Vector(0, 1.5, 0)), Halo, Visible To and Position, Color(Orange), False);
+        Create Icon(All Players(All Teams), Add(Position Of(Event Player), Vector(0, 0.5, 0)), Halo, Visible To and Position, Color(Orange), False);
         Clear Status(Event Player, Burning);
         Clear Status((Event Player).Partner, Burning);
         Set Player Variable((Event Player).Partner, Protected, True);
         Detach Players(Event Player);
         Respawn((Event Player).Partner);
         Respawn(Event Player);
-        Set Status(Event Player, Null, Phased Out, 5);
         Disallow Button(Event Player, Button(Primary Fire));
         Big Message(Array(Event Player, (Event Player).Partner), Custom String("5 sec spawn protection!", Null, Null, Null));
         Wait Until(And(Is Alive(Event Player), Is Alive((Event Player).Partner)), 3);
-        Attach Players(Event Player, (Event Player).Partner, Vector(0, 0.5, 0));
+        Set Status(Event Player, Null, Phased Out, 5);
+        Set Status((Event Player).Partner, Null, Phased Out, 9999);
+        Attach Players(Event Player, (Event Player).Partner, Null);
         Wait(3, Ignore Condition);
         Press Button(Event Player, Button(Ultimate));
+        Start Facing(Event Player, Facing Direction Of((Event Player).Partner), 9999, To World, Direction and Turn Rate);
         Wait(2, Ignore Condition);
         Set Player Variable((Event Player).Partner, Protected, False);
         Allow Button(Event Player, Button(Primary Fire));
@@ -281,6 +285,20 @@ rule ("Bastion allow shooting") {
     }
     actions {
         Allow Button(Event Player, Button(Primary Fire));
+    }
+}
+
+rule ("Lucio got a kill") {
+    event {
+        Player Earned Elimination;
+        All;
+        Lúcio;
+    }
+    conditions {
+        Victim != Attacker;
+    }
+    actions {
+        Modify Player Score(Event Player, 1);
     }
 }
 

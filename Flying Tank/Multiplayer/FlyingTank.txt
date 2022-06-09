@@ -141,7 +141,7 @@ rule ("Setup - Global") {
                 Disallow Button(Global.ForPlayer, Button(Primary Fire));
                 Set Knockback Dealt(Global.ForPlayer, 0);
                 Set Player Variable(Global.ForPlayer, Partner, If-Then-Else(Global.Mode, Players In Slot(Subtract(Global.ForLoop, 1), All Teams), Value In Array(All Players(All Teams), Subtract(Global.ForLoop, 1))));
-                Attach Players(Global.ForPlayer, If-Then-Else(Global.Mode, Players In Slot(Subtract(Global.ForLoop, 1), All Teams), Value In Array(All Players(All Teams), Subtract(Global.ForLoop, 1))), Vector(0, 1.5, 0));
+                Attach Players(Global.ForPlayer, If-Then-Else(Global.Mode, Players In Slot(Subtract(Global.ForLoop, 1), All Teams), Value In Array(All Players(All Teams), Subtract(Global.ForLoop, 1))), Vector(0, 2, 0));
             End;
         End;
         Wait(0.016, Ignore Condition);
@@ -215,7 +215,7 @@ rule ("Respawn on death") {
     }
     actions {
         Destroy Icon(Last Created Entity);
-        Create Icon(All Players(All Teams), Add(Position Of(Event Player), Vector(0, 1.5, 0)), Halo, Visible To and Position, Color(Orange), False);
+        Create Icon(All Players(All Teams), Add(Position Of(Event Player), Vector(0, 2, 0)), Halo, Visible To and Position, Color(Orange), False);
         Clear Status(Event Player, Burning);
         Clear Status((Event Player).Partner, Burning);
         Set Player Variable((Event Player).Partner, Protected, True);
@@ -296,6 +296,20 @@ rule ("Bastion allow shooting") {
     }
     actions {
         Allow Button(Event Player, Button(Primary Fire));
+    }
+}
+
+rule ("Lucio got a kill") {
+    event {
+        Player Earned Elimination;
+        All;
+        Lúcio;
+    }
+    conditions {
+        Victim != Attacker;
+    }
+    actions {
+        Modify Player Score((Event Player).Partner, 1);
     }
 }
 
