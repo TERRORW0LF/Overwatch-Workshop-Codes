@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.2.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR"
+		Description: "Lucio Surf v5.3.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR"
 		Mode Name: "Lucio Surf"
 	}
 	lobby
@@ -1087,7 +1087,7 @@ rule ("Start - Maps (Season 5)") {
         If(Compare(Current Map, ==, Map(Eichenwalde)));
             Set Global Variable(PosStart, Vector(69.737, 18.36, -66.742));
             Set Global Variable(PosCheckpoint, Array(Vector(31.753, 13.5, -79.386), Vector(142.5, 11.7, -38.836), Vector(3.39, -0.1, -8.241)));
-            Set Global Variable(PosFinish, Vector(73.816, 13, -75.982));
+            Set Global Variable(PosFinish, Vector(73.816, 12.6, -75.982));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Hollywood)));

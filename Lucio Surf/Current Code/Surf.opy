@@ -846,7 +846,7 @@ rule "Start - Maps (Season 5)":
     if getCurrentMap() == Map.EICHENWALDE:
         PosStart = vect(69.737, 18.36, -66.742)
         PosCheckpoint = [vect(31.753, 13.5, -79.386), vect(142.5, 11.7, -38.836), vect(3.39, -0.1, -8.241)]
-        PosFinish = vect(73.816, 13, -75.982)
+        PosFinish = vect(73.816, 12.6, -75.982)
         return
     if getCurrentMap() == Map.HOLLYWOOD:
         PosStart = vect(7.65, 6, -55.154)
