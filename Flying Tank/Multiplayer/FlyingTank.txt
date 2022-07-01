@@ -226,7 +226,7 @@ rule ("Respawn on death") {
         Disallow Button(Event Player, Button(Primary Fire));
         Big Message(Array(Event Player, (Event Player).Partner), Custom String("5 sec spawn protection!", Null, Null, Null));
         Wait Until(And(Is Alive(Event Player), Is Alive((Event Player).Partner)), 3);
-        Attach Players(Event Player, (Event Player).Partner, Vector(0, 0.5, 0));
+        Attach Players(Event Player, (Event Player).Partner, Vector(0, 1.5, 0));
         Wait(3, Ignore Condition);
         Press Button(Event Player, Button(Ultimate));
         Wait(2, Ignore Condition);

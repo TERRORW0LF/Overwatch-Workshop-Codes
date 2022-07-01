@@ -8,7 +8,6 @@ globalvar GameStart 2
 globalvar Mode 3
 globalvar ForPlayer 4
 
-
 #Player variables
 
 playervar Partner 0
@@ -100,7 +99,7 @@ rule "Respawn on death":
     eventPlayer.disallowButton(Button.PRIMARY_FIRE)
     bigMessage([eventPlayer, eventPlayer.Partner], "5 sec spawn protection!")
     waitUntil(eventPlayer.isAlive() and eventPlayer.Partner.isAlive(), 3)
-    eventPlayer.attachTo(eventPlayer.Partner, vect(0, 0.5, 0))
+    eventPlayer.attachTo(eventPlayer.Partner, vect(0, 1.5, 0))
     wait(3)
     eventPlayer.forceButtonPress(Button.ULTIMATE)
     wait(2)
