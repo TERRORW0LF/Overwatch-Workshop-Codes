@@ -1,0 +1,360 @@
+settings
+{
+	main
+	{
+		Description: "Follow the leading Lucio player."
+		Mode Name: "Follow the Lucio"
+	}
+	lobby
+	{
+		Allow Players Who Are In Queue: Yes
+		Map Rotation: After A Game
+		Match Voice Chat: Enabled
+		Max Spectators: 12
+		Return To Lobby: Never
+		Swap Teams After Match: No
+	}
+	modes
+	{
+		Deathmatch
+		{
+			enabled maps
+			{
+				Château Guillard
+				Dorado
+				Eichenwalde
+				Hanamura
+				Havana
+				Hollywood
+				Ilios Lighthouse
+				Ilios Ruins
+				Ilios Well
+				Kanezaka
+				Malevento
+				Nepal Shrine
+				Nepal Village
+				Paris
+				Temple of Anubis
+			}
+			Self Initiated Respawn: Off
+		}
+		General
+		{
+			Allow Hero Switching: Off
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Respawn As Random Hero: On
+			Spawn Health Packs: Disabled
+		}
+	}
+	heroes
+	{
+		General
+		{
+			Lúcio
+			{
+				No Ammunition Requirement: On
+				Primary Fire: Off
+				Receive Headshots Only: On
+				Soundwave: Off
+			}
+			enabled heroes
+			{
+				Lúcio
+			}
+		}
+	}
+}
+variables {
+    global:
+        0: Leader
+        1: Started
+        2: SelectLeader
+        3: SelectMode
+        4: WarningDistance
+        5: MaxDistance
+        6: Time
+        7: CurrTime
+    player:
+        0: DistanceColor
+        1: Time
+        2: InDanger
+}
+rule ("Workshop Settings") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Set Global Variable(SelectLeader, Workshop Setting Combo(Custom String("Settings", Null, Null, Null), Custom String("Leader selection", Null, Null, Null), 1, Array(Custom String("Slot 0", Null, Null, Null), Custom String("Random", Null, Null, Null)), 0));
+        Set Global Variable(SelectMode, Workshop Setting Combo(Custom String("Settings", Null, Null, Null), Custom String("Mode", Null, Null, Null), 0, Array(Custom String("Elimination", Null, Null, Null), Custom String("Timer", Null, Null, Null)), 1));
+        Set Global Variable(MaxDistance, Workshop Setting Integer(Custom String("Settings", Null, Null, Null), Custom String("Elimation distance", Null, Null, Null), 15, 5, 50, 2));
+        Set Global Variable(Time, Workshop Setting Integer(Custom String("Settings", Null, Null, Null), Custom String("Elimation time", Null, Null, Null), 20, 0, 60, 3));
+    }
+}
+
+rule ("Global Setup") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Set Global Variable(CurrTime, 0);
+        Set Global Variable(WarningDistance, Divide(Global.MaxDistance, 2));
+        Wait(4, Ignore Condition);
+        Set Global Variable(Leader, If-Then-Else(Global.SelectLeader, Value In Array(All Players(All Teams), Random Value In Array(All Players(All Teams))), Players In Slot(0, All Teams)));
+        Create Icon(Remove From Array(All Players(All Teams), Global.Leader), Position Of(Global.Leader), Flag, Visible To and Position, Color(Green), True);
+        If(Global.SelectMode);
+            Create HUD Text(All Players(All Teams), Custom String("{0} sec", Subtract(Global.Time, Global.CurrTime), Null, Null), Null, Null, Top, 0, Color(White), Null, Null, Visible To and String, Default Visibility);
+    }
+}
+
+rule ("Player Setup") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    actions {
+        Enable Death Spectate All Players(Event Player);
+        Enable Death Spectate Target HUD(Event Player);
+        Disable Movement Collision With Players(Event Player);
+        Set Respawn Max Time(Event Player, 9999);
+        Set Player Variable(Event Player, DistanceColor, Color(White));
+        If(Not(Global.SelectMode));
+            Create HUD Text(Event Player, Custom String("{0} sec", Subtract(Global.Time, (Event Player).Time), Null, Null), Null, Null, Top, 0, Color(White), Null, Null, String, Default Visibility);
+        End;
+        Create HUD Text(Event Player, Custom String("{0} m", Distance Between(Position Of(Global.Leader), Position Of(Event Player)), Null, Null), Null, Null, Top, 1, (Event Player).DistanceColor, Null, Null, String and Color, Default Visibility);
+    }
+}
+
+rule ("Teleport to Leader") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.Leader != Null;
+        Is Game In Progress == False;
+    }
+    actions {
+        Wait Until(Has Spawned(Global.Leader), 5);
+        Teleport(Event Player, Position Of(Global.Leader));
+    }
+}
+
+rule ("Match start Setup") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Set Player Score(Global.Leader, 1);
+        If(Global.SelectMode);
+            Chase Global Variable At Rate(CurrTime, 20, 1, None);
+    }
+}
+
+rule ("Kill late-joins") {
+    event {
+        Player Joined Match;
+        All;
+        All;
+    }
+    conditions {
+        Is Game In Progress == True;
+    }
+    actions {
+        Wait Until(Has Spawned(Event Player), 20);
+        Kill(Event Player, Null);
+        Big Message(Event Player, Custom String("Joined into ongoing game", Null, Null, Null));
+    }
+}
+
+rule ("Declare Victory - Leader") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Number Of Living Players(All Teams) <= 1;
+    }
+    actions {
+        Declare Player Victory(Global.Leader);
+    }
+}
+
+rule ("Declare Victory - Followers") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Match Time <= 1;
+    }
+    actions {
+        Declare Player Victory(Random Value In Array(Filtered Array(All Living Players(All Teams), Is Alive(Current Array Element))));
+    }
+}
+
+rule ("Leader left") {
+    event {
+        Player Left Match;
+        All;
+        All;
+    }
+    conditions {
+        Event Player == Global.Leader;
+    }
+    actions {
+        Declare Player Victory(Random Value In Array(All Living Players(All Teams)));
+    }
+}
+
+rule ("Leader died") {
+    event {
+        Player Died;
+        All;
+        All;
+    }
+    conditions {
+        Event Player == Global.Leader;
+    }
+    actions {
+        Declare Player Victory(Random Value In Array(All Living Players(All Teams)));
+    }
+}
+
+rule ("Elimation - Timer start") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.SelectMode == False;
+        Is Alive(Event Player) == True;
+        Distance Between(Position Of(Global.Leader), Position Of(Event Player)) > Global.MaxDistance;
+    }
+    actions {
+        Set Player Variable(Event Player, DistanceColor, Color(Red));
+        Set Player Variable(Event Player, InDanger, True);
+        Chase Player Variable At Rate(Event Player, Time, 9999, 1, None);
+        While((Event Player).InDanger);
+            Play Effect(Event Player, Debuff Impact Sound, Color(Black), Position Of(Event Player), 10);
+            Wait(1, Abort When False);
+        End;
+    }
+}
+
+rule ("Elimation - Timer end") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.SelectMode == False;
+        Is Alive(Event Player) == True;
+        Distance Between(Position Of(Global.Leader), Position Of(Event Player)) < Global.MaxDistance;
+    }
+    actions {
+        Stop Chasing Player Variable(Event Player, Time);
+        Set Player Variable(Event Player, Time, 0);
+        Set Player Variable(Event Player, InDanger, False);
+        Set Player Variable(Event Player, DistanceColor, Color(Yellow));
+    }
+}
+
+rule ("Elimation - Elimate Player") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.SelectMode == False;
+        (Event Player).Time > Global.Time;
+    }
+    actions {
+        Kill(Event Player, Event Player);
+        Set Player Variable(Event Player, InDanger, False);
+    }
+}
+
+rule ("Elimation - Distance White") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.SelectMode == False;
+        Distance Between(Position Of(Global.Leader), Position Of(Event Player)) < Global.WarningDistance;
+    }
+    actions {
+        Set Player Variable(Event Player, DistanceColor, Color(White));
+    }
+}
+
+rule ("Elimation - Distance Yellow") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.SelectMode == False;
+        Distance Between(Position Of(Global.Leader), Position Of(Event Player)) > Global.WarningDistance;
+    }
+    actions {
+        Set Player Variable(Event Player, DistanceColor, Color(Yellow));
+    }
+}
+
+rule ("Timer - Timer") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Global.SelectMode != False;
+        Is Game In Progress == True;
+        Global.CurrTime >= 20;
+    }
+    actions {
+        Kill(Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1)), Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1)));
+        Set Global Variable(CurrTime, 0);
+    }
+}
+
+rule ("Timer - Distance White") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.SelectMode != False;
+        Event Player != Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1));
+    }
+    actions {
+        Set Player Variable(Event Player, DistanceColor, Color(White));
+    }
+}
+
+rule ("Timer - Distance Red") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.SelectMode != False;
+        Event Player == Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1));
+    }
+    actions {
+        Set Player Variable(Event Player, DistanceColor, Color(Red));
+    }
+}
+

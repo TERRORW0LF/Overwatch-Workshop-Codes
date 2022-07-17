@@ -1,0 +1,57 @@
+{
+    "main": {
+        "description": "Follow the leading Lucio player.",
+        "modeName": "Follow the Lucio"
+    },
+    "lobby": {
+        "allowPlayersInQueue": true,
+        "mapRotation": "afterGame",
+        "enableMatchVoiceChat": true,
+        "spectatorSlots": 12,
+        "returnToLobby": "never",
+        "swapTeamsAfterMatch": false
+    },
+    "gamemodes": {
+        "ffa": {
+            "enabledMaps": [
+                "chateauGuillard",
+                "dorado",
+                "eichenwalde",
+                "hanamura",
+                "havana",
+                "hollywood",
+                "iliosLighthouse",
+                "iliosRuins",
+                "iliosWell",
+                "kanezaka",
+                "malevento",
+                "nepalShrine",
+                "nepalVillage",
+                "paris",
+                "templeOfAnubis"
+            ],
+            "enableSelfInitiatedRespawn": false
+        },
+        "general": {
+            "enableHeroSwitching": false,
+            "gamemodeStartTrigger": "immediately",
+            "heroLimit": "off",
+            "enableRandomHeroes": true,
+            "spawnHealthPacks": "disabled"
+        }
+    },
+    "heroes": {
+        "allTeams": {
+            "lucio": {
+                "enableInfiniteAmmo": true,
+                "enablePrimaryFire": false,
+                "enableHeadshotsOnly": true,
+                "enableSecondaryFire": false
+            },
+            "enabledHeroes": [
+                "lucio"
+            ]
+        }
+    }
+}
+
