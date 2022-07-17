@@ -1053,8 +1053,8 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.5b | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.5b | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.5b1 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.5b1 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
     hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("3", l"{0} sec".format(TimeThirdStan), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("2", l"{0} sec".format(TimeSecondStan), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
@@ -1699,7 +1699,7 @@ rule "Spectator Mode (slow movement disabled)":
 rule "Circle Fix":
     @Event eachPlayer
     @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) <= 2
-    #@Condition updateEveryTick(eventPlayer.isOnGround())
+    @Condition updateEveryTick(eventPlayer.isOnGround())
     @Condition not eventPlayer.Reset
     @Condition eventPlayer.Mode <= 1
     @Condition not eventPlayer.PracticeCheckpoint
