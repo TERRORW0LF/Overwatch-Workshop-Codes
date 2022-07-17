@@ -1129,7 +1129,7 @@ rule "Start timer":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
-    @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) > 2
+    @Condition distance(PosStart, vect(updateEveryTick(eventPlayer.getPosition()).x, PosStart.y, updateEveryTick(eventPlayer.getPosition()).z)) > 2
     
     chase(eventPlayer.TimeCurrent, 5000, rate=1, ChaseReeval.NONE)
     if not Visible:
@@ -1699,11 +1699,12 @@ rule "Spectator Mode (slow movement disabled)":
 rule "Circle Fix":
     @Event eachPlayer
     @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) <= 2
+    #@Condition updateEveryTick(eventPlayer.isOnGround())
     @Condition not eventPlayer.Reset
     @Condition eventPlayer.Mode <= 1
     @Condition not eventPlayer.PracticeCheckpoint
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
-    @Condition (not eventPlayer.Category and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 8.6)
+    @Condition (not eventPlayer.Category and updateEveryTick(eventPlayer.getHorizontalSpeed()) <= 6.88) or (eventPlayer.Category == 1 and updateEveryTick(eventPlayer.getHorizontalSpeed()) <= 8.6)
     
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.TimeCurrent = 0

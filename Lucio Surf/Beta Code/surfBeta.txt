@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.5b.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR"
+		Description: "Lucio Surf v5.5b.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
 		Mode Name: "Lucio Surf Beta"
 	}
 	lobby
@@ -1421,7 +1421,7 @@ rule ("Start timer") {
     conditions {
         (Event Player).Mode == False;
         Is True For Any((Event Player).Checkpoint, Current Array Element) == False;
-        Distance Between(Global.PosStart, Update Every Frame(Position Of(Event Player))) > 2;
+        Distance Between(Global.PosStart, Vector(X Component Of(Update Every Frame(Position Of(Event Player))), Y Component Of(Global.PosStart), Z Component Of(Update Every Frame(Position Of(Event Player))))) > 2;
     }
     actions {
         Chase Player Variable At Rate(Event Player, TimeCurrent, 5000, 1, None);
@@ -2328,11 +2328,12 @@ rule ("Circle Fix") {
     }
     conditions {
         Distance Between(Global.PosStart, Update Every Frame(Position Of(Event Player))) <= 2;
+        "@Condition updateEveryTick(eventPlayer.isOnGround())"
         (Event Player).Reset == False;
         (Event Player).Mode <= 1;
         (Event Player).PracticeCheckpoint == False;
         Is True For Any((Event Player).Checkpoint, Current Array Element) == False;
-        Or(And(Not((Event Player).Category), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 8.6))) == True;
+        Or(And(Not((Event Player).Category), Compare(Update Every Frame(Horizontal Speed Of(Event Player)), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Update Every Frame(Horizontal Speed Of(Event Player)), <=, 8.6))) == True;
     }
     actions {
         Stop Chasing Player Variable(Event Player, TimeCurrent);
