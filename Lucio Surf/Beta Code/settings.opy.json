@@ -1,6 +1,6 @@
 {
     "main": {
-        "description": "Lucio Surf v5.0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ",
+        "description": "Lucio Surf v5.5b.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR",
         "modeName": "Lucio Surf Beta"
     },
     "lobby": {
@@ -44,7 +44,8 @@
     "heroes": {
         "allTeams": {
             "lucio": {
-                "enableSecondaryFire": false
+                "enableSecondaryFire": false,
+                "enableAbility2": false
             },
             "enabledHeroes": [
                 "lucio"
