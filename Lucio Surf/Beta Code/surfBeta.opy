@@ -360,7 +360,7 @@ rule "Start - Maps (Season 2)":
             return
         #Shrine
         if getCurrentObjective() == 1:
-            PosStart = vect(-70.647, 16.89, -64.165)
+            PosStart = vect(-70.647, 15.7, -64.165)
             PosFinish = vect(-38.5, 13.6, 60)
             return
         #Village
@@ -1053,8 +1053,8 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.5b1 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.5b1 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.5b2 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.5b2 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
     hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("3", l"{0} sec".format(TimeThirdStan), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("2", l"{0} sec".format(TimeSecondStan), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
@@ -1129,7 +1129,7 @@ rule "Start timer":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
-    @Condition distance(PosStart, vect(updateEveryTick(eventPlayer.getPosition()).x, PosStart.y, updateEveryTick(eventPlayer.getPosition()).z)) > 2
+    @Condition distance(PosStart, vect(updateEveryTick(eventPlayer.getPosition()).x, PosStart.y, updateEveryTick(eventPlayer.getPosition()).z)) > 2 or abs(updateEveryTick(eventPlayer.getPosition()).y - PosStart.y) > 5
     
     chase(eventPlayer.TimeCurrent, 5000, rate=1, ChaseReeval.NONE)
     if not Visible:
@@ -1698,7 +1698,8 @@ rule "Spectator Mode (slow movement disabled)":
 
 rule "Circle Fix":
     @Event eachPlayer
-    @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) <= 2
+    @Condition distance(PosStart, vect(updateEveryTick(eventPlayer.getPosition()).x, PosStart.y, updateEveryTick(eventPlayer.getPosition()).z)) <= 2
+    @Condition abs(updateEveryTick(eventPlayer.getPosition()).y - PosStart.y) <= 5
     @Condition updateEveryTick(eventPlayer.isOnGround())
     @Condition not eventPlayer.Reset
     @Condition eventPlayer.Mode <= 1
