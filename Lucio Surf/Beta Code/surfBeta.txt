@@ -254,13 +254,13 @@ rule ("Start - Maps (Season 1)") {
         End;
         "FFA"
         If(Compare(Current Map, ==, Map(Château Guillard)));
-            Set Global Variable(PosStart, Vector(0, 0, 0));
-            Set Global Variable(PosFinish, Vector(0, 0, 0));
+            Set Global Variable(PosStart, Vector(176.515, 0, 52.458));
+            Set Global Variable(PosFinish, Vector(233.220, 3.9, 110.969));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Kanezaka)));
-            Set Global Variable(PosStart, Vector(0, 0, 0));
-            Set Global Variable(PosFinish, Vector(0, 0, 0));
+            Set Global Variable(PosStart, Vector(-14.495, 6, 42.699));
+            Set Global Variable(PosFinish, Vector(-39.953, 7.9, -54.264));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Malevento)));
@@ -1321,6 +1321,7 @@ rule ("Start - Global FFA") {
         Create HUD Text(All Players(All Teams), Null, Null, Custom String("{0}:{1}:{2}", Round To Integer(Divide(Match Time, 3600), Down), Round To Integer(Divide(Subtract(Match Time, Multiply(Round To Integer(Divide(Match Time, 3600), Down), 3600)), 60), Down), Round To Integer(Subtract(Match Time, Multiply(Round To Integer(Divide(Match Time, 60), Down), 60)), Down)), Top, 0, Null, Null, Color(White), Visible To and String, Default Visibility);
         Disable Built-In Game Mode Scoring;
         Disable Built-In Game Mode Completion;
+        Disable Built-In Game Mode Announcer;
         Set Match Time(0);
     }
 }

@@ -131,12 +131,12 @@ rule "Start - Maps (Season 1)":
         return
     #FFA
     if getCurrentMap() == Map.CHATEAU_GUILLARD:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(176.515, 0, 52.458)
+        PosFinish = vect(233.220, 3.9, 110.969)
         return
     if getCurrentMap() == Map.KANEZAKA:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-14.495, 6, 42.699)
+        PosFinish = vect(-39.953, 7.9, -54.264)
         return
     if getCurrentMap() == Map.MALEVENTO:
         PosStart = vect(0, 0, 0)
@@ -1005,6 +1005,7 @@ rule "Start - Global FFA":
     hudSubtext(getAllPlayers(), "{0}:{1}:{2}".format(floor(getMatchTime() / 3600), floor((getMatchTime() - floor(getMatchTime() / 3600) * 3600) / 60), floor(getMatchTime() - floor(getMatchTime() / 60) * 60)), HudPosition.TOP, 0, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
     disableScoring()
     disableGamemodeCompletion()
+    disableAnnouncer()
     setMatchTime(0)
 
 
