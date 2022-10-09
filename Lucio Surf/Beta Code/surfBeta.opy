@@ -1112,12 +1112,12 @@ rule "Start - Global":
     hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.5b4 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.5b4 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
-    hudHeader([player for player in getAllPlayers() if not player.Category], "3 - {0}{1} sec - {2}".format(TimeThirdStan, "{0}".format(TimeThirdStan).split(".")[1].charAt(1), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category], "2 - {0}{1} sec - {2}".format(TimeSecondStan, "{0}".format(TimeSecondStan).split(".")[1].charAt(1), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Record - {0}{1} sec - {2}".format(TimeFirstStan, "{0}".format(TimeFirstStan).split(".")[1].charAt(1), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "3 - {0}{1} sec - {2}".format(TimeThirdGrav, "{0}".format(TimeThirdGrav).split(".")[1].charAt(1), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "2 - {0}{1} sec - {2}".format(TimeSecondGrav, "{0}".format(TimeSecondGrav).split(".")[1].charAt(1), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Record - {0}{1} sec - {2}".format(TimeFirstGrav, "{0}".format(TimeFirstGrav).split(".")[1].charAt(1), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "3 - {0}{1} sec - {2}".format(TimeThirdStan, "{0}".format(10 * TimeThirdStan).split(".")[1].charAt(1), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "2 - {0}{1} sec - {2}".format(TimeSecondStan, "{0}".format(10 * TimeSecondStan).split(".")[1].charAt(1), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Record - {0}{1} sec - {2}".format(TimeFirstStan, "{0}".format(10 * TimeFirstStan).split(".")[1].charAt(1), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "3 - {0}{1} sec - {2}".format(TimeThirdGrav, "{0}".format(10 * TimeThirdGrav).split(".")[1].charAt(1), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "2 - {0}{1} sec - {2}".format(TimeSecondGrav, "{0}".format(10 * TimeSecondGrav).split(".")[1].charAt(1), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Record - {0}{1} sec - {2}".format(TimeFirstGrav, "{0}".format(10 * TimeFirstGrav).split(".")[1].charAt(1), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     #Help text standard
     hudSubtext(getAllPlayers(), "Toggle Help - Crouch + Interact", HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
@@ -1179,11 +1179,11 @@ rule "Start - Player":
     eventPlayer.disablePlayerCollision()
     #Hud
     hudHeader(eventPlayer, eventPlayer, HudPosition.LEFT, 0, Color.YELLOW, HudReeval.NONE, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestStan, "{0}".format(eventPlayer.TimeBestStan).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestGrav, "{0}".format(eventPlayer.TimeBestGrav).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestStan, "{0}".format(10 * eventPlayer.TimeBestStan).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestGrav, "{0}".format(10 * eventPlayer.TimeBestGrav).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "ATTEMPTS: {0}".format(eventPlayer.Attempts), HudPosition.LEFT, 2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "{0} m/s".format(eventPlayer.getHorizontalSpeed()), HudPosition.TOP, 0.1, eventPlayer.SpeedColor, HudReeval.STRING_AND_COLOR, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer, "{0}{1} sec".format(eventPlayer.TimeCurrent + eventPlayer.TimeExtra, "{0}".format(eventPlayer.TimeCurrent + eventPlayer.TimeExtra).split(".")[1].charAt(1)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer, "{0}{1} sec".format(eventPlayer.TimeCurrent + eventPlayer.TimeExtra, "{0}".format(10 * (eventPlayer.TimeCurrent + eventPlayer.TimeExtra)).split(".")[1].charAt(1)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
     #Start
     async(Respawn, AsyncBehavior.NOOP)
 
@@ -1200,13 +1200,13 @@ rule "Start timer":
     eventPlayer.setInvisibility(Invis.NONE)
 
     eventPlayer.Slope = eventPlayer.getVelocity().z / eventPlayer.getVelocity().x
-    eventPlayer.Intercept = eventPlayer.getPosition().z - (eventPlayer.Slope * eventPlayer.getPosition().x)
-    eventPlayer.Root = sqrt(4*(eventPlayer.Slope**2) - (eventPlayer.Slope**2)*(PosStart.x**2) + 2*eventPlayer.Slope*PosStart.x*PosStart.z - 2*eventPlayer.Slope*eventPlayer.Intercept*PosStart.x + 2*eventPlayer.Intercept*PosStart.z + 4 - (eventPlayer.Intercept**2) - (PosStart.z**2))
-    eventPlayer.Xp = (PosStart.x + eventPlayer.Slope*PosStart.z - eventPlayer.Slope*eventPlayer.Intercept + eventPlayer.Root) / (1 + eventPlayer.Slope**2)
-    if getSign(PosStart.x - eventPlayer.Xp) != getSign(eventPlayer.getVelocity().x):
-        eventPlayer.Xp = (-(2 * eventPlayer.Slope * eventPlayer.Intercept)**2 - eventPlayer.Root) / (2 * (1 + eventPlayer.Slope**2))
+    eventPlayer.Intercept = eventPlayer.getPosition().z - PosStart.z - (eventPlayer.Slope * (eventPlayer.getPosition().x - PosStart.x))
+    eventPlayer.Root = sqrt(4*eventPlayer.Slope*eventPlayer.Slope + 4 - eventPlayer.Intercept*eventPlayer.Intercept)
+    eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept + eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
+    if getSign(-eventPlayer.Xp) != getSign(eventPlayer.getVelocity().x):
+        eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept - eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
     eventPlayer.Zp = eventPlayer.Slope * eventPlayer.Xp + eventPlayer.Intercept
-    eventPlayer.Distance = distance(eventPlayer.getPosition(), vect(eventPlayer.Xp, eventPlayer.getPosition().y, eventPlayer.Zp))
+    eventPlayer.Distance = distance(eventPlayer.getPosition() - vect(PosStart.x, 0, PosStart.z), vect(eventPlayer.Xp, eventPlayer.getPosition().y, eventPlayer.Zp))
     eventPlayer.TimeExtra = eventPlayer.Distance * eventPlayer.getHorizontalSpeed()
     eventPlayer.TimeExtra = eventPlayer.TimeExtra if abs(eventPlayer.TimeExtra) < 0.016 else getSign(eventPlayer.TimeExtra) * 0.016
 
@@ -1267,13 +1267,13 @@ rule "Finish":
     eventPlayer.Attempts += 1
 
     eventPlayer.Slope = eventPlayer.getVelocity().z / eventPlayer.getVelocity().x
-    eventPlayer.Intercept = eventPlayer.getPosition().z - (eventPlayer.Slope * eventPlayer.getPosition().x)
-    eventPlayer.Root = sqrt(-(eventPlayer.Slope**2)*PosFinish.x**2 + 2*eventPlayer.Slope*PosFinish.x*PosFinish.z - 2*eventPlayer.Slope*eventPlayer.Intercept*PosFinish.x + (eventPlayer.Slope**2)*25 + 2*eventPlayer.Intercept*PosFinish.z + 25 - eventPlayer.Intercept**2 - PosFinish.z**2)
-    eventPlayer.Xp = (PosFinish.x + eventPlayer.Slope*PosFinish.z - eventPlayer.Slope*eventPlayer.Intercept + eventPlayer.Root) / (1 + eventPlayer.Slope**2)
-    if getSign(PosStart.x - eventPlayer.Xp) != getSign(eventPlayer.getVelocity().x):
-        eventPlayer.Xp = (-(2 * eventPlayer.Slope * eventPlayer.Intercept)**2 - eventPlayer.Root) / (2 * (1 + eventPlayer.Slope**2))
+    eventPlayer.Intercept = eventPlayer.getPosition().z - PosFinish.z - (eventPlayer.Slope * (eventPlayer.getPosition().x - PosFinish.x))
+    eventPlayer.Root = sqrt(25*eventPlayer.Slope*eventPlayer.Slope + 25 - eventPlayer.Intercept*eventPlayer.Intercept)
+    eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept + eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
+    if getSign(-eventPlayer.Xp) != getSign(eventPlayer.getVelocity().x):
+        eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept - eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
     eventPlayer.Zp = eventPlayer.Slope * eventPlayer.Xp + eventPlayer.Intercept
-    eventPlayer.Distance = distance(eventPlayer.getPosition(), vect(eventPlayer.Xp, eventPlayer.getPosition().y, eventPlayer.Zp))
+    eventPlayer.Distance = distance(eventPlayer.getPosition() - vect(PosFinish.x, 0, PosFinish.z), vect(eventPlayer.Xp, eventPlayer.getPosition().y, eventPlayer.Zp))
     eventPlayer.TimeExtra -= eventPlayer.Distance * eventPlayer.getHorizontalSpeed()
     eventPlayer.TimeCurrent += eventPlayer.TimeExtra if abs(eventPlayer.TimeExtra) < 0.016 else getSign(eventPlayer.TimeExtra) * 0.016
 
@@ -1351,7 +1351,7 @@ rule "Finish Message (Best Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer != PlayerFirstGrav)
     
-    bigMessage(eventPlayer, "New PB: {0}{1} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav).split(".")[1].charAt(1)))
+    bigMessage(eventPlayer, "New PB: {0}{1} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(10 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)).split(".")[1].charAt(1)))
 
 
 rule "Finish Message (Record Time)":
@@ -1360,7 +1360,7 @@ rule "Finish Message (Record Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer == PlayerFirstGrav)
     
-    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}{1} sec - {2}!!!".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav).split(".")[1].charAt(1), eventPlayer))
+    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}{1} sec - {2}!!!".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(10 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)).split(".")[1].charAt(1), eventPlayer))
 
 
 rule "Floor":
