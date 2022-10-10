@@ -52,12 +52,13 @@ playervar PosPracticeCheckpoint 23
 playervar FacingPracticeCheckpoint 24
 playervar VelocityPracticeCheckpoint 25
 playervar SpeedPracticeCheckpoint 26
-playervar Slope 30
-playervar Intercept 31
-playervar Root 32
-playervar Xp 33
-playervar Zp 34
+playervar PosPrev 30
+playervar Pos1 31
+playervar Pos2 32
+playervar Angle 33
+playervar PosCircleHit 34
 playervar Distance 35
+playervar Distance2 36
 
 
 #Subroutine names
@@ -1199,16 +1200,18 @@ rule "Start timer":
         return
     eventPlayer.setInvisibility(Invis.NONE)
 
-    eventPlayer.Slope = eventPlayer.getVelocity().z / eventPlayer.getVelocity().x
-    eventPlayer.Intercept = eventPlayer.getPosition().z - PosStart.z - (eventPlayer.Slope * (eventPlayer.getPosition().x - PosStart.x))
-    eventPlayer.Root = sqrt(4*eventPlayer.Slope*eventPlayer.Slope + 4 - eventPlayer.Intercept*eventPlayer.Intercept)
-    eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept + eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
-    if getSign(-eventPlayer.Xp) != getSign(eventPlayer.getVelocity().x):
-        eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept - eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
-    eventPlayer.Zp = eventPlayer.Slope * eventPlayer.Xp + eventPlayer.Intercept
-    eventPlayer.Distance = distance(eventPlayer.getPosition() - vect(PosStart.x, 0, PosStart.z), vect(eventPlayer.Xp, eventPlayer.getPosition().y, eventPlayer.Zp))
-    eventPlayer.TimeExtra = eventPlayer.Distance * eventPlayer.getHorizontalSpeed()
-    eventPlayer.TimeExtra = eventPlayer.TimeExtra if abs(eventPlayer.TimeExtra) < 0.016 else getSign(eventPlayer.TimeExtra) * 0.016
+    eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.getPosition().x - eventPlayer.PosPrev.x, 0, eventPlayer.getPosition().z - eventPlayer.PosPrev.z), Vector.RIGHT)
+    eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sin(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sin(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cos(eventPlayer.Angle))
+    if distance(eventPlayer.Pos1, vect(PosStart.x, 0, PosStart.z)) > 2:
+        eventPlayer.Pos2 = vect((eventPlayer.getPosition().x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.getPosition().z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
+        eventPlayer.PosCircleHit = vect((-1 if Pos1.x < Pos2.x else 1) * sqrt(4 - eventPlayer.Pos1.z*eventPlayer.Pos1.z), 0, Pos1.z)
+        eventPlayer.Distance = distance(eventPlayer.Pos1, eventPlayer.PosCircleHit)
+        #Do shit to calculate time
+        #Find speed function, if possible
+    if eventPlayer.getPosition().y - PosStart.y > 3:
+        eventPlayer.Distance2 = PosStart.y - eventPlayer.PosPrev.y
+        #Find gravity to calculate time when they hit limit
+        #Compare extra time against calculated one, take smaller one
 
 
 rule "Checkpoint":
@@ -1265,17 +1268,14 @@ rule "Finish":
 
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.Attempts += 1
-
-    eventPlayer.Slope = eventPlayer.getVelocity().z / eventPlayer.getVelocity().x
-    eventPlayer.Intercept = eventPlayer.getPosition().z - PosFinish.z - (eventPlayer.Slope * (eventPlayer.getPosition().x - PosFinish.x))
-    eventPlayer.Root = sqrt(25*eventPlayer.Slope*eventPlayer.Slope + 25 - eventPlayer.Intercept*eventPlayer.Intercept)
-    eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept + eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
-    if getSign(-eventPlayer.Xp) != getSign(eventPlayer.getVelocity().x):
-        eventPlayer.Xp = (-eventPlayer.Slope*eventPlayer.Intercept - eventPlayer.Root) / (1 + eventPlayer.Slope*eventPlayer.Slope)
-    eventPlayer.Zp = eventPlayer.Slope * eventPlayer.Xp + eventPlayer.Intercept
-    eventPlayer.Distance = distance(eventPlayer.getPosition() - vect(PosFinish.x, 0, PosFinish.z), vect(eventPlayer.Xp, eventPlayer.getPosition().y, eventPlayer.Zp))
-    eventPlayer.TimeExtra -= eventPlayer.Distance * eventPlayer.getHorizontalSpeed()
-    eventPlayer.TimeCurrent += eventPlayer.TimeExtra if abs(eventPlayer.TimeExtra) < 0.016 else getSign(eventPlayer.TimeExtra) * 0.016
+    
+    eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.getPosition().x - eventPlayer.PosPrev.x, 0, eventPlayer.getPosition().z - eventPlayer.PosPrev.z), Vector.RIGHT)
+    eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sin(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sin(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cos(eventPlayer.Angle))
+    eventPlayer.Pos2 = vect((eventPlayer.getPosition().x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.getPosition().z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
+    eventPlayer.PosCircleHit = vect((-1 if Pos1.x > Pos2.x else 1) * sqrt(25 - eventPlayer.Pos1.z*eventPlayer.Pos1.z), 0, Pos1.z)
+    eventPlayer.Distance = distance(eventPlayer.Pos1, eventPlayer.PosCircleHit)
+    #Do shit to calculate time
+    #Find speed function, if possible
 
     if not eventPlayer.Category:
         if eventPlayer.TimeCurrent < eventPlayer.TimeBestStan:
