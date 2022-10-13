@@ -167,7 +167,7 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 4, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
+        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 0, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
         Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 1, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
@@ -732,10 +732,10 @@ rule ("Start - Maps (Season 3)") {
         "Lijiang"
         If(Compare(Current Map, ==, Map(Lijiang Control Center)));
             Set Global Variable(PosStart, Vector(0, 278, 293));
+            Set Global Variable(PosCheckpoint, Array(Vector(0, 274, 330)));
+            Set Global Variable(PosFinish, Vector(0, 269.9, 254));
+            Abort;
         End;
-        Set Global Variable(PosCheckpoint, Array(Vector(0, 274, 330)));
-        Set Global Variable(PosFinish, Vector(0, 269.9, 254));
-        Abort;
         If(Compare(Current Map, ==, Map(Lijiang Garden)));
             Set Global Variable(PosStart, Vector(-65, 94, 145));
             Set Global Variable(PosCheckpoint, Array(Vector(0, 94.9, 125)));
@@ -2453,10 +2453,11 @@ rule ("End Match FFA") {
     }
     conditions {
         Current Game Mode == Game Mode(Deathmatch);
+        Is Game In Progress == True;
         Match Time == 0;
     }
     actions {
-        Declare Player Victory(Null);
+        Restart Match;
     }
 }
 

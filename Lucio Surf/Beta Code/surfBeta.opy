@@ -546,7 +546,7 @@ rule "Start - Maps (Season 3)":
     #Lijiang
     if getCurrentMap() == Map.LIJIANG_CONTROL_CENTER:
         PosStart = vect(0, 278, 293)
-    PosCheckpoint = [vect(0, 274, 330)]
+        PosCheckpoint = [vect(0, 274, 330)]
         PosFinish = vect(0, 269.9, 254)
         return
     if getCurrentMap() == Map.LIJIANG_GARDEN:
