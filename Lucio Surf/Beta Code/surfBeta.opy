@@ -93,7 +93,7 @@ rule "Start - Maps (Season 1)":
     Checkpoint = false
     #Assault
     if getCurrentMap() == Map.HANAMURA:
-        PosStart = vect(58, -1.87, 34)
+        PosStart = vect(57, -1.87, 33.65)
         PosFinish = vect(-10.57, -1.02, -84.71)
         return
     if getCurrentMap() == Map.HORIZON_LUNAR_COLONY:
@@ -109,7 +109,7 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-7.5, 4.57, 111.3)
         return
     if getCurrentMap() == Map.VOLSKAYA:
-        PosStart = vect(18, -5, 23)
+        PosStart = vect(15.74, -4.64, 22.19)
         PosFinish = vect(-94.24, -2.08, 49.3)
         return
     #Escort
@@ -118,11 +118,11 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(184.19, 13.7, 40.32)
         return
     if getCurrentMap() == Map.HAVANA:
-        PosStart = vect(-98, 4, -93)
+        PosStart = vect(-95.37, 4, -93.5)
         PosFinish = vect(140.14, 5.9, -46.38)
         return
     if getCurrentMap() == Map.JUNKERTOWN:
-        PosStart = vect(-46.5, 9.5, -47.5)
+        PosStart = vect(-47.67, 9.5, -49.62)
         PosFinish = vect(-92.82, 5.28, -119.06)
         return
     if getCurrentMap() == Map.RIALTO:
@@ -172,14 +172,14 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-149.09, -3.1, 24.25)
         return
     if getCurrentMap() == Map.NUMBANI:
-        PosStart = vect(18, 0.08, 13)
+        PosStart = vect(18, 0.08, 10)
         PosFinish = vect(206.99, -2.29, 22.14)
         return
     #Control
     if getCurrentMap() == Map.BUSAN:
         #Downtown
         if getCurrentObjective() == 0:
-            PosStart = vect(99, 15.93, -125.5)
+            PosStart = vect(101.64, 15.93, -126.23)
             PosFinish = vect(-3.5, 15.8, -125)
             return
         #MEKA Base
@@ -189,7 +189,7 @@ rule "Start - Maps (Season 1)":
             return
         #Sanctuary
         if getCurrentObjective() == 1:
-            PosStart = vect(-255.5, 9.36, 147)
+            PosStart = vect(-252, 9.65, 146.92)
             PosFinish = vect(-397, 9.1, 171)
             return
     if getCurrentMap() == Map.ILIOS_LIGHTHOUSE:
@@ -197,11 +197,11 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(290, -25.74, -89)
         return
     if getCurrentMap() == Map.ILIOS_RUINS:
-        PosStart = vect(112, 65.39, -178)
+        PosStart = vect(112, 65.39, -178.88)
         PosFinish = vect(-58.5, 60.3, -150)
         return
     if getCurrentMap() == Map.ILIOS_WELL:
-        PosStart = vect(-159, -5.06, -75.5)
+        PosStart = vect(-157, -5.06, -77.36)
         PosFinish = vect(-264.5, -5.2, 29.5)
         return
     if getCurrentMap() == Map.LIJIANG_CONTROL_CENTER:
@@ -229,11 +229,11 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-176.5, -99.5, -71)
         return
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
-        PosStart = vect(101, 1, 309.5)
+        PosStart = vect(100, 1, 311)
         PosFinish = vect(195, 0.75, 200)
         return
     if getCurrentMap() == Map.OASIS_GARDENS:
-        PosStart = vect(182, 8, -223.5)
+        PosStart = vect(181, 8, -220.3)
         PosFinish = vect(103, 7.9, -285.5)
         return
     if getCurrentMap() == Map.OASIS_UNIVERSITY:
@@ -1110,8 +1110,8 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.5b4 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.5b4 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.6b0 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.6b0 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
     hudHeader([player for player in getAllPlayers() if not player.Category], "3 - {0}{1} sec - {2}".format(TimeThirdStan, "{0}".format(10 * TimeThirdStan).split(".")[1].charAt(1), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if not player.Category], "2 - {0}{1} sec - {2}".format(TimeSecondStan, "{0}".format(10 * TimeSecondStan).split(".")[1].charAt(1), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
