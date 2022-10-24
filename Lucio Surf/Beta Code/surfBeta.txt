@@ -2,7 +2,7 @@ settings
 {
     main
 	{
-		Description: "Lucio Surf v5.6b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
+		Description: "Lucio Surf v5.6b1.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
 		Mode Name: "Lucio Surf Beta"
 	}
 	lobby
@@ -190,7 +190,7 @@ rule ("Start - Maps (Season 1)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Horizon Lunar Colony)));
-            Set Global Variable(PosStart, Vector(19, 13, -45.5));
+            Set Global Variable(PosStart, Vector(17.5, 13, -49.07));
             Set Global Variable(PosFinish, Vector(-24.74, 2.5, -121));
             Abort;
         End;
@@ -315,7 +315,7 @@ rule ("Start - Maps (Season 1)") {
                 Abort;
             End;
             If(Compare(Objective Index, ==, 2));
-                Set Global Variable(PosStart, Vector(112, 65.39, -178.88));
+                Set Global Variable(PosStart, Vector(112, 65.39, -178));
                 Set Global Variable(PosFinish, Vector(-58.5, 60.3, -150));
                 Abort;
             End;
@@ -394,6 +394,7 @@ rule ("Start - Maps (Season 2)") {
         If(Compare(Current Map, ==, Map(Horizon Lunar Colony)));
             Set Global Variable(PosStart, Vector(-19.673, 2.75, -120.219));
             Set Global Variable(PosFinish, Vector(19, 6.9, -45.5));
+            Set Global Variable(PosBarrier, Array(Vector(50.83, 14.7, -84.84)));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Paris)));
@@ -413,17 +414,17 @@ rule ("Start - Maps (Season 2)") {
         End;
         "Escort"
         If(Compare(Current Map, ==, Map(Dorado)));
-            Set Global Variable(PosStart, Vector(190.171, 14.1, 35.423));
+            Set Global Variable(PosStart, Vector(192.23, 14.1, 37.31));
             Set Global Variable(PosFinish, Vector(12.5, -0.3, 6));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Havana)));
-            Set Global Variable(PosStart, Vector(138.376, 6, -34.025));
+            Set Global Variable(PosStart, Vector(132.8, 6, -38.67));
             Set Global Variable(PosFinish, Vector(-98, 3.9, -93));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Junkertown)));
-            Set Global Variable(PosStart, Vector(-89.759, 7.05, -105.446));
+            Set Global Variable(PosStart, Vector(-88.12, 6.44, -107.5));
             Set Global Variable(PosFinish, Vector(-46.5, 9.4, -47.5));
             Abort;
         End;
@@ -433,12 +434,12 @@ rule ("Start - Maps (Season 2)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Route 66)));
-            Set Global Variable(PosStart, Vector(-89.645, 6.5, -32.632));
+            Set Global Variable(PosStart, Vector(-89.63, 6.5, -29.58));
             Set Global Variable(PosFinish, Vector(38.5, 4.6, 36.5));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Watchpoint: Gibraltar)));
-            Set Global Variable(PosStart, Vector(65.011, 1, 47.639));
+            Set Global Variable(PosStart, Vector(65.23, 1, 46.5));
             Set Global Variable(PosFinish, Vector(39, 3.9, -124.5));
             Abort;
         End;
@@ -475,7 +476,7 @@ rule ("Start - Maps (Season 2)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Hollywood)));
-            Set Global Variable(PosStart, Vector(-33.426, 1.75, -140.166));
+            Set Global Variable(PosStart, Vector(-31.19, 1.75, -138.17));
             Set Global Variable(PosFinish, Vector(-52, -0.5, 12.5));
             Abort;
         End;
@@ -485,7 +486,7 @@ rule ("Start - Maps (Season 2)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Numbani)));
-            Set Global Variable(PosStart, Vector(201.699, 4.2, 38.253));
+            Set Global Variable(PosStart, Vector(199.54, 4.2, 37.77));
             Set Global Variable(PosFinish, Vector(18, -0.3, 13));
             Abort;
         End;
@@ -557,7 +558,7 @@ rule ("Start - Maps (Season 2)") {
                 Abort;
             End;
             If(Compare(Objective Index, ==, 0));
-                Set Global Variable(PosStart, Vector(-184.744, -96.5, -75.548));
+                Set Global Variable(PosStart, Vector(-182, -99.08, -74.5));
                 Set Global Variable(PosFinish, Vector(-191, -98.7, 60));
                 Abort;
             End;
@@ -570,12 +571,12 @@ rule ("Start - Maps (Season 2)") {
                 Abort;
             End;
             If(Compare(Objective Index, ==, 1));
-                Set Global Variable(PosStart, Vector(101.075, 8, -271.365));
+                Set Global Variable(PosStart, Vector(102.21, 8, -272.96));
                 Set Global Variable(PosFinish, Vector(182, 7.4, -223.5));
                 Abort;
             End;
             If(Compare(Objective Index, ==, 2));
-                Set Global Variable(PosStart, Vector(-187.904, 19.77, -69.197));
+                Set Global Variable(PosStart, Vector(-190, 19.07, -67.81));
                 Set Global Variable(PosFinish, Vector(-188, 16.9, 50.5));
                 Abort;
             End;
@@ -1460,8 +1461,8 @@ rule ("Start - Global") {
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Global.Loop1), 5, Visible To);
         End;
         "Seaons / Mode information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Lucio Surf v5.6b0 | Season {0} | Standard", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.6b0 | Season {0} | Gravspeed", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Lucio Surf v5.6b1 | Season {0} | Standard", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.6b1 | Season {0} | Gravspeed", Add(Global.Season, 1), Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
         Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("3 - {0}{1} sec - {2}", Global.TimeThirdStan, Char In String(Value In Array(String Split(Custom String("{0}", Multiply(10, Global.TimeThirdStan), Null, Null), Custom String(".", Null, Null, Null)), 1), 1), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("2 - {0}{1} sec - {2}", Global.TimeSecondStan, Char In String(Value In Array(String Split(Custom String("{0}", Multiply(10, Global.TimeSecondStan), Null, Null), Custom String(".", Null, Null, Null)), 1), 1), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
@@ -1828,6 +1829,7 @@ rule ("Barrier") {
         All;
     }
     conditions {
+        (Event Player).Mode == 0;
         Is True For Any(Global.PosBarrier, Compare(Distance Between(Event Player, Current Array Element), <=, 5)) == True;
     }
     actions {

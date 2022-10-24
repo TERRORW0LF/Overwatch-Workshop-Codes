@@ -1,4 +1,4 @@
-settings "settings.opy.json"
+#settings "settings.opy.json"
 
 #Global variables
 
@@ -52,13 +52,14 @@ playervar PosPracticeCheckpoint 23
 playervar FacingPracticeCheckpoint 24
 playervar VelocityPracticeCheckpoint 25
 playervar SpeedPracticeCheckpoint 26
-playervar PosPrev 30
-playervar Pos1 31
-playervar Pos2 32
-playervar Angle 33
-playervar PosCircleHit 34
-playervar Distance 35
-playervar Distance2 36
+playervar PosNow 30
+playervar PosPrev 31
+playervar SpeedNow 32
+playervar SpeedPrev 33
+playervar Pos1 34
+playervar Pos2 35
+playervar Angle 36
+playervar Distance2 37
 
 
 #Subroutine names
@@ -97,7 +98,7 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-10.57, -1.02, -84.71)
         return
     if getCurrentMap() == Map.HORIZON_LUNAR_COLONY:
-        PosStart = vect(19, 13, -45.5)
+        PosStart = vect(17.5, 13, -49.07)
         PosFinish = vect(-24.74, 2.5, -121)
         return
     if getCurrentMap() == Map.PARIS:
@@ -197,7 +198,7 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(290, -25.74, -89)
         return
     if getCurrentMap() == Map.ILIOS_RUINS:
-        PosStart = vect(112, 65.39, -178.88)
+        PosStart = vect(112, 65.39, -178)
         PosFinish = vect(-58.5, 60.3, -150)
         return
     if getCurrentMap() == Map.ILIOS_WELL:
@@ -253,6 +254,7 @@ rule "Start - Maps (Season 2)":
     if getCurrentMap() == Map.HORIZON_LUNAR_COLONY:
         PosStart = vect(-19.673, 2.75, -120.219)
         PosFinish = vect(19, 6.9, -45.5)
+        PosBarrier = [vect(50.83, 14.7, -84.84)]
         return
     if getCurrentMap() == Map.PARIS:
         PosStart = vect(-87.011, 13, -104.458)
@@ -268,15 +270,15 @@ rule "Start - Maps (Season 2)":
         return
     #Escort
     if getCurrentMap() == Map.DORADO:
-        PosStart = vect(190.171, 14.1, 35.423)
+        PosStart = vect(192.23, 14.1, 37.31)
         PosFinish = vect(12.5, -0.3, 6)
         return
     if getCurrentMap() == Map.HAVANA:
-        PosStart = vect(138.376, 6, -34.025)
+        PosStart = vect(132.8, 6, -38.67)
         PosFinish = vect(-98, 3.9, -93)
         return
     if getCurrentMap() == Map.JUNKERTOWN:
-        PosStart = vect(-89.759, 7.05, -105.446)
+        PosStart = vect(-88.12, 6.44, -107.5)
         PosFinish = vect(-46.5, 9.4, -47.5)
         return
     if getCurrentMap() == Map.RIALTO:
@@ -284,11 +286,11 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(106.5, -1.5, -15.5)
         return
     if getCurrentMap() == Map.ROUTE66:
-        PosStart = vect(-89.645, 6.5, -32.632)
+        PosStart = vect(-89.63, 6.5, -29.58)
         PosFinish = vect(38.5, 4.6, 36.5)
         return
     if getCurrentMap() == Map.WATCHPOINT_GIBRALTAR:
-        PosStart = vect(65.011, 1, 47.639)
+        PosStart = vect(65.23, 1, 46.5)
         PosFinish = vect(39, 3.9, -124.5)
         return
     #FFA
@@ -318,7 +320,7 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(2, 5.9, 0.5)
         return
     if getCurrentMap() == Map.HOLLYWOOD:
-        PosStart = vect(-33.426, 1.75, -140.166)
+        PosStart = vect(-31.19, 1.75, -138.17)
         PosFinish = vect(-52, -0.5, 12.5)
         return
     if getCurrentMap() == Map.KINGS_ROW:
@@ -326,7 +328,7 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(-12, -0.2, 12.5)
         return
     if getCurrentMap() == Map.NUMBANI:
-        PosStart = vect(201.699, 4.2, 38.253)
+        PosStart = vect(199.54, 4.2, 37.77)
         PosFinish = vect(18, -0.3, 13)
         return
     #Control
@@ -382,7 +384,7 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(-38.5, 13.6, 60)
         return
     if getCurrentMap() == Map.NEPAL_VILLAGE:
-        PosStart = vect(-184.744, -96.5, -75.548)
+        PosStart = vect(-182, -99.08, -74.5)
         PosFinish = vect(-191, -98.7, 60)
         return
     #Oasis
@@ -391,11 +393,11 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(101, 0.75, 309.5)
         return
     if getCurrentMap() == Map.OASIS_GARDENS:
-        PosStart = vect(101.075, 8, -271.365)
+        PosStart = vect(102.21, 8, -272.96)
         PosFinish = vect(182, 7.4, -223.5)
         return
     if getCurrentMap() == Map.OASIS_UNIVERSITY:
-        PosStart = vect(-187.904, 19.77, -69.197)
+        PosStart = vect(-190, 19.07, -67.81)
         PosFinish = vect(-188, 16.9, 50.5)
 
 
@@ -1113,12 +1115,12 @@ rule "Start - Global":
     hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.6b0 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.6b0 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
-    hudHeader([player for player in getAllPlayers() if not player.Category], "3 - {0}{1} sec - {2}".format(TimeThirdStan, "{0}".format(10 * TimeThirdStan).split(".")[1].charAt(1), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category], "2 - {0}{1} sec - {2}".format(TimeSecondStan, "{0}".format(10 * TimeSecondStan).split(".")[1].charAt(1), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Record - {0}{1} sec - {2}".format(TimeFirstStan, "{0}".format(10 * TimeFirstStan).split(".")[1].charAt(1), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "3 - {0}{1} sec - {2}".format(TimeThirdGrav, "{0}".format(10 * TimeThirdGrav).split(".")[1].charAt(1), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "2 - {0}{1} sec - {2}".format(TimeSecondGrav, "{0}".format(10 * TimeSecondGrav).split(".")[1].charAt(1), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Record - {0}{1} sec - {2}".format(TimeFirstGrav, "{0}".format(10 * TimeFirstGrav).split(".")[1].charAt(1), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdStan), "{0}".format(round((1000 * TimeThirdStan) % 1000 + 1000)).substring(1, 3), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondStan), "{0}".format(round((1000 * TimeSecondStan) % 1000 + 1000)).substring(1, 3), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Record - {0}.{1} sec - {2}".format(floor(TimeFirstStan), "{0}".format(round((1000 * TimeFirstStan) % 1000 + 1000)).substring(1, 3), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdGrav), "{0}".format(round((1000 * TimeThirdGrav) % 1000 + 1000)).substring(1, 3), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondGrav), "{0}".format(round((1000 * TimeSecondGrav) % 1000 + 1000)).substring(1, 3), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Record - {0}.{1} sec - {2}".format(floor(TimeFirstGrav), "{0}".format(round((1000 * TimeFirstGrav) % 1000 + 1000)).substring(1, 3), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     #Help text standard
     hudSubtext(getAllPlayers(), "Toggle Help - Crouch + Interact", HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
@@ -1180,13 +1182,24 @@ rule "Start - Player":
     eventPlayer.disablePlayerCollision()
     #Hud
     hudHeader(eventPlayer, eventPlayer, HudPosition.LEFT, 0, Color.YELLOW, HudReeval.NONE, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestStan, "{0}".format(10 * eventPlayer.TimeBestStan).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestGrav, "{0}".format(10 * eventPlayer.TimeBestGrav).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestStan), "{0}".format(round((1000 * eventPlayer.TimeBestStan) % 1000 + 1000)).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestGrav), "{0}".format(round((1000 * eventPlayer.TimeBestGrav) % 1000 + 1000)).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "ATTEMPTS: {0}".format(eventPlayer.Attempts), HudPosition.LEFT, 2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "{0} m/s".format(eventPlayer.getHorizontalSpeed()), HudPosition.TOP, 0.1, eventPlayer.SpeedColor, HudReeval.STRING_AND_COLOR, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer, "{0}{1} sec".format(eventPlayer.TimeCurrent + eventPlayer.TimeExtra, "{0}".format(10 * (eventPlayer.TimeCurrent + eventPlayer.TimeExtra)).split(".")[1].charAt(1)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer, "{0}.{1} sec".format(floor(eventPlayer.TimeCurrent), "{0}".format(round((1000 * eventPlayer.TimeCurrent) % 1000 + 1000)).substring(1, 3)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
     #Start
     async(Respawn, AsyncBehavior.NOOP)
+
+
+rule "Last Frame Data":
+    @Event eachPlayer
+
+    while true:
+        eventPlayer.PosNow = eventPlayer.getPosition()
+        eventPlayer.SpeedNow = eventPlayer.getHorizontalSpeed()
+        wait()
+        eventPlayer.PosPrev = eventPlayer.PosNow
+        eventPlayer.SpeedPrev = eventPlayer.SpeedNow
 
 
 rule "Start timer":
@@ -1200,18 +1213,18 @@ rule "Start timer":
         return
     eventPlayer.setInvisibility(Invis.NONE)
 
-    eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.getPosition().x - eventPlayer.PosPrev.x, 0, eventPlayer.getPosition().z - eventPlayer.PosPrev.z), Vector.RIGHT)
-    eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sin(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sin(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cos(eventPlayer.Angle))
-    if distance(eventPlayer.Pos1, vect(PosStart.x, 0, PosStart.z)) > 2:
-        eventPlayer.Pos2 = vect((eventPlayer.getPosition().x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.getPosition().z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
-        eventPlayer.PosCircleHit = vect((-1 if Pos1.x < Pos2.x else 1) * sqrt(4 - eventPlayer.Pos1.z*eventPlayer.Pos1.z), 0, Pos1.z)
-        eventPlayer.Distance = distance(eventPlayer.Pos1, eventPlayer.PosCircleHit)
-        #Do shit to calculate time
-        #Find speed function, if possible
+    if distance(vect(eventPlayer.PosPrev.x, PosStart.y, eventPlayer.PosPrev.z), PosStart) < 2 and distance(vect(eventPlayer.PosNow.x, PosStart.y, eventPlayer.PosNow.z), PosStart) > 2:
+        eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z), Vector.RIGHT)
+        eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sin(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sin(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cos(eventPlayer.Angle))
+        eventPlayer.Pos2 = vect((eventPlayer.PosNow.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
+        eventPlayer.TimeExtra = (-eventPlayer.SpeedPrev + sqrt(eventPlayer.SpeedPrev*eventPlayer.SpeedPrev + 4*(eventPlayer.SpeedNow - eventPlayer.SpeedPrev)*distance(eventPlayer.Pos1, vect((1 if eventPlayer.Pos1.x < eventPlayer.Pos2.x else -1) * sqrt(4 - eventPlayer.Pos1.z*eventPlayer.Pos1.z), 0, eventPlayer.Pos1.z))))/(2*(eventPlayer.SpeedNow - eventPlayer.SpeedPrev))
+    else:
+        eventPlayer.TimeExtra = 0
     if eventPlayer.getPosition().y - PosStart.y > 3:
         eventPlayer.Distance2 = PosStart.y - eventPlayer.PosPrev.y
         #Find gravity to calculate time when they hit limit
         #Compare extra time against calculated one, take smaller one
+    #eventPlayer.TimeCurrent += eventPlayer.TimeExtra
 
 
 rule "Checkpoint":
@@ -1236,7 +1249,7 @@ rule "Checkpoint":
         smallMessage(eventPlayer, l"{0} - {1}".format(l"{0} {1}".format(l"Finish", l"Unlocked"), l"{0} sec".format(eventPlayer.TimeCurrent)))
         return
     
-    smallMessage(eventPlayer, l"{0}: {1}".format(l"Checkpoints", "{0}/{1} - {2}".format(len([checkpoint for checkpoint in eventPlayer.Checkpoint if checkpoint]), len(PosCheckpoint), l"{0} sec".format(eventPlayer.TimeCurrent))))
+    smallMessage(eventPlayer, l"{0}: {1}".format(l"Checkpoints", "{0}/{1} - {2}".format(len([checkpoint for checkpoint in eventPlayer.Checkpoint if checkpoint]), len(PosCheckpoint), "{0}.{1} sec".format(floor(eventPlayer.TimeCurrent), "{0}".format(round((1000 * eventPlayer.TimeCurrent) % 1000 + 1000)).substring(1, 3)))))
 
 
 rule "Checkpoint (no LoS)":
@@ -1269,13 +1282,11 @@ rule "Finish":
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.Attempts += 1
     
-    eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.getPosition().x - eventPlayer.PosPrev.x, 0, eventPlayer.getPosition().z - eventPlayer.PosPrev.z), Vector.RIGHT)
+    eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z), Vector.RIGHT)
     eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sin(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sin(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cos(eventPlayer.Angle))
-    eventPlayer.Pos2 = vect((eventPlayer.getPosition().x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.getPosition().z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
-    eventPlayer.PosCircleHit = vect((-1 if Pos1.x > Pos2.x else 1) * sqrt(25 - eventPlayer.Pos1.z*eventPlayer.Pos1.z), 0, Pos1.z)
-    eventPlayer.Distance = distance(eventPlayer.Pos1, eventPlayer.PosCircleHit)
-    #Do shit to calculate time
-    #Find speed function, if possible
+    eventPlayer.Pos2 = vect((eventPlayer.PosNow.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
+    eventPlayer.TimeExtra -= 0.016 - (-eventPlayer.SpeedPrev + sqrt(eventPlayer.SpeedPrev*eventPlayer.SpeedPrev + 4*(eventPlayer.SpeedNow - eventPlayer.SpeedPrev)*distance(eventPlayer.Pos1, vect((-1 if eventPlayer.Pos1.x < eventPlayer.Pos2.x else 1) * sqrt(25 - eventPlayer.Pos1.z*eventPlayer.Pos1.z), 0, eventPlayer.Pos1.z))))/(2*(eventPlayer.SpeedNow - eventPlayer.SpeedPrev))
+    #eventPlayer.TimeCurrent += eventPlayer.TimeExtra
 
     if not eventPlayer.Category:
         if eventPlayer.TimeCurrent < eventPlayer.TimeBestStan:
@@ -1351,8 +1362,7 @@ rule "Finish Message (Best Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer != PlayerFirstGrav)
     
-    bigMessage(eventPlayer, "New PB: {0}{1} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(10 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)).split(".")[1].charAt(1)))
-
+    bigMessage(eventPlayer, "New PB: {0}.{1} sec".format(floor(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav), "{0}".format(round((1000 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)) % 1000 + 1000)).substring(1, 3)))
 
 rule "Finish Message (Record Time)":
     @Event eachPlayer
@@ -1360,7 +1370,7 @@ rule "Finish Message (Record Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer == PlayerFirstGrav)
     
-    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}{1} sec - {2}!!!".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(10 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)).split(".")[1].charAt(1), eventPlayer))
+    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}.{1} sec - {2}!!!".format(floor(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav), "{0}".format(round((1000 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)) % 1000 + 1000)).substring(1, 3), eventPlayer))
 
 
 rule "Floor":
@@ -1392,6 +1402,7 @@ rule "Death":
 
 rule "Barrier":
     @Event eachPlayer
+    @Condition eventPlayer.Mode == 0
     @Condition any([distance(eventPlayer, barrier) <= 5 for barrier in PosBarrier])
 
     async(Respawn, AsyncBehavior.NOOP)
