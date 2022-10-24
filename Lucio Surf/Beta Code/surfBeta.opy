@@ -141,19 +141,19 @@ rule "Start - Maps (Season 1)":
     #FFA
     if getCurrentMap() == Map.CHATEAU_GUILLARD:
         PosStart = vect(176.515, 0, 52.458)
-        PosFinish = vect(233.220, 3.9, 110.969)
+        PosFinish = vect(233.22, 3.9, 110.969)
         return
     if getCurrentMap() == Map.KANEZAKA:
         PosStart = vect(-14.495, 6, 42.699)
         PosFinish = vect(-39.953, 7.9, -54.264)
         return
     if getCurrentMap() == Map.MALEVENTO:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(22.672, 2, -25.413)
+        PosFinish = vect(-0.175, 2.4, 46.063)
         return
     if getCurrentMap() == Map.PETRA:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(39.378, -10.12, 36.503)
+        PosFinish = vect(-38.385, -12, -15.7)
         return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -295,20 +295,20 @@ rule "Start - Maps (Season 2)":
         return
     #FFA
     if getCurrentMap() == Map.CHATEAU_GUILLARD:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(236.155, 4, 102.912)
+        PosFinish = vect(176.515, -1, 52.458)
         return
     if getCurrentMap() == Map.KANEZAKA:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-37.609, 8, -51.548)
+        PosFinish = vect(-13.4, 5.7, 41.9)
         return
     if getCurrentMap() == Map.MALEVENTO:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(0.164, 2.67, 42.701)
+        PosFinish = vect(22.672, 1.9, -25.413)
         return
     if getCurrentMap() == Map.PETRA:
-        PosStart = vect(0, 0, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-38.385, -10.5, -15.7)
+        PosFinish = vect(39.378, -11, 36.503)
         return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -357,7 +357,7 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(-58.5, 60.58, -150)
         PosFinish = vect(112, 60.3, -178)
         return
-        if getCurrentMap() == Map.ILIOS_WELL:
+    if getCurrentMap() == Map.ILIOS_WELL:
         PosStart = vect(-264.5, -5.1, 29.5)
         PosFinish = vect(-159, -5.2, -75.5)
         return
@@ -464,24 +464,24 @@ rule "Start - Maps (Season 3)":
         return
     #FFA
     if getCurrentMap() == Map.CHATEAU_GUILLARD:
-        PosStart = vect(0, 0, 0)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(191.7, 9, 111.2)
+        PosCheckpoint = [vect(227.61, 12.5, 63.65)]
+        PosFinish = vect(180.24, 8.9, 104)
         return
     if getCurrentMap() == Map.KANEZAKA:
-        PosStart = vect(0, 0, 0)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-58.95, 11, -38)
+        PosCheckpoint = [vect(-4.6, 5.8, 17.77)]
+        PosFinish = vect(-59.5, 10.9, -16)
         return
     if getCurrentMap() == Map.MALEVENTO:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(22.672, 2, -25.413)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-0.175, 2.4, 46.063)
         return
     if getCurrentMap() == Map.PETRA:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(39.378, -10.12, 36.503)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-38.385, -12, -15.7)
         return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -664,27 +664,27 @@ rule "Start - Maps (Season 4)":
         return
     #FFA
     if getCurrentMap() == Map.CHATEAU_GUILLARD:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(176.515, 0, 52.458)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(233.22, 3.9, 110.969)
         Checkpoint = true
         return
     if getCurrentMap() == Map.KANEZAKA:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(-14.495, 6, 42.699)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-39.953, 7.9, -54.264)
         Checkpoint = true
         return
     if getCurrentMap() == Map.MALEVENTO:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(22.672, 2, -25.413)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-0.175, 2.4, 46.063)
         Checkpoint = true
         return
     if getCurrentMap() == Map.PETRA:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(39.378, -10.12, 36.503)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-38.385, -12, -15.7)
         Checkpoint = true
         return
     #Hybrid
@@ -878,24 +878,24 @@ rule "Start - Maps (Season 5)":
         return
     #FFA
     if getCurrentMap() == Map.CHATEAU_GUILLARD:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(176.515, 0, 52.458)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(233.22, 3.9, 110.969)
         return
     if getCurrentMap() == Map.KANEZAKA:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(-14.495, 6, 42.699)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-39.953, 7.9, -54.264)
         return
     if getCurrentMap() == Map.MALEVENTO:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(22.672, 2, -25.413)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-0.175, 2.4, 46.063)
         return
     if getCurrentMap() == Map.PETRA:
-        PosStart = vect(0, 0, 0)
+        PosStart = vect(39.378, -10.12, 36.503)
         PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosFinish = vect(-38.385, -12, -15.7)
         return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -1112,8 +1112,8 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.6b0 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.6b0 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.7b0 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.7b0 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
     hudHeader([player for player in getAllPlayers() if not player.Category], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdStan), "{0}".format(round((1000 * TimeThirdStan) % 1000 + 1000)).substring(1, 3), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if not player.Category], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondStan), "{0}".format(round((1000 * TimeSecondStan) % 1000 + 1000)).substring(1, 3), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
