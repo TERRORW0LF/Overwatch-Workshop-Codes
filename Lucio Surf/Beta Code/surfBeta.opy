@@ -1821,6 +1821,14 @@ rule "Match Time Frozen":
     setMatchTime(Time + 10)
 
 
+rule "End Match FFA":
+    @Condition getCurrentGamemode() == Gamemode.FFA
+    @Condition isGameInProgress()
+    @Condition getMatchTime() == 0
+
+    restartMatch()
+
+
 def Respawn():
     @Name "Respawn"
     

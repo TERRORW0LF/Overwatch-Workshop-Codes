@@ -2547,6 +2547,20 @@ rule ("Match Time Frozen") {
     }
 }
 
+rule ("End Match FFA") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Deathmatch);
+        Is Game In Progress == True;
+        Match Time == 0;
+    }
+    actions {
+        Restart Match;
+    }
+}
+
 rule ("Respawn") {
     event {
         Subroutine;
@@ -2601,4 +2615,3 @@ rule ("Respawn") {
         End;
     }
 }
-

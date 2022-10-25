@@ -222,7 +222,7 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 2, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
+        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 0, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
         Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 1, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
@@ -2552,6 +2552,20 @@ rule ("Match Time Frozen") {
     actions {
         Wait(0.016, Ignore Condition);
         Set Match Time(Add(Global.Time, 10));
+    }
+}
+
+rule ("End Match FFA") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Deathmatch);
+        Is Game In Progress == True;
+        Match Time == 0;
+    }
+    actions {
+        Restart Match;
     }
 }
 
