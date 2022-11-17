@@ -129,6 +129,23 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(39, 4, -124.5)
         PosFinish = vect(82.46, -1, 39.99)
         return
+    #FFA
+    if getCurrentMap() == Map.CHATEAU_GUILLARD:
+        PosStart = vect(176.515, 0, 52.458)
+        PosFinish = vect(233.220, 3.9, 110.969)
+        return
+    if getCurrentMap() == Map.KANEZAKA:
+        PosStart = vect(-14.495, 6, 42.699)
+        PosFinish = vect(-39.953, 7.9, -54.264)
+        return
+    if getCurrentMap() == Map.MALEVENTO:
+        PosStart = vect(0, 0, 0)
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.PETRA:
+        PosStart = vect(0, 0, 0)
+        PosFinish = vect(0, 0, 0)
+        return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(3, -0.1, 21.5)
@@ -167,69 +184,53 @@ rule "Start - Maps (Season 1)":
             PosStart = vect(-255.5, 9.36, 147)
             PosFinish = vect(-397, 9.1, 171)
             return
-    if getCurrentMap() == Map.ILIOS:
-        #Lighthouse
-        if getCurrentObjective() == 0:
-            PosStart = vect(329, -25.6, 22)
-            PosFinish = vect(290, -25.74, -89)
-            return
-        #Ruins
-        if getCurrentObjective() == 2:
-            PosStart = vect(112, 65.39, -178)
-            PosFinish = vect(-58.5, 60.3, -150)
-            return
-        #Well
-        if getCurrentObjective() == 1:
-            PosStart = vect(-159, -5.06, -75.5)
-            PosFinish = vect(-264.5, -5.2, 29.5)
-            return
-    if getCurrentMap() == Map.LIJIANG_TOWER:
-        #Control Tower
-        if getCurrentObjective() == 2:
-            PosStart = vect(44, 265, 327)
-            PosFinish = vect(-35.5, 266.9, 316.75)
-            return
-        #Garden
-        if getCurrentObjective() == 1:
-            PosStart = vect(64.5, 94, 145.5)
-            PosFinish = vect(-61, 93.9, 148)
-            return
-        #Night Market
-        if getCurrentObjective() == 0:
-            PosStart = vect(61, 2, -34)
-            PosFinish = vect(-54.25, 5.9, -11.75)
-            return
-    if getCurrentMap() == Map.NEPAL:
-        #Sanctum
-        if getCurrentObjective() == 2:
-            PosStart = vect(81, 131.8, 36)
-            PosFinish = vect(81, 131.7, -35.5)
-            return
-        #Shrine
-        if getCurrentObjective() == 1:
-            PosStart = vect(-38.5, 14.88, 60)
-            PosFinish = vect(-49, 14.9, -74)
-            return
-        #Village
-        if getCurrentObjective() == 0:
-            PosStart = vect(-191, -98.23, 60)
-            PosFinish = vect(-176.5, -99.5, -71)
-            return
-    if getCurrentMap() == Map.OASIS:
-        #City Center
-        if getCurrentObjective() == 0:
-            PosStart = vect(101, 1, 309.5)
-            PosFinish = vect(195, 0.75, 200)
-            return
-        #Gardens
-        if getCurrentObjective() == 1:
-            PosStart = vect(182, 8, -223.5)
-            PosFinish = vect(103, 7.9, -285.5)
-            return
-        #University
-        if getCurrentObjective() == 2:
-            PosStart = vect(-188, 18, 50.5)
-            PosFinish = vect(-188.25, 17.9, -58)
+    if getCurrentMap() == Map.ILIOS_LIGHTHOUSE:
+        PosStart = vect(329, -25.6, 22)
+        PosFinish = vect(290, -25.74, -89)
+        return
+    if getCurrentMap() == Map.ILIOS_RUINS:
+        PosStart = vect(112, 65.39, -178)
+        PosFinish = vect(-58.5, 60.3, -150)
+        return
+    if getCurrentMap() == Map.ILIOS_WELL:
+        PosStart = vect(-159, -5.06, -75.5)
+        PosFinish = vect(-264.5, -5.2, 29.5)
+        return
+    if getCurrentMap() == Map.LIJIANG_CONTROL_CENTER:
+        PosStart = vect(44, 265, 327)
+        PosFinish = vect(-35.5, 266.9, 316.75)
+        return
+    if getCurrentMap() == Map.LIJIANG_GARDEN:
+        PosStart = vect(64.5, 94, 145.5)
+        PosFinish = vect(-61, 93.9, 148)
+        return
+    if getCurrentMap() == Map.LIJIANG_NIGHT_MARKET:
+        PosStart = vect(61, 2, -34)
+        PosFinish = vect(-54.25, 5.9, -11.75)
+        return
+    if getCurrentMap() == Map.NEPAL_SANCTUM:
+        PosStart = vect(81, 131.8, 36)
+        PosFinish = vect(81, 131.7, -35.5)
+        return
+    if getCurrentMap() == Map.NEPAL_SHRINE:
+        PosStart = vect(-38.5, 14.88, 60)
+        PosFinish = vect(-49, 14.9, -74)
+        return
+    if getCurrentMap() == Map.NEPAL_VILLAGE:
+        PosStart = vect(-191, -98.23, 60)
+        PosFinish = vect(-176.5, -99.5, -71)
+        return
+    if getCurrentMap() == Map.OASIS_CITY_CENTER:
+        PosStart = vect(101, 1, 309.5)
+        PosFinish = vect(195, 0.75, 200)
+        return
+    if getCurrentMap() == Map.OASIS_GARDENS:
+        PosStart = vect(182, 8, -223.5)
+        PosFinish = vect(103, 7.9, -285.5)
+        return
+    if getCurrentMap() == Map.OASIS_UNIVERSITY:
+        PosStart = vect(-188, 18, 50.5)
+        PosFinish = vect(-188.25, 17.9, -58)
 
 
 rule "Start - Maps (Season 2)":
@@ -282,6 +283,23 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(65.011, 1, 47.639)
         PosFinish = vect(39, 3.9, -124.5)
         return
+    #FFA
+    if getCurrentMap() == Map.CHATEAU_GUILLARD:
+        PosStart = vect(0, 0, 0)
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.KANEZAKA:
+        PosStart = vect(0, 0, 0)
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.MALEVENTO:
+        PosStart = vect(0, 0, 0)
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.PETRA:
+        PosStart = vect(0, 0, 0)
+        PosFinish = vect(0, 0, 0)
+        return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(-121.57, -0.4, 116.2)
@@ -320,68 +338,57 @@ rule "Start - Maps (Season 2)":
             PosStart = vect(-391.367, 9.36, 168.276)
             PosFinish = vect(-255.5, 9.26, 147)
             return
-    if getCurrentMap() == Map.ILIOS:
-        #Lighthouse
-        if getCurrentObjective() == 0:
-            PosStart = vect(288.533, -25.57, -100.389)
-            PosFinish = vect(329, -25.7, 22)
-            return
-        #Ruins
-        if getCurrentObjective() == 2:
-            PosStart = vect(-58.5, 60.58, -150)
-            PosFinish = vect(112, 60.3, -178)
-            return
-        #Well
-        if getCurrentObjective() == 1:
-            PosStart = vect(-264.5, -5.1, 29.5)
-            PosFinish = vect(-159, -5.2, -75.5)
-            return
-    if getCurrentMap() == Map.LIJIANG_TOWER:
-        #Control Tower
-        if getCurrentObjective() == 2:
-            PosStart = vect(-35.5, 267, 316.75)
-            PosFinish = vect(44, 264.9, 327)
-            return
-        #Garden
-        if getCurrentObjective() == 1:
-            PosStart = vect(-65.211, 94, 145.476)
-            PosFinish = vect(64.5, 93.9, 145.5)
-            return
-        #Night Market
-        if getCurrentObjective() == 0:
-            PosStart = vect(-56.087, 1.86, -35.084)
-            PosFinish = vect(61, 1.8, -34)
-            return
-    if getCurrentMap() == Map.NEPAL:
-        #Sanctum
-        if getCurrentObjective() == 2:
-            PosStart = vect(81, 131.8, -35.5)
-            PosFinish = vect(81, 131.7, 36)
-            return
-        #Shrine
-        if getCurrentObjective() == 1:
-            PosStart = vect(-70.647, 16.89, -64.165)
-            PosFinish = vect(-38.5, 13.6, 60)
-            return
-        #Village
-        if getCurrentObjective() == 0:
-            PosStart = vect(-184.744, -96.5, -75.548)
-            PosFinish = vect(-191, -98.7, 60)
-    if getCurrentMap() == Map.OASIS:
-        #City Center
-        if getCurrentObjective() == 0:
-            PosStart = vect(211.712, 1, 203.561)
-            PosFinish = vect(101, 0.75, 309.5)
-            return
-        #Gardens
-        if getCurrentObjective() == 1:
-            PosStart = vect(101.075, 8, -271.365)
-            PosFinish = vect(182, 7.4, -223.5)
-            return
-        #University
-        if getCurrentObjective() == 2:
-            PosStart = vect(-187.904, 19.77, -69.197)
-            PosFinish = vect(-188, 16.9, 50.5)
+    #Ilios
+    if getCurrentMap() == Map.ILIOS_LIGHTHOUSE:
+        PosStart = vect(288.533, -25.57, -100.389)
+        PosFinish = vect(329, -25.7, 22)
+        return
+    if getCurrentMap() == Map.ILIOS_RUINS:
+        PosStart = vect(-58.5, 60.58, -150)
+        PosFinish = vect(112, 60.3, -178)
+        return
+    if getCurrentMap() == Map.ILIOS_WELL:
+        PosStart = vect(-264.5, -5.1, 29.5)
+        PosFinish = vect(-159, -5.2, -75.5)
+        return
+    #Lijiang
+    if getCurrentMap() == Map.LIJIANG_CONTROL_CENTER:
+        PosStart = vect(-35.5, 267, 316.75)
+        PosFinish = vect(44, 264.9, 327)
+        return
+    if getCurrentMap() == Map.LIJIANG_GARDEN:
+        PosStart = vect(-65.211, 94, 145.476)
+        PosFinish = vect(64.5, 93.9, 145.5)
+        return
+    if getCurrentMap() == Map.LIJIANG_NIGHT_MARKET:
+        PosStart = vect(-56.087, 1.86, -35.084)
+        PosFinish = vect(61, 1.8, -34)
+        return
+    #Nepal
+    if getCurrentMap() == Map.NEPAL_SANCTUM:
+        PosStart = vect(81, 131.8, -35.5)
+        PosFinish = vect(81, 131.7, 36)
+        return
+    if getCurrentMap() == Map.NEPAL_SHRINE:
+        PosStart = vect(-70.647, 15.7, -64.165)
+        PosFinish = vect(-38.5, 13.6, 60)
+        return
+    if getCurrentMap() == Map.NEPAL_VILLAGE:
+        PosStart = vect(-184.744, -96.5, -75.548)
+        PosFinish = vect(-191, -98.7, 60)
+        return
+    #Oasis
+    if getCurrentMap() == Map.OASIS_CITY_CENTER:
+        PosStart = vect(211.712, 1, 203.561)
+        PosFinish = vect(101, 0.75, 309.5)
+        return
+    if getCurrentMap() == Map.OASIS_GARDENS:
+        PosStart = vect(101.075, 8, -271.365)
+        PosFinish = vect(182, 7.4, -223.5)
+        return
+    if getCurrentMap() == Map.OASIS_UNIVERSITY:
+        PosStart = vect(-187.904, 19.77, -69.197)
+        PosFinish = vect(-188, 16.9, 50.5)
 
 
 rule "Start - Maps (Season 3)":
@@ -445,6 +452,27 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(89, 2.9, -27)]
         PosFinish = vect(97.362, -6, 38.946)
         return
+    #FFA
+    if getCurrentMap() == Map.CHATEAU_GUILLARD:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.KANEZAKA:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.MALEVENTO:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.PETRA:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(23.31, 2, 79.2)
@@ -491,81 +519,69 @@ rule "Start - Maps (Season 3)":
             PosCheckpoint = [vect(-328.5, 9.72, 107.4)]
             PosFinish = vect(-328.5, 9, 195)
             return
-    if getCurrentMap() == Map.ILIOS:
-        #Lighthouse
-        if getCurrentObjective() == 0:
-            PosStart = vect(318, -23.66, -35)
-            PosCheckpoint = [vect(365, -25.73, -54.5)]
-            PosFinish = vect(307.8, -11.1, 31.4)
-            return
-        #Ruins
-        if getCurrentObjective() == 2:
-            PosStart = vect(28.5, 57.37, -141.5)
-            PosCheckpoint = [vect(-55, 65, -178)]
-            PosFinish = vect(11.9, 66.2, -144.2)
-            return
-        #Well
-        if getCurrentObjective() == 1:
-            PosStart = vect(-195, 1, -3)
-            PosCheckpoint = [vect(-284, -0.55, 10)]
-            PosFinish = vect(-271.9, 1.2, 53.5)
-            return
-    if getCurrentMap() == Map.LIJIANG_TOWER:
-        #Control Tower
-        if getCurrentObjective() == 2:
-            PosStart = vect(0, 278, 293)
-            PosCheckpoint = [vect(0, 274, 330)]
-            PosFinish = vect(0, 269.9, 254)
-            return
-        #Garden
-        if getCurrentObjective() == 1:
-            PosStart = vect(-65, 94, 145)
-            PosCheckpoint = [vect(0, 94.9, 125)]
-            PosFinish = vect(52, 90, 182)
-            return
-        #Night Market
-        if getCurrentObjective() == 0:
-            PosStart = vect(1, -2, -82)
-            PosCheckpoint = [vect(49, 1.76, -47)]
-            PosFinish = vect(1, -0.1, -10)
-            return
-    if getCurrentMap() == Map.NEPAL:
-        #Sanctum
-        if getCurrentObjective() == 0:
-            PosStart = vect(78, 129.8, -59)
-            PosCheckpoint = [vect(81, 127.9, 8)]
-            PosFinish = vect(102, 131.9, 78)
-            return
-        #Shrine
-        if getCurrentObjective() == 2:
-            PosStart = vect(-26, 10.62, -34)
-            PosCheckpoint = [vect(-63, 12.9, 0)]
-            PosFinish = vect(-24, 14.9, 82)
-            return
-        #Village
-        if getCurrentObjective() == 1:
-            PosStart = vect(-158, -88.94, 0)
-            PosCheckpoint = [vect(-220, -94.1, 0)]
-            PosFinish = vect(-207, -87.1, -44)
-            return
-    if getCurrentMap() == Map.OASIS:
-        #City Center
-        if getCurrentObjective() == 0:
-            PosStart = vect(166, 4, 270)
-            PosCheckpoint = [vect(102, -2, 288)]
-            PosFinish = vect(119, 0.5, 223)
-            return
-        #Gardens
-        if getCurrentObjective() == 1:
-            PosStart = vect(172.66, 8.4, -166)
-            PosCheckpoint = [vect(141.33, 7.3, -247.33)]
-            PosFinish = vect(101.5, -1, -207.5)
-            return
-        #University
-        if getCurrentObjective() == 2:
-            PosStart = vect(-198, 9, 0)
-            PosCheckpoint = [vect(-220, 18.9, 0)]
-            PosFinish = vect(-175, 15.9, 61.5)
+    #Ilios
+    if getCurrentMap() == Map.ILIOS_LIGHTHOUSE:
+        PosStart = vect(318, -23.66, -35)
+        PosCheckpoint = [vect(365, -25.73, -54.5)]
+        PosFinish = vect(307.8, -11.1, 31.4)
+        return
+    if getCurrentMap() == Map.ILIOS_RUINS:
+        PosStart = vect(28.5, 57.37, -141.5)
+        PosCheckpoint = [vect(-55, 65, -178)]
+        PosFinish = vect(11.9, 66.2, -144.2)
+        return
+    if getCurrentMap() == Map.ILIOS_WELL:
+        PosStart = vect(-195, 1, -3)
+        PosCheckpoint = [vect(-284, -0.55, 10)]
+        PosFinish = vect(-271.9, 1.2, 53.5)
+        return
+    #Lijiang
+    if getCurrentMap() == Map.LIJIANG_CONTROL_CENTER:
+        PosStart = vect(0, 278, 293)
+        PosCheckpoint = [vect(0, 274, 330)]
+        PosFinish = vect(0, 269.9, 254)
+        return
+    if getCurrentMap() == Map.LIJIANG_GARDEN:
+        PosStart = vect(-65, 94, 145)
+        PosCheckpoint = [vect(0, 94.9, 125)]
+        PosFinish = vect(52, 90, 182)
+        return
+    if getCurrentMap() == Map.LIJIANG_NIGHT_MARKET:
+        PosStart = vect(1, -2, -82)
+        PosCheckpoint = [vect(49, 1.76, -47)]
+        PosFinish = vect(1, -0.1, -10)
+        return
+    #Nepal
+    if getCurrentMap() == Map.NEPAL_SANCTUM:
+        PosStart = vect(78, 129.8, -59)
+        PosCheckpoint = [vect(81, 127.9, 8)]
+        PosFinish = vect(102, 131.9, 78)
+        return
+    if getCurrentMap() == Map.NEPAL_SHRINE:
+        PosStart = vect(-26, 10.62, -34)
+        PosCheckpoint = [vect(-63, 12.9, 0)]
+        PosFinish = vect(-24, 14.9, 82)
+        return
+    if getCurrentMap() == Map.NEPAL_VILLAGE:
+        PosStart = vect(-158, -88.94, 0)
+        PosCheckpoint = [vect(-220, -94.1, 0)]
+        PosFinish = vect(-207, -87.1, -44)
+        return
+    #Oasis
+    if getCurrentMap() == Map.OASIS_CITY_CENTER:
+        PosStart = vect(166, 4, 270)
+        PosCheckpoint = [vect(102, -2, 288)]
+        PosFinish = vect(119, 0.5, 223)
+        return
+    if getCurrentMap() == Map.OASIS_GARDENS:
+        PosStart = vect(172.66, 8.4, -166)
+        PosCheckpoint = [vect(141.33, 7.3, -247.33)]
+        PosFinish = vect(101.5, -1, -207.5)
+        return
+    if getCurrentMap() == Map.OASIS_UNIVERSITY:
+        PosStart = vect(-198, 9, 0)
+        PosCheckpoint = [vect(-220, 18.9, 0)]
+        PosFinish = vect(-175, 15.9, 61.5)
 
 
 rule "Start - Maps (Season 4)":
@@ -636,6 +652,31 @@ rule "Start - Maps (Season 4)":
         PosFinish = vect(22.688, -6.1, -159.187)
         Checkpoint = true
         return
+    #FFA
+    if getCurrentMap() == Map.CHATEAU_GUILLARD:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.KANEZAKA:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.MALEVENTO:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.PETRA:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        Checkpoint = true
+        return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(52.118, -0.81, -7.795)
@@ -689,90 +730,78 @@ rule "Start - Maps (Season 4)":
             PosFinish = vect(-271.677, 9, 137.999)
             Checkpoint = true
             return
-    if getCurrentMap() == Map.ILIOS:
-        #Lighthouse
-        if not getCurrentObjective():
-            PosStart = vect(284.738, -17.94, -75.819)
-            PosCheckpoint = [vect(363.517, -18.4, -53.426)]
-            PosFinish = vect(336.947, -25.7, 22.725)
-            Checkpoint = true
-            return
-        #Ruins
-        if getCurrentObjective() == 2:
-            PosStart = vect(111.647, 65.39, -177.77)
-            PosCheckpoint = [vect(28.446, 61.39, -143.87)]
-            PosFinish = vect(-55.178, 65.3, -178.229)
-            Checkpoint = true
-            return
-        #Well
-        if getCurrentObjective() == 1:
-            PosStart = vect(-258.986, -0.5, 48.481)
-            PosCheckpoint = [vect(-224.969, 5.3, -33.21)]
-            PosFinish = vect(-141.105, 10.5, -87.497)
-            Checkpoint = true
-    if getCurrentMap() == Map.LIJIANG_TOWER:
-        #Control Tower
-        if getCurrentObjective() == 2:
-            PosStart = vect(-26.497, 270, 340.286)
-            PosCheckpoint = [vect(10.656, 269.9, 261.943)]
-            PosFinish = vect(27.763, 269.9, 355.578)
-            Checkpoint = true
-            return
-        #Garden
-        if getCurrentObjective() == 1:
-            PosStart = vect(61.321, 98, 161.408)
-            PosCheckpoint = [vect(-0.067, 95.9, 107.872)]
-            PosFinish = vect(-68.698, 97.9, 163.209)
-            Checkpoint = true
-            return
-        #Night Market
-        if not getCurrentObjective():
-            PosStart = vect(61.03, 6, -10.232)
-            PosCheckpoint = [vect(1.479, -1.1, -59.482)]
-            PosFinish = vect(-58.911, 5.9, -10.302)
-            Checkpoint = true
-            return
-    if getCurrentMap() == Map.NEPAL:
-        #Sanctum
-        if getCurrentObjective() == 2:
-            PosStart = vect(107.495, 133.1, -73.174)
-            PosCheckpoint = [vect(55.295, 129.7, 0.52)]
-            PosFinish = vect(102.618, 135.9, 78.165)
-            Checkpoint = true
-            return
-        #Shrine
-        if getCurrentObjective() == 1:
-            PosStart = vect(-22.294, 22, 76.936)
-            PosFinish = vect(-50.994, 14.9, -77.311)
-            Checkpoint = false
-            return
-        #Village
-        if not getCurrentObjective():
-            PosStart = vect(-168.653, -97.53, -48.431)
-            PosCheckpoint = [vect(-221.123, -89.5, 0.323)]
-            PosFinish = vect(-147.782, -92.5, 62.105)
-            Checkpoint = true
-            return
-    if getCurrentMap() == Map.OASIS:
-        #City Center
-        if not getCurrentObjective():
-            PosStart = vect(84.599, 1, 298.498)
-            PosCheckpoint = [vect(157.26, 3.9, 264.225)]
-            PosFinish = vect(157.23, 0.8, 205.119)
-            Checkpoint = true
-            return
-        #Gardens
-        if getCurrentObjective() == 1:
-            PosStart = vect(73.282, 7.5, -285.746)
-            PosFinish = vect(155.223, 9.9, -186.502)
-            Checkpoint = false
-            return
-        #University
-        if getCurrentObjective() == 2:
-            PosStart = vect(-208.867, 20.33, -71.688)
-            PosCheckpoint = [vect(-172.403, 16.9, 2.078)]
-            PosFinish = vect(-188.53, 17.9, 60.728)
-            Checkpoint = true
+    #Ilios
+    if getCurrentMap() == Map.ILIOS_LIGHTHOUSE:
+        PosStart = vect(284.738, -17.94, -75.819)
+        PosCheckpoint = [vect(363.517, -18.4, -53.426)]
+        PosFinish = vect(336.947, -25.7, 22.725)
+        Checkpoint = true   
+        return
+    if getCurrentMap() == Map.ILIOS_RUINS:
+        PosStart = vect(111.647, 65.39, -177.77)
+        PosCheckpoint = [vect(28.446, 61.39, -143.87)]
+        PosFinish = vect(-55.178, 65.3, -178.229)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.ILIOS_WELL:
+        PosStart = vect(-258.986, -0.5, 48.481)
+        PosCheckpoint = [vect(-224.969, 5.3, -33.21)]
+        PosFinish = vect(-141.105, 10.5, -87.497)
+        Checkpoint = true
+    #Lijiang
+    if getCurrentMap() == Map.LIJIANG_CONTROL_CENTER:
+        PosStart = vect(-26.497, 270, 340.286)
+        PosCheckpoint = [vect(10.656, 269.9, 261.943)]
+        PosFinish = vect(27.763, 269.9, 355.578)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.LIJIANG_GARDEN:
+        PosStart = vect(61.321, 98, 161.408)
+        PosCheckpoint = [vect(-0.067, 95.9, 107.872)]
+        PosFinish = vect(-68.698, 97.9, 163.209)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.LIJIANG_NIGHT_MARKET:
+        PosStart = vect(61.03, 6, -10.232)
+        PosCheckpoint = [vect(1.479, -1.1, -59.482)]
+        PosFinish = vect(-58.911, 5.9, -10.302)
+        Checkpoint = true
+        return
+    #Nepal
+    if getCurrentMap() == Map.NEPAL_SANCTUM:
+        PosStart = vect(107.495, 133.1, -73.174)
+        PosCheckpoint = [vect(55.295, 129.7, 0.52)]
+        PosFinish = vect(102.618, 135.9, 78.165)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.NEPAL_SHRINE:
+        PosStart = vect(-22.294, 22, 76.936)
+        PosFinish = vect(-50.994, 14.9, -77.311)
+        Checkpoint = false
+        return
+    if getCurrentMap() == Map.NEPAL_VILLAGE:
+        PosStart = vect(-168.653, -97.53, -48.431)
+        PosCheckpoint = [vect(-221.123, -89.5, 0.323)]
+        PosFinish = vect(-147.782, -92.5, 62.105)
+        Checkpoint = true
+        return
+    #Oasis
+    if getCurrentMap() == Map.OASIS_CITY_CENTER:
+        PosStart = vect(84.599, 1, 298.498)
+        PosCheckpoint = [vect(157.26, 3.9, 264.225)]
+        PosFinish = vect(157.23, 0.8, 205.119)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.OASIS_GARDENS:
+        PosStart = vect(73.282, 7.5, -285.746)
+        PosFinish = vect(155.223, 9.9, -186.502)
+        Checkpoint = false
+        return
+    if getCurrentMap() == Map.OASIS_UNIVERSITY:
+        PosStart = vect(-208.867, 20.33, -71.688)
+        PosCheckpoint = [vect(-172.403, 16.9, 2.078)]
+        PosFinish = vect(-188.53, 17.9, 60.728)
+        Checkpoint = true
             
             
 rule "Start - Maps (Season 5)":
@@ -837,6 +866,27 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(59.279, -3.2, -39.483)
         PosBarrier = [vect(38.005, 4.175, -76.422), vect(38.619, -3.844, -76.96)]
         return
+    #FFA
+    if getCurrentMap() == Map.CHATEAU_GUILLARD:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.KANEZAKA:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.MALEVENTO:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
+    if getCurrentMap() == Map.PETRA:
+        PosStart = vect(0, 0, 0)
+        PosCheckpoint = [vect(0, 0, 0)]
+        PosFinish = vect(0, 0, 0)
+        return
     #Hybrid
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(-46.717, 4.7, 86.88)
@@ -883,86 +933,85 @@ rule "Start - Maps (Season 5)":
             PosCheckpoint = [vect(-389.913, 9, 139.646), vect(-328.561, 8, 180.59), vect(-266.552, 9, 138.877), vect(-327.941, 9.7, 117.976)]
             PosFinish = vect(-328.184, 13.5, 140.64)
             return
-    if getCurrentMap() == Map.ILIOS:
-        #Lighthouse
-        if not getCurrentObjective():
-            PosStart = vect(336.294, -23.7, -42.507)
-            PosCheckpoint = [vect(336.182, -25.7, 22.951), vect(290.258, -25.7, -88.687), vect(357.797, -25.7, -50.871), vect(322.5, -23.7, -36.7)]
-            PosFinish = vect(338.282, -25.7, -43.21)
-            return
-        #Ruins
-        if getCurrentObjective() == 2:
-            PosStart = vect(28.463, 57.37, -163.093)
-            PosCheckpoint = [vect(87.767, 58.3, -148.654), vect(113.185, 65.3, -178.097), vect(-55.96, 60.3, -158.273)]
-            PosFinish = vect(28.411, 57.3, -156.448)
-            return
-        #Well
-        if getCurrentObjective() == 1:
-            PosStart = vect(-201.811, 0.8, -10.588)
-            PosCheckpoint = [vect(-155.044, -4, -58.727), vect(-179.473, -0.5, -87.438), vect(-258.817, -5.2, 21.142)]
-            PosFinish = vect(-199.735, 9.8, -7.602)
-            return
-    if getCurrentMap() == Map.LIJIANG_TOWER:
-        #Control Tower
-        if getCurrentObjective() == 2:
-            PosStart = vect(0.023, 270, 301.513)
-            PosCheckpoint = [vect(36.745, 264.9, 336.094), vect(-36.683, 264.9, 336.086), vect(0.125, 269.9, 260.847)]
-            PosFinish = vect(-0.021, 267.3, 280)
-            return
-        #Garden
-        if getCurrentObjective() == 1:
-            PosStart = vect(-0.178, 94, 140.449)
-            PosCheckpoint = [vect(0, 95.9, 110), vect(56.906, 93.9, 145.431), vect(-64.365, 97.9, 162.007)]
-            PosFinish = vect(0, 93.9, 150)
-            return
-        #Night Market
-        if not getCurrentObjective():
-            PosStart = vect(1.155, 0, -20.142)
-            PosCheckpoint = [vect(1.061, -1.1, -73.3), vect(27.511, -0.1, -18.133), vect(-56.438, 1.8, -29.101)]
-            PosFinish = vect(0.84, -1.2, -29.825)
-            return
-    if getCurrentMap() == Map.NEPAL:
-        #Sanctum
-        if getCurrentObjective() == 2:
-            PosStart = vect(67.643, 132, 0.073)
-            PosCheckpoint = [vect(97.8, 131.7, 73.715), vect(96.973, 131.7, -0.008), vect(56.276, 129.7, -0.025), vect(70.755, 127.7, -63.246)]
-            PosFinish = vect(83.1, 127.9, 0.05)
-            return
-        #Shrine
-        if getCurrentObjective() == 1:
-            PosStart = vect(-52.552, 13.13, 0)
-            PosCheckpoint = [vect(-53.696, 14.7, -63.339), vect(-53.662, 14.7, 63.728)]
-            PosFinish = vect(-50, 12.7, 0)
-            return
-        #Village
-        if not getCurrentObjective():
-            PosStart = vect(-183.773, -94.08, 0)
-            PosCheckpoint = [vect(-171.284, -99.3, -62.016), vect(-155.566, -91.2, 45.98), vect(-186.996, -96.6, 72.119)]
-            PosFinish = vect(-181.606, -88, 0)
-            return
-    if getCurrentMap() == Map.OASIS:
-        #City Center
-        if not getCurrentObjective():
-            PosStart = vect(143.522, 2.15, 247.456)
-            PosCheckpoint = [vect(125.589, 0.9, 229.793), vect(91.966, 0.9, 305.984), vect(158.681, 3.9, 262.665), vect(183.478, -3.5, 207.761)]
-            PosFinish = vect(143.522, 9.9, 247.456)
-            return
-        #Gardens
-        if getCurrentObjective() == 1:
-            PosStart = vect(122.619, 6.27, -228.847)
-            PosCheckpoint = [vect(186.331, 8.3, -195.651), vect(83.077, 5.4, -262.511), vect(120.717, 7.4, -267.995)]
-            PosFinish = vect(121.375, 11.4, -227.604)
-            return
-        #University
-        if getCurrentObjective() == 2:
-            PosStart = vect(-196.495, 15, 0)
-            PosCheckpoint = [vect(-188.089, 19.9, 115.294), vect(-171.972, 14.9, -44.885), vect(-207.617, 17.9, -62.585)]
-            PosFinish = vect(-202.067, 18.9, -0.002)
+    #Ilios
+    if getCurrentMap() == Map.ILIOS_LIGHTHOUSE:
+        PosStart = vect(336.294, -23.7, -42.507)
+        PosCheckpoint = [vect(336.182, -25.7, 22.951), vect(290.258, -25.7, -88.687), vect(357.797, -25.7, -50.871), vect(322.5, -23.7, -36.7)]
+        PosFinish = vect(338.282, -25.7, -43.21)
+        return
+    if getCurrentMap() == Map.ILIOS_RUINS:
+        PosStart = vect(28.463, 57.37, -163.093)
+        PosCheckpoint = [vect(87.767, 58.3, -148.654), vect(113.185, 65.3, -178.097), vect(-55.96, 60.3, -158.273)]
+        PosFinish = vect(28.411, 57.3, -156.448)
+        return
+    if getCurrentMap() == Map.ILIOS_WELL:
+        PosStart = vect(-201.811, 0.8, -10.588)
+        PosCheckpoint = [vect(-155.044, -4, -58.727), vect(-179.473, -0.5, -87.438), vect(-258.817, -5.2, 21.142)]
+        PosFinish = vect(-199.735, 9.8, -7.602)
+        return
+    #Lijiang
+    if getCurrentMap() == Map.LIJIANG_CONTROL_CENTER:
+        PosStart = vect(0.023, 270, 301.513)
+        PosCheckpoint = [vect(36.745, 264.9, 336.094), vect(-36.683, 264.9, 336.086), vect(0.125, 269.9, 260.847)]
+        PosFinish = vect(-0.021, 267.3, 280)
+        return
+    if getCurrentMap() == Map.LIJIANG_GARDEN:
+        PosStart = vect(-0.178, 94, 140.449)
+        PosCheckpoint = [vect(0, 95.9, 110), vect(56.906, 93.9, 145.431), vect(-64.365, 97.9, 162.007)]
+        PosFinish = vect(0, 93.9, 150)
+        return
+    if getCurrentMap() == Map.LIJIANG_NIGHT_MARKET:
+        PosStart = vect(1.155, 0, -20.142)
+        PosCheckpoint = [vect(1.061, -1.1, -73.3), vect(27.511, -0.1, -18.133), vect(-56.438, 1.8, -29.101)]
+        PosFinish = vect(0.84, -1.2, -29.825)
+        return
+    #Nepal
+    if getCurrentMap() == Map.NEPAL_SANCTUM:
+        PosStart = vect(67.643, 132, 0.073)
+        PosCheckpoint = [vect(97.8, 131.7, 73.715), vect(96.973, 131.7, -0.008), vect(56.276, 129.7, -0.025), vect(70.755, 127.7, -63.246)]
+        PosFinish = vect(83.1, 127.9, 0.05)
+        return
+    if getCurrentMap() == Map.NEPAL_SHRINE:
+        PosStart = vect(-52.552, 13.13, 0)
+        PosCheckpoint = [vect(-53.696, 14.7, -63.339), vect(-53.662, 14.7, 63.728)]
+        PosFinish = vect(-50, 12.7, 0)
+        return
+    if getCurrentMap() == Map.NEPAL_VILLAGE:
+        PosStart = vect(-183.773, -94.08, 0)
+        PosCheckpoint = [vect(-171.284, -99.3, -62.016), vect(-155.566, -91.2, 45.98), vect(-186.996, -96.6, 72.119)]
+        PosFinish = vect(-181.606, -88, 0)
+        return
+    #Oasis
+    if getCurrentMap() == Map.OASIS_CITY_CENTER:
+        PosStart = vect(143.522, 2.15, 247.456)
+        PosCheckpoint = [vect(125.589, 0.9, 229.793), vect(91.966, 0.9, 305.984), vect(158.681, 3.9, 262.665), vect(183.478, -3.5, 207.761)]
+        PosFinish = vect(143.522, 9.9, 247.456)
+        return
+    if getCurrentMap() == Map.OASIS_GARDENS:
+        PosStart = vect(122.619, 6.27, -228.847)
+        PosCheckpoint = [vect(186.331, 8.3, -195.651), vect(83.077, 5.4, -262.511), vect(120.717, 7.4, -267.995)]
+        PosFinish = vect(121.375, 11.4, -227.604)
+        return
+    if getCurrentMap() == Map.OASIS_UNIVERSITY:
+        PosStart = vect(-196.495, 15, 0)
+        PosCheckpoint = [vect(-188.089, 19.9, 115.294), vect(-171.972, 14.9, -44.885), vect(-207.617, 17.9, -62.585)]
+        PosFinish = vect(-202.067, 18.9, -0.002)
 
 
 #Gamemode
+rule "Start - Global FFA":
+    @Condition getCurrentGamemode() == Gamemode.FFA
+
+    hudSubtext(getAllPlayers(), "{0}:{1}:{2}".format(floor(getMatchTime() / 3600), floor((getMatchTime() - floor(getMatchTime() / 3600) * 3600) / 60), floor(getMatchTime() - floor(getMatchTime() / 60) * 60)), HudPosition.TOP, 0, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    disableScoring()
+    disableGamemodeCompletion()
+    disableAnnouncer()
+    setMatchTime(0)
+
+
 rule "Start - Global":
     #Vars
+    wait()
     setMatchTime(Time + 10)
     TimeFirstStan = 9999
     TimeFirstGrav = 9999
@@ -1053,15 +1102,15 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.4 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.4 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.5 | Season {0} | Standard".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.5 | Season {0} | Gravspeed".format(Season + 1), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
-    hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("3", l"{0} sec".format(TimeThirdStan), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format("2", l"{0} sec".format(TimeSecondStan), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category], l"{0} - {1} - {2}".format(l"Record", l"{0} sec".format(TimeFirstStan), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], l"{0} - {1} - {2}".format("3", l"{0} sec".format(TimeThirdGrav), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], l"{0} - {1} - {2}".format("2", l"{0} sec".format(TimeSecondGrav), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], l"{0} - {1} - {2}".format(l"Record", l"{0} sec".format(TimeFirstGrav), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "3 - {0}{1} sec - {2}".format(TimeThirdStan, "{0}".format(10*TimeThirdStan).split(".")[1].charAt(1), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "2 - {0}{1} sec - {2}".format(TimeSecondStan, "{0}".format(10*TimeSecondStan).split(".")[1].charAt(1), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Record - {0}{1} sec - {2}".format(TimeFirstStan, "{0}".format(10*TimeFirstStan).split(".")[1].charAt(1), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "3 - {0}{1} sec - {2}".format(TimeThirdGrav, "{0}".format(10*TimeThirdGrav).split(".")[1].charAt(1), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "2 - {0}{1} sec - {2}".format(TimeSecondGrav, "{0}".format(10*TimeSecondGrav).split(".")[1].charAt(1), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Record - {0}{1} sec - {2}".format(TimeFirstGrav, "{0}".format(10*TimeFirstGrav).split(".")[1].charAt(1), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     #Help text standard
     hudSubtext(getAllPlayers(), "Toggle Help - Crouch + Interact", HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
@@ -1084,6 +1133,13 @@ rule "Start - Global":
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 3], "Standard Mode - Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 3], "Stop - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHelp and player.Mode == 3], "Slow Move - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+
+
+rule "Start - Player FFA":
+    @Event eachPlayer
+    @Condition getCurrentGamemode() == Gamemode.FFA
+
+    eventPlayer.disableGamemodeHud()
 
 
 rule "Start - Player":
@@ -1116,11 +1172,11 @@ rule "Start - Player":
     eventPlayer.disablePlayerCollision()
     #Hud
     hudHeader(eventPlayer, eventPlayer, HudPosition.LEFT, 0, Color.YELLOW, HudReeval.NONE, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0} sec".format(eventPlayer.TimeBestStan), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0} sec".format(eventPlayer.TimeBestGrav), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestStan, "{0}".format(10*eventPlayer.TimeBestStan).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}{1} sec".format(eventPlayer.TimeBestGrav, "{0}".format(10*eventPlayer.TimeBestGrav).split(".")[1].charAt(1)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "ATTEMPTS: {0}".format(eventPlayer.Attempts), HudPosition.LEFT, 2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer, "{0} m/s".format(eventPlayer.getHorizontalSpeed()), HudPosition.TOP, 1, eventPlayer.SpeedColor, HudReeval.STRING_AND_COLOR, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer, "{0} sec".format(eventPlayer.TimeCurrent), HudPosition.TOP, 2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer, "{0} m/s".format(eventPlayer.getHorizontalSpeed()), HudPosition.TOP, 0.1, eventPlayer.SpeedColor, HudReeval.STRING_AND_COLOR, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer, "{0}{1} sec".format(eventPlayer.TimeCurrent, "{0}".format(10*eventPlayer.TimeCurrent).split(".")[1].charAt(1)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
     #Start
     async(Respawn, AsyncBehavior.NOOP)
 
@@ -1129,7 +1185,7 @@ rule "Start timer":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
-    @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) > 2
+    @Condition distance(PosStart, vect(updateEveryTick(eventPlayer.getPosition()).x, PosStart.y, updateEveryTick(eventPlayer.getPosition()).z)) > 2 or abs(updateEveryTick(eventPlayer.getPosition()).y - PosStart.y) > 3
     
     chase(eventPlayer.TimeCurrent, 5000, rate=1, ChaseReeval.NONE)
     if not Visible:
@@ -1156,10 +1212,10 @@ rule "Checkpoint":
     
     eventPlayer.Checkpoint[eventPlayer.CurrCheckpoint] = true
     if all([checkpoint for checkpoint in eventPlayer.Checkpoint]):
-        smallMessage(eventPlayer, l"{0} - {1}".format(l"{0} {1}".format(l"Finish", l"Unlocked"), l"{0} sec".format(eventPlayer.TimeCurrent)))
+        smallMessage(eventPlayer, "Finish unlocked - {0}{1} sec".format(eventPlayer.TimeCurrent, "{0}".format(10*eventPlayer.TimeCurrent).split('.')[1].charAt(1)))
         return
     
-    smallMessage(eventPlayer, l"{0}: {1}".format(l"Checkpoints", "{0}/{1} - {2}".format(len([checkpoint for checkpoint in eventPlayer.Checkpoint if checkpoint]), len(PosCheckpoint), l"{0} sec".format(eventPlayer.TimeCurrent))))
+    smallMessage(eventPlayer, "Checkpoints: {0} - {1}{2} sec".format("{0}/{1}".format(len([checkpoint for checkpoint in eventPlayer.Checkpoint if checkpoint]), len(PosCheckpoint)), eventPlayer.TimeCurrent, "{0}".format(10*eventPlayer.TimeCurrent).split('.')[1].charAt(1)))
 
 
 rule "Checkpoint (no LoS)":
@@ -1191,6 +1247,7 @@ rule "Finish":
 
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.Attempts += 1
+
     if not eventPlayer.Category:
         if eventPlayer.TimeCurrent < eventPlayer.TimeBestStan:
             if eventPlayer.TimeCurrent < TimeThirdStan and eventPlayer != PlayerSecondStan and eventPlayer != PlayerFirstStan:
@@ -1265,7 +1322,7 @@ rule "Finish Message (Best Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer != PlayerFirstGrav)
     
-    bigMessage(eventPlayer, "New PB: {0} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav))
+    bigMessage(eventPlayer, "New PB: {0}{1} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(10*(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)).split(".")[1].charAt(1)))
 
 
 rule "Finish Message (Record Time)":
@@ -1274,7 +1331,7 @@ rule "Finish Message (Record Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer == PlayerFirstGrav)
     
-    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], l"{0}: {1}".format(l"New Record", l"{0} - {1}".format(l"{0} sec".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav), l"{0}!!!".format(eventPlayer))))
+    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}{1} sec - {2}!!!".format(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav, "{0}".format(10*(eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)).split(".")[1].charAt(1), eventPlayer))
 
 
 rule "Floor":
@@ -1698,12 +1755,14 @@ rule "Spectator Mode (slow movement disabled)":
 
 rule "Circle Fix":
     @Event eachPlayer
-    @Condition distance(PosStart, updateEveryTick(eventPlayer.getPosition())) <= 2
+    @Condition distance(PosStart, vect(updateEveryTick(eventPlayer.getPosition()).x, PosStart.y, updateEveryTick(eventPlayer.getPosition()).z)) <= 2
+    @Condition abs(updateEveryTick(eventPlayer.getPosition()).y - PosStart.y) <= 3
+    @Condition updateEveryTick(eventPlayer.isOnGround())
     @Condition not eventPlayer.Reset
     @Condition eventPlayer.Mode <= 1
     @Condition not eventPlayer.PracticeCheckpoint
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
-    @Condition (not eventPlayer.Category and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 8.6)
+    @Condition (not eventPlayer.Category and updateEveryTick(eventPlayer.getHorizontalSpeed()) <= 6.88) or (eventPlayer.Category == 1 and updateEveryTick(eventPlayer.getHorizontalSpeed()) <= 8.6)
     
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.TimeCurrent = 0
@@ -1719,6 +1778,14 @@ rule "Match Time Frozen":
     
     wait()
     setMatchTime(Time + 10)
+
+
+rule "End Match FFA":
+    @Condition getCurrentGamemode() == Gamemode.FFA
+    @Condition isGameInProgress()
+    @Condition getMatchTime() == 0
+
+    restartMatch()
 
 
 def Respawn():

@@ -1,6 +1,6 @@
 {
     "main": {
-        "description": "Lucio Surf v5.4.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR",
+        "description": "Lucio Surf v5.5.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ",
         "modeName": "Lucio Surf"
     },
     "lobby": {
@@ -14,14 +14,39 @@
         "swapTeamsAfterMatch": false
     },
     "gamemodes": {
+        "ffa": {
+            "enabledMaps": [
+                "chateauGuillard",
+                "iliosLighthouse",
+                "iliosRuins",
+                "iliosWell",
+                "kanezaka",
+                "lijiangControlCenter",
+                "lijiangGarden",
+                "lijiangNightMarket",
+                "malevento",
+                "nepalSanctum",
+                "nepalShrine",
+                "nepalVillage",
+                "oasisCityCenter",
+                "oasisGardens",
+                "oasisUniversity",
+                "petra"
+            ],
+            "enableSelfInitiatedRespawn": false
+        },
         "skirmish": {
             "disabledMaps": [
                 "blizzWorldWinter",
                 "eichenwaldeHalloween",
                 "hanamuraWinter",
                 "hollywoodHalloween",
+                "ilios",
                 "kingsRowWinter",
+                "lijiangTower",
                 "lijiangTowerLny",
+                "nepal",
+                "oasis",
                 "workshopChamber",
                 "workshopExpanse",
                 "workshopExpanseNight",
@@ -44,8 +69,23 @@
     "heroes": {
         "allTeams": {
             "lucio": {
-                "enableSecondaryFire": false,
-                "enableAbility2": false
+                "enableAbility2": false,
+                "enableSecondaryFire": false
+            },
+            "enabledHeroes": [
+                "lucio"
+            ],
+            "general": {
+                "enableInfiniteAmmo": true,
+                "enablePrimaryFire": false,
+                "enableHeadshotsOnly": true,
+                "enableUlt": false
+            }
+        },
+        "ffa": {
+            "lucio": {
+                "enableAbility2": false,
+                "enableSecondaryFire": false
             },
             "enabledHeroes": [
                 "lucio"

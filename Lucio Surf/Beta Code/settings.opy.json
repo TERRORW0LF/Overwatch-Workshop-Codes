@@ -1,6 +1,6 @@
 {
     "main": {
-        "description": "Lucio Surf v5.5b4.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ",
+        "description": "Lucio Surf v5.8b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ",
         "modeName": "Lucio Surf Beta"
     },
     "lobby": {
@@ -8,7 +8,7 @@
         "mapRotation": "afterGame",
         "enableMatchVoiceChat": true,
         "spectatorSlots": 6,
-        "team1Slots": 12,
+        "team1Slots": 10,
         "team2Slots": 0,
         "returnToLobby": "never",
         "swapTeamsAfterMatch": false
