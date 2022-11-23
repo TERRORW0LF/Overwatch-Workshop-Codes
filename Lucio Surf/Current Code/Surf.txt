@@ -3,7 +3,7 @@ settings
     main
 	{
 		Description: "Lucio Surf v5.7.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR"
-		Mode Name: "Lucio Surf Beta"
+		Mode Name: "Lucio Surf"
 	}
 	lobby
 	{
@@ -1273,9 +1273,9 @@ rule ("Start - Maps (Season 5)") {
             End;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Château Guillard)));
-            Set Global Variable(PosStart, Vector(176.515, 0, 52.458));
-            Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-            Set Global Variable(PosFinish, Vector(233.22, 3.9, 110.969));
+            Set Global Variable(PosStart, Vector(206.25, 0, 84.5));
+            Set Global Variable(PosCheckpoint, Array(Vector(218.29, 11.9, 51.29), Vector(220.7, 4.9, 111.92), Vector(173.15, 6.9, 66.05), Vector(182.76, 8.9, 101.38)));
+            Set Global Variable(PosFinish, Vector(206.25, 8.9, 81.73));
             Set Global Variable(MapName, Custom String("CG", Null, Null, Null));
             Abort;
         End;
@@ -1350,9 +1350,9 @@ rule ("Start - Maps (Season 5)") {
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Kanezaka)));
-            Set Global Variable(PosStart, Vector(-14.495, 6, 42.699));
-            Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-            Set Global Variable(PosFinish, Vector(-39.953, 7.9, -54.264));
+            Set Global Variable(PosStart, Vector(-30.18, 6.56, -8.78));
+            Set Global Variable(PosCheckpoint, Array(Vector(-44.21, 5.9, 26.86), Vector(-4.37, 5.6, 17.15), Vector(-1, 7.9, -45.85), Vector(-43.25, 8.9, -52.15)));
+            Set Global Variable(PosFinish, Vector(-30.84, 10.7, -9.62));
             Set Global Variable(MapName, Custom String("KZ", Null, Null, Null));
             Abort;
         End;
@@ -1385,9 +1385,9 @@ rule ("Start - Maps (Season 5)") {
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Malevento)));
-            Set Global Variable(PosStart, Vector(22.672, 2, -25.413));
-            Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-            Set Global Variable(PosFinish, Vector(-0.175, 2.4, 46.063));
+            Set Global Variable(PosStart, Vector(1.14, 2, 15.5));
+            Set Global Variable(PosCheckpoint, Array(Vector(0, 1.4, 34), Vector(29, 4.5, -5), Vector(1, -3.6, -30), Vector(-27, -2.1, 8)));
+            Set Global Variable(PosFinish, Vector(0, 0.9, 9.5));
             Set Global Variable(MapName, Custom String("MV", Null, Null, Null));
             Abort;
         End;
@@ -1448,16 +1448,16 @@ rule ("Start - Maps (Season 5)") {
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Petra)));
-            Set Global Variable(PosStart, Vector(39.378, -10.12, 36.503));
-            Set Global Variable(PosCheckpoint, Array(Vector(0, 0, 0)));
-            Set Global Variable(PosFinish, Vector(-38.385, -12, -15.7));
+            Set Global Variable(PosStart, Vector(2, -11, 21.26));
+            Set Global Variable(PosCheckpoint, Array(Vector(27, -11.3, 31.8), Vector(-23.9, -9, 18), Vector(-21.34, -9.5, -10), Vector(19.12, -6.1, -12.85)));
+            Set Global Variable(PosFinish, Vector(2, -1.1, 30));
             Set Global Variable(MapName, Custom String("PT", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Rialto)));
-            Set Global Variable(PosStart, Vector(46.435, 0.65, -36.57));
+            Set Global Variable(PosStart, Vector(2.38, -11, 21.24));
             Set Global Variable(PosCheckpoint, Array(Vector(85.068, -0.5, -49.805), Vector(107.15, -1.3, -1.272), Vector(-25.075, -1.8, -60.92), Vector(-57.09, 4.7, -145.623)));
-            Set Global Variable(PosFinish, Vector(37.136, -0.3, -55.023));
+            Set Global Variable(PosFinish, Vector(2, -1.1, 30));
             Set Global Variable(MapName, Custom String("RT", Null, Null, Null));
             Abort;
         End;
@@ -1500,7 +1500,7 @@ rule ("Start - Global FFA") {
         Current Game Mode == Game Mode(Deathmatch);
     }
     actions {
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).HideHud, <=, 1)), Null, Null, Custom String("{0}:{1}:{2}", Round To Integer(Divide(Match Time, 3600), Down), Round To Integer(Divide(Subtract(Match Time, Multiply(Round To Integer(Divide(Match Time, 3600), Down), 3600)), 60), Down), Round To Integer(Subtract(Match Time, Multiply(Round To Integer(Divide(Match Time, 60), Down), 60)), Down)), Top, 0, Null, Null, Color(White), Visible To and String, Default Visibility);
+        Create HUD Text(All Players(All Teams), Null, Null, Custom String("{0}:{1}:{2}", Round To Integer(Divide(Match Time, 3600), Down), Round To Integer(Divide(Subtract(Match Time, Multiply(Round To Integer(Divide(Match Time, 3600), Down), 3600)), 60), Down), Round To Integer(Subtract(Match Time, Multiply(Round To Integer(Divide(Match Time, 60), Down), 60)), Down)), Top, 0, Null, Null, Color(White), Visible To and String, Default Visibility);
         Disable Built-In Game Mode Scoring;
         Disable Built-In Game Mode Completion;
         Disable Built-In Game Mode Announcer;
@@ -1620,10 +1620,10 @@ rule ("Start - Global") {
         "Leaderboards"
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeThirdStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeSecondStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Record - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeFirstStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeFirstStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeThirdGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeSecondGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Record - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeFirstGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeFirstGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         "Help text standard"
         Create HUD Text(All Players(All Teams), Null, Null, Custom String("Cycle HUD - Crouch + Interact", Null, Null, Null), Left, 3, Null, Null, Color(Yellow), Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate", Null, Null, Null), Left, 4, Null, Null, Color(Yellow), Visible To, Default Visibility);
@@ -1674,6 +1674,7 @@ rule ("Start - Player") {
     }
     actions {
         "vars"
+        Start Rule(Respawn, Do Nothing);
         Set Player Variable(Event Player, Mode, 0);
         Set Player Variable(Event Player, TimeBestStan, 9999);
         Set Player Variable(Event Player, TimeBestGrav, 9999);
@@ -1703,7 +1704,7 @@ rule ("Start - Player") {
         Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
         Create HUD Text(If-Then-Else((Event Player).Category, Null, Event Player), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Event Player).TimeBestStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Event Player).TimeBestGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("ATTEMPTS: {0}", (Event Player).Attempts, Null, Null), Null, Null, Left, 2, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("ATTEMPTS: {0}", (Event Player).Attempts, Null, Null), Null, Null, Left, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0} m/s", Horizontal Speed Of(Event Player), Null, Null), Null, Null, Top, 0.1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0}.{1} sec", Round To Integer(Add((Event Player).TimeCurrent, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Event Player).TimeCurrent), 1000), 1000), To Nearest), Null, Null), 1, 3), Null), Null, Null, Top, 0.2, Color(White), Null, Null, String, Default Visibility);
         "Start"
@@ -1737,7 +1738,7 @@ rule ("Start timer") {
     conditions {
         Or(Not((Event Player).Mode), And(Compare((Event Player).Mode, ==, 1), Not((Event Player).PracticeCheckpoint))) == True;
         Or(Not(Is True For Any((Event Player).Checkpoint, Current Array Element)), Compare((Event Player).Mode, ==, 1)) == True;
-        Update Every Frame(Or(Compare(Distance Between(Global.PosStart, Position Of(Event Player)), >, 2), Compare(Absolute Value(Subtract(Y Component Of(Update Every Frame(Position Of(Event Player))), Y Component Of(Global.PosStart))), >, 3))) != False;
+        Update Every Frame(Or(Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))), >, 2), Compare(Absolute Value(Subtract(Y Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart))), >, 3))) != False;
     }
     actions {
         Chase Player Variable At Rate(Event Player, TimeCurrent, 5000, 1, None);
@@ -1756,7 +1757,7 @@ rule ("Start timer (Practice)") {
         (Event Player).Mode == 1;
         (Event Player).PracticeCheckpoint != False;
         (Event Player).SpeedPracticeCheckpoint == 0;
-        Update Every Frame(Or(Compare(Distance Between((Event Player).PosPracticeCheckpoint, Position Of(Event Player)), >, 2), Compare(Absolute Value(Subtract(Y Component Of(Update Every Frame(Position Of(Event Player))), Y Component Of(Global.PosStart))), >, 3))) != False;
+        Update Every Frame(Or(Compare(Distance Between((Event Player).PosPracticeCheckpoint, Vector(X Component Of(Position Of(Event Player)), Y Component Of((Event Player).PosPracticeCheckpoint), Z Component Of(Position Of(Event Player)))), >, 2), Compare(Absolute Value(Subtract(Y Component Of(Position Of(Event Player)), Y Component Of((Event Player).PosPracticeCheckpoint))), >, 3))) != False;
     }
     actions {
         Chase Player Variable At Rate(Event Player, TimeCurrent, 5000, 1, None);
@@ -1828,8 +1829,8 @@ rule ("Finish") {
         Or(Is True For All((Event Player).Checkpoint, Current Array Element), Compare((Event Player).Mode, ==, 1)) == True;
         (Event Player).Finished == False;
         (Event Player).Mode <= 1;
-        Distance Between(Global.PosFinish, Vector(Update Every Frame(X Component Of(Position Of(Event Player))), Y Component Of(Global.PosFinish), Update Every Frame(Z Component Of(Position Of(Event Player))))) <= 5;
-        Update Every Frame(Y Component Of(Position Of(Event Player))) >= Y Component Of(Global.PosFinish);
+        Update Every Frame(Compare(Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))), <=, 5)) != False;
+        Update Every Frame(Compare(Y Component Of(Position Of(Event Player)), >=, Y Component Of(Global.PosFinish))) != False;
     }
     actions {
         If(Compare((Event Player).Mode, ==, 1));
@@ -2691,14 +2692,14 @@ rule ("Circle Fix") {
         All;
     }
     conditions {
-        Distance Between(Global.PosStart, Vector(X Component Of(Update Every Frame(Position Of(Event Player))), Y Component Of(Global.PosStart), Z Component Of(Update Every Frame(Position Of(Event Player))))) <= 2;
-        Absolute Value(Subtract(Y Component Of(Update Every Frame(Position Of(Event Player))), Y Component Of(Global.PosStart))) <= 3;
-        Update Every Frame(Is On Ground(Event Player)) != False;
+        Update Every Frame(Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Event Player)))), <=, 2)) != False;
+        Update Every Frame(Compare(Absolute Value(Subtract(Y Component Of(Position Of(Event Player)), Y Component Of(Global.PosStart))), <=, 3)) != False;
+        Is On Ground(Event Player) == True;
         (Event Player).Reset == False;
         (Event Player).Mode <= 1;
         (Event Player).PracticeCheckpoint == False;
         Is True For Any((Event Player).Checkpoint, Current Array Element) == False;
-        Or(And(Not((Event Player).Category), Compare(Update Every Frame(Horizontal Speed Of(Event Player)), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Update Every Frame(Horizontal Speed Of(Event Player)), <=, 8.6))) == True;
+        Update Every Frame(Or(And(Not((Event Player).Category), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 8.6)))) != False;
     }
     actions {
         Stop Chasing Player Variable(Event Player, TimeCurrent);
@@ -2719,11 +2720,11 @@ rule ("Circle Fix (Practice)") {
     conditions {
         (Event Player).Mode == 1;
         (Event Player).PracticeCheckpoint != False;
-        Distance Between((Event Player).PosPracticeCheckpoint, Vector(X Component Of(Update Every Frame(Position Of(Event Player))), Y Component Of(Global.PosStart), Z Component Of(Update Every Frame(Position Of(Event Player))))) <= 2;
-        Absolute Value(Subtract(Y Component Of(Update Every Frame(Position Of(Event Player))), Y Component Of(Global.PosStart))) <= 3;
-        Update Every Frame(Is On Ground(Event Player)) != False;
+        Update Every Frame(Compare(Distance Between((Event Player).PosPracticeCheckpoint, Vector(X Component Of(Position Of(Event Player)), Y Component Of((Event Player).PosPracticeCheckpoint), Z Component Of(Position Of(Event Player)))), <=, 2)) != False;
+        Update Every Frame(Compare(Absolute Value(Subtract(Y Component Of(Position Of(Event Player)), Y Component Of((Event Player).PosPracticeCheckpoint))), <=, 3)) != False;
+        Is On Ground(Event Player) == True;
         (Event Player).Reset == False;
-        Or(And(Not((Event Player).Category), Compare(Update Every Frame(Horizontal Speed Of(Event Player)), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Update Every Frame(Horizontal Speed Of(Event Player)), <=, 8.6))) == True;
+        Update Every Frame(Or(And(Not((Event Player).Category), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 8.6)))) != False;
     }
     actions {
         Stop Chasing Player Variable(Event Player, TimeCurrent);
@@ -2771,9 +2772,9 @@ rule ("Respawn") {
     actions {
         If(Compare((Event Player).Mode, <=, 1));
             If((Event Player).PracticeCheckpoint);
-                Modify Player Variable(Event Player, Attempts, Add, 1);
                 Set Facing(Event Player, (Event Player).FacingPracticeCheckpoint, To World);
                 If((Event Player).SpeedPracticeCheckpoint);
+                    Modify Player Variable(Event Player, Attempts, Add, 1);
                     Teleport(Event Player, (Event Player).PosPracticeCheckpoint);
                     Apply Impulse(Event Player, Multiply(Velocity Of(Event Player), -0.001), 0.001, To World, Cancel Contrary Motion);
                     Apply Impulse(Event Player, (Event Player).VelocityPracticeCheckpoint, (Event Player).SpeedPracticeCheckpoint, To World, Cancel Contrary Motion);
@@ -2809,7 +2810,7 @@ rule ("Respawn") {
             Set Player Variable At Index(Event Player, Checkpoint, (Event Player).CheckpointLoop, False);
         End;
         If(Compare((Event Player).Mode, >, 1));
-            Set Player Variable(Event Player, Attempts, 0);
+            Set Player Variable(Event Player, Attempts, -1);
             Set Player Variable(Event Player, Mode, 0);
             If(Not((Event Player).Category));
                 Set Gravity(Event Player, 100);
