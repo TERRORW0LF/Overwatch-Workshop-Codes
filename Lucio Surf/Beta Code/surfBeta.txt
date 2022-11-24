@@ -145,6 +145,7 @@ variables {
         15: CurrCheckpoint
         16: CheckpointLoop
         17: Reset
+        18: FFAReset
         22: PracticeCheckpoint
         23: PosPracticeCheckpoint
         24: FacingPracticeCheckpoint
@@ -270,6 +271,7 @@ rule ("Start - Maps (Season 1)") {
         If(Compare(Global.__currentMap__, ==, Map(Château Guillard)));
             Set Global Variable(PosStart, Vector(176.515, 0, 52.458));
             Set Global Variable(PosFinish, Vector(233.22, 3.9, 110.969));
+            Set Global Variable(PosBarrier, Array(Vector(175, -5, 51.64), Vector(177.29, -5, 49.88)));
             Set Global Variable(MapName, Custom String("CG", Null, Null, Null));
             Abort;
         End;
@@ -1060,7 +1062,7 @@ rule ("Start - Maps (Season 4)") {
         If(Compare(Global.__currentMap__, ==, -2957));
             Set Global Variable(PosStart, Vector(-258.986, -0.5, 48.481));
             Set Global Variable(PosCheckpoint, Array(Vector(-224.969, 5.3, -33.21)));
-            Set Global Variable(PosFinish, Vector(-141.105, -0.1, -87.497));
+            Set Global Variable(PosFinish, Vector(-144.5, -3.5, -83.33));
             Set Global Variable(Checkpoint, True);
             Set Global Variable(MapName, Custom String("IW", Null, Null, Null));
         End;
@@ -1660,6 +1662,7 @@ rule ("Start - Player FFA") {
     }
     actions {
         Disable Game Mode HUD(Event Player);
+        Set Player Variable(Event Player, FFAReset, True);
     }
 }
 
@@ -1674,7 +1677,6 @@ rule ("Start - Player") {
     }
     actions {
         "vars"
-        Start Rule(Respawn, Do Nothing);
         Set Player Variable(Event Player, Mode, 0);
         Set Player Variable(Event Player, TimeBestStan, 9999);
         Set Player Variable(Event Player, TimeBestGrav, 9999);
@@ -1842,6 +1844,7 @@ rule ("Finish") {
         (Event Player).Mode <= 1;
         Update Every Frame(Compare(Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))), <=, 5)) != False;
         Update Every Frame(Compare(Y Component Of(Position Of(Event Player)), >=, Y Component Of(Global.PosFinish))) != False;
+        (Event Player).FFAReset == False;
     }
     actions {
         If(Compare((Event Player).Mode, ==, 1));
@@ -2786,6 +2789,7 @@ rule ("Respawn") {
         Respawn;
     }
     actions {
+        Set Player Variable(Event Player, FFAReset, False);
         If(Compare((Event Player).Mode, <=, 1));
             If((Event Player).PracticeCheckpoint);
                 Set Facing(Event Player, (Event Player).FacingPracticeCheckpoint, To World);

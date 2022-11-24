@@ -48,6 +48,7 @@ playervar Speed 14
 playervar CurrCheckpoint 15
 playervar CheckpointLoop 16
 playervar Reset 17
+playervar FFAReset 18
 playervar PracticeCheckpoint 22
 playervar PosPracticeCheckpoint 23
 playervar FacingPracticeCheckpoint 24
@@ -120,6 +121,7 @@ rule "Start - Maps (Season 1)":
     if getCurrentMap() == Map.CHATEAU_GUILLARD:
         PosStart = vect(176.515, 0, 52.458)
         PosFinish = vect(233.22, 3.9, 110.969)
+        PosBarrier = [vect(175, -5, 51.64), vect(177.29, -5, 49.88)]
         MapName = "CG"
         return
     if getCurrentMap() == Map.DORADO:
@@ -778,7 +780,7 @@ rule "Start - Maps (Season 4)":
     if getCurrentMap() == Map.ILIOS_WELL:
         PosStart = vect(-258.986, -0.5, 48.481)
         PosCheckpoint = [vect(-224.969, 5.3, -33.21)]
-        PosFinish = vect(-141.105, -0.1, -87.497)
+        PosFinish = vect(-144.5, -3.5, -83.33)
         Checkpoint = true
         MapName = "IW"
     if getCurrentMap() == Map.JUNKERTOWN:
@@ -1288,6 +1290,7 @@ rule "Start - Player FFA":
     @Event eachPlayer
     @Condition getCurrentGamemode() == Gamemode.FFA
 
+    eventPlayer.FFAReset = true
     eventPlayer.disableGamemodeHud()
 
 
@@ -1414,6 +1417,7 @@ rule "Finish":
     @Condition eventPlayer.Mode <= 1
     @Condition updateEveryTick(distance(PosFinish, vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z)) <= 5)
     @Condition updateEveryTick(eventPlayer.getPosition().y >= PosFinish.y)
+    @Condition not eventPlayer.FFAReset
     
     if eventPlayer.Mode == 1:
         stopChasingVariable(eventPlayer.TimeCurrent)
@@ -2007,6 +2011,7 @@ rule "End Match FFA":
 def Respawn():
     @Name "Respawn"
     
+    eventPlayer.FFAReset = false
     if eventPlayer.Mode <= 1:
         if eventPlayer.PracticeCheckpoint:
             eventPlayer.setFacing(eventPlayer.FacingPracticeCheckpoint, Relativity.TO_WORLD)
