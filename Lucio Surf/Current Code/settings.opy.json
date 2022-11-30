@@ -10,6 +10,7 @@
         "spectatorSlots": 6,
         "team1Slots": 10,
         "team2Slots": 0,
+        "ffaSlots": 10,
         "returnToLobby": "never",
         "swapTeamsAfterMatch": false
     },

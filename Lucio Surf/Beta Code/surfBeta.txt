@@ -13,6 +13,7 @@ settings
 		Max Spectators: 6
 		Max Team 1 Players: 10
 		Max Team 2 Players: 0
+        Max FFA Players: 10
 		Return To Lobby: Never
 		Swap Teams After Match: No
 	}
@@ -390,7 +391,7 @@ rule ("Start - Maps (Season 1)") {
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Numbani)));
-            Set Global Variable(PosStart, Vector(18, 0.08, 10));
+            Set Global Variable(PosStart, Vector(18, 0.08, 13));
             Set Global Variable(PosFinish, Vector(206.99, -2.29, 22.14));
             Set Global Variable(MapName, Custom String("NB", Null, Null, Null));
             Abort;
@@ -1659,9 +1660,13 @@ rule ("Start - Player FFA") {
     }
     conditions {
         Current Game Mode == Game Mode(Deathmatch);
+        Is Game In Progress == True;
+        Has Spawned(Event Player) == True;
     }
     actions {
+        Start Rule(Respawn, Do Nothing);
         Disable Game Mode HUD(Event Player);
+        Wait(0.1, Ignore Condition);
         Set Player Variable(Event Player, FFAReset, True);
     }
 }
@@ -1844,7 +1849,7 @@ rule ("Finish") {
         (Event Player).Mode <= 1;
         Update Every Frame(Compare(Distance Between(Global.PosFinish, Vector(X Component Of(Position Of(Event Player)), Y Component Of(Global.PosFinish), Z Component Of(Position Of(Event Player)))), <=, 5)) != False;
         Update Every Frame(Compare(Y Component Of(Position Of(Event Player)), >=, Y Component Of(Global.PosFinish))) != False;
-        (Event Player).FFAReset == False;
+        (Event Player).FFAReset != False;
     }
     actions {
         If(Compare((Event Player).Mode, ==, 1));
@@ -2789,7 +2794,6 @@ rule ("Respawn") {
         Respawn;
     }
     actions {
-        Set Player Variable(Event Player, FFAReset, False);
         If(Compare((Event Player).Mode, <=, 1));
             If((Event Player).PracticeCheckpoint);
                 Set Facing(Event Player, (Event Player).FacingPracticeCheckpoint, To World);

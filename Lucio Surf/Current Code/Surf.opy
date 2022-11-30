@@ -220,7 +220,7 @@ rule "Start - Maps (Season 1)":
         MapName = "NV"
         return
     if getCurrentMap() == Map.NUMBANI:
-        PosStart = vect(18, 0.08, 10)
+        PosStart = vect(18, 0.08, 13)
         PosFinish = vect(206.99, -2.29, 22.14)
         MapName = "NB"
         return
@@ -1289,9 +1289,13 @@ rule "Start - Global":
 rule "Start - Player FFA":
     @Event eachPlayer
     @Condition getCurrentGamemode() == Gamemode.FFA
+    @Condition isGameInProgress()
+    @Condition eventPlayer.hasSpawned()
 
-    eventPlayer.FFAReset = true
+    async(Respawn(), AsyncBehavior.NOOP)
     eventPlayer.disableGamemodeHud()
+    wait(0.1)
+    eventPlayer.FFAReset = true
 
 
 rule "Start - Player":
@@ -1417,7 +1421,7 @@ rule "Finish":
     @Condition eventPlayer.Mode <= 1
     @Condition updateEveryTick(distance(PosFinish, vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z)) <= 5)
     @Condition updateEveryTick(eventPlayer.getPosition().y >= PosFinish.y)
-    @Condition not eventPlayer.FFAReset
+    @Condition eventPlayer.FFAReset
     
     if eventPlayer.Mode == 1:
         stopChasingVariable(eventPlayer.TimeCurrent)
@@ -2011,7 +2015,6 @@ rule "End Match FFA":
 def Respawn():
     @Name "Respawn"
     
-    eventPlayer.FFAReset = false
     if eventPlayer.Mode <= 1:
         if eventPlayer.PracticeCheckpoint:
             eventPlayer.setFacing(eventPlayer.FacingPracticeCheckpoint, Relativity.TO_WORLD)
