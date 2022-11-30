@@ -219,7 +219,7 @@ rule "Start - Maps (Season 1)":
         MapName = "NV"
         return
     if getCurrentMap() == Map.NUMBANI:
-        PosStart = vect(18, 0.08, 13)
+        PosStart = vect(10.74, 0.08, 1.3)
         PosFinish = vect(206.99, -2.29, 22.14)
         MapName = "NB"
         return
@@ -1313,6 +1313,8 @@ rule "Start - Player":
     eventPlayer.Attempts = -1
     eventPlayer.SpeedColor = Color.RED
     eventPlayer.HideHud = 1
+    if (getCurrentGamemode() != Gamemode.FFA):
+        eventPlayer.FFAReset = true
     #Category setup
     eventPlayer.Category = Category
     if not Category:
