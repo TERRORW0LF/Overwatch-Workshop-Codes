@@ -391,7 +391,7 @@ rule ("Start - Maps (Season 1)") {
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Numbani)));
-            Set Global Variable(PosStart, Vector(10.74, 0.08, 1.3));
+            Set Global Variable(PosStart, Vector(18, 0.08, 13));
             Set Global Variable(PosFinish, Vector(206.99, -2.29, 22.14));
             Set Global Variable(MapName, Custom String("NB", Null, Null, Null));
             Abort;
