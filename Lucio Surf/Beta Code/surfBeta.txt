@@ -1752,7 +1752,7 @@ rule ("Start timer") {
     }
     actions {
         Chase Player Variable At Rate(Event Player, TimeCurrent, 5000, 1, None);
-        Abort If(Not(Global.Visible));
+        Abort If(Or(Not(Global.Visible), Compare((Event Player).Mode, ==, 1)));
         Set Invisible(Event Player, None);
         If(And(Compare(Distance Between(Vector(X Component Of((Event Player).PosPrev), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosPrev)), Global.PosStart), <, 2), Compare(Distance Between(Vector(X Component Of((Event Player).PosNow), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosNow)), Global.PosStart), >, 2)));
             Set Player Variable(Event Player, Angle, Multiply(-1, Angle Between Vectors(Vector(Subtract(X Component Of((Event Player).PosNow), X Component Of((Event Player).PosPrev)), 0, Subtract(Z Component Of((Event Player).PosNow), Z Component Of((Event Player).PosPrev))), Right)));

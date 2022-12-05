@@ -1356,7 +1356,7 @@ rule "Start timer":
     @Condition updateEveryTick(distance(PosStart, vect(eventPlayer.getPosition().x, PosStart.y, eventPlayer.getPosition().z)) > 2 or abs(eventPlayer.getPosition().y - PosStart.y) > 3)
     
     chase(eventPlayer.TimeCurrent, 5000, rate=1, ChaseReeval.NONE)
-    if not Visible:
+    if not Visible or eventPlayer.Mode == 1:
         return
     eventPlayer.setInvisibility(Invis.NONE)
 
