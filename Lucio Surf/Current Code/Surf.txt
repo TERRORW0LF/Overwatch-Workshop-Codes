@@ -1,8 +1,8 @@
 settings
 {
-    main
+	main
 	{
-		Description: "Lucio Surf v5.7.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR"
+		Description: "Lucio Surf v5.8.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR"
 		Mode Name: "Lucio Surf"
 	}
 	lobby
@@ -13,7 +13,7 @@ settings
 		Max Spectators: 6
 		Max Team 1 Players: 10
 		Max Team 2 Players: 0
-        Max FFA Players: 10
+		Max FFA Players: 10
 		Return To Lobby: Never
 		Swap Teams After Match: No
 	}
@@ -23,9 +23,13 @@ settings
 		{
 			enabled maps
 			{
-                Lijiang Control Center 0
+				Château Guillard 0
+				Kanezaka 0
+				Lijiang Control Center 0
 				Lijiang Garden 0
 				Lijiang Night Market 0
+				Malevento 0
+				Petra 0
 			}
 			Self Initiated Respawn: Off
 		}
@@ -33,23 +37,14 @@ settings
 		{
 			disabled maps
 			{
-                Blizzard World Winter 0
-				Circuit royal 0
-				Colosseo 0
-				Eichenwalde Halloween 0
-				Esperança 0
-				Hanamura Winter 0
-				King's Row Winter 0
+				Ilios 0
 				Lijiang Tower 0
-				Lijiang Tower Lunar New Year 0
-				New Queen Street 0
-				Paraíso 0
+				Nepal 0
+				Oasis 0
 				Workshop Chamber 0
 				Workshop Expanse 0
-				Workshop Expanse Night 0
 				Workshop Green Screen 0
 				Workshop Island 0
-				Workshop Island Night 0
 			}
 		}
 		General
@@ -170,7 +165,7 @@ rule("OverPy Map Detection") {
 		Ongoing - Global;
 	}
 	actions {
-		If(Array Contains(Array(Map(Ayutthaya), Map(Black Forest), Map(Black Forest Winter), Map(Blizzard World), Map(Blizzard World Winter), Map(Busan), Map(Busan Downtown Lunar New Year), Map(Busan Sanctuary Lunar New Year), Map(Castillo), Map(Château Guillard), Map(Château Guillard Halloween), Map(Circuit Royal), Map(Colosseo), Map(Dorado), Map(Ecopoint: Antarctica), Map(Eichenwalde), Map(Eichenwalde Halloween), Map(Esperança), Map(Hanamura), Map(Hanamura Winter), Map(Havana), Map(Hollywood), Map(Horizon Lunar Colony), Map(Ilios), Map(Ilios Lighthouse), Map(Ilios Ruins), Map(Ilios Well), Map(Junkenstein's Revenge), Map(Junkertown), Map(Kanezaka), Map(King's Row), Map(King's Row Winter), Map(Lijiang Control Center), Map(Lijiang Control Center Lunar New Year), Map(Lijiang Garden), Map(Lijiang Garden Lunar New Year), Map(Lijiang Night Market), Map(Lijiang Night Market Lunar New Year), Map(Lijiang Tower), Map(Lijiang Tower Lunar New Year), Map(Malevento), Map(Midtown), Map(Necropolis), Map(Nepal), Map(Nepal Sanctum), Map(Nepal Shrine), Map(Nepal Village), Map(New Queen Street), Map(Numbani), Map(Oasis), Map(Oasis City Center), Map(Oasis Gardens), Map(Oasis University), Map(Paraíso), Map(Paris), Map(Petra), Map(Practice Range), Map(Rialto), Map(Route 66), Map(Temple of Anubis), Map(Volskaya Industries), Map(Watchpoint: Gibraltar), Map(Workshop Chamber), Map(Workshop Expanse), Map(Workshop Expanse Night), Map(Workshop Green Screen), Map(Workshop Island), Map(Workshop Island Night)), Current Map));
+		If(Array Contains(Array(Map(Ayutthaya), Map(Black Forest), Map(Black Forest Winter), Map(Blizzard World), Map(Blizzard World Winter), Map(Busan), Map(Busan Downtown Lunar New Year), Map(Busan Sanctuary Lunar New Year), Map(Castillo), Map(Château Guillard), Map(Château Guillard Halloween), Map(Circuit Royal), Map(Colosseo), Map(Dorado), Map(Ecopoint: Antarctica), Map(Ecopoint: Antarctica Winter), Map(Eichenwalde), Map(Eichenwalde Halloween), Map(Esperança), Map(Hanamura), Map(Hanamura Winter), Map(Havana), Map(Hollywood), Map(Hollywood Halloween), Map(Horizon Lunar Colony), Map(Ilios), Map(Ilios Lighthouse), Map(Ilios Ruins), Map(Ilios Well), Map(Junkenstein's Revenge), Map(Junkertown), Map(Kanezaka), Map(King's Row), Map(King's Row Winter), Map(Lijiang Control Center), Map(Lijiang Control Center Lunar New Year), Map(Lijiang Garden), Map(Lijiang Garden Lunar New Year), Map(Lijiang Night Market), Map(Lijiang Night Market Lunar New Year), Map(Lijiang Tower), Map(Lijiang Tower Lunar New Year), Map(Malevento), Map(Midtown), Map(Necropolis), Map(Nepal), Map(Nepal Sanctum), Map(Nepal Shrine), Map(Nepal Village), Map(Nepal Village Winter), Map(New Queen Street), Map(Numbani), Map(Oasis), Map(Oasis City Center), Map(Oasis Gardens), Map(Oasis University), Map(Paraíso), Map(Paris), Map(Petra), Map(Practice Range), Map(Rialto), Map(Route 66), Map(Temple of Anubis), Map(Volskaya Industries), Map(Watchpoint: Gibraltar), Map(Workshop Chamber), Map(Workshop Expanse), Map(Workshop Expanse Night), Map(Workshop Green Screen), Map(Workshop Island), Map(Workshop Island Night), Map(Shambali Monastery)), Current Map));
 			Global.__currentMap__ = Current Map;
 			Abort;
 		End;
@@ -224,7 +219,7 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 4, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
+        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 1, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
         Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 1, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
@@ -276,6 +271,18 @@ rule ("Start - Maps (Season 1)") {
             Set Global Variable(MapName, Custom String("CG", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Circuit Royal)));
+            Set Global Variable(PosStart, Vector(-78.48, 4.21, -78.5));
+            Set Global Variable(PosFinish, Vector(108.7, 10.9, 11.81));
+            Set Global Variable(MapName, Custom String("CR", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Colosseo)));
+            Set Global Variable(PosStart, Vector(-89.44, 9, -25.68));
+            Set Global Variable(PosFinish, Vector(99, 8.9, -13));
+            Set Global Variable(MapName, Custom String("CS", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, Map(Dorado)));
             Set Global Variable(PosStart, Vector(12.5, 0, 6));
             Set Global Variable(PosFinish, Vector(184.19, 13.7, 40.32));
@@ -286,6 +293,12 @@ rule ("Start - Maps (Season 1)") {
             Set Global Variable(PosStart, Vector(2, 6, 0.5));
             Set Global Variable(PosFinish, Vector(123.63, 8.62, -27.05));
             Set Global Variable(MapName, Custom String("EW", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Esperança)));
+            Set Global Variable(PosStart, Vector(-109.68, -1, -56.06));
+            Set Global Variable(PosFinish, Vector(94.7, -1.1, -84.88));
+            Set Global Variable(MapName, Custom String("ER", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Hanamura)));
@@ -372,6 +385,12 @@ rule ("Start - Maps (Season 1)") {
             Set Global Variable(MapName, Custom String("MV", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Midtown)));
+            Set Global Variable(PosStart, Vector(41.22, 3.98, 126.22));
+            Set Global Variable(PosFinish, Vector(128.32, 0.8, -65.74));
+            Set Global Variable(MapName, Custom String("MT", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, -11860));
             Set Global Variable(PosStart, Vector(81, 131.8, 36));
             Set Global Variable(PosFinish, Vector(81, 131.7, -35.5));
@@ -388,6 +407,12 @@ rule ("Start - Maps (Season 1)") {
             Set Global Variable(PosStart, Vector(-191, -98.23, 60));
             Set Global Variable(PosFinish, Vector(-176.5, -99.5, -71));
             Set Global Variable(MapName, Custom String("NV", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(New Queen Street)));
+            Set Global Variable(PosStart, Vector(77.5, 8, -55.34));
+            Set Global Variable(PosFinish, Vector(-79, 7.9, 4.4));
+            Set Global Variable(MapName, Custom String("NQ", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Numbani)));
@@ -414,6 +439,12 @@ rule ("Start - Maps (Season 1)") {
             Set Global Variable(MapName, Custom String("OU", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Paraíso)));
+            Set Global Variable(PosStart, Vector(-48, -2.91, 77));
+            Set Global Variable(PosFinish, Vector(-37.25, 0.9, -143.14));
+            Set Global Variable(MapName, Custom String("PI", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, Map(Paris)));
             Set Global Variable(PosStart, Vector(-14.4, 14, -35.75));
             Set Global Variable(PosFinish, Vector(-104, 14.5, -100));
@@ -437,6 +468,11 @@ rule ("Start - Maps (Season 1)") {
             Set Global Variable(PosFinish, Vector(-92.49, 6.4, -23.25));
             Set Global Variable(MapName, Custom String("R6", Null, Null, Null));
             Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Shambali Monastery)));
+            Set Global Variable(PosStart, Vector(20.75, 9, -14.83));
+            Set Global Variable(PosFinish, Vector(-22.46, 30.15, 202.14));
+            Set Global Variable(MapName, Custom String("SM", Null, Null, Null));
         End;
         If(Compare(Global.__currentMap__, ==, Map(Temple of Anubis)));
             Set Global Variable(PosStart, Vector(-1, -2.32, -9));
@@ -502,6 +538,18 @@ rule ("Start - Maps (Season 2)") {
             Set Global Variable(MapName, Custom String("CG", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Circuit Royal)));
+            Set Global Variable(PosStart, Vector(108.96, 10.96, 11.66));
+            Set Global Variable(PosFinish, Vector(-72.29, 3.9, -72.73));
+            Set Global Variable(MapName, Custom String("CR", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Colosseo)));
+            Set Global Variable(PosStart, Vector(95.53, 9, -14.64));
+            Set Global Variable(PosFinish, Vector(-87.73, 8.9, -32.18));
+            Set Global Variable(MapName, Custom String("CS", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, Map(Dorado)));
             Set Global Variable(PosStart, Vector(192.23, 14.1, 37.31));
             Set Global Variable(PosFinish, Vector(12.5, -0.3, 6));
@@ -512,6 +560,12 @@ rule ("Start - Maps (Season 2)") {
             Set Global Variable(PosStart, Vector(126.088, 14.76, -17.073));
             Set Global Variable(PosFinish, Vector(2, 5.9, 0.5));
             Set Global Variable(MapName, Custom String("EW", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Esperança)));
+            Set Global Variable(PosStart, Vector(92.82, -1, -85.71));
+            Set Global Variable(PosFinish, Vector(-106.63, -1.1, -58.81));
+            Set Global Variable(MapName, Custom String("ER", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Hanamura)));
@@ -598,6 +652,12 @@ rule ("Start - Maps (Season 2)") {
             Set Global Variable(MapName, Custom String("MV", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Midtown)));
+            Set Global Variable(PosStart, Vector(126.07, 1.09, -76.23));
+            Set Global Variable(PosFinish, Vector(40.22, 3.9, 123.15));
+            Set Global Variable(MapName, Custom String("MT", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, -11860));
             Set Global Variable(PosStart, Vector(81, 131.8, -35.5));
             Set Global Variable(PosFinish, Vector(81, 131.7, 36));
@@ -614,6 +674,12 @@ rule ("Start - Maps (Season 2)") {
             Set Global Variable(PosStart, Vector(-182, -99.08, -74.5));
             Set Global Variable(PosFinish, Vector(-191, -98.7, 60));
             Set Global Variable(MapName, Custom String("NV", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(New Queen Street)));
+            Set Global Variable(PosStart, Vector(-82.67, 8.21, 3.75));
+            Set Global Variable(PosFinish, Vector(76.21, 7.9, -46.4));
+            Set Global Variable(MapName, Custom String("NQ", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Numbani)));
@@ -640,6 +706,12 @@ rule ("Start - Maps (Season 2)") {
             Set Global Variable(MapName, Custom String("OU", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Paraíso)));
+            Set Global Variable(PosStart, Vector(-48.76, 2.75, -140.07));
+            Set Global Variable(PosFinish, Vector(-63.31, -2.2, 69.42));
+            Set Global Variable(MapName, Custom String("PI", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, Map(Paris)));
             Set Global Variable(PosStart, Vector(-87.011, 13, -104.458));
             Set Global Variable(PosFinish, Vector(-14.4, 13.9, -35.75));
@@ -663,6 +735,11 @@ rule ("Start - Maps (Season 2)") {
             Set Global Variable(PosFinish, Vector(38.5, 4.6, 36.5));
             Set Global Variable(MapName, Custom String("R6", Null, Null, Null));
             Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Shambali Monastery)));
+            Set Global Variable(PosStart, Vector(-24, 30.65, 200.22));
+            Set Global Variable(PosFinish, Vector(16, 7.9, -10));
+            Set Global Variable(MapName, Custom String("SM", Null, Null, Null));
         End;
         If(Compare(Global.__currentMap__, ==, Map(Temple of Anubis)));
             Set Global Variable(PosStart, Vector(-11.096, 4.66, 110.46));
@@ -1618,8 +1695,8 @@ rule ("Start - Global") {
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Global.Loop1), 5, Visible To);
         End;
         "Seaons / Mode information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Lucio Surf v5.7 | {0}S{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.7 | {0}G{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Lucio Surf v5.8 | {0}S{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.8 | {0}G{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeThirdStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeSecondStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);

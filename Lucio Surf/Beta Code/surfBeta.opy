@@ -123,6 +123,16 @@ rule "Start - Maps (Season 1)":
         PosBarrier = [vect(175, -5, 51.64), vect(177.29, -5, 49.88)]
         MapName = "CG"
         return
+    if getCurrentMap() == Map.CIRCUIT_ROYAL:
+        PosStart = vect(-78.48, 4.21, -78.5)
+        PosFinish = vect(108.7, 10.9, 11.81)
+        MapName = "CR"
+        return
+    if getCurrentMap() == Map.COLOSSEO:
+        PosStart = vect(-89.44, 9, -25.68)
+        PosFinish = vect(99, 8.9, -13)
+        MapName = "CS"
+        return
     if getCurrentMap() == Map.DORADO:
         PosStart = vect(12.5, 0, 6)
         PosFinish = vect(184.19, 13.7, 40.32)
@@ -132,6 +142,11 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(2, 6, 0.5)
         PosFinish = vect(123.63, 8.62, -27.05)
         MapName = "EW"
+        return
+    if getCurrentMap() == Map.ESPERANCA:
+        PosStart = vect(-109.68, -1, -56.06)
+        PosFinish = vect(94.7, -1.1, -84.88)
+        MapName = "ER"
         return
     if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(57, -1.87, 33.65)
@@ -203,6 +218,11 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-0.175, 2.4, 46.063)
         MapName = "MV"
         return
+    if getCurrentMap() == Map.MIDTOWN:
+        PosStart = vect(41.22, 3.98, 126.22)
+        PosFinish = vect(128.32, 0.8, -65.74)
+        MapName = "MT"
+        return
     if getCurrentMap() == Map.NEPAL_SANCTUM:
         PosStart = vect(81, 131.8, 36)
         PosFinish = vect(81, 131.7, -35.5)
@@ -217,6 +237,11 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(-191, -98.23, 60)
         PosFinish = vect(-176.5, -99.5, -71)
         MapName = "NV"
+        return
+    if getCurrentMap() == Map.NEW_QUEEN_STREET:
+        PosStart = vect(77.5, 8, -55.34)
+        PosFinish = vect(-79, 7.9, 4.4)
+        MapName = "NQ"
         return
     if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(18, 0.08, 13)
@@ -238,6 +263,11 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-188.25, 17.9, -58)
         MapName = "OU"
         return
+    if getCurrentMap() == Map.PARAISO:
+        PosStart = vect(-48, -2.91, 77)
+        PosFinish = vect(-37.25, 0.9, -143.14)
+        MapName = "PI"
+        return
     if getCurrentMap() == Map.PARIS:
         PosStart = vect(-14.4, 14, -35.75)
         PosFinish = vect(-104, 14.5, -100)
@@ -258,6 +288,10 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-92.49, 6.4, -23.25)
         MapName = "R6"
         return
+    if getCurrentMap() == Map.SHAMBALI_MONASTERY:
+        PosStart = vect(20.75, 9, -14.83)
+        PosFinish = vect(-22.46, 30.15, 202.14)
+        MapName = "SM"
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-1, -2.32, -9)
         PosFinish = vect(-7.5, 4.57, 111.3)
@@ -308,6 +342,16 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(176.515, -1, 52.458)
         MapName = "CG"
         return
+    if getCurrentMap() == Map.CIRCUIT_ROYAL:
+        PosStart = vect(108.96, 10.96, 11.66)
+        PosFinish = vect(-72.29, 3.9, -72.73)
+        MapName = "CR"
+        return
+    if getCurrentMap() == Map.COLOSSEO:
+        PosStart = vect(95.53, 9, -14.64)
+        PosFinish = vect(-87.73, 8.9, -32.18)
+        MapName = "CS"
+        return
     if getCurrentMap() == Map.DORADO:
         PosStart = vect(192.23, 14.1, 37.31)
         PosFinish = vect(12.5, -0.3, 6)
@@ -317,6 +361,11 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(126.088, 14.76, -17.073)
         PosFinish = vect(2, 5.9, 0.5)
         MapName = "EW"
+        return
+    if getCurrentMap() == Map.ESPERANCA:
+        PosStart = vect(92.82, -1, -85.71)
+        PosFinish = vect(-106.63, -1.1, -58.81)
+        MapName = "ER"
         return
     if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(-6.786, -0.92, -84.457)
@@ -388,6 +437,11 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(22.672, 1.9, -25.413)
         MapName = "MV"
         return
+    if getCurrentMap() == Map.MIDTOWN:
+        PosStart = vect(126.07, 1.09, -76.23)
+        PosFinish = vect(40.22, 3.9, 123.15)
+        MapName = "MT"
+        return
     if getCurrentMap() == Map.NEPAL_SANCTUM:
         PosStart = vect(81, 131.8, -35.5)
         PosFinish = vect(81, 131.7, 36)
@@ -402,6 +456,11 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(-182, -99.08, -74.5)
         PosFinish = vect(-191, -98.7, 60)
         MapName = "NV"
+        return
+    if getCurrentMap() == Map.NEW_QUEEN_STREET:
+        PosStart = vect(-82.67, 8.21, 3.75)
+        PosFinish = vect(76.21, 7.9, -46.4)
+        MapName = "NQ"
         return
     if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(199.54, 4.2, 37.77)
@@ -423,6 +482,11 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(-188, 16.9, 50.5)
         MapName = "OU"
         return
+    if getCurrentMap() == Map.PARAISO:
+        PosStart = vect(-48.76, 2.75, -140.07)
+        PosFinish = vect(-63.31, -2.2, 69.42)
+        MapName = "PI"
+        return
     if getCurrentMap() == Map.PARIS:
         PosStart = vect(-87.011, 13, -104.458)
         PosFinish = vect(-14.4, 13.9, -35.75)
@@ -443,6 +507,10 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(38.5, 4.6, 36.5)
         MapName = "R6"
         return
+    if getCurrentMap() == Map.SHAMBALI_MONASTERY:
+        PosStart = vect(-24, 30.65, 200.22)
+        PosFinish = vect(16, 7.9, -10)
+        MapName = "SM"
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-11.096, 4.66, 110.46)
         PosFinish = vect(-1, -2.8, -9)
