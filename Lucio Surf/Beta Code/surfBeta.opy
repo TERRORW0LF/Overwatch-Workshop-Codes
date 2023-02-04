@@ -1,4 +1,4 @@
-#settings "settings.opy.json"
+settings "settings.opy.json"
 
 #Global variables
 
@@ -82,7 +82,7 @@ rule "Debug (Player)":
 
 #Settings
 rule "Workshop Settings":
-    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 0, 0)
+    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 2, 0)
     Category = createWorkshopSetting(enum["Standard", "Gravspeed"], "Combo", "Default Category", 1, 1)
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
     Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
@@ -565,6 +565,12 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(229.8, -1.5, 52.88)]
         PosFinish = vect(180.24, 8.9, 104)
         MapName = "CG"
+        return
+    if getCurrentMap() == Map.CIRCUIT_ROYAL:
+        PosStart = vect(-19.88, 11, -60)
+        PosCheckpoint = [vect(11.1, 9.5, -34.7)]
+        PosFinish = vect(79.91, 17.6, 50.08)
+        MapName = "CR"
         return
     if getCurrentMap() == Map.DORADO:
         PosStart = vect(167.15, 18.01, 68)

@@ -1,0 +1,429 @@
+settings
+{
+	main
+	{
+		Description: "Fastest Lucio Rollouts v2.0 | Maintained by TERRORWOLF\nInteract to Reset\nT0H08"
+		Mode Name: "Lucio Rollouts"
+	}
+	lobby
+	{
+		Map Rotation: After A Game
+		Return To Lobby: Never
+		Max Team 1 Players: 6
+		Max Team 2 Players: 6
+	}
+	modes
+	{
+		Assault
+		{
+			disabled maps
+			{
+			}
+			Capture Speed Modifier: 500%
+		}
+		Control
+		{
+			disabled maps
+			{
+			}
+		}
+		Escort
+		{
+			Payload Speed Modifier: 500%
+		}
+		Hybrid
+		{
+			disabled maps
+			{
+			}
+			Capture Speed Modifier: 500%
+			Payload Speed Modifier: 500%
+		}
+		General
+		{
+			Allow Hero Switching: Off
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Kill Cam: Off
+			Kill Feed: Off
+			Respawn As Random Hero: On
+		}
+	}
+	heroes
+	{
+		General
+		{
+			Lúcio
+			{
+				Spawn With Ultimate Ready: On
+			}
+			enabled heroes
+			{
+				Lúcio
+			}
+		}
+	}
+}
+variables {
+    global:
+        0: Defense
+        1: Point
+        2: Time
+        3: Infinite
+        4: DummyAttack
+        5: DummyDefense
+        6: ObjectiveInPosition
+    player:
+        0: TimeSpawn
+        1: TimeRun
+        2: Finished
+        3: Reset
+        4: BestSpawn
+        5: BestRun
+        6: SpeedColor
+}
+rule ("Workshop Settings") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Set Global Variable(Defense, Workshop Setting Combo(Custom String("Point Select", Null, Null, Null), Custom String("Active Team", Null, Null, Null), 0, Array(Custom String("Attack", Null, Null, Null), Custom String("Defense", Null, Null, Null)), 0));
+        Set Global Variable(Point, Workshop Setting Integer(Custom String("Point Select", Null, Null, Null), Custom String("Active Point", Null, Null, Null), 1, 1, 3, 1));
+        Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
+        Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
+    }
+}
+
+rule ("Skip Prepare Phase") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is In Setup == True;
+    }
+    actions {
+        Set Match Time(1);
+    }
+}
+
+rule ("Unlock Control Point") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Control);
+        Is In Setup == False;
+        Is Control Mode Point Locked == True;
+    }
+    actions {
+        Set Match Time(1);
+    }
+}
+
+rule ("Set Match Time") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Or(Not(Is Control Mode Point Locked), Compare(Current Game Mode, !=, Game Mode(Control))) == True;
+    }
+    actions {
+        Set Match Time(Global.Time);
+    }
+}
+
+rule ("Setup - Player") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    actions {
+        Set Player Variable(Event Player, BestSpawn, 9999);
+        Set Player Variable(Event Player, BestRun, 9999);
+        Disable Game Mode HUD(Event Player);
+        Disable Movement Collision With Players(Event Player);
+        Set Status(Event Player, Null, Invincible, 9999);
+        Set Status(Event Player, Null, Phased Out, 9999);
+        Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Spawn: {0} sec", (Event Player).TimeSpawn, Null, Null), Null, Null, Left, 1, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Run: {0} sec", (Event Player).TimeRun, Null, Null), Null, Null, Left, 2, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player), Null, Null), Null, Null, Top, 1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Best Spawn: {0} sec", (Event Player).BestSpawn, Null, Null), Null, Null, Right, 1, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Best Run: {0} sec", (Event Player).BestRun, Null, Null), Null, Null, Right, 2, Color(White), Null, Null, String, Default Visibility);
+    }
+}
+
+rule ("Setup - Global") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        Create HUD Text(All Players(All Teams), Custom String("Fastest Rollouts v2.0", Null, Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, None, Default Visibility);
+    }
+}
+
+rule ("Setup - Active Point (Assault)") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Assault);
+        Is In Setup == False;
+    }
+    actions {
+        Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(0)), Null);
+        Set Global Variable(DummyAttack, Last Created Entity);
+        Set Invisible(Global.DummyAttack, All);
+        Disable Movement Collision With Players(Global.DummyAttack);
+        Wait Until(Compare(Objective Index, ==, Subtract(Global.Point, 1)), 9999);
+        Teleport(Global.DummyAttack, Nearest Walkable Position(Objective Position(Objective Index)));
+        Create Dummy Bot(Hero(Ana), Team 1, 5, Nearest Walkable Position(Objective Position(Objective Index)), Null);
+        Set Global Variable(DummyDefense, Last Created Entity);
+        Set Invisible(Global.DummyDefense, All);
+        Disable Movement Collision With Players(Global.DummyDefense);
+        Set Global Variable(ObjectiveInPosition, True);
+    }
+}
+
+rule ("Setup - Active Point (Hybrid)") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Hybrid);
+        Is In Setup == False;
+    }
+    actions {
+        Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(0)), Null);
+        Set Global Variable(DummyAttack, Last Created Entity);
+        Set Invisible(Global.DummyAttack, All);
+        Disable Movement Collision With Players(Global.DummyAttack);
+        Wait Until(If-Then-Else(Compare(Global.Point, !=, 1), Compare(Objective Index, ==, 1), True), 9999);
+        If(Subtract(Global.Point, 1));
+            Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
+            Wait Until(If-Then-Else(Compare(Global.Defense, ==, 0), Compare(Distance Between(Payload Position, Objective Position(Subtract(Global.Point, 1))), <, 0.5), Compare(Objective Index, ==, Subtract(Global.Point, 1))), 9999);
+        End;
+        Create Dummy Bot(Hero(Ana), Team 1, 5, If-Then-Else(Compare(Global.Point, !=, 1), Nearest Walkable Position(Payload Position), Nearest Walkable Position(Objective Position(0))), Null);
+        Set Global Variable(DummyDefense, Last Created Entity);
+        Set Invisible(Global.DummyDefense, All);
+        Disable Movement Collision With Players(Global.DummyDefense);
+        Set Global Variable(ObjectiveInPosition, True);
+    }
+}
+
+rule ("Setup - Active Point (Payl﻿oad)") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Escort);
+        Is In Setup == False;
+    }
+    actions {
+        Create Dummy Bot(Hero(Ana), Team 2, 5, Payload Position, Null);
+        Set Global Variable(DummyAttack, Last Created Entity);
+        Set Invisible(Global.DummyAttack, All);
+        Disable Movement Collision With Players(Global.DummyAttack);
+        Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
+        Wait Until(If-Then-Else(Compare(Global.Defense, ==, 0), Compare(Distance Between(Payload Position, Objective Position(Subtract(Global.Point, 1))), <, 0.5), Compare(Objective Index, ==, Subtract(Global.Point, 1))), 9999);
+        Create Dummy Bot(Hero(Ana), Team 1, 5, Nearest Walkable Position(Payload Position), Null);
+        Set Global Variable(DummyDefense, Last Created Entity);
+        Set Invisible(Global.DummyDefense, All);
+        Disable Movement Collision With Players(Global.DummyDefense);
+        Set Global Variable(ObjectiveInPosition, True);
+    }
+}
+
+rule ("Setup - Active Point (Control)") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Control);
+        Is In Setup == False;
+    }
+    actions {
+        Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(Objective Index)), Null);
+        Set Global Variable(DummyAttack, Last Created Entity);
+        Set Invisible(Global.DummyAttack, All);
+        Disable Movement Collision With Players(Global.DummyAttack);
+        Create Dummy Bot(Hero(Ana), Team 1, 5, Nearest Walkable Position(Objective Position(Objective Index)), Null);
+        Set Global Variable(DummyDefense, Last Created Entity);
+        Set Invisible(Global.DummyDefense, All);
+        Disable Movement Collision With Players(Global.DummyDefense);
+        Set Global Variable(ObjectiveInPosition, True);
+    }
+}
+
+rule ("Reset - Player (Point Active)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Global.ObjectiveInPosition != False;
+    }
+    actions {
+        Respawn(Event Player);
+    }
+}
+
+rule ("Start Timer - Spawn") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is In Spawn Room(Event Player) == True;
+        Has Spawned(Event Player) == True;
+        Global.ObjectiveInPosition != False;
+    }
+    actions {
+        Set Player Variable(Event Player, TimeSpawn, 0);
+        Chase Player Variable At Rate(Event Player, TimeSpawn, 5000, 1, None);
+        Stop Chasing Player Variable(Event Player, TimeRun);
+        Set Player Variable(Event Player, TimeRun, 0);
+        Set Ultimate Charge(Event Player, 100);
+        Set Status(Event Player, Null, Invincible, 9999);
+        Set Player Variable(Event Player, Finished, False);
+    }
+}
+
+rule ("Start Timer - Run") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is In Spawn Room(Event Player) == False;
+        Has Spawned(Event Player) == True;
+        Global.ObjectiveInPosition != False;
+    }
+    actions {
+        Chase Player Variable At Rate(Event Player, TimeRun, 5000, 1, None);
+        Stop Chasing Player Variable(Event Player, TimeSpawn);
+        If(And(Compare((Event Player).TimeSpawn, <, (Event Player).BestSpawn), Compare((Event Player).TimeSpawn, !=, 0)));
+            Set Player Variable(Event Player, BestSpawn, (Event Player).TimeSpawn);
+            Small Message(Event Player, Custom String("PB Spawn: {0} sec", (Event Player).TimeSpawn, Null, Null));
+        Else;
+            Small Message(Event Player, Custom String("Spawn: {0} sec", (Event Player).TimeSpawn, Null, Null));
+    }
+}
+
+rule ("Reset") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Interact)) == True;
+    }
+    actions {
+        Respawn(Event Player);
+        Stop Chasing Player Variable(Event Player, TimeSpawn);
+        Set Player Variable(Event Player, TimeSpawn, 0);
+        Chase Player Variable At Rate(Event Player, TimeSpawn, 5000, 1, None);
+    }
+}
+
+rule ("Finish") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is On Objective(Event Player) == True;
+        (Event Player).Finished == False;
+        Global.ObjectiveInPosition != False;
+    }
+    actions {
+        Stop Chasing Player Variable(Event Player, TimeRun);
+        If(Compare((Event Player).TimeRun, <, (Event Player).BestRun));
+            Set Player Variable(Event Player, BestRun, (Event Player).TimeRun);
+            Small Message(Event Player, Custom String("PB Run: {0} sec", (Event Player).TimeRun, Null, Null));
+        Else;
+            Small Message(Event Player, Custom String("Run: {0} sec", (Event Player).TimeRun, Null, Null));
+        End;
+        Set Player Variable(Event Player, Finished, True);
+    }
+}
+
+rule ("Velocity Counter (Green)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) > 13.75;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Green));
+    }
+}
+
+rule ("Velocity Counter (Yellow)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) > 11;
+        Horizontal Speed Of(Event Player) < 13.75;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Yellow));
+    }
+}
+
+rule ("Velocity Counter (Orange)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) > 6.88;
+        Horizontal Speed Of(Event Player) < 11;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Orange));
+    }
+}
+
+rule ("Velocity Counter (Red)") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Horizontal Speed Of(Event Player) <= 6.88;
+    }
+    actions {
+        Set Player Variable(Event Player, SpeedColor, Color(Red));
+    }
+}
+
+rule ("Infinite Match Time") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Is Game In Progress == True;
+        Or(Not(Is Control Mode Point Locked), Compare(Current Game Mode, !=, Game Mode(Control))) == True;
+        Match Time < 10;
+    }
+    actions {
+        Set Match Time(Global.Time);
+    }
+}
+

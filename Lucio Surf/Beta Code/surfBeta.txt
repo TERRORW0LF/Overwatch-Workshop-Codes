@@ -1,6 +1,6 @@
 settings
 {
-    main
+	main
 	{
 		Description: "Lucio Surf v5.8b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
 		Mode Name: "Lucio Surf Beta"
@@ -13,7 +13,7 @@ settings
 		Max Spectators: 6
 		Max Team 1 Players: 10
 		Max Team 2 Players: 0
-        Max FFA Players: 10
+		Max FFA Players: 10
 		Return To Lobby: Never
 		Swap Teams After Match: No
 	}
@@ -23,9 +23,13 @@ settings
 		{
 			enabled maps
 			{
-                Lijiang Control Center 0
+				Château Guillard 0
+				Kanezaka 0
+				Lijiang Control Center 0
 				Lijiang Garden 0
 				Lijiang Night Market 0
+				Malevento 0
+				Petra 0
 			}
 			Self Initiated Respawn: Off
 		}
@@ -33,23 +37,14 @@ settings
 		{
 			disabled maps
 			{
-                Blizzard World Winter 0
-				Circuit royal 0
-				Colosseo 0
-				Eichenwalde Halloween 0
-				Esperança 0
-				Hanamura Winter 0
-				King's Row Winter 0
+				Ilios 0
 				Lijiang Tower 0
-				Lijiang Tower Lunar New Year 0
-				New Queen Street 0
-				Paraíso 0
+				Nepal 0
+				Oasis 0
 				Workshop Chamber 0
 				Workshop Expanse 0
-				Workshop Expanse Night 0
 				Workshop Green Screen 0
 				Workshop Island 0
-				Workshop Island Night 0
 			}
 		}
 		General
@@ -224,7 +219,7 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 0, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
+        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 2, Array(Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
         Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 1, Array(Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
@@ -813,6 +808,13 @@ rule ("Start - Maps (Season 3)") {
             Set Global Variable(PosCheckpoint, Array(Vector(229.8, -1.5, 52.88)));
             Set Global Variable(PosFinish, Vector(180.24, 8.9, 104));
             Set Global Variable(MapName, Custom String("CG", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Circuit Royal)));
+            Set Global Variable(PosStart, Vector(-19.88, 11, -60));
+            Set Global Variable(PosCheckpoint, Array(Vector(11.1, 9.5, -34.7)));
+            Set Global Variable(PosFinish, Vector(79.91, 17.6, 50.08));
+            Set Global Variable(MapName, Custom String("CR", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Dorado)));
