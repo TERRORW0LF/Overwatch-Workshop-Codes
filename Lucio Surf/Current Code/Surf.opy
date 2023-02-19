@@ -244,11 +244,11 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-79, 7.9, 4.4)
         MapName = "NQ"
         return
-    if getCurrentMap() == Map.NUMBANI:
+    /*if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(18, 0.08, 13)
         PosFinish = vect(206.99, -2.29, 22.14)
         MapName = "NB"
-        return
+        return*/
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(100, 1, 311)
         PosFinish = vect(195, 0.75, 200)
@@ -317,7 +317,7 @@ rule "Start - Maps (Season 2)":
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(-121.57, -0.4, 116.2)
         PosFinish = vect(3, -0.2, 21.5)
-        MapName = "BL"
+        MapName = "BW"
         return
     if getCurrentMap() == Map.BUSAN:
         #Downtown
@@ -463,11 +463,11 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(76.21, 7.9, -46.4)
         MapName = "NQ"
         return
-    if getCurrentMap() == Map.NUMBANI:
+    /*if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(199.54, 4.2, 37.77)
         PosFinish = vect(18, -0.3, 13)
         MapName = "NB"
-        return
+        return*/
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(211.712, 1, 203.561)
         PosFinish = vect(101, 0.75, 309.5)
@@ -567,6 +567,18 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(180.24, 8.9, 104)
         MapName = "CG"
         return
+    if getCurrentMap() == Map.CIRCUIT_ROYAL:
+        PosStart = vect(-19.88, 11, -60)
+        PosCheckpoint = [vect(11.1, 9.5, -34.7)]
+        PosFinish = vect(79.91, 17.6, 50.08)
+        MapName = "CR"
+        return
+    if getCurrentMap() == Map.COLOSSEO:
+        PosStart = vect(44.5, 4, -40.35)
+        PosCheckpoint = [vect(0, -0.1, 10)]
+        PosFinish = vect(-68.7, 4, -57.8)
+        MapName = "CS"
+        return
     if getCurrentMap() == Map.DORADO:
         PosStart = vect(167.15, 18.01, 68)
         PosCheckpoint = [vect(68, 16.9, 40)]
@@ -578,6 +590,12 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(4.93, 4.9, -14.1)]
         PosFinish = vect(64.74, 15.5, -61.86)
         MapName = "EW"
+        return
+    if getCurrentMap() == Map.ESPERANCA:
+        PosStart = vect(-39.86, -2, -26.51)
+        PosCheckpoint = [vect(12.23, -6.1, -75.73)]
+        PosFinish = vect(106, -1.1, -58.6)
+        MapName = "ER"
         return
     if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(55.024, -1.92, 41.766)
@@ -663,6 +681,12 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(27, 1.9, -28)
         MapName = "MV"
         return
+    if getCurrentMap() == Map.MIDTOWN:
+        PosStart = vect(47.73, 3.84, -41.25)
+        PosCheckpoint = [vect(-30.54, 3.9, 45.31)]
+        PosFinish = vect(-16.41, 3.9, 98.35)
+        MapName = "MT"
+        return
     if getCurrentMap() == Map.NEPAL_SANCTUM:
         PosStart = vect(78, 129.8, -59)
         PosCheckpoint = [vect(81, 127.9, 8)]
@@ -681,12 +705,18 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(-207, -87.1, -44)
         MapName = "NV"
         return
-    if getCurrentMap() == Map.NUMBANI:
+    if getCurrentMap() == Map.NEW_QUEEN_STREET:
+        PosStart = vect(-59.69, 8.02, -1.29)
+        PosCheckpoint = [vect(0, 1.9, -42.2)]
+        PosFinish = vect(66.14, 7.9, 9.89)
+        MapName = "NQ"
+        return
+    /*if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(87.83, 4.25, -23.57)
         PosCheckpoint = [vect(129.52, -3.85, 38.61)]
         PosFinish = vect(204.25, -2.25, 22.61)
         MapName = "NB"
-        return
+        return*/
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(166, 4, 270)
         PosCheckpoint = [vect(102, -2, 288)]
@@ -704,6 +734,12 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(-220, 18.9, 0)]
         PosFinish = vect(-175, 15.9, 61.5)
         MapName = "OU"
+        return
+    if getCurrentMap() == Map.PARAISO:
+        PosStart = vect(-7.7, 3.75, 36.99)
+        PosCheckpoint = [vect(24.91, 4.8, -110.14)]
+        PosFinish = vect(-56.2, -1.1, 28.5)
+        MapName = "PI"
         return
     if getCurrentMap() == Map.PARIS:
         PosStart = vect(-77.279, 12.07, -2.75)
@@ -728,6 +764,12 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(16, 7.8, -23)]
         PosFinish = vect(51, 0.1, 45)
         MapName = "R6"
+        return
+    if getCurrentMap() == Map.SHAMBALI_MONASTERY:
+        PosStart = vect(25, 14, 63.75)
+        PosCheckpoint = [vect(-60, 22.9, 126)]
+        PosFinish = vect(12.36, 26.9, 117.14)
+        MapName = "SM"
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-58.89, 6.51, 44.81)
@@ -920,13 +962,13 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         MapName = "NV"
         return
-    if getCurrentMap() == Map.NUMBANI:
+    /*if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(144.571, 2.25, 29.313)
         PosCheckpoint = [vect(49.435, 1.6, -6.419)]
         PosFinish = vect(163.628, 4.15, -0.052)
         Checkpoint = true
         MapName = "NB"
-        return
+        return*/
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(85.57, 1, 297.8)
         PosCheckpoint = [vect(157.26, 3.9, 264.225)]
@@ -1148,12 +1190,12 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(-181.606, -88, 0)
         MapName = "NV"
         return
-    if getCurrentMap() == Map.NUMBANI:
+    /*if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(161.121, -4, 6.575)
         PosCheckpoint = [vect(207.578, -2.2, 31.463), vect(203.656, -3.9, 1.168), vect(120.67, -5.8, -17.039), vect(131.903, -3.8, 40.896), vect(59.889, -0.8, -25.254), vect(8.506, 0.2, 37.804)]
         PosFinish = vect(169.395, 4.2, 6.428)
         MapName = "NB"
-        return
+        return*/
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(143.522, 2.15, 247.456)
         PosCheckpoint = [vect(125.589, 0.9, 229.793), vect(91.966, 0.9, 305.984), vect(158.681, 3.9, 262.665), vect(183.478, -3.5, 207.761)]
@@ -1371,7 +1413,6 @@ rule "Start - Player":
     @Condition eventPlayer.hasSpawned()
     
     #vars
-    async(Respawn, AsyncBehavior.NOOP)
     eventPlayer.Mode = 0
     eventPlayer.TimeBestStan = 9999
     eventPlayer.TimeBestGrav = 9999
