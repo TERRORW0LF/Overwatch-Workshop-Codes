@@ -57,12 +57,11 @@ playervar SpeedPracticeCheckpoint 26
 playervar PosNow 30
 playervar PosPrev 31
 playervar SpeedNow 32
+playervar SpeedPrev 33
 playervar Pos1 34
 playervar Pos2 35
 playervar Angle 36
 playervar TimeExtra2 37
-playervar Test1 100
-playervar Test2 101
 
 
 #Subroutine names
@@ -79,7 +78,6 @@ rule "Debug (Player)":
     @Event eachPlayer
 
     hudHeader(eventPlayer, "{0}".format(eventPlayer.getPosition()), HudPosition.TOP, 4, Color.WHITE, HudReeval.STRING)
-    hudHeader(eventPlayer, "{0}".format(eventPlayer.getHorizontalFacingAngle()), HudPosition.TOP, 5, Color.WHITE, HudReeval.STRING)
 
 
 #Settings
@@ -1450,46 +1448,28 @@ rule "Start - Player":
     async(Respawn, AsyncBehavior.NOOP)
 
 
-rule "Last Frame Data":
-    @Event eachPlayer
-
-    while true:
-        eventPlayer.PosNow = eventPlayer.getPosition()
-        eventPlayer.SpeedNow = eventPlayer.getHorizontalSpeed()
-        wait()
-        eventPlayer.PosPrev = eventPlayer.PosNow
-
-
 rule "Start timer":
     @Event eachPlayer
     @Condition not eventPlayer.Mode or (eventPlayer.Mode == 1 and not eventPlayer.PracticeCheckpoint)
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint]) or eventPlayer.Mode == 1
     @Condition updateEveryTick(distance(PosStart, vect(eventPlayer.getPosition().x, PosStart.y, eventPlayer.getPosition().z)) > 2 or abs(eventPlayer.getPosition().y - PosStart.y) > 3)
-    
+
     chase(eventPlayer.TimeCurrent, 5000, rate=1, ChaseReeval.NONE)
     if not Visible or eventPlayer.Mode == 1:
         return
     eventPlayer.setInvisibility(Invis.NONE)
 
-    eventPlayer.Test1 = eventPlayer.PosPrev
-    eventPlayer.Test2 = eventPlayer.PosNow
     if distance(vect(eventPlayer.PosPrev.x, PosStart.y, eventPlayer.PosPrev.z), PosStart) < 2 and distance(vect(eventPlayer.PosNow.x, PosStart.y, eventPlayer.PosNow.z), PosStart) > 2:
         eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z), Vector.RIGHT)
         eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cosDeg(eventPlayer.Angle))
-        eventPlayer.Pos2 = vect((eventPlayer.PosNow.x - PosStart.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cosDeg(eventPlayer.Angle))
-        eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (abs(eventPlayer.Pos2.x) - sqrt(4 - eventPlayer.Pos2.z*eventPlayer.Pos2.z))
+        eventPlayer.Pos2 = vect(eventPlayer.Pos1.x, 0, (eventPlayer.PosNow.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosStart.z) * cosDeg(eventPlayer.Angle))
+        eventPlayer.TimeExtra = (-eventPlayer.SpeedPrev + sqrt(eventPlayer.SpeedPrev*eventPlayer.SpeedPrev + 4*(eventPlayer.SpeedNow - eventPlayer.SpeedPrev)*distance(eventPlayer.Pos1, vect((1 if eventPlayer.Pos1.x < eventPlayer.Pos2.x else -1) * sqrt(4 - eventPlayer.Pos1.z*eventPlayer.Pos1.z), 0, eventPlayer.Pos1.z))))/(2*(eventPlayer.SpeedNow - eventPlayer.SpeedPrev))
     else:
         eventPlayer.TimeExtra = 1
     if eventPlayer.PosNow.y - PosStart.y > 3:
         eventPlayer.TimeExtra2 = 0.016 / (eventPlayer.PosNow.y - eventPlayer.PosPrev.y) * (PosStart.y + 3 - eventPlayer.PosPrev.y)
         eventPlayer.TimeExtra = eventPlayer.TimeExtra if eventPlayer.TimeExtra < eventPlayer.TimeExtra2 else eventPlayer.TimeExtra2
     #eventPlayer.TimeCurrent += eventPlayer.TimeExtra
-    printLog(eventPlayer.Test1)
-    printLog(eventPlayer.Test2)
-    printLog(eventPlayer.Angle)
-    printLog(eventPlayer.Pos1)
-    printLog(eventPlayer.Pos2)
-    printLog("{0}.{1} sec".format(floor(eventPlayer.TimeExtra + 0.001 / 10), "{0}".format(round((1000 * eventPlayer.TimeExtra) % 1000 + 1000)).substring(1, 3)))
 
 
 rule "Start timer (Practice)":
@@ -1537,13 +1517,17 @@ rule "Checkpoint (no LoS)":
     @Condition not eventPlayer.Finished
     @Condition eventPlayer.Mode <= 1
     @Condition any([distance(checkpoint, vect(eventPlayer.getPosition().x, checkpoint.y, eventPlayer.getPosition().z)) <= 3.5 and eventPlayer.getPosition().y < checkpoint.y for checkpoint in PosCheckpoint])
-    
+
     eventPlayer.CurrCheckpoint = PosCheckpoint.index([checkpoint for checkpoint in PosCheckpoint if distance(checkpoint, vect(eventPlayer.getPosition().x, checkpoint.y, eventPlayer.getPosition().z)) <= 3.5 and eventPlayer.getPosition().y < checkpoint.y][0])
     if (eventPlayer.CurrCheckpoint == -1 or eventPlayer.Checkpoint[eventPlayer.CurrCheckpoint]):
         return
 
     smallMessage(eventPlayer, l"{0} {1}".format(l"Checkpoint", l"Out of View"))
 
+playervar distanceToClosestApproach
+playervar approachDirection
+playervar closestApproachLocation
+playervar finishZonePointOfEntry
 
 rule "Finish":
     @Event eachPlayer
@@ -1565,13 +1549,54 @@ rule "Finish":
 
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.Attempts += 1
-    
-    eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z), Vector.RIGHT)
-    eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sin(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sin(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cos(eventPlayer.Angle))
-    eventPlayer.Pos2 = vect((eventPlayer.PosNow.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
-    eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (eventPlayer.Pos2.x - sqrt(25 - eventPlayer.Pos1.z))
-    #eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
 
+    if (distance(PosFinish, vect(eventPlayer.PosPrev.x, PosFinish.y, eventPlayer.PosPrev.z)) <= 5 and eventPlayer.PosPrev.y >= PosFinish.y):
+        printLog("WARN: Shadow is in finish! Not the first frame we're in finish?")
+    else:
+        printLog("DEBUG: Player finished as expected (shadow outside finish). Performing timer compensation...")
+
+        # Set up a few useful variables
+        eventPlayer.approachDirection = normalize(vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z) - vect(eventPlayer.PosPrev.x, PosFinish.y, eventPlayer.PosPrev.z))
+
+        # Calculate distance along approach trajectory to closest approach to center
+        eventPlayer.distanceToClosestApproach = dotProduct(
+            PosFinish - vect(eventPlayer.PosPrev.x, PosFinish.y, eventPlayer.PosPrev.z),
+            eventPlayer.approachDirection)
+        # Use that distance to get the closest point along the trajectory to the center
+        eventPlayer.closestApproachLocation = eventPlayer.distanceToClosestApproach * eventPlayer.approachDirection + vect(eventPlayer.PosPrev.x, PosFinish.y, eventPlayer.PosPrev.z)
+
+        # Sanity check: does the closest approach reside within the center?
+        if (distance(eventPlayer.closestApproachLocation, PosFinish) > 5):
+            printLog("WARN: closest approach does not intersect finish cylinder? {} not within 5m of center {} (actual distance {})".format(eventPlayer.closestApproachLocation, PosFinish, distance(eventPlayer.closestApproachLocation, PosFinish)))
+            goto AFTER_TIMER_COMPENSATION
+
+        # Use Pythagorean theorem to determine the distance to back up along the intersection trajectory from closest approach to first contact w/ finish cylinder
+        eventPlayer.TimeExtra2 = sqrt(25 - distance(PosFinish, eventPlayer.closestApproachLocation)**2)
+        # Sanity check: does the distance to back up make sense?
+        if (eventPlayer.TimeExtra2 > 5 or eventPlayer.TimeExtra < 0):
+            printLog("WARN: backup amount is invalid (not within 0..5), was {}".format(eventPlayer.TimeExtra))
+            goto AFTER_TIMER_COMPENSATION
+
+        # Determine the actual intersection point
+        eventPlayer.finishZonePointOfEntry = eventPlayer.closestApproachLocation - eventPlayer.TimeExtra2 * eventPlayer.approachDirection
+        # Sanity check: is the point of entry ~5m away from finish?
+        if (abs(distance(eventPlayer.finishZonePointOfEntry, PosFinish) - 5) > 0.05):
+            printLog("WARN: determined point of entry to finish zone is not within acceptable range of radius: {0}'s distance from center ({1}) is {2}".format(eventPlayer.finishZonePointOfEntry, PosFinish, distance(eventPlayer.finishZonePointOfEntry, PosFinish) - 5))
+            goto AFTER_TIMER_COMPENSATION
+
+        # Get final compensation by `extra distance / speed (m / m/s = s)`,
+        # where extra distance is given by the horizontal distance between current position and the intersection point
+        # and speed is assumed to be on average an average of the previous tick's speed and current speed
+        eventPlayer.TimeExtra = distance(eventPlayer.finishZonePointOfEntry, vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z)) / ((eventPlayer.getHorizontalSpeed() + eventPlayer.SpeedPrev) / 2)
+        # Final sanity check: is our compensation time within expected range?
+        if (eventPlayer.TimeExtra < 0 or eventPlayer.TimeExtra > 0.016):
+            printLog("WARN: Final compensation time amount is invalid (not within 0..0.016): was {0} | calc: {1} / {2}".format(eventPlayer.TimeExtra, distance(eventPlayer.finishZonePointOfEntry, vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z)), ((eventPlayer.getHorizontalSpeed() + eventPlayer.SpeedPrev) / 2)))
+            goto AFTER_TIMER_COMPENSATION
+
+        printLog("DEBUG: player traveled {0}m (x100) too far at estimated speed {1}m/s, so taking {2}s (x100) off the timer".format(distance(eventPlayer.finishZonePointOfEntry, vect(eventPlayer.getPosition().x, PosFinish.y, eventPlayer.getPosition().z)) * 100, ((eventPlayer.getHorizontalSpeed() + eventPlayer.SpeedPrev) / 2), eventPlayer.TimeExtra * 100))
+        eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
+
+    AFTER_TIMER_COMPENSATION:
     if not eventPlayer.Category:
         if eventPlayer.TimeCurrent < eventPlayer.TimeBestStan:
             if eventPlayer.TimeCurrent < TimeThirdStan and eventPlayer != PlayerSecondStan and eventPlayer != PlayerFirstStan:
@@ -2194,3 +2219,20 @@ def Respawn():
             eventPlayer.setGravity(80)
             eventPlayer.setMoveSpeed(125)
 
+rule "Last Frame Position":
+    @Event eachPlayer
+    @Condition updateEveryTick(eventPlayer.getPosition()) != eventPlayer.PosPrev
+
+    eventPlayer.PosPrev = eventPlayer.getPosition()
+    wait()
+    if RULE_CONDITION:
+        goto RULE_START
+
+rule "Last Frame Horizontal Speed":
+    @Event eachPlayer
+    @Condition updateEveryTick(eventPlayer.getHorizontalSpeed()) != eventPlayer.SpeedPrev
+
+    eventPlayer.SpeedPrev = eventPlayer.getHorizontalSpeed()
+    wait()
+    if RULE_CONDITION:
+        goto RULE_START
