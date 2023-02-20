@@ -150,12 +150,9 @@ variables {
         30: PosNow
         31: PosPrev
         32: SpeedNow
-        34: Pos1
-        35: PosNorm
-        36: Angle
-        37: TimeExtra2
-        100: Test1
-        101: Test2
+        33: PosNorm
+        34: Angle
+        35: TimeExtra2
 }
 subroutines {
     0: Respawn

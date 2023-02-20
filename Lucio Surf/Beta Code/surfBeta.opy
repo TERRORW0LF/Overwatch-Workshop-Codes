@@ -57,12 +57,9 @@ playervar SpeedPracticeCheckpoint 26
 playervar PosNow 30
 playervar PosPrev 31
 playervar SpeedNow 32
-playervar Pos1 34
-playervar PosNorm 35
-playervar Angle 36
-playervar TimeExtra2 37
-playervar Test1 100
-playervar Test2 101
+playervar PosNorm 33
+playervar Angle 34
+playervar TimeExtra2 35
 
 
 #Subroutine names
