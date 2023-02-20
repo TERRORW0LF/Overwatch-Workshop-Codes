@@ -58,7 +58,7 @@ playervar PosNow 30
 playervar PosPrev 31
 playervar SpeedNow 32
 playervar Pos1 34
-playervar Pos2 35
+playervar PosNorm 35
 playervar Angle 36
 playervar TimeExtra2 37
 playervar Test1 100
@@ -1471,25 +1471,16 @@ rule "Start timer":
         return
     eventPlayer.setInvisibility(Invis.NONE)
 
-    eventPlayer.Test1 = eventPlayer.PosPrev
-    eventPlayer.Test2 = eventPlayer.PosNow
     if distance(vect(eventPlayer.PosPrev.x, PosStart.y, eventPlayer.PosPrev.z), PosStart) < 2 and distance(vect(eventPlayer.PosNow.x, PosStart.y, eventPlayer.PosNow.z), PosStart) > 2:
-        eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z), Vector.RIGHT)
-        eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cosDeg(eventPlayer.Angle))
-        eventPlayer.Pos2 = vect((eventPlayer.PosNow.x - PosStart.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cosDeg(eventPlayer.Angle))
-        eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (abs(eventPlayer.Pos2.x) - sqrt(4 - eventPlayer.Pos2.z*eventPlayer.Pos2.z))
+        eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
+        eventPlayer.PosNorm = vect((eventPlayer.PosNow.x - PosStart.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosNow.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosStart.z) * cosDeg(eventPlayer.Angle))
+        eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (abs(eventPlayer.PosNorm.x) - sqrt(4 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z))
     else:
-        eventPlayer.TimeExtra = 1
+        eventPlayer.TimeExtra = 0
     if eventPlayer.PosNow.y - PosStart.y > 3:
-        eventPlayer.TimeExtra2 = 0.016 / (eventPlayer.PosNow.y - eventPlayer.PosPrev.y) * (PosStart.y + 3 - eventPlayer.PosPrev.y)
-        eventPlayer.TimeExtra = eventPlayer.TimeExtra if eventPlayer.TimeExtra < eventPlayer.TimeExtra2 else eventPlayer.TimeExtra2
-    #eventPlayer.TimeCurrent += eventPlayer.TimeExtra
-    printLog(eventPlayer.Test1)
-    printLog(eventPlayer.Test2)
-    printLog(eventPlayer.Angle)
-    printLog(eventPlayer.Pos1)
-    printLog(eventPlayer.Pos2)
-    printLog("{0}.{1} sec".format(floor(eventPlayer.TimeExtra + 0.001 / 10), "{0}".format(round((1000 * eventPlayer.TimeExtra) % 1000 + 1000)).substring(1, 3)))
+        eventPlayer.TimeExtra2 = 0.016 * ((eventPlayer.PosNow.y - PosStart.y - 3) / (eventPlayer.PosNow.y - eventPlayer.PosPrev.y))
+        eventPlayer.TimeExtra = eventPlayer.TimeExtra if eventPlayer.TimeExtra > eventPlayer.TimeExtra2 else eventPlayer.TimeExtra2
+    eventPlayer.TimeCurrent += eventPlayer.TimeExtra
 
 
 rule "Start timer (Practice)":
@@ -1566,11 +1557,10 @@ rule "Finish":
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.Attempts += 1
     
-    eventPlayer.Angle = -angleBetweenVectors(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z), Vector.RIGHT)
-    eventPlayer.Pos1 = vect((eventPlayer.PosPrev.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosStart.z) * sin(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosStart.x) * sin(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosStart.z) * cos(eventPlayer.Angle))
-    eventPlayer.Pos2 = vect((eventPlayer.PosNow.x - PosStart.x) * cos(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sin(eventPlayer.Angle), 0, eventPlayer.Pos1.z)
-    eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (eventPlayer.Pos2.x - sqrt(25 - eventPlayer.Pos1.z))
-    #eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
+    eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
+    eventPlayer.PosNorm = vect((eventPlayer.PosNow.x - PosFinish.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosFinish.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosNow.x - PosFinish.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosFinish.z) * cosDeg(eventPlayer.Angle))
+    eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z) - abs(eventPlayer.PosNorm.x))
+    eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
 
     if not eventPlayer.Category:
         if eventPlayer.TimeCurrent < eventPlayer.TimeBestStan:
