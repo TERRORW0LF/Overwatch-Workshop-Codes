@@ -1556,7 +1556,7 @@ rule "Finish":
     
     eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
     eventPlayer.PosNorm = vect((eventPlayer.PosNow.x - PosFinish.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosFinish.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosNow.x - PosFinish.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosFinish.z) * cosDeg(eventPlayer.Angle))
-    eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z) - abs(eventPlayer.PosNorm.x))
+    eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z) - eventPlayer.PosNorm.x)
     eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
 
     if not eventPlayer.Category:
