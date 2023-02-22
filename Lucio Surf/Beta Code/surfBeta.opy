@@ -1468,14 +1468,26 @@ rule "Start timer":
         return
     eventPlayer.setInvisibility(Invis.NONE)
 
+    /*2 methods of starting timer: either further than 2 m away, or more than 3 m up. Start is a cylinder.*/
     if distance(vect(eventPlayer.PosPrev.x, PosStart.y, eventPlayer.PosPrev.z), PosStart) < 2 and distance(vect(eventPlayer.PosNow.x, PosStart.y, eventPlayer.PosNow.z), PosStart) > 2:
+        /*Get angle between the travel line and (-1, 0, 0) (OW's coordinate system is left handed).*/
         eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
+        /*Translate the travel line so that PosStart is considered the origin, then rotate by the calculated angle.
+          This will result in the travel line being of the from y = c, with c being the z-coordinate of a point on the line.
+          For optimization purposes only PosNow gets transformed, bc we're only interested in c.*/
         eventPlayer.PosNorm = vect((eventPlayer.PosNow.x - PosStart.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosNow.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosStart.z) * cosDeg(eventPlayer.Angle))
-        eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (abs(eventPlayer.PosNorm.x) - sqrt(4 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z))
+        /*calculate extra time with
+            (1/speed) x
+          with x being the dinstance between PosNow and the intersection of the travel line and the start circle (x^2 + c^2 = r^2 => x = sqrt(r^2 - c^2).
+          This formula is a near perfect approximation for the actual formula in the relevant area (0 >= x <= 0.016).
+          Due to the sqrt always giving us the positve x intersection point, we need the absolute value of PosNorm.x.*/
+        eventPlayer.TimeExtra = (abs(eventPlayer.PosNorm.x) - sqrt(4 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z)) / eventPlayer.SpeedNow
     else:
         eventPlayer.TimeExtra = 0
     if eventPlayer.PosNow.y - PosStart.y > 3:
+        /*Crude approximation with disregard to speed. This case will not happen in 99% of the starts.*/
         eventPlayer.TimeExtra2 = 0.016 * ((eventPlayer.PosNow.y - PosStart.y - 3) / (eventPlayer.PosNow.y - eventPlayer.PosPrev.y))
+        /*If both cases happen chose the higher extra time.*/
         eventPlayer.TimeExtra = eventPlayer.TimeExtra if eventPlayer.TimeExtra > eventPlayer.TimeExtra2 else eventPlayer.TimeExtra2
     eventPlayer.TimeCurrent += eventPlayer.TimeExtra
 
@@ -1553,10 +1565,19 @@ rule "Finish":
 
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.Attempts += 1
-    
+
+    /*Get angle between the travel line and (-1, 0, 0) (OW's coordinate system is left handed).*/
     eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
+    /*Translate the travel line so that PosFinish is considered the origin, then rotate by the calculated angle.
+      This will result in the travel line being of the from y = c, with c being the z-coordinate of a point on the line.
+      For optimization purposes only PosNow gets transformed, bc we're only interested in c.*/
     eventPlayer.PosNorm = vect((eventPlayer.PosNow.x - PosFinish.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosFinish.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosNow.x - PosFinish.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosFinish.z) * cosDeg(eventPlayer.Angle))
-    eventPlayer.TimeExtra = 1 / eventPlayer.SpeedNow * (sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z) - eventPlayer.PosNorm.x)
+    /*calculate extra time with
+        (1/speed) x
+      with x being the dinstance between PosNow and the intersection of the travel line and the start circle (x^2 + c^2 = r^2 => x = sqrt(r^2 - c^2).
+      This formula is a near perfect approximation for the actual formula in the relevant area (0 >= x <= 0.016).
+      Due to the sqrt always giving us the positve x intersection point, we need the absolute value of PosNorm.x.*/
+    eventPlayer.TimeExtra = (sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z) - abs(eventPlayer.PosNorm.x)) / eventPlayer.SpeedNow
     eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
 
     if not eventPlayer.Category:
@@ -1602,6 +1623,7 @@ rule "Finish":
             eventPlayer.NewBest = true
         else:
             bigMessage(eventPlayer, l"{0}!!!".format(l"Finished"))
+    /*This wait is needed so that the "Finish Messages" rules announce the correct player. Otherwise the messages would have the old player's name in them instead.*/
     wait()
     eventPlayer.Finished = true
 
