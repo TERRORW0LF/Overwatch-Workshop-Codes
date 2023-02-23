@@ -60,7 +60,6 @@ playervar SpeedNow 32
 playervar PosNorm 33
 playervar Angle 34
 playervar TimeExtra2 35
-playervar PosNorm2 100
 
 
 #Subroutine names

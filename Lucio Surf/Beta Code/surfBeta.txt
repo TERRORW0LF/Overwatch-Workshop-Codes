@@ -153,7 +153,6 @@ variables {
         33: PosNorm
         34: Angle
         35: TimeExtra2
-        100: PosNorm2
 }
 subroutines {
     0: Respawn
