@@ -153,6 +153,7 @@ variables {
         33: PosNorm
         34: Angle
         35: TimeExtra2
+        100: PosNorm2
 }
 subroutines {
     0: Respawn
@@ -1844,10 +1845,10 @@ rule ("Start timer") {
         Chase Player Variable At Rate(Event Player, TimeCurrent, 5000, 1, None);
         Abort If(Or(Not(Global.Visible), Compare((Event Player).Mode, ==, 1)));
         Set Invisible(Event Player, None);
-        If(And(Compare(Distance Between(Vector(X Component Of((Event Player).PosPrev), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosPrev)), Global.PosStart), <, 2), Compare(Distance Between(Vector(X Component Of((Event Player).PosNow), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosNow)), Global.PosStart), >, 2)));
+        If(And(Compare(Distance Between(Vector(X Component Of((Event Player).PosPrev), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosPrev)), Global.PosStart), <=, 2), Compare(Distance Between(Vector(X Component Of((Event Player).PosNow), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosNow)), Global.PosStart), >, 2)));
             Set Player Variable(Event Player, Angle, Add(Horizontal Angle From Direction(Right), Horizontal Angle From Direction(Vector(Subtract(X Component Of((Event Player).PosNow), X Component Of((Event Player).PosPrev)), 0, Subtract(Z Component Of((Event Player).PosNow), Z Component Of((Event Player).PosPrev))))));
             Set Player Variable(Event Player, PosNorm, Vector(Subtract(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosStart)), Cosine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosStart)), Sine From Degrees((Event Player).Angle))), 0, Add(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosStart)), Sine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosStart)), Cosine From Degrees((Event Player).Angle)))));
-            Set Player Variable(Event Player, TimeExtra, Divide(Subtract(Absolute Value(X Component Of((Event Player).PosNorm)), Square Root(Subtract(4, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm))))), (Event Player).SpeedNow));
+            Set Player Variable(Event Player, TimeExtra, Divide(Subtract(X Component Of((Event Player).PosNorm), Square Root(Subtract(4, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm))))), (Event Player).SpeedNow));
         Else;
             Set Player Variable(Event Player, TimeExtra, 0);
         End;
@@ -1959,7 +1960,7 @@ rule ("Finish") {
         Modify Player Variable(Event Player, Attempts, Add, 1);
         Set Player Variable(Event Player, Angle, Add(Horizontal Angle From Direction(Right), Horizontal Angle From Direction(Vector(Subtract(X Component Of((Event Player).PosNow), X Component Of((Event Player).PosPrev)), 0, Subtract(Z Component Of((Event Player).PosNow), Z Component Of((Event Player).PosPrev))))));
         Set Player Variable(Event Player, PosNorm, Vector(Subtract(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosFinish)), Cosine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosFinish)), Sine From Degrees((Event Player).Angle))), 0, Add(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosFinish)), Sine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosFinish)), Cosine From Degrees((Event Player).Angle)))));
-        Set Player Variable(Event Player, TimeExtra, Divide(Subtract(Square Root(Subtract(25, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm)))), Absolute Value(X Component Of((Event Player).PosNorm))), (Event Player).SpeedNow));
+        Set Player Variable(Event Player, TimeExtra, Divide(Add(X Component Of((Event Player).PosNorm), Square Root(Subtract(25, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm))))), (Event Player).SpeedNow));
         Modify Player Variable(Event Player, TimeCurrent, Subtract, (Event Player).TimeExtra);
         If(Not((Event Player).Category));
             If(Compare((Event Player).TimeCurrent, <, (Event Player).TimeBestStan));

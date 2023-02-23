@@ -60,6 +60,7 @@ playervar SpeedNow 32
 playervar PosNorm 33
 playervar Angle 34
 playervar TimeExtra2 35
+playervar PosNorm2 100
 
 
 #Subroutine names
@@ -1469,7 +1470,7 @@ rule "Start timer":
     eventPlayer.setInvisibility(Invis.NONE)
 
     /*2 methods of starting timer: either further than 2 m away, or more than 3 m up. Start is a cylinder.*/
-    if distance(vect(eventPlayer.PosPrev.x, PosStart.y, eventPlayer.PosPrev.z), PosStart) < 2 and distance(vect(eventPlayer.PosNow.x, PosStart.y, eventPlayer.PosNow.z), PosStart) > 2:
+    if distance(vect(eventPlayer.PosPrev.x, PosStart.y, eventPlayer.PosPrev.z), PosStart) <= 2 and distance(vect(eventPlayer.PosNow.x, PosStart.y, eventPlayer.PosNow.z), PosStart) > 2:
         /*Get angle between the travel line and (-1, 0, 0) (OW's coordinate system is left handed).*/
         eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
         /*Translate the travel line so that PosStart is considered the origin, then rotate by the calculated angle.
@@ -1479,9 +1480,9 @@ rule "Start timer":
         /*calculate extra time with
             (1/speed) x
           with x being the dinstance between PosNow and the intersection of the travel line and the start circle (x^2 + c^2 = r^2 => x = sqrt(r^2 - c^2).
-          This formula is a near perfect approximation for the actual formula in the relevant area (0 >= x <= 0.016).
-          Due to the sqrt always giving us the positve x intersection point, we need the absolute value of PosNorm.x.*/
-        eventPlayer.TimeExtra = (abs(eventPlayer.PosNorm.x) - sqrt(4 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z)) / eventPlayer.SpeedNow
+          This formula is a near perfect approximation for the actual formula in the relevant area (0 <= x <= 0.016).
+          The rotation leaves the intersect and posNow always in the postivie for x, with PosNowm.x >= sqrt(...).*/
+        eventPlayer.TimeExtra = (eventPlayer.PosNorm.x - sqrt(4 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z)) / eventPlayer.SpeedNow
     else:
         eventPlayer.TimeExtra = 0
     if eventPlayer.PosNow.y - PosStart.y > 3:
@@ -1575,9 +1576,11 @@ rule "Finish":
     /*calculate extra time with
         (1/speed) x
       with x being the dinstance between PosNow and the intersection of the travel line and the start circle (x^2 + c^2 = r^2 => x = sqrt(r^2 - c^2).
-      This formula is a near perfect approximation for the actual formula in the relevant area (0 >= x <= 0.016).
-      Due to the sqrt always giving us the positve x intersection point, we need the absolute value of PosNorm.x.*/
-    eventPlayer.TimeExtra = (sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z) - abs(eventPlayer.PosNorm.x)) / eventPlayer.SpeedNow
+      This formula is a near perfect approximation for the actual formula in the relevant area (0 <= x <= 0.016).
+      The rotation leaves the intersect always in the negative. Sqrt(...) returns the positive intersection point.
+      We therefore need the negative of the root to get an accureate result [PosNorm.x - (-sqrt(...))  => PosNorm.x + sqrt(...)].
+      PosNorm.x >= -sqrt(...)*/
+    eventPlayer.TimeExtra = (eventPlayer.PosNorm.x + sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z)) / eventPlayer.SpeedNow
     eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
 
     if not eventPlayer.Category:
