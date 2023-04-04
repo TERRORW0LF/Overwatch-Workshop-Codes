@@ -76,15 +76,14 @@ rule "Debug (Player)":
     @Event eachPlayer
 
     hudHeader(eventPlayer, "{0}".format(eventPlayer.getPosition()), HudPosition.TOP, 4, Color.WHITE, HudReeval.STRING)
-    hudHeader(eventPlayer, "{0}".format(eventPlayer.getHorizontalFacingAngle()), HudPosition.TOP, 5, Color.WHITE, HudReeval.STRING)
 
 
 #Settings
 rule "Workshop Settings":
-    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 0, 0)
+    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 4, 0)
     Category = createWorkshopSetting(enum["Standard", "Gravspeed"], "Combo", "Default Category", 1, 1)
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
-    Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
+    Infinite = createWorkshopSetting(bool, "Time", "Infinite", true, 1)
 
 
 #Maps
@@ -830,6 +829,20 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         MapName = "CG"
         return
+    if getCurrentMap() == Map.CIRCUIT_ROYAL:
+        PosStart = vect(95.54, 17.96, 47.36)
+        PosCheckpoint = [vect(58, 14.9, -7)]
+        PosFinish = vect(-77.34, 5.9, -15.69)
+        Checkpoint = true
+        MapName = "CR"
+        return
+    if getCurrentMap() == Map.COLOSSEO:
+        PosStart = vect(129.83, 9, -64.82)
+        PosCheckpoint = [vect(-14.81, 2.9, -38.8)]
+        PosFinish = vect(-85.38, -0.1, 17.52)
+        Checkpoint = true
+        MapName = "CS"
+        return
     if getCurrentMap() == Map.DORADO:
         PosStart = vect(62.246, 13.42, 21.758)
         PosCheckpoint = [vect(117.076, 17.9, 5.438)]
@@ -843,6 +856,13 @@ rule "Start - Maps (Season 4)":
         PosFinish = vect(83.903, 12.6, -87.977)
         Checkpoint = true
         MapName = "EW"
+        return
+    if getCurrentMap() == Map.ESPERANCA:
+        PosStart = vect(109.9, -1, -56)
+        PosCheckpoint = [vect(0, -0.3, -3.35)]
+        PosFinish = vect(-62.63, -6.1, -82.11)
+        Checkpoint = true
+        MapName = "ER"
         return
     if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(85.867, -2.02, 16.524)
@@ -940,6 +960,13 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         MapName = "MV"
         return
+    if getCurrentMap() == Map.MIDTOWN:
+        PosStart = vect(132.2, 1.26, -38.57)
+        PosCheckpoint = [vect(65.5, 5.5, 27.33)]
+        PosFinish = vect(-8.1, 4.8, 27)
+        Checkpoint = true
+        MapName = "MT"
+        return
     if getCurrentMap() == Map.NEPAL_SANCTUM:
         PosStart = vect(107.5, 134, -82.56)
         PosCheckpoint = [vect(55.295, 129.7, 0.52)]
@@ -959,6 +986,13 @@ rule "Start - Maps (Season 4)":
         PosFinish = vect(-147.782, -92.5, 62.105)
         Checkpoint = true
         MapName = "NV"
+        return
+    if getCurrentMap() == Map.NEW_QUEEN_STREET:
+        PosStart = vect(-60.9, 8, -40)
+        PosCheckpoint = [vect(0, -0.2, 10.5)]
+        PosFinish = vect(76.24, 7.9, -49.12)
+        Checkpoint = true
+        MapName = "NQ"
         return
     /*if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(144.571, 2.25, 29.313)
@@ -987,6 +1021,13 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         MapName = "OU"
         return
+    if getCurrentMap() == Map.PARAISO:
+        PosStart = vect(-26.56, 2.75, -165.08)
+        PosCheckpoint = [vect(7.36, 3.4, -24.55)]
+        PosFinish = vect(-56.2, -1.1, 28.5)
+        Checkpoint = true
+        MapName = "PI"
+        return
     if getCurrentMap() == Map.PARIS:
         PosStart = vect(-119.964, 9.86, -51.908)
         PosCheckpoint = [vect(-44.044, 11, -33.258)]
@@ -1013,6 +1054,13 @@ rule "Start - Maps (Season 4)":
         PosFinish = vect(-100.763, 8.4, 8.128)
         Checkpoint = true
         MapName = "R6"
+        return
+    if getCurrentMap() == Map.SHAMBALI_MONASTERY:
+        PosStart = vect(-40.68, 31, 213.38)
+        PosCheckpoint = [vect(6.42, 18.8, 90)]
+        PosFinish = vect(-14.75, 7.9, -5.12)
+        Checkpoint = true
+        MapName = "SM"
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(9.122, 4.4, 124.801)
@@ -1074,6 +1122,18 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(206.25, 8.9, 81.73)
         MapName = "CG"
         return
+    if getCurrentMap() == Map.CIRCUIT_ROYAL:
+        PosStart = vect(8.52, 5.82, 0.69)
+        PosCheckpoint = [vect(104.36, 9.7, 28.74), vect(11.1, 9.5, -34.7), vect(27.34, 1, 37.78), vect(-63.78, 4, -41.41), vect(-22.04, 5.8, -42.31)]
+        PosFinish = vect(11, 5.9, 6.39)
+        MapName = "CR"
+        return
+    if getCurrentMap() == Map.COLOSSEO:
+        PosStart = vect(0, 2.58, -6.14)
+        PosCheckpoint = [vect(-18.16, 2.9, 27.9), vect(40.32, 1.9, 18.87), vect(-55, 2, -58.33), vect(83.28, 8.01, -30), vect(-83.28, 8.01, -30)]
+        PosFinish = vect(0, 0.9, -18)
+        MapName = "CS"
+        return
     if getCurrentMap() == Map.DORADO:
         PosStart = vect(84.979, 20, 17.035)
         PosCheckpoint = [vect(136.754, 10.9, 45.919), vect(35.461, 9.7, -33.067), vect(8.526, -2, 22.064), vect(193.551, 14, 43.411)]
@@ -1085,6 +1145,12 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(31.753, 13.5, -79.386), vect(142.5, 11.7, -38.836), vect(3.39, -0.1, -8.241)]
         PosFinish = vect(73.816, 12.6, -75.982)
         MapName = "EW"
+        return
+    if getCurrentMap() == Map.ESPERANCA:
+        PosStart = vect(-39.86, -2, -26.51)
+        PosCheckpoint = [vect(12.23, -6.1, -75.73)]
+        PosFinish = vect(106, -1.1, -58.6)
+        MapName = "ER"
         return
     if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(11.329, 0, -24.036)
@@ -1170,6 +1236,12 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(0, 0.9, 9.5)
         MapName = "MV"
         return
+    if getCurrentMap() == Map.MIDTOWN:
+        PosStart = vect(47.73, 3.84, -41.25)
+        PosCheckpoint = [vect(-30.54, 3.9, 45.31)]
+        PosFinish = vect(-16.41, 3.9, 98.35)
+        MapName = "MT"
+        return
     if getCurrentMap() == Map.NEPAL_SANCTUM:
         PosStart = vect(67.643, 132, 0.073)
         PosCheckpoint = [vect(97.8, 131.7, 73.715), vect(96.973, 131.7, -0.008), vect(56.276, 129.7, -0.025), vect(70.755, 127.7, -63.246)]
@@ -1187,6 +1259,12 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(-171.284, -99.3, -62.016), vect(-155.566, -91.2, 45.98), vect(-186.996, -96.6, 72.119)]
         PosFinish = vect(-181.606, -88, 0)
         MapName = "NV"
+        return
+    if getCurrentMap() == Map.NEW_QUEEN_STREET:
+        PosStart = vect(-59.69, 8.02, -1.29)
+        PosCheckpoint = [vect(0, 1.9, -42.2)]
+        PosFinish = vect(66.14, 7.9, 9.89)
+        MapName = "NQ"
         return
     /*if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(161.121, -4, 6.575)
@@ -1212,6 +1290,12 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(-202.067, 18.9, -0.002)
         MapName = "OU"
         return
+    if getCurrentMap() == Map.PARAISO:
+        PosStart = vect(-7.7, 3.75, 36.99)
+        PosCheckpoint = [vect(24.91, 4.8, -110.14)]
+        PosFinish = vect(-56.2, -1.1, 28.5)
+        MapName = "PI"
+        return
     if getCurrentMap() == Map.PARIS:
         PosStart = vect(-27.132, 13, 6.412)
         PosCheckpoint = [vect(7.458, 9.9, -58.2), vect(-53.175, 12, 12.32), vect(-73.074, 14.9, -86.629), vect(-118.024, 12.9, -92.921), vect(-83.325, 11.7, -58.477)]
@@ -1235,6 +1319,12 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(-43.069, 3.3, 5.652), vect(-68.091, 6.4, -14.181), vect(44.356, 2.3, 62.423)]
         PosFinish = vect(-23.554, 3.2, -15.238)
         MapName = "R6"
+        return
+    if getCurrentMap() == Map.SHAMBALI_MONASTERY:
+        PosStart = vect(25, 14, 63.75)
+        PosCheckpoint = [vect(-60, 22.9, 126)]
+        PosFinish = vect(12.36, 26.9, 117.14)
+        MapName = "SM"
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-31.404, 1.3, 27.937)
@@ -1464,13 +1554,10 @@ rule "Start timer":
     @Condition updateEveryTick(distance(PosStart, vect(eventPlayer.getPosition().x, PosStart.y, eventPlayer.getPosition().z)) > 2 or abs(eventPlayer.getPosition().y - PosStart.y) > 3)
     
     chase(eventPlayer.TimeCurrent, 5000, rate=1, ChaseReeval.NONE)
-    if not Visible or eventPlayer.Mode == 1:
-        return
-    eventPlayer.setInvisibility(Invis.NONE)
 
     /*2 methods of starting timer: either further than 2 m away, or more than 3 m up. Start is a cylinder.*/
     if distance(vect(eventPlayer.PosPrev.x, PosStart.y, eventPlayer.PosPrev.z), PosStart) <= 2 and distance(vect(eventPlayer.PosNow.x, PosStart.y, eventPlayer.PosNow.z), PosStart) > 2:
-        /*Get angle between the travel line and (-1, 0, 0) (OW's coordinate system is left handed).*/
+        /*Get angle between the travel line and (1, 0, 0) and add 180°. I don't know why the 180°s are necessary, but they are.*/
         eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
         /*Translate the travel line so that PosStart is considered the origin, then rotate by the calculated angle.
           This will result in the travel line being of the from y = c, with c being the z-coordinate of a point on the line.
@@ -1490,6 +1577,10 @@ rule "Start timer":
         /*If both cases happen chose the higher extra time.*/
         eventPlayer.TimeExtra = eventPlayer.TimeExtra if eventPlayer.TimeExtra > eventPlayer.TimeExtra2 else eventPlayer.TimeExtra2
     eventPlayer.TimeCurrent += eventPlayer.TimeExtra
+
+    if not Visible or eventPlayer.Mode == 1:
+        return
+    eventPlayer.setInvisibility(Invis.NONE)
 
 
 rule "Start timer (Practice)":
@@ -1808,6 +1899,13 @@ rule "Cycle HUD":
     eventPlayer.ExecutingMenu = false
 
 
+rule "Teleport":
+    @Event eachPlayer
+    @Condition eventPlayer.isHoldingButton(Button.MELEE)
+
+    eventPlayer.teleport(eventPlayer.getPosition() + 5 * eventPlayer.getFacingDirection())
+
+
 rule "Cycle Auto Reset":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
@@ -1883,6 +1981,7 @@ rule "Enable Practice Mode":
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.Finished = false
     eventPlayer.TimeCurrent = 0
+    eventPlayer.TimeExtra = 0
     eventPlayer.Attempts = 0
     eventPlayer.Mode = 1
     bigMessage(eventPlayer, "Entering Practice Mode")
@@ -1982,6 +2081,7 @@ rule "Enable Player Spectator Mode":
     eventPlayer.Mode = 2
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.TimeCurrent = 0
+    eventPlayer.TimeExtra = 0
     eventPlayer.setRespawnTime(9999)
     bigMessage(eventPlayer, "Entering Player Spectator Mode")
     wait(0.1)
@@ -2020,6 +2120,7 @@ rule "Enable Spectator Mode":
     eventPlayer.setInvisibility(Invis.ALL)
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.TimeCurrent = 0
+    eventPlayer.TimeExtra = 0
     eventPlayer.Attempts = 0
     bigMessage(eventPlayer, "Entering Spectator Mode")
     waitUntil(not eventPlayer.isHoldingButton(Button.RELOAD), 9999)
@@ -2173,6 +2274,7 @@ def Respawn():
                 eventPlayer.applyImpulse(eventPlayer.VelocityPracticeCheckpoint, eventPlayer.SpeedPracticeCheckpoint, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
                 stopChasingVariable(eventPlayer.TimeCurrent)
                 eventPlayer.TimeCurrent = 0
+                eventPlayer.TimeExtra = 0
                 chase(eventPlayer.TimeCurrent, 5000, rate=1, ChaseReeval.NONE)
                 return
         eventPlayer.Reset = true

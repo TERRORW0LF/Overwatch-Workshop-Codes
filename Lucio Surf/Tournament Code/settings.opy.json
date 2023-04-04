@@ -1,16 +1,16 @@
 {
     "main": {
-        "description": "Lucio Surf v5.9.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR",
-        "modeName": "Lucio Surf"
+        "description": "Lucio Surf v5.9t0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ",
+        "modeName": "Lucio Surf Tournament"
     },
     "lobby": {
         "allowPlayersInQueue": true,
         "mapRotation": "afterGame",
         "enableMatchVoiceChat": true,
         "spectatorSlots": 6,
-        "team1Slots": 10,
+        "team1Slots": 4,
         "team2Slots": 0,
-        "ffaSlots": 10,
+        "ffaSlots": 4,
         "returnToLobby": "never",
         "swapTeamsAfterMatch": false
     },
