@@ -150,9 +150,10 @@ variables {
         30: PosNow
         31: PosPrev
         32: SpeedNow
-        33: PosNorm
-        34: Angle
-        35: TimeExtra2
+        33: SpeedPrev
+        34: PosNorm
+        35: Angle
+        36: TimeExtra2
 }
 subroutines {
     0: Respawn
@@ -209,6 +210,7 @@ disabled rule ("Debug (Player)") {
     }
     actions {
         Create HUD Text(Event Player, Custom String("{0}", Position Of(Event Player), Null, Null), Null, Null, Top, 4, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}.{1} sec", Round To Integer(Add((Event Player).TimeExtra, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Event Player).TimeExtra), 1000), 1000), To Nearest), Null, Null), 1, 3), Null), Null, Null, Top, 5, Color(White), Null, Null, String, Default Visibility);
     }
 }
 
@@ -1435,6 +1437,20 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(MapName, Custom String("CG", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Circuit Royal)));
+            Set Global Variable(PosStart, Vector(8.52, 5.82, 0.69));
+            Set Global Variable(PosCheckpoint, Array(Vector(104.36, 9.7, 28.74), Vector(11.1, 9.5, -34.7), Vector(27.34, 1, 37.78), Vector(-63.78, 4, -41.41), Vector(-22.04, 5.8, -42.31)));
+            Set Global Variable(PosFinish, Vector(11, 5.9, 6.39));
+            Set Global Variable(MapName, Custom String("CR", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Colosseo)));
+            Set Global Variable(PosStart, Vector(0, 2.58, -6.14));
+            Set Global Variable(PosCheckpoint, Array(Vector(-18.16, 2.9, 27.9), Vector(40.32, 1.9, 18.87), Vector(-55, 2, -58.33), Vector(83.28, 8.01, -30), Vector(-83.28, 8.01, -30)));
+            Set Global Variable(PosFinish, Vector(0, 0.9, -18));
+            Set Global Variable(MapName, Custom String("CS", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, Map(Dorado)));
             Set Global Variable(PosStart, Vector(84.979, 20, 17.035));
             Set Global Variable(PosCheckpoint, Array(Vector(136.754, 10.9, 45.919), Vector(35.461, 9.7, -33.067), Vector(8.526, -2, 22.064), Vector(193.551, 14, 43.411)));
@@ -1447,6 +1463,13 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(PosCheckpoint, Array(Vector(31.753, 13.5, -79.386), Vector(142.5, 11.7, -38.836), Vector(3.39, -0.1, -8.241)));
             Set Global Variable(PosFinish, Vector(73.816, 12.6, -75.982));
             Set Global Variable(MapName, Custom String("EW", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Esperança)));
+            Set Global Variable(PosStart, Vector(-39.86, -2, -26.51));
+            Set Global Variable(PosCheckpoint, Array(Vector(12.23, -6.1, -75.73)));
+            Set Global Variable(PosFinish, Vector(106, -1.1, -58.6));
+            Set Global Variable(MapName, Custom String("ER", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Hanamura)));
@@ -1547,6 +1570,13 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(MapName, Custom String("MV", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(Midtown)));
+            Set Global Variable(PosStart, Vector(47.73, 3.84, -41.25));
+            Set Global Variable(PosCheckpoint, Array(Vector(-30.54, 3.9, 45.31)));
+            Set Global Variable(PosFinish, Vector(-16.41, 3.9, 98.35));
+            Set Global Variable(MapName, Custom String("MT", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, -11860));
             Set Global Variable(PosStart, Vector(67.643, 132, 0.073));
             Set Global Variable(PosCheckpoint, Array(Vector(97.8, 131.7, 73.715), Vector(96.973, 131.7, -0.008), Vector(56.276, 129.7, -0.025), Vector(70.755, 127.7, -63.246)));
@@ -1568,6 +1598,13 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(MapName, Custom String("NV", Null, Null, Null));
             Abort;
         End;
+        If(Compare(Global.__currentMap__, ==, Map(New Queen Street)));
+            Set Global Variable(PosStart, Vector(-59.69, 8.02, -1.29));
+            Set Global Variable(PosCheckpoint, Array(Vector(0, 1.9, -42.2)));
+            Set Global Variable(PosFinish, Vector(66.14, 7.9, 9.89));
+            Set Global Variable(MapName, Custom String("NQ", Null, Null, Null));
+            Abort;
+        End;
         If(Compare(Global.__currentMap__, ==, 6920));
             Set Global Variable(PosStart, Vector(143.522, 2.15, 247.456));
             Set Global Variable(PosCheckpoint, Array(Vector(125.589, 0.9, 229.793), Vector(91.966, 0.9, 305.984), Vector(158.681, 3.9, 262.665), Vector(183.478, -3.5, 207.761)));
@@ -1587,6 +1624,13 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(PosCheckpoint, Array(Vector(-196.1, 16.9, 57.72), Vector(-171.972, 14.9, -44.885), Vector(-207.617, 17.9, -62.585)));
             Set Global Variable(PosFinish, Vector(-202.067, 18.9, -0.002));
             Set Global Variable(MapName, Custom String("OU", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Paraíso)));
+            Set Global Variable(PosStart, Vector(-7.7, 3.75, 36.99));
+            Set Global Variable(PosCheckpoint, Array(Vector(24.91, 4.8, -110.14)));
+            Set Global Variable(PosFinish, Vector(-56.2, -1.1, 28.5));
+            Set Global Variable(MapName, Custom String("PI", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Paris)));
@@ -1615,6 +1659,13 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(PosCheckpoint, Array(Vector(-43.069, 3.3, 5.652), Vector(-68.091, 6.4, -14.181), Vector(44.356, 2.3, 62.423)));
             Set Global Variable(PosFinish, Vector(-23.554, 3.2, -15.238));
             Set Global Variable(MapName, Custom String("R6", Null, Null, Null));
+            Abort;
+        End;
+        If(Compare(Global.__currentMap__, ==, Map(Shambali Monastery)));
+            Set Global Variable(PosStart, Vector(25, 14, 63.75));
+            Set Global Variable(PosCheckpoint, Array(Vector(-60, 22.9, 126)));
+            Set Global Variable(PosFinish, Vector(12.36, 26.9, 117.14));
+            Set Global Variable(MapName, Custom String("SM", Null, Null, Null));
             Abort;
         End;
         If(Compare(Global.__currentMap__, ==, Map(Temple of Anubis)));
@@ -1767,12 +1818,12 @@ rule ("Start - Global") {
         Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("Lucio Surf v5.9 | {0}S{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.9 | {0}G{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeThirdStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeSecondStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeFirstStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeThirdGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeSecondGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, Global.TimeFirstGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).Category), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).Category)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         "Help text standard"
         Create HUD Text(All Players(All Teams), Null, Null, Custom String("Cycle HUD - Crouch + Interact", Null, Null, Null), Left, 3, Null, Null, Color(Yellow), Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate", Null, Null, Null), Left, 4, Null, Null, Color(Yellow), Visible To, Default Visibility);
@@ -1858,11 +1909,11 @@ rule ("Start - Player") {
         Disable Movement Collision With Players(Event Player);
         "Hud"
         Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
-        Create HUD Text(If-Then-Else((Event Player).Category, Null, Event Player), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Event Player).TimeBestStan), 1000), 1000), To Nearest), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Event Player).TimeBestGrav), 1000), 1000), To Nearest), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else((Event Player).Category, Null, Event Player), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("ATTEMPTS: {0}", (Event Player).Attempts, Null, Null), Null, Null, Left, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0} m/s", Horizontal Speed Of(Event Player), Null, Null), Null, Null, Top, 0.1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
-        Create HUD Text(Event Player, Custom String("{0}.{1} sec", Round To Integer(Add((Event Player).TimeCurrent, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Event Player).TimeCurrent), 1000), 1000), To Nearest), Null, Null), 1, 3), Null), Null, Null, Top, 0.2, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}.{1} sec", Round To Integer(Add((Event Player).TimeCurrent, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeCurrent), 0.001), Down), 1000), 1000), Null, Null), 1, 4), Null), Null, Null, Top, 0.2, Color(White), Null, Null, String, Default Visibility);
         "Start"
         Start Rule(Respawn, Do Nothing);
     }
@@ -1880,6 +1931,7 @@ rule ("Last Frame Data") {
             Set Player Variable(Event Player, SpeedNow, Horizontal Speed Of(Event Player));
             Wait(0.016, Ignore Condition);
             Set Player Variable(Event Player, PosPrev, (Event Player).PosNow);
+            Set Player Variable(Event Player, SpeedPrev, (Event Player).SpeedNow);
         End;
     }
 }
@@ -1900,7 +1952,7 @@ rule ("Start timer") {
         If(And(Compare(Distance Between(Vector(X Component Of((Event Player).PosPrev), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosPrev)), Global.PosStart), <=, 2), Compare(Distance Between(Vector(X Component Of((Event Player).PosNow), Y Component Of(Global.PosStart), Z Component Of((Event Player).PosNow)), Global.PosStart), >, 2)));
             Set Player Variable(Event Player, Angle, Add(Horizontal Angle From Direction(Right), Horizontal Angle From Direction(Vector(Subtract(X Component Of((Event Player).PosNow), X Component Of((Event Player).PosPrev)), 0, Subtract(Z Component Of((Event Player).PosNow), Z Component Of((Event Player).PosPrev))))));
             Set Player Variable(Event Player, PosNorm, Vector(Subtract(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosStart)), Cosine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosStart)), Sine From Degrees((Event Player).Angle))), 0, Add(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosStart)), Sine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosStart)), Cosine From Degrees((Event Player).Angle)))));
-            Set Player Variable(Event Player, TimeExtra, Divide(Subtract(X Component Of((Event Player).PosNorm), Square Root(Subtract(4, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm))))), (Event Player).SpeedNow));
+            Set Player Variable(Event Player, TimeExtra, Subtract(0.016, Divide(Subtract(X Component Of((Event Player).PosNorm), Square Root(Subtract(4, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm))))), (Event Player).SpeedNow)));
         Else;
             Set Player Variable(Event Player, TimeExtra, 0);
         End;
@@ -2013,8 +2065,8 @@ rule ("Finish") {
         Stop Chasing Player Variable(Event Player, TimeCurrent);
         Modify Player Variable(Event Player, Attempts, Add, 1);
         Set Player Variable(Event Player, Angle, Add(Horizontal Angle From Direction(Right), Horizontal Angle From Direction(Vector(Subtract(X Component Of((Event Player).PosNow), X Component Of((Event Player).PosPrev)), 0, Subtract(Z Component Of((Event Player).PosNow), Z Component Of((Event Player).PosPrev))))));
-        Set Player Variable(Event Player, PosNorm, Vector(Subtract(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosFinish)), Cosine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosFinish)), Sine From Degrees((Event Player).Angle))), 0, Add(Multiply(Subtract(X Component Of((Event Player).PosNow), X Component Of(Global.PosFinish)), Sine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosNow), Z Component Of(Global.PosFinish)), Cosine From Degrees((Event Player).Angle)))));
-        Set Player Variable(Event Player, TimeExtra, Divide(Add(X Component Of((Event Player).PosNorm), Square Root(Subtract(25, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm))))), (Event Player).SpeedNow));
+        Set Player Variable(Event Player, PosNorm, Vector(Subtract(Multiply(Subtract(X Component Of((Event Player).PosPrev), X Component Of(Global.PosFinish)), Cosine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosPrev), Z Component Of(Global.PosFinish)), Sine From Degrees((Event Player).Angle))), 0, Add(Multiply(Subtract(X Component Of((Event Player).PosPrev), X Component Of(Global.PosFinish)), Sine From Degrees((Event Player).Angle)), Multiply(Subtract(Z Component Of((Event Player).PosPrev), Z Component Of(Global.PosFinish)), Cosine From Degrees((Event Player).Angle)))));
+        Set Player Variable(Event Player, TimeExtra, Add(0.016, Divide(Add(Square Root(Subtract(25, Multiply(Z Component Of((Event Player).PosNorm), Z Component Of((Event Player).PosNorm)))), X Component Of((Event Player).PosNorm)), (Event Player).SpeedPrev)));
         Modify Player Variable(Event Player, TimeCurrent, Subtract, (Event Player).TimeExtra);
         If(Not((Event Player).Category));
             If(Compare((Event Player).TimeCurrent, <, (Event Player).TimeBestStan));
@@ -2123,7 +2175,7 @@ rule ("Finish Message (Best Time)") {
         Or(And(Not((Event Player).Category), Compare(Event Player, !=, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, !=, Global.PlayerFirstGrav))) == True;
     }
     actions {
-        Big Message(Event Player, Custom String("New PB: {0}.{1} sec", Round To Integer(Add(If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan), 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan)), 1000), 1000), To Nearest), Null, Null), 1, 3), Null));
+        Big Message(Event Player, Custom String("New PB: {0}.{1} sec", Round To Integer(Add(If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan), 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan)), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null));
     }
 }
 
@@ -2139,7 +2191,7 @@ rule ("Finish Message (Record Time)") {
         Or(And(Not((Event Player).Category), Compare(Event Player, ==, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, ==, Global.PlayerFirstGrav))) == True;
     }
     actions {
-        Big Message(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, (Event Player).Category)), Custom String("New Record: {0}.{1} sec - {2}!!!", Round To Integer(Add(If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan), 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan)), 1000), 1000), To Nearest), Null, Null), 1, 3), Event Player));
+        Big Message(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, (Event Player).Category)), Custom String("New Record: {0}.{1} sec - {2}!!!", Round To Integer(Add(If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan), 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, If-Then-Else((Event Player).Category, (Event Player).TimeBestGrav, (Event Player).TimeBestStan)), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Event Player));
     }
 }
 

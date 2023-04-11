@@ -57,9 +57,10 @@ playervar SpeedPracticeCheckpoint 26
 playervar PosNow 30
 playervar PosPrev 31
 playervar SpeedNow 32
-playervar PosNorm 33
-playervar Angle 34
-playervar TimeExtra2 35
+playervar SpeedPrev 33
+playervar PosNorm 34
+playervar Angle 35
+playervar TimeExtra2 36
 
 
 #Subroutine names
@@ -76,11 +77,12 @@ rule "Debug (Player)":
     @Event eachPlayer
 
     hudHeader(eventPlayer, "{0}".format(eventPlayer.getPosition()), HudPosition.TOP, 4, Color.WHITE, HudReeval.STRING)
+    hudHeader(eventPlayer, "{0}.{1} sec".format(floor(eventPlayer.TimeExtra + 0.001 / 10), "{0}".format(round((1000 * eventPlayer.TimeExtra) % 1000 + 1000)).substring(1, 3)), HudPosition.TOP, 5, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
 
 
 #Settings
 rule "Workshop Settings":
-    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 4, 0)
+    Season = createWorkshopSetting(enum["Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 0, 0)
     Category = createWorkshopSetting(enum["Standard", "Gravspeed"], "Combo", "Default Category", 1, 1)
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
     Infinite = createWorkshopSetting(bool, "Time", "Infinite", true, 1)
@@ -1451,15 +1453,15 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.8b0 | {0}S{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.8b0 | {0}G{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "Lucio Surf v5.10b0 | {0}S{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.10b0 | {0}G{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
-    hudHeader([player for player in getAllPlayers() if not player.Category and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdStan + 0.001 / 10), "{0}".format(round((1000 * TimeThirdStan) % 1000 + 1000)).substring(1, 3), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondStan + 0.001 / 10), "{0}".format(round((1000 * TimeSecondStan) % 1000 + 1000)).substring(1, 3), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if not player.Category], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstStan + 0.001 / 10), "{0}".format(round((1000 * TimeFirstStan) % 1000 + 1000)).substring(1, 3), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdGrav + 0.001 / 10), "{0}".format(round((1000 * TimeThirdGrav) % 1000 + 1000)).substring(1, 3), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondGrav + 0.001 / 10), "{0}".format(round((1000 * TimeSecondGrav) % 1000 + 1000)).substring(1, 3), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstGrav + 0.001 / 10), "{0}".format(round((1000 * TimeFirstGrav) % 1000 + 1000)).substring(1, 3), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if not player.Category], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     #Help text standard
     hudSubtext(getAllPlayers(), "Cycle HUD - Crouch + Interact", HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
@@ -1528,11 +1530,11 @@ rule "Start - Player":
     eventPlayer.disablePlayerCollision()
     #Hud
     hudHeader(eventPlayer, eventPlayer, HudPosition.LEFT, 0, Color.YELLOW, HudReeval.NONE, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestStan + 0.001 / 10), "{0}".format(round((1000 * eventPlayer.TimeBestStan) % 1000 + 1000)).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestGrav + 0.001 / 10), "{0}".format(round((1000 * eventPlayer.TimeBestGrav) % 1000 + 1000)).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if not eventPlayer.Category else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestStan + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestStan + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestGrav + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestGrav + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer if eventPlayer.HideHud <= 1 else null, "ATTEMPTS: {0}".format(eventPlayer.Attempts), HudPosition.LEFT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "{0} m/s".format(eventPlayer.getHorizontalSpeed()), HudPosition.TOP, 0.1, eventPlayer.SpeedColor, HudReeval.STRING_AND_COLOR, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer, "{0}.{1} sec".format(floor(eventPlayer.TimeCurrent + 0.001 / 10), "{0}".format(round((1000 * eventPlayer.TimeCurrent) % 1000 + 1000)).substring(1, 3)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer, "{0}.{1} sec".format(floor(eventPlayer.TimeCurrent + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeCurrent + 0.001)) % 1000 + 1000).substring(1, 4)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
     #Start
     async(Respawn, AsyncBehavior.NOOP)
 
@@ -1545,6 +1547,7 @@ rule "Last Frame Data":
         eventPlayer.SpeedNow = eventPlayer.getHorizontalSpeed()
         wait()
         eventPlayer.PosPrev = eventPlayer.PosNow
+        eventPlayer.SpeedPrev = eventPlayer.SpeedNow
 
 
 rule "Start timer":
@@ -1561,14 +1564,14 @@ rule "Start timer":
         eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
         /*Translate the travel line so that PosStart is considered the origin, then rotate by the calculated angle.
           This will result in the travel line being of the from y = c, with c being the z-coordinate of a point on the line.
-          For optimization purposes only PosNow gets transformed, bc we're only interested in c.*/
+          For optimization purposes only PosNow gets transformed, bc we know that the slope is 0.*/
         eventPlayer.PosNorm = vect((eventPlayer.PosNow.x - PosStart.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosStart.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosNow.x - PosStart.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosStart.z) * cosDeg(eventPlayer.Angle))
         /*calculate extra time with
-            (1/speed) x
+            0.016 - (1/speed) x
           with x being the dinstance between PosNow and the intersection of the travel line and the start circle (x^2 + c^2 = r^2 => x = sqrt(r^2 - c^2).
-          This formula is a near perfect approximation for the actual formula in the relevant area (0 <= x <= 0.016).
+          This formula is a near perfect approximation for the actual formula in the relevant area (0 <= y <= 0.016).
           The rotation leaves the intersect and posNow always in the postivie for x, with PosNowm.x >= sqrt(...).*/
-        eventPlayer.TimeExtra = (eventPlayer.PosNorm.x - sqrt(4 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z)) / eventPlayer.SpeedNow
+        eventPlayer.TimeExtra = 0.016 - (eventPlayer.PosNorm.x - sqrt(4 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z)) / eventPlayer.SpeedNow
     else:
         eventPlayer.TimeExtra = 0
     if eventPlayer.PosNow.y - PosStart.y > 3:
@@ -1661,16 +1664,16 @@ rule "Finish":
     eventPlayer.Angle = horizontalAngleOfDirection(Vector.RIGHT) + horizontalAngleOfDirection(vect(eventPlayer.PosNow.x - eventPlayer.PosPrev.x, 0, eventPlayer.PosNow.z - eventPlayer.PosPrev.z))
     /*Translate the travel line so that PosFinish is considered the origin, then rotate by the calculated angle.
       This will result in the travel line being of the from y = c, with c being the z-coordinate of a point on the line.
-      For optimization purposes only PosNow gets transformed, bc we're only interested in c.*/
-    eventPlayer.PosNorm = vect((eventPlayer.PosNow.x - PosFinish.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosNow.z - PosFinish.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosNow.x - PosFinish.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosNow.z - PosFinish.z) * cosDeg(eventPlayer.Angle))
+      For optimization purposes only PosPrev gets transformed, bc we know that the slope is 0.*/
+    eventPlayer.PosNorm = vect((eventPlayer.PosPrev.x - PosFinish.x) * cosDeg(eventPlayer.Angle) - (eventPlayer.PosPrev.z - PosFinish.z) * sinDeg(eventPlayer.Angle), 0, (eventPlayer.PosPrev.x - PosFinish.x) * sinDeg(eventPlayer.Angle) + (eventPlayer.PosPrev.z - PosFinish.z) * cosDeg(eventPlayer.Angle))
     /*calculate extra time with
         (1/speed) x
-      with x being the dinstance between PosNow and the intersection of the travel line and the start circle (x^2 + c^2 = r^2 => x = sqrt(r^2 - c^2).
-      This formula is a near perfect approximation for the actual formula in the relevant area (0 <= x <= 0.016).
+      with x being the dinstance between PosPrev and the intersection of the travel line and the start circle (x^2 + c^2 = r^2 => x = sqrt(r^2 - c^2).
+      This formula is a near perfect approximation for the actual formula in the relevant area (0 <= y <= 0.016).
       The rotation leaves the intersect always in the negative. Sqrt(...) returns the positive intersection point.
-      We therefore need the negative of the root to get an accureate result [PosNorm.x - (-sqrt(...))  => PosNorm.x + sqrt(...)].
-      PosNorm.x >= -sqrt(...)*/
-    eventPlayer.TimeExtra = (eventPlayer.PosNorm.x + sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z)) / eventPlayer.SpeedNow
+      We therefore need the negative of the root to get an accureate result [0.016 - (-sqrt(...) - PosNorm.x) / SpeedPrev => 0.016 + (sqrt(...) + PosNorm.x) / SpeedPrev].
+      PosNorm.x <= -sqrt(...)*/
+    eventPlayer.TimeExtra = 0.016 + (sqrt(25 - eventPlayer.PosNorm.z*eventPlayer.PosNorm.z) + eventPlayer.PosNorm.x) / eventPlayer.SpeedPrev
     eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
 
     if not eventPlayer.Category:
@@ -1748,7 +1751,7 @@ rule "Finish Message (Best Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer != PlayerFirstGrav)
     
-    bigMessage(eventPlayer, "New PB: {0}.{1} sec".format(floor((eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav) + 0.001 / 10), "{0}".format(round((1000 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)) % 1000 + 1000)).substring(1, 3)))
+    bigMessage(eventPlayer, "New PB: {0}.{1} sec".format(floor((eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav) + 0.001 / 1000), "{0}".format(floor((1000 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav) + 0.001)) % 1000 + 1000).substring(1, 3)))
 
 rule "Finish Message (Record Time)":
     @Event eachPlayer
@@ -1756,7 +1759,7 @@ rule "Finish Message (Record Time)":
     @Condition eventPlayer.NewBest
     @Condition (not eventPlayer.Category and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer == PlayerFirstGrav)
     
-    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}.{1} sec - {2}!!!".format(floor((eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav) + 0.001 / 10), "{0}".format(round((1000 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav)) % 1000 + 1000)).substring(1, 3), eventPlayer))
+    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}.{1} sec - {2}!!!".format(floor((eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav) + 0.001 / 1000), "{0}".format(floor((1000 * (eventPlayer.TimeBestStan if not eventPlayer.Category else eventPlayer.TimeBestGrav) + 0.001)) % 1000 + 1000).substring(1, 3), eventPlayer))
 
 
 rule "Floor":
