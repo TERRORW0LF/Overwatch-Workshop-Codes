@@ -11,6 +11,7 @@ settings
 		Return To Lobby: Never
 		Max Team 1 Players: 6
 		Max Team 2 Players: 6
+		Swap Teams After Match: No
 	}
 	modes
 	{
@@ -55,6 +56,8 @@ settings
 		{
 			Lúcio
 			{
+				Amp It Up Cooldown Time: 0%
+				Soundwave Cooldown Time: 0%
 				Spawn With Ultimate Ready: On
 			}
 			enabled heroes
@@ -94,6 +97,20 @@ rule ("Workshop Settings") {
     }
 }
 
+disabled rule ("Debug Player") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    actions {
+        Create HUD Text(Event Player, Custom String("{0}", Position Of(Event Player), Null, Null), Null, Null, Top, 5, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}", Objective Index, Null, Null), Null, Null, Top, 6, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}", Objective Position(Objective Index), Null, Null), Null, Null, Top, 7, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}", Payload Position, Null, Null), Null, Null, Top, 8, Color(White), Null, Null, String, Default Visibility);
+    }
+}
+
 rule ("Skip Prepare Phase") {
     event {
         Ongoing - Global;
@@ -111,7 +128,7 @@ rule ("Unlock Control Point") {
         Ongoing - Global;
     }
     conditions {
-        Current Game Mode == Game Mode(Control);
+        Or(Compare(Current Game Mode, ==, Game Mode(Control)), Compare(Current Game Mode, ==, Game Mode(Push))) == True;
         Is In Setup == False;
         Is Control Mode Point Locked == True;
     }
@@ -126,7 +143,7 @@ rule ("Set Match Time") {
     }
     conditions {
         Is Game In Progress == True;
-        Or(Not(Is Control Mode Point Locked), Compare(Current Game Mode, !=, Game Mode(Control))) == True;
+        Is Control Mode Point Locked == False;
     }
     actions {
         Set Match Time(Global.Time);
@@ -213,7 +230,7 @@ rule ("Setup - Active Point (Hybrid)") {
     }
 }
 
-rule ("Setup - Active Point (Payl﻿oad)") {
+rule ("Setup - Active Point (Payload)") {
     event {
         Ongoing - Global;
     }
@@ -228,10 +245,11 @@ rule ("Setup - Active Point (Payl﻿oad)") {
         Disable Movement Collision With Players(Global.DummyAttack);
         Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
         Wait Until(If-Then-Else(Compare(Global.Defense, ==, 0), Compare(Distance Between(Payload Position, Objective Position(Subtract(Global.Point, 1))), <, 0.5), Compare(Objective Index, ==, Subtract(Global.Point, 1))), 9999);
-        Create Dummy Bot(Hero(Ana), Team 1, 5, Nearest Walkable Position(Payload Position), Null);
+        Create Dummy Bot(Hero(Ana), Team 1, 5, Payload Position, Null);
         Set Global Variable(DummyDefense, Last Created Entity);
         Set Invisible(Global.DummyDefense, All);
         Disable Movement Collision With Players(Global.DummyDefense);
+        Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
         Set Global Variable(ObjectiveInPosition, True);
     }
 }
@@ -245,6 +263,7 @@ rule ("Setup - Active Point (Control)") {
         Is In Setup == False;
     }
     actions {
+        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
         Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(Objective Index)), Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
@@ -257,14 +276,39 @@ rule ("Setup - Active Point (Control)") {
     }
 }
 
-rule ("Reset - Player (Point Active)") {
+rule ("Setup - Active Point (Push)") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Current Game Mode == Game Mode(Push);
+        Is In Setup == False;
+    }
+    actions {
+        Create Dummy Bot(Hero(Ana), Team 2, 5, Payload Position, Null);
+        Set Global Variable(DummyAttack, Last Created Entity);
+        Set Invisible(Global.DummyAttack, All);
+        Disable Movement Collision With Players(Global.DummyAttack);
+        Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
+        Wait Until(If-Then-Else(Compare(Global.Defense, ==, 0), Compare(Distance Between(Payload Position, Objective Position(Subtract(Global.Point, 1))), <, 0.5), Compare(Objective Index, ==, Subtract(Global.Point, 1))), 9999);
+        Create Dummy Bot(Hero(Ana), Team 1, 5, Payload Position, Null);
+        Set Global Variable(DummyDefense, Last Created Entity);
+        Set Invisible(Global.DummyDefense, All);
+        Disable Movement Collision With Players(Global.DummyDefense);
+        Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
+        Set Global Variable(ObjectiveInPosition, True);
+    }
+}
+
+rule ("Setup - Keep in spawn") {
     event {
         Ongoing - Each Player;
         All;
         All;
     }
     conditions {
-        Global.ObjectiveInPosition != False;
+        Global.ObjectiveInPosition == False;
+        Is In Spawn Room(Event Player) == False;
     }
     actions {
         Respawn(Event Player);

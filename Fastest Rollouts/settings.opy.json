@@ -7,7 +7,8 @@
         "mapRotation": "afterGame",
         "returnToLobby": "never",
         "team1Slots": 6,
-        "team2Slots": 6
+        "team2Slots": 6,
+        "swapTeamsAfterMatch": false
     },
     "gamemodes": {
         "assault": {

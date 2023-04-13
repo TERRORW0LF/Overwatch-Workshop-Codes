@@ -31,6 +31,16 @@ rule "Workshop Settings":
     Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
 
 
+rule "Debug Player":
+    @Disabled
+    @Event eachPlayer
+
+    hudHeader(eventPlayer, "{0}".format(eventPlayer.getPosition()), HudPosition.TOP, 5, Color.WHITE, HudReeval.STRING)
+    hudHeader(eventPlayer, "{0}".format(getCurrentObjective()), HudPosition.TOP, 6, Color.WHITE, HudReeval.STRING)
+    hudHeader(eventPlayer, "{0}".format(getObjectivePosition(getCurrentObjective())), HudPosition.TOP, 7, Color.WHITE, HudReeval.STRING)
+    hudHeader(eventPlayer, "{0}".format(getPayloadPosition()), HudPosition.TOP, 8, Color.WHITE, HudReeval.STRING)
+
+
 #Setup
 rule "Skip Prepare Phase":
     @Condition isInSetup()
@@ -39,7 +49,7 @@ rule "Skip Prepare Phase":
 
 
 rule "Unlock Control Point":
-    @Condition getCurrentGamemode() == Gamemode.CONTROL
+    @Condition getCurrentGamemode() == Gamemode.CONTROL or getCurrentGamemode() == Gamemode.PUSH
     @Condition not isInSetup()
     @Condition isControlPointLocked()
 
@@ -48,7 +58,7 @@ rule "Unlock Control Point":
 
 rule "Set Match Time":
     @Condition isGameInProgress()
-    @Condition not isControlPointLocked() or getCurrentGamemode() != Gamemode.CONTROL
+    @Condition not isControlPointLocked()
 
     setMatchTime(Time)
 
@@ -121,10 +131,11 @@ rule "Setup - Active Point (Payload)":
     DummyAttack.disablePlayerCollision()
     DummyAttack.startForcingPosition(nearestWalkablePosition(getPayloadPosition()), true)
     waitUntil(distance(getPayloadPosition(), getObjectivePosition(Point - 1)) < 0.5 if Defense == 0 else getCurrentObjective() == Point - 1, 9999)
-    createDummy(Hero.ANA, Team.1, 5, nearestWalkablePosition(getPayloadPosition()), null)
+    createDummy(Hero.ANA, Team.1, 5, getPayloadPosition(), null)
     DummyDefense = getLastCreatedEntity()
     DummyDefense.setInvisibility(Invis.ALL)
     DummyDefense.disablePlayerCollision()
+    DummyAttack.startForcingPosition(nearestWalkablePosition(getPayloadPosition()), true)
     ObjectiveInPosition = true
 
 
@@ -132,6 +143,7 @@ rule "Setup - Active Point (Control)":
     @Condition getCurrentGamemode() == Gamemode.CONTROL
     @Condition not isInSetup()
 
+    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
     createDummy(Hero.ANA, Team.2, 5, nearestWalkablePosition(getObjectivePosition(getCurrentObjective())), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
@@ -141,12 +153,30 @@ rule "Setup - Active Point (Control)":
     DummyDefense.setInvisibility(Invis.ALL)
     DummyDefense.disablePlayerCollision()
     ObjectiveInPosition = true
+
+
+rule "Setup - Active Point (Push)":
+    @Condition getCurrentGamemode() == Gamemode.PUSH
+    @Condition not isInSetup()
+
+    createDummy(Hero.ANA, Team.2, 5, getPayloadPosition(), null)
+    DummyAttack = getLastCreatedEntity()
+    DummyAttack.setInvisibility(Invis.ALL)
+    DummyAttack.disablePlayerCollision()
+    DummyAttack.startForcingPosition(nearestWalkablePosition(getPayloadPosition()), true)
+    waitUntil(distance(getPayloadPosition(), getObjectivePosition(Point - 1)) < 0.5 if Defense == 0 else getCurrentObjective() == Point - 1, 9999)
+    createDummy(Hero.ANA, Team.1, 5, getPayloadPosition(), null)
+    DummyDefense = getLastCreatedEntity()
+    DummyDefense.setInvisibility(Invis.ALL)
+    DummyDefense.disablePlayerCollision()
+    DummyAttack.startForcingPosition(nearestWalkablePosition(getPayloadPosition()), true)
+    ObjectiveInPosition = true
     
 
-
-rule "Reset - Player (Point Active)":
+rule "Setup - Keep in spawn":
     @Event eachPlayer
-    @Condition ObjectiveInPosition
+    @Condition not ObjectiveInPosition
+    @Condition not eventPlayer.isInSpawnRoom()
 
     eventPlayer.respawn()
 
