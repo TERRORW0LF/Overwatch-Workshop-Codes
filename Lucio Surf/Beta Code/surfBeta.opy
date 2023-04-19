@@ -243,11 +243,11 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-79, 7.9, 4.4)
         MapName = "NQ"
         return
-    /*if getCurrentMap() == Map.NUMBANI:
+    if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(18, 0.08, 13)
         PosFinish = vect(206.99, -2.29, 22.14)
         MapName = "NB"
-        return*/
+        return
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(100, 1, 311)
         PosFinish = vect(195, 0.75, 200)
@@ -462,11 +462,11 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(76.21, 7.9, -46.4)
         MapName = "NQ"
         return
-    /*if getCurrentMap() == Map.NUMBANI:
+    if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(199.54, 4.2, 37.77)
         PosFinish = vect(18, -0.3, 13)
         MapName = "NB"
-        return*/
+        return
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(211.712, 1, 203.561)
         PosFinish = vect(101, 0.75, 309.5)
@@ -710,12 +710,12 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(66.14, 7.9, 9.89)
         MapName = "NQ"
         return
-    /*if getCurrentMap() == Map.NUMBANI:
+    if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(87.83, 4.25, -23.57)
         PosCheckpoint = [vect(129.52, -3.85, 38.61)]
         PosFinish = vect(204.25, -2.25, 22.61)
         MapName = "NB"
-        return*/
+        return
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(166, 4, 270)
         PosCheckpoint = [vect(102, -2, 288)]
@@ -996,13 +996,13 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         MapName = "NQ"
         return
-    /*if getCurrentMap() == Map.NUMBANI:
+    if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(144.571, 2.25, 29.313)
         PosCheckpoint = [vect(49.435, 1.6, -6.419)]
         PosFinish = vect(163.628, 4.15, -0.052)
         Checkpoint = true
         MapName = "NB"
-        return*/
+        return
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(85.57, 1, 297.8)
         PosCheckpoint = [vect(157.26, 3.9, 264.225)]
@@ -1268,12 +1268,12 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(66.14, 7.9, 9.89)
         MapName = "NQ"
         return
-    /*if getCurrentMap() == Map.NUMBANI:
+    if getCurrentMap() == Map.NUMBANI:
         PosStart = vect(161.121, -4, 6.575)
         PosCheckpoint = [vect(207.578, -2.2, 31.463), vect(203.656, -3.9, 1.168), vect(120.67, -5.8, -17.039), vect(131.903, -3.8, 40.896), vect(59.889, -0.8, -25.254), vect(8.506, 0.2, 37.804)]
         PosFinish = vect(169.395, 4.2, 6.428)
         MapName = "NB"
-        return*/
+        return
     if getCurrentMap() == Map.OASIS_CITY_CENTER:
         PosStart = vect(143.522, 2.15, 247.456)
         PosCheckpoint = [vect(125.589, 0.9, 229.793), vect(91.966, 0.9, 305.984), vect(158.681, 3.9, 262.665), vect(183.478, -3.5, 207.761)]
