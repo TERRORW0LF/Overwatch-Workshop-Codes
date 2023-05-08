@@ -19,6 +19,7 @@ settings
 		{
 			disabled maps
 			{
+				Hanamura Winter
 			}
 			Capture Speed Modifier: 500%
 		}
@@ -26,6 +27,7 @@ settings
 		{
 			disabled maps
 			{
+				Lijiang Tower Lunar New Year
 			}
 		}
 		Escort
@@ -36,6 +38,10 @@ settings
 		{
 			disabled maps
 			{
+				Blizzard World Winter
+				Eichenwalde Halloween
+				Hollywood Halloween
+				King's Row Winter
 			}
 			Capture Speed Modifier: 500%
 			Payload Speed Modifier: 500%
@@ -190,6 +196,7 @@ rule ("Setup - Active Point (Assault)") {
         Is In Setup == False;
     }
     actions {
+        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
         Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(0)), Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
@@ -213,6 +220,7 @@ rule ("Setup - Active Point (Hybrid)") {
         Is In Setup == False;
     }
     actions {
+        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
         Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(0)), Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
@@ -239,6 +247,7 @@ rule ("Setup - Active Point (Payload)") {
         Is In Setup == False;
     }
     actions {
+        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
         Create Dummy Bot(Hero(Ana), Team 2, 5, Payload Position, Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
@@ -285,6 +294,7 @@ rule ("Setup - Active Point (Push)") {
         Is In Setup == False;
     }
     actions {
+        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
         Create Dummy Bot(Hero(Ana), Team 2, 5, Payload Position, Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);

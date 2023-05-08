@@ -89,6 +89,7 @@ rule "Setup - Active Point (Assault)":
     @Condition getCurrentGamemode() == Gamemode.ASSAULT
     @Condition not isInSetup()
 
+    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
     createDummy(Hero.ANA, Team.2, 5, nearestWalkablePosition(getObjectivePosition(0)), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
@@ -106,6 +107,7 @@ rule "Setup - Active Point (Hybrid)":
     @Condition getCurrentGamemode() == Gamemode.HYBRID
     @Condition not isInSetup()
 
+    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
     createDummy(Hero.ANA, Team.2, 5, nearestWalkablePosition(getObjectivePosition(0)), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
@@ -125,6 +127,7 @@ rule "Setup - Active Point (Payload)":
     @Condition getCurrentGamemode() == Gamemode.ESCORT
     @Condition not isInSetup()
 
+    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
     createDummy(Hero.ANA, Team.2, 5, getPayloadPosition(), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
@@ -159,6 +162,7 @@ rule "Setup - Active Point (Push)":
     @Condition getCurrentGamemode() == Gamemode.PUSH
     @Condition not isInSetup()
 
+    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
     createDummy(Hero.ANA, Team.2, 5, getPayloadPosition(), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
