@@ -523,7 +523,7 @@ rule "Start - Maps (Season 2)":
         MapName = "VS"
         return
     if getCurrentMap() == Map.WATCHPOINT_GIBRALTAR:
-        PosStart = vect(65.23, 1, 46.5)
+        PosStart = vect(79.14, -0.94, 44.9)
         PosFinish = vect(39, 3.9, -124.5)
         MapName = "WG"
         return
