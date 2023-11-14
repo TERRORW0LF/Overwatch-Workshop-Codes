@@ -86,7 +86,7 @@ rule "Workshop Settings":
     Season = createWorkshopSetting(enum["Random", "Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 0, 0)
     Category = createWorkshopSetting(enum["Random", "Standard", "Gravspeed"], "Combo", "Default Category", 0, 1)
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
-    Infinite = createWorkshopSetting(bool, "Time", "Infinite", true, 1)
+    Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
 
     if not Season:
         Season = random.randint(1, 5)
