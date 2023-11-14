@@ -89,17 +89,23 @@ rule "Setup - Active Point (Assault)":
     @Condition getCurrentGamemode() == Gamemode.ASSAULT
     @Condition not isInSetup()
 
-    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
-    createDummy(Hero.ANA, Team.2, 5, nearestWalkablePosition(getObjectivePosition(0)), null)
+    createDummy(Hero.ANA, Team.2, 5, getObjectivePosition(0), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
     DummyAttack.disablePlayerCollision()
+    DummyAttack.setGravity(0)
+    DummyAttack.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyAttack.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyAttack.startForcingPosition(getObjectivePosition(getCurrentObjective()), true)
     waitUntil(getCurrentObjective() == Point - 1, 9999)
-    DummyAttack.teleport(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())))
-    createDummy(Hero.ANA, Team.1, 5, nearestWalkablePosition(getObjectivePosition(getCurrentObjective())), null)
+    createDummy(Hero.ANA, Team.1, 5, getObjectivePosition(getCurrentObjective()), null)
     DummyDefense = getLastCreatedEntity()
     DummyDefense.setInvisibility(Invis.ALL)
     DummyDefense.disablePlayerCollision()
+    DummyDefense.setGravity(0)
+    DummyDefense.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyDefense.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyDefense.startForcingPosition(getObjectivePosition(getCurrentObjective()), false)
     ObjectiveInPosition = true
 
 
@@ -107,19 +113,27 @@ rule "Setup - Active Point (Hybrid)":
     @Condition getCurrentGamemode() == Gamemode.HYBRID
     @Condition not isInSetup()
 
-    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
-    createDummy(Hero.ANA, Team.2, 5, nearestWalkablePosition(getObjectivePosition(0)), null)
+    createDummy(Hero.ANA, Team.2, 5, getObjectivePosition(0), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
     DummyAttack.disablePlayerCollision()
+    DummyAttack.setGravity(0)
+    DummyAttack.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyAttack.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyAttack.startForcingPosition(getObjectivePosition(0), false)
     waitUntil(getCurrentObjective() == 1 if Point != 1 else true, 9999)
     if Point - 1:
-        DummyAttack.startForcingPosition(nearestWalkablePosition(getPayloadPosition()), true)
+        DummyAttack.stopForcingPosition()
+        DummyAttack.startForcingPosition(getPayloadPosition(), true)
         waitUntil(distance(getPayloadPosition(), getObjectivePosition(Point - 1)) < 0.5 if Defense == 0 else getCurrentObjective() == Point - 1, 9999)
-    createDummy(Hero.ANA, Team.1, 5, nearestWalkablePosition(getPayloadPosition()) if Point != 1 else nearestWalkablePosition(getObjectivePosition(0)), null)
+    createDummy(Hero.ANA, Team.1, 5, getPayloadPosition() if Point != 1 else getObjectivePosition(0), null)
     DummyDefense = getLastCreatedEntity()
     DummyDefense.setInvisibility(Invis.ALL)
     DummyDefense.disablePlayerCollision()
+    DummyDefense.setGravity(0)
+    DummyDefense.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyDefense.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyDefense.startForcingPosition(getPayloadPosition() if Point != 1 else getObjectivePosition(0), false)
     ObjectiveInPosition = true
 
 
@@ -127,18 +141,23 @@ rule "Setup - Active Point (Payload)":
     @Condition getCurrentGamemode() == Gamemode.ESCORT
     @Condition not isInSetup()
 
-    waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
     createDummy(Hero.ANA, Team.2, 5, getPayloadPosition(), null)
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
     DummyAttack.disablePlayerCollision()
-    DummyAttack.startForcingPosition(nearestWalkablePosition(getPayloadPosition()), true)
+    DummyAttack.setGravity(0)
+    DummyAttack.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyAttack.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyAttack.startForcingPosition(getPayloadPosition(), true)
     waitUntil(distance(getPayloadPosition(), getObjectivePosition(Point - 1)) < 0.5 if Defense == 0 else getCurrentObjective() == Point - 1, 9999)
     createDummy(Hero.ANA, Team.1, 5, getPayloadPosition(), null)
     DummyDefense = getLastCreatedEntity()
     DummyDefense.setInvisibility(Invis.ALL)
     DummyDefense.disablePlayerCollision()
-    DummyAttack.startForcingPosition(nearestWalkablePosition(getPayloadPosition()), true)
+    DummyDefense.setGravity(0)
+    DummyDefense.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyDefense.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyDefense.startForcingPosition(getPayloadPosition(), false)
     ObjectiveInPosition = true
 
 
@@ -151,10 +170,18 @@ rule "Setup - Active Point (Control)":
     DummyAttack = getLastCreatedEntity()
     DummyAttack.setInvisibility(Invis.ALL)
     DummyAttack.disablePlayerCollision()
+    DummyAttack.setGravity(0)
+    DummyAttack.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyAttack.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyAttack.startForcingPosition(getObjectivePosition(getCurrentObjective()), false)
     createDummy(Hero.ANA, Team.1, 5, nearestWalkablePosition(getObjectivePosition(getCurrentObjective())), null)
     DummyDefense = getLastCreatedEntity()
     DummyDefense.setInvisibility(Invis.ALL)
     DummyDefense.disablePlayerCollision()
+    DummyDefense.setGravity(0)
+    DummyDefense.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    DummyDefense.applyImpulse(Vector.DOWN, 0.001, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    DummyDefense.startForcingPosition(getObjectivePosition(getCurrentObjective()), false)
     ObjectiveInPosition = true
 
 

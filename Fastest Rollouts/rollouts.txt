@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Fastest Lucio Rollouts v2.0 | Maintained by TERRORWOLF\nInteract to Reset\nT0H08"
+		Description: "Fastest Lucio Rollouts v2.3 | Maintained by TERRORWOLF\nInteract to Reset\nT0H08"
 		Mode Name: "Lucio Rollouts"
 	}
 	lobby
@@ -196,17 +196,23 @@ rule ("Setup - Active Point (Assault)") {
         Is In Setup == False;
     }
     actions {
-        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
-        Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(0)), Null);
+        Create Dummy Bot(Hero(Ana), Team 2, 5, Objective Position(0), Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
         Disable Movement Collision With Players(Global.DummyAttack);
+        Set Gravity(Global.DummyAttack, 0);
+        Apply Impulse(Global.DummyAttack, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyAttack, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyAttack, Objective Position(Objective Index), True);
         Wait Until(Compare(Objective Index, ==, Subtract(Global.Point, 1)), 9999);
-        Teleport(Global.DummyAttack, Nearest Walkable Position(Objective Position(Objective Index)));
-        Create Dummy Bot(Hero(Ana), Team 1, 5, Nearest Walkable Position(Objective Position(Objective Index)), Null);
+        Create Dummy Bot(Hero(Ana), Team 1, 5, Objective Position(Objective Index), Null);
         Set Global Variable(DummyDefense, Last Created Entity);
         Set Invisible(Global.DummyDefense, All);
         Disable Movement Collision With Players(Global.DummyDefense);
+        Set Gravity(Global.DummyDefense, 0);
+        Apply Impulse(Global.DummyDefense, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyDefense, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyDefense, Objective Position(Objective Index), False);
         Set Global Variable(ObjectiveInPosition, True);
     }
 }
@@ -220,20 +226,28 @@ rule ("Setup - Active Point (Hybrid)") {
         Is In Setup == False;
     }
     actions {
-        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
-        Create Dummy Bot(Hero(Ana), Team 2, 5, Nearest Walkable Position(Objective Position(0)), Null);
+        Create Dummy Bot(Hero(Ana), Team 2, 5, Objective Position(0), Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
         Disable Movement Collision With Players(Global.DummyAttack);
+        Set Gravity(Global.DummyAttack, 0);
+        Apply Impulse(Global.DummyAttack, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyAttack, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyAttack, Objective Position(0), False);
         Wait Until(If-Then-Else(Compare(Global.Point, !=, 1), Compare(Objective Index, ==, 1), True), 9999);
         If(Subtract(Global.Point, 1));
-            Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
+            Stop Forcing Player Position(Global.DummyAttack);
+            Start Forcing Player Position(Global.DummyAttack, Payload Position, True);
             Wait Until(If-Then-Else(Compare(Global.Defense, ==, 0), Compare(Distance Between(Payload Position, Objective Position(Subtract(Global.Point, 1))), <, 0.5), Compare(Objective Index, ==, Subtract(Global.Point, 1))), 9999);
         End;
-        Create Dummy Bot(Hero(Ana), Team 1, 5, If-Then-Else(Compare(Global.Point, !=, 1), Nearest Walkable Position(Payload Position), Nearest Walkable Position(Objective Position(0))), Null);
+        Create Dummy Bot(Hero(Ana), Team 1, 5, If-Then-Else(Compare(Global.Point, !=, 1), Payload Position, Objective Position(0)), Null);
         Set Global Variable(DummyDefense, Last Created Entity);
         Set Invisible(Global.DummyDefense, All);
         Disable Movement Collision With Players(Global.DummyDefense);
+        Set Gravity(Global.DummyDefense, 0);
+        Apply Impulse(Global.DummyDefense, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyDefense, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyDefense, If-Then-Else(Compare(Global.Point, !=, 1), Payload Position, Objective Position(0)), False);
         Set Global Variable(ObjectiveInPosition, True);
     }
 }
@@ -247,18 +261,23 @@ rule ("Setup - Active Point (Payload)") {
         Is In Setup == False;
     }
     actions {
-        Wait Until(Compare(Nearest Walkable Position(Objective Position(Objective Index)), !=, 0), 9999);
         Create Dummy Bot(Hero(Ana), Team 2, 5, Payload Position, Null);
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
         Disable Movement Collision With Players(Global.DummyAttack);
-        Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
+        Set Gravity(Global.DummyAttack, 0);
+        Apply Impulse(Global.DummyAttack, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyAttack, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyAttack, Payload Position, True);
         Wait Until(If-Then-Else(Compare(Global.Defense, ==, 0), Compare(Distance Between(Payload Position, Objective Position(Subtract(Global.Point, 1))), <, 0.5), Compare(Objective Index, ==, Subtract(Global.Point, 1))), 9999);
         Create Dummy Bot(Hero(Ana), Team 1, 5, Payload Position, Null);
         Set Global Variable(DummyDefense, Last Created Entity);
         Set Invisible(Global.DummyDefense, All);
         Disable Movement Collision With Players(Global.DummyDefense);
-        Start Forcing Player Position(Global.DummyAttack, Nearest Walkable Position(Payload Position), True);
+        Set Gravity(Global.DummyDefense, 0);
+        Apply Impulse(Global.DummyDefense, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyDefense, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyDefense, Payload Position, False);
         Set Global Variable(ObjectiveInPosition, True);
     }
 }
@@ -277,10 +296,18 @@ rule ("Setup - Active Point (Control)") {
         Set Global Variable(DummyAttack, Last Created Entity);
         Set Invisible(Global.DummyAttack, All);
         Disable Movement Collision With Players(Global.DummyAttack);
+        Set Gravity(Global.DummyAttack, 0);
+        Apply Impulse(Global.DummyAttack, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyAttack, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyAttack, Objective Position(Objective Index), False);
         Create Dummy Bot(Hero(Ana), Team 1, 5, Nearest Walkable Position(Objective Position(Objective Index)), Null);
         Set Global Variable(DummyDefense, Last Created Entity);
         Set Invisible(Global.DummyDefense, All);
         Disable Movement Collision With Players(Global.DummyDefense);
+        Set Gravity(Global.DummyDefense, 0);
+        Apply Impulse(Global.DummyDefense, Up, 0.001, To World, Cancel Contrary Motion);
+        Apply Impulse(Global.DummyDefense, Down, 0.001, To World, Incorporate Contrary Motion);
+        Start Forcing Player Position(Global.DummyDefense, Objective Position(Objective Index), False);
         Set Global Variable(ObjectiveInPosition, True);
     }
 }

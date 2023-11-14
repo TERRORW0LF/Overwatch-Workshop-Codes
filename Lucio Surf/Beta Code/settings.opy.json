@@ -1,16 +1,16 @@
 {
     "main": {
-        "description": "Lucio Surf v5.10b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ",
+        "description": "Lucio Surf v5.11b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ",
         "modeName": "Lucio Surf Beta"
     },
     "lobby": {
         "allowPlayersInQueue": true,
         "mapRotation": "afterGame",
         "enableMatchVoiceChat": true,
+        "ffaSlots": 10,
         "spectatorSlots": 6,
         "team1Slots": 10,
         "team2Slots": 0,
-        "ffaSlots": 10,
         "returnToLobby": "never",
         "swapTeamsAfterMatch": false
     },
@@ -38,6 +38,7 @@
         },
         "skirmish": {
             "disabledMaps": [
+                "antarcticPeninsula",
                 "blizzWorldWinter",
                 "eichenwaldeHalloween",
                 "hanamuraWinter",
@@ -47,7 +48,10 @@
                 "lijiangTower",
                 "lijiangTowerLny",
                 "nepal",
+                "newJunkCity",
                 "oasis",
+                "samoa",
+                "suravasa",
                 "workshopChamber",
                 "workshopExpanse",
                 "workshopExpanseNight",
@@ -69,21 +73,6 @@
     },
     "heroes": {
         "allTeams": {
-            "lucio": {
-                "enableAbility2": false,
-                "enableSecondaryFire": false
-            },
-            "enabledHeroes": [
-                "lucio"
-            ],
-            "general": {
-                "enableInfiniteAmmo": true,
-                "enablePrimaryFire": false,
-                "enableHeadshotsOnly": true,
-                "enableUlt": false
-            }
-        },
-        "ffa": {
             "lucio": {
                 "enableAbility2": false,
                 "enableSecondaryFire": false
