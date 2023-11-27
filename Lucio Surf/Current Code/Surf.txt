@@ -818,7 +818,7 @@ rule ("Start - Maps (Season 2)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Watchpoint: Gibraltar)));
-            Set Global Variable(PosStart, Vector(65.23, 1, 46.5));
+            Set Global Variable(PosStart, Vector(79.14, -0.94, 44.9));
             Set Global Variable(PosFinish, Vector(39, 3.9, -124.5));
             Abort;
     }
