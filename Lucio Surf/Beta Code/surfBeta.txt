@@ -117,15 +117,17 @@ variables {
         12: Checkpoint
         13: Visible
         14: Season
-        15: Category
-        16: Time
-        17: Infinite
-        19: Loop1
-        20: PosStart
-        21: PosCheckpoint
-        22: PosFinish
-        23: PosBarrier
-        24: MapName
+        15: SeasonArr
+        16: Category
+        17: CategoryArr
+        18: Time
+        19: Infinite
+        20: Loop1
+        21: PosStart
+        22: PosCheckpoint
+        23: PosFinish
+        24: PosBarrier
+        25: MapName
     player:
         0: TimeCurrent
         1: TimeExtra
@@ -179,15 +181,19 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Season, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Season", Null, Null, Null), 0, Array(Custom String("Random", Null, Null, Null), Custom String("Season 1", Null, Null, Null), Custom String("Season 2", Null, Null, Null), Custom String("Season 3", Null, Null, Null), Custom String("Season 4", Null, Null, Null), Custom String("Season 5", Null, Null, Null)), 0));
-        Set Global Variable(Category, Workshop Setting Combo(Custom String("Combo", Null, Null, Null), Custom String("Default Category", Null, Null, Null), 0, Array(Custom String("Random", Null, Null, Null), Custom String("Standard", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null)), 1));
+        Set Global Variable(SeasonArr, Empty Array);
+        Set Global Variable At Index(SeasonArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 1", Null, Null, Null), True, 0), 0, -1));
+        Set Global Variable At Index(SeasonArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 2", Null, Null, Null), True, 1), 1, -1));
+        Set Global Variable At Index(SeasonArr, 2, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 3", Null, Null, Null), True, 2), 2, -1));
+        Set Global Variable At Index(SeasonArr, 3, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 4", Null, Null, Null), True, 3), 3, -1));
+        Set Global Variable At Index(SeasonArr, 4, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 5", Null, Null, Null), False, 4), 4, -1));
+        Set Global Variable(Season, Random Value In Array(Filtered Array(Global.SeasonArr, Compare(Current Array Element, >=, 0))));
+        Set Global Variable(CategoryArr, Empty Array);
+        Set Global Variable At Index(CategoryArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category", Null, Null, Null), Custom String("Standard", Null, Null, Null), True, 0), 0, -1));
+        Set Global Variable At Index(CategoryArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null), True, 1), 1, -1));
+        Set Global Variable(Category, Random Value In Array(Filtered Array(Global.CategoryArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), True, 1));
-        If(Not(Global.Season));
-            Set Global Variable(Season, Random Integer(1, 5));
-        End;
-        If(Not(Global.Category));
-            Set Global Variable(Category, Random Integer(1, 2));
     }
 }
 
@@ -376,7 +382,7 @@ rule ("Start - Maps (Season 1)") {
         Ongoing - Global;
     }
     conditions {
-        Global.Season == 1;
+        Global.Season == 0;
     }
     actions {
         Set Global Variable(Checkpoint, False);
@@ -603,7 +609,7 @@ rule ("Start - Maps (Season 2)") {
         Ongoing - Global;
     }
     conditions {
-        Global.Season == 2;
+        Global.Season == 1;
     }
     actions {
         Set Global Variable(Checkpoint, False);
@@ -829,7 +835,7 @@ rule ("Start - Maps (Season 3)") {
         Ongoing - Global;
     }
     conditions {
-        Global.Season == 3;
+        Global.Season == 2;
     }
     actions {
         Set Global Variable(Checkpoint, True);
@@ -1097,7 +1103,7 @@ rule ("Start - Maps (Season 4)") {
         Ongoing - Global;
     }
     conditions {
-        Global.Season == 4;
+        Global.Season == 3;
     }
     actions {
         If(Compare(Current Map, ==, Map(Blizzard World)));
@@ -1400,7 +1406,7 @@ rule ("Start - Maps (Season 5)") {
         Ongoing - Global;
     }
     conditions {
-        Global.Season == 5;
+        Global.Season == 4;
     }
     actions {
         Set Global Variable(Checkpoint, True);
@@ -1787,15 +1793,15 @@ rule ("Start - Global") {
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Global.Loop1), 5, Visible To);
         End;
         "Seaons / Mode information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.10b0 | {0}S{1}", Global.Season, Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 2)), Custom String("Lucio Surf v5.10b0 | {0}G{1}", Global.Season, Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.11b0 | {0}S{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.11b0 | {0}G{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 2), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 2), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 2)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         "Help text standard"
         Create HUD Text(All Players(All Teams), Null, Null, Custom String("Cycle HUD - Crouch + Interact", Null, Null, Null), Left, 3, Null, Null, Color(Yellow), Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate", Null, Null, Null), Left, 4, Null, Null, Color(Yellow), Visible To, Default Visibility);
@@ -1868,10 +1874,10 @@ rule ("Start - Player") {
         End;
         "Category setup"
         Set Player Variable(Event Player, Category, Global.Category);
-        If(Compare(Global.Category, ==, 1));
+        If(Compare(Global.Category, ==, 0));
             Set Move Speed(Event Player, 100);
             Set Gravity(Event Player, 100);
-        Else If(Compare(Global.Category, ==, 2));
+        Else If(Compare(Global.Category, ==, 1));
             Set Move Speed(Event Player, 125);
             Set Gravity(Event Player, 80);
         End;
@@ -1881,8 +1887,8 @@ rule ("Start - Player") {
         Disable Movement Collision With Players(Event Player);
         "Hud"
         Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 2), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 0), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("ATTEMPTS: {0}", (Event Player).Attempts, Null, Null), Null, Null, Left, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0} m/s", Horizontal Speed Of(Event Player), Null, Null), Null, Null, Top, 0.1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0}.{1} sec", Round To Integer(Add((Event Player).TimeCurrent, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeCurrent), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null), Null, Null, Top, 0.2, Color(White), Null, Null, String, Default Visibility);
@@ -2048,7 +2054,7 @@ rule ("Finish") {
             Set Player Variable(Event Player, TimeExtra, If-Then-Else(Compare((Event Player).TimeExtra, >, (Event Player).TimeExtra2), (Event Player).TimeExtra, (Event Player).TimeExtra2));
         End;
         Modify Player Variable(Event Player, TimeCurrent, Subtract, (Event Player).TimeExtra);
-        If(Compare((Event Player).Category, ==, 1));
+        If(Compare((Event Player).Category, ==, 0));
             If(Compare((Event Player).TimeCurrent, <, (Event Player).TimeBestStan));
                 If(And(And(Compare((Event Player).TimeCurrent, <, Global.TimeThirdStan), Compare(Event Player, !=, Global.PlayerSecondStan)), Compare(Event Player, !=, Global.PlayerFirstStan)));
                     Set Global Variable(TimeThirdStan, (Event Player).TimeCurrent);
@@ -2075,7 +2081,7 @@ rule ("Finish") {
             Else;
                 Big Message(Event Player, String("{0}!!!", String("Finished", Null, Null, Null), Null, Null));
             End;
-        Else If(Compare((Event Player).Category, ==, 2));
+        Else If(Compare((Event Player).Category, ==, 1));
             If(Compare((Event Player).TimeCurrent, <, (Event Player).TimeBestGrav));
                 If(And(And(Compare((Event Player).TimeCurrent, <, Global.TimeThirdGrav), Compare(Event Player, !=, Global.PlayerSecondGrav)), Compare(Event Player, !=, Global.PlayerFirstGrav)));
                     Set Global Variable(TimeThirdGrav, (Event Player).TimeCurrent);
@@ -2152,10 +2158,10 @@ rule ("Finish Message (Best Time)") {
     conditions {
         (Event Player).Finished != False;
         (Event Player).NewBest != False;
-        Or(And(Compare((Event Player).Category, ==, 1), Compare(Event Player, !=, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 2), Compare(Event Player, !=, Global.PlayerFirstGrav))) == True;
+        Or(And(Compare((Event Player).Category, ==, 0), Compare(Event Player, !=, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, !=, Global.PlayerFirstGrav))) == True;
     }
     actions {
-        Big Message(Event Player, Custom String("New PB: {0}.{1} sec", Round To Integer(Add(If-Then-Else(Compare((Event Player).Category, ==, 1), (Event Player).TimeBestStan, (Event Player).TimeBestGrav), 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, If-Then-Else(Compare((Event Player).Category, ==, 1), (Event Player).TimeBestStan, (Event Player).TimeBestGrav)), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null));
+        Big Message(Event Player, Custom String("New PB: {0}.{1} sec", Round To Integer(Add(If-Then-Else(Compare((Event Player).Category, ==, 0), (Event Player).TimeBestStan, (Event Player).TimeBestGrav), 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, If-Then-Else(Compare((Event Player).Category, ==, 0), (Event Player).TimeBestStan, (Event Player).TimeBestGrav)), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Null));
     }
 }
 
@@ -2168,10 +2174,10 @@ rule ("Finish Message (Record Time)") {
     conditions {
         (Event Player).Finished != False;
         (Event Player).NewBest != False;
-        Or(And(Compare((Event Player).Category, ==, 1), Compare(Event Player, ==, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 2), Compare(Event Player, ==, Global.PlayerFirstGrav))) == True;
+        Or(And(Compare((Event Player).Category, ==, 0), Compare(Event Player, ==, Global.PlayerFirstStan)), And(Compare((Event Player).Category, ==, 1), Compare(Event Player, ==, Global.PlayerFirstGrav))) == True;
     }
     actions {
-        Big Message(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, (Event Player).Category)), Custom String("New Record: {0}.{1} sec - {2}!!!", Round To Integer(Add(If-Then-Else(Compare((Event Player).Category, ==, 1), (Event Player).TimeBestStan, (Event Player).TimeBestGrav), 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, If-Then-Else(Compare((Event Player).Category, ==, 1), (Event Player).TimeBestStan, (Event Player).TimeBestGrav)), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Event Player));
+        Big Message(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, (Event Player).Category)), Custom String("New Record: {0}.{1} sec - {2}!!!", Round To Integer(Add(If-Then-Else(Compare((Event Player).Category, ==, 0), (Event Player).TimeBestStan, (Event Player).TimeBestGrav), 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, If-Then-Else(Compare((Event Player).Category, ==, 0), (Event Player).TimeBestStan, (Event Player).TimeBestGrav)), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Event Player));
     }
 }
 
@@ -2245,7 +2251,7 @@ rule ("Velocity Counter - Standard (Green)") {
         All;
     }
     conditions {
-        (Event Player).Category == 1;
+        (Event Player).Category == 0;
         Horizontal Speed Of(Event Player) > 13.75;
     }
     actions {
@@ -2260,7 +2266,7 @@ rule ("Velocity Counter - Standard (Yellow)") {
         All;
     }
     conditions {
-        (Event Player).Category == 1;
+        (Event Player).Category == 0;
         Horizontal Speed Of(Event Player) > 11;
         Horizontal Speed Of(Event Player) < 13.75;
     }
@@ -2276,7 +2282,7 @@ rule ("Velocity Counter - Standard (Orange)") {
         All;
     }
     conditions {
-        (Event Player).Category == 1;
+        (Event Player).Category == 0;
         Horizontal Speed Of(Event Player) > 6.88;
         Horizontal Speed Of(Event Player) < 11;
     }
@@ -2292,7 +2298,7 @@ rule ("Velocity Counter - Standard (Red)") {
         All;
     }
     conditions {
-        (Event Player).Category == 1;
+        (Event Player).Category == 0;
         Horizontal Speed Of(Event Player) <= 6.88;
     }
     actions {
@@ -2307,7 +2313,7 @@ rule ("Velocity Counter - Gravspeed (Green)") {
         All;
     }
     conditions {
-        (Event Player).Category == 2;
+        (Event Player).Category == 1;
         Horizontal Speed Of(Event Player) > 17.2;
     }
     actions {
@@ -2322,7 +2328,7 @@ rule ("Velocity Counter - Gravspeed (Yellow)") {
         All;
     }
     conditions {
-        (Event Player).Category == 2;
+        (Event Player).Category == 1;
         Horizontal Speed Of(Event Player) > 13.15;
         Horizontal Speed Of(Event Player) < 17.2;
     }
@@ -2338,7 +2344,7 @@ rule ("Velocity Counter - Gravspeed (Orange)") {
         All;
     }
     conditions {
-        (Event Player).Category == 2;
+        (Event Player).Category == 1;
         Horizontal Speed Of(Event Player) > 8.6;
         Horizontal Speed Of(Event Player) < 13.15;
     }
@@ -2354,7 +2360,7 @@ rule ("Velocity Counter - Gravspeed (Red)") {
         All;
     }
     conditions {
-        (Event Player).Category == 2;
+        (Event Player).Category == 1;
         Horizontal Speed Of(Event Player) <= 8.6;
     }
     actions {
@@ -2470,7 +2476,7 @@ rule ("Auto Reset (Personal Best)") {
     conditions {
         (Event Player).Mode == False;
         (Event Player).AutoReset == 1;
-        (Event Player).TimeCurrent > If-Then-Else(Compare((Event Player).Category, ==, 1), (Event Player).TimeBestStan, (Event Player).TimeBestGrav);
+        (Event Player).TimeCurrent > If-Then-Else(Compare((Event Player).Category, ==, 0), (Event Player).TimeBestStan, (Event Player).TimeBestGrav);
     }
     actions {
         Small Message(Event Player, Custom String("Reset by 'Auto Reset'", Null, Null, Null));
@@ -2487,7 +2493,7 @@ rule ("Auto Reset (Record)") {
     conditions {
         (Event Player).Mode == False;
         (Event Player).AutoReset == 2;
-        (Event Player).TimeCurrent > If-Then-Else(Compare((Event Player).Category, ==, 1), Global.TimeFirstStan, Global.TimeFirstGrav);
+        (Event Player).TimeCurrent > If-Then-Else(Compare((Event Player).Category, ==, 0), Global.TimeFirstStan, Global.TimeFirstGrav);
     }
     actions {
         Small Message(Event Player, Custom String("Reset by 'Auto Reset'", Null, Null, Null));
@@ -2510,14 +2516,14 @@ rule ("Cycle Category") {
     actions {
         Set Player Variable(Event Player, ExecutingMenu, True);
         Modify Player Variable(Event Player, Category, Add, 1);
-        If(Compare((Event Player).Category, >, 2));
-            Set Player Variable(Event Player, Category, 1);
+        If(Compare((Event Player).Category, >, 1));
+            Set Player Variable(Event Player, Category, 0);
         End;
-        If(Compare((Event Player).Category, ==, 1));
+        If(Compare((Event Player).Category, ==, 0));
             Set Move Speed(Event Player, 100);
             Set Gravity(Event Player, 100);
             Small Message(Event Player, Custom String("Now playing Standard", Null, Null, Null));
-        Else If(Compare((Event Player).Category, ==, 2));
+        Else If(Compare((Event Player).Category, ==, 1));
             Set Move Speed(Event Player, 125);
             Set Gravity(Event Player, 80);
             Small Message(Event Player, Custom String("Now playing Gravspeed", Null, Null, Null));
@@ -2751,9 +2757,9 @@ rule ("Enable Spectator Mode") {
         Set Player Variable(Event Player, ExecutingMenu, True);
         Set Player Variable(Event Player, Mode, 3);
         Set Gravity(Event Player, 0);
-        If(Compare((Event Player).Category, ==, 1));
+        If(Compare((Event Player).Category, ==, 0));
             Set Move Speed(Event Player, 225);
-        Else If(Compare((Event Player).Category, ==, 2));
+        Else If(Compare((Event Player).Category, ==, 1));
             Set Move Speed(Event Player, 275);
         End;
         Set Invisible(Event Player, All);
@@ -2781,10 +2787,10 @@ rule ("Disable Spectator Mode") {
     }
     actions {
         Set Player Variable(Event Player, ExecutingMenu, True);
-        If(Compare((Event Player).Category, ==, 1));
+        If(Compare((Event Player).Category, ==, 0));
             Set Move Speed(Event Player, 100);
             Set Gravity(Event Player, 100);
-        Else If(Compare((Event Player).Category, ==, 2));
+        Else If(Compare((Event Player).Category, ==, 1));
             Set Move Speed(Event Player, 125);
             Set Gravity(Event Player, 80);
         End;
@@ -2920,7 +2926,7 @@ rule ("Circle Fix") {
         (Event Player).Mode <= 1;
         (Event Player).PracticeCheckpoint == False;
         Is True For Any((Event Player).Checkpoint, Current Array Element) == False;
-        Update Every Frame(Or(And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 2), Compare(Horizontal Speed Of(Event Player), <=, 8.6)))) != False;
+        Update Every Frame(Or(And(Compare((Event Player).Category, ==, 0), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 8.6)))) != False;
     }
     actions {
         Stop Chasing Player Variable(Event Player, TimeCurrent);
@@ -2945,7 +2951,7 @@ rule ("Circle Fix (Practice)") {
         Update Every Frame(Compare(Absolute Value(Subtract(Y Component Of(Position Of(Event Player)), Y Component Of((Event Player).PosPracticeCheckpoint))), <=, 3)) != False;
         Is On Ground(Event Player) == True;
         (Event Player).Reset == False;
-        Update Every Frame(Or(And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 2), Compare(Horizontal Speed Of(Event Player), <=, 8.6)))) != False;
+        Update Every Frame(Or(And(Compare((Event Player).Category, ==, 0), Compare(Horizontal Speed Of(Event Player), <=, 6.88)), And(Compare((Event Player).Category, ==, 1), Compare(Horizontal Speed Of(Event Player), <=, 8.6)))) != False;
     }
     actions {
         Stop Chasing Player Variable(Event Player, TimeCurrent);
@@ -3034,10 +3040,10 @@ rule ("Respawn") {
         If(Compare((Event Player).Mode, >, 1));
             Set Player Variable(Event Player, Attempts, -1);
             Set Player Variable(Event Player, Mode, 0);
-            If(Compare((Event Player).Category, ==, 1));
+            If(Compare((Event Player).Category, ==, 0));
                 Set Gravity(Event Player, 100);
                 Set Move Speed(Event Player, 100);
-            Else If(Compare((Event Player).Category, ==, 2));
+            Else If(Compare((Event Player).Category, ==, 1));
                 Set Gravity(Event Player, 80);
                 Set Move Speed(Event Player, 125);
             End;

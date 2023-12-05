@@ -17,15 +17,17 @@ globalvar PlayerThirdStan 11
 globalvar Checkpoint 12
 globalvar Visible 13
 globalvar Season 14
-globalvar Category 15
-globalvar Time 16
-globalvar Infinite 17
-globalvar Loop1 19
-globalvar PosStart 20
-globalvar PosCheckpoint 21
-globalvar PosFinish 22
-globalvar PosBarrier 23
-globalvar MapName 24
+globalvar SeasonArr 15
+globalvar Category 16
+globalvar CategoryArr 17
+globalvar Time 18
+globalvar Infinite 19
+globalvar Loop1 20
+globalvar PosStart 21
+globalvar PosCheckpoint 22
+globalvar PosFinish 23
+globalvar PosBarrier 24
+globalvar MapName 25
 
 
 #Player variables
@@ -82,15 +84,19 @@ rule "Debug (Player)":
 
 #Settings
 rule "Workshop Settings":
-    Season = createWorkshopSetting(enum["Random", "Season 1", "Season 2", "Season 3", "Season 4", "Season 5"], "Combo", "Season", 0, 0)
-    Category = createWorkshopSetting(enum["Random", "Standard", "Gravspeed"], "Combo", "Default Category", 0, 1)
+    SeasonArr = []
+    SeasonArr[0] = 0 if createWorkshopSetting(bool, "Season", "Season 1", true, 0) else -1
+    SeasonArr[1] = 1 if createWorkshopSetting(bool, "Season", "Season 2", true, 1) else -1
+    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", true, 2) else -1
+    SeasonArr[3] = 3 if createWorkshopSetting(bool, "Season", "Season 4", true, 3) else -1
+    SeasonArr[4] = 4 if createWorkshopSetting(bool, "Season", "Season 5", false, 4) else -1
+    Season = random.choice([season for season in SeasonArr if season >= 0])
+    CategoryArr = []
+    CategoryArr[0] = 0 if createWorkshopSetting(bool, "Default Category", "Standard", true, 0) else -1
+    CategoryArr[1] = 1 if createWorkshopSetting(bool, "Default Category", "Gravspeed", true, 1) else -1
+    Category = random.choice([category for category in CategoryArr if category >= 0])
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
     Infinite = createWorkshopSetting(bool, "Time", "Infinite", true, 1)
-
-    if not Season:
-        Season = random.randint(1, 5)
-    if not Category:
-        Category = random.randint(1, 2)
 
 
 #Maps
@@ -228,7 +234,7 @@ rule "Start - Maps (Identifier)":
 
 
 rule "Start - Maps (Season 1)":
-    @Condition Season == 1
+    @Condition Season == 0
     
     Checkpoint = false
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -407,7 +413,7 @@ rule "Start - Maps (Season 1)":
 
 
 rule "Start - Maps (Season 2)":
-    @Condition Season == 2
+    @Condition Season == 1
     
     Checkpoint = false
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -585,7 +591,7 @@ rule "Start - Maps (Season 2)":
 
 
 rule "Start - Maps (Season 3)":
-    @Condition Season == 3
+    @Condition Season == 2
     
     Checkpoint = true
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -805,7 +811,7 @@ rule "Start - Maps (Season 3)":
 
 
 rule "Start - Maps (Season 4)":
-    @Condition Season == 4
+    @Condition Season == 3
     
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(52.118, -0.81, -7.795)
@@ -1060,7 +1066,7 @@ rule "Start - Maps (Season 4)":
             
             
 rule "Start - Maps (Season 5)":
-    @Condition Season == 5
+    @Condition Season == 4
     
     Checkpoint = true
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -1384,15 +1390,15 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
     #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.10b0 | {0}S{1}".format(Season, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 2], "Lucio Surf v5.10b0 | {0}G{1}".format(Season, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 0], "Lucio Surf v5.11b0 | {0}S{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.11b0 | {0}G{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     #Leaderboards
-    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 2 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 2 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 2], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 0 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 0 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 0], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     #Help text standard
     hudSubtext(getAllPlayers(), "Cycle HUD - Crouch + Interact", HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
@@ -1449,10 +1455,10 @@ rule "Start - Player":
         eventPlayer.FFAReset = true
     #Category setup
     eventPlayer.Category = Category
-    if Category == 1:
+    if Category == 0:
         eventPlayer.setMoveSpeed(100)
         eventPlayer.setGravity(100)
-    elif Category == 2:
+    elif Category == 1:
         eventPlayer.setMoveSpeed(125)
         eventPlayer.setGravity(80)
     #Mode setup
@@ -1461,8 +1467,8 @@ rule "Start - Player":
     eventPlayer.disablePlayerCollision()
     #Hud
     hudHeader(eventPlayer, eventPlayer, HudPosition.LEFT, 0, Color.YELLOW, HudReeval.NONE, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestStan + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestStan + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 2 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestGrav + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestGrav + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 0 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestStan + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestStan + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestGrav + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestGrav + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer if eventPlayer.HideHud <= 1 else null, "ATTEMPTS: {0}".format(eventPlayer.Attempts), HudPosition.LEFT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "{0} m/s".format(eventPlayer.getHorizontalSpeed()), HudPosition.TOP, 0.1, eventPlayer.SpeedColor, HudReeval.STRING_AND_COLOR, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "{0}.{1} sec".format(floor(eventPlayer.TimeCurrent + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeCurrent + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
@@ -1615,7 +1621,7 @@ rule "Finish":
         eventPlayer.TimeExtra = eventPlayer.TimeExtra if eventPlayer.TimeExtra > eventPlayer.TimeExtra2 else eventPlayer.TimeExtra2
     eventPlayer.TimeCurrent -= eventPlayer.TimeExtra
 
-    if eventPlayer.Category == 1:
+    if eventPlayer.Category == 0:
         if eventPlayer.TimeCurrent < eventPlayer.TimeBestStan:
             if eventPlayer.TimeCurrent < TimeThirdStan and eventPlayer != PlayerSecondStan and eventPlayer != PlayerFirstStan:
                 TimeThirdStan = eventPlayer.TimeCurrent
@@ -1637,7 +1643,7 @@ rule "Finish":
         else:
             bigMessage(eventPlayer, l"{0}!!!".format(l"Finished"))
 
-    elif eventPlayer.Category == 2:
+    elif eventPlayer.Category == 1:
         if eventPlayer.TimeCurrent < eventPlayer.TimeBestGrav:
             if eventPlayer.TimeCurrent < TimeThirdGrav and eventPlayer != PlayerSecondGrav and eventPlayer != PlayerFirstGrav:
                 TimeThirdGrav = eventPlayer.TimeCurrent
@@ -1688,17 +1694,17 @@ rule "Finish Message (Best Time)":
     @Event eachPlayer
     @Condition eventPlayer.Finished
     @Condition eventPlayer.NewBest
-    @Condition (eventPlayer.Category == 1 and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 2 and eventPlayer != PlayerFirstGrav)
+    @Condition (eventPlayer.Category == 0 and eventPlayer != PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer != PlayerFirstGrav)
     
-    bigMessage(eventPlayer, "New PB: {0}.{1} sec".format(floor((eventPlayer.TimeBestStan if eventPlayer.Category == 1 else eventPlayer.TimeBestGrav) + 0.001 / 1000), "{0}".format(floor((1000 * (eventPlayer.TimeBestStan if eventPlayer.Category == 1 else eventPlayer.TimeBestGrav) + 0.001)) % 1000 + 1000).substring(1, 3)))
+    bigMessage(eventPlayer, "New PB: {0}.{1} sec".format(floor((eventPlayer.TimeBestStan if eventPlayer.Category == 0 else eventPlayer.TimeBestGrav) + 0.001 / 1000), "{0}".format(floor((1000 * (eventPlayer.TimeBestStan if eventPlayer.Category == 0 else eventPlayer.TimeBestGrav) + 0.001)) % 1000 + 1000).substring(1, 3)))
 
 rule "Finish Message (Record Time)":
     @Event eachPlayer
     @Condition eventPlayer.Finished
     @Condition eventPlayer.NewBest
-    @Condition (eventPlayer.Category == 1 and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 2 and eventPlayer == PlayerFirstGrav)
+    @Condition (eventPlayer.Category == 0 and eventPlayer == PlayerFirstStan) or (eventPlayer.Category == 1 and eventPlayer == PlayerFirstGrav)
     
-    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}.{1} sec - {2}!!!".format(floor((eventPlayer.TimeBestStan if eventPlayer.Category == 1 else eventPlayer.TimeBestGrav) + 0.001 / 1000), "{0}".format(floor((1000 * (eventPlayer.TimeBestStan if eventPlayer.Category == 1 else eventPlayer.TimeBestGrav) + 0.001)) % 1000 + 1000).substring(1, 3), eventPlayer))
+    bigMessage([player for player in getAllPlayers() if player.Category == eventPlayer.Category], "New Record: {0}.{1} sec - {2}!!!".format(floor((eventPlayer.TimeBestStan if eventPlayer.Category == 0 else eventPlayer.TimeBestGrav) + 0.001 / 1000), "{0}".format(floor((1000 * (eventPlayer.TimeBestStan if eventPlayer.Category == 0 else eventPlayer.TimeBestGrav) + 0.001)) % 1000 + 1000).substring(1, 3), eventPlayer))
 
 
 rule "Floor":
@@ -1738,7 +1744,7 @@ rule "Barrier":
 
 rule "Velocity Counter - Standard (Green)":
     @Event eachPlayer
-    @Condition eventPlayer.Category == 1
+    @Condition eventPlayer.Category == 0
     @Condition eventPlayer.getHorizontalSpeed() > 13.75
 
     eventPlayer.SpeedColor = Color.GREEN
@@ -1746,7 +1752,7 @@ rule "Velocity Counter - Standard (Green)":
     
 rule "Velocity Counter - Standard (Yellow)":
     @Event eachPlayer
-    @Condition eventPlayer.Category == 1
+    @Condition eventPlayer.Category == 0
     @Condition eventPlayer.getHorizontalSpeed() > 11
     @Condition eventPlayer.getHorizontalSpeed() < 13.75
 
@@ -1755,7 +1761,7 @@ rule "Velocity Counter - Standard (Yellow)":
 
 rule "Velocity Counter - Standard (Orange)":
     @Event eachPlayer
-    @Condition eventPlayer.Category  == 1
+    @Condition eventPlayer.Category  == 0
     @Condition eventPlayer.getHorizontalSpeed() > 6.88
     @Condition eventPlayer.getHorizontalSpeed() < 11
 
@@ -1764,7 +1770,7 @@ rule "Velocity Counter - Standard (Orange)":
     
 rule "Velocity Counter - Standard (Red)":
     @Event eachPlayer
-    @Condition eventPlayer.Category == 1
+    @Condition eventPlayer.Category == 0
     @Condition eventPlayer.getHorizontalSpeed() <= 6.88
     
     eventPlayer.SpeedColor = Color.RED
@@ -1772,7 +1778,7 @@ rule "Velocity Counter - Standard (Red)":
 
 rule "Velocity Counter - Gravspeed (Green)":
     @Event eachPlayer
-    @Condition eventPlayer.Category == 2
+    @Condition eventPlayer.Category == 1
     @Condition eventPlayer.getHorizontalSpeed() > 17.2
 
     eventPlayer.SpeedColor = Color.GREEN
@@ -1780,7 +1786,7 @@ rule "Velocity Counter - Gravspeed (Green)":
 
 rule "Velocity Counter - Gravspeed (Yellow)":
     @Event eachPlayer
-    @Condition eventPlayer.Category == 2
+    @Condition eventPlayer.Category == 1
     @Condition eventPlayer.getHorizontalSpeed() > 13.15
     @Condition eventPlayer.getHorizontalSpeed() < 17.2
 
@@ -1789,7 +1795,7 @@ rule "Velocity Counter - Gravspeed (Yellow)":
 
 rule "Velocity Counter - Gravspeed (Orange)":
     @Event eachPlayer
-    @Condition eventPlayer.Category == 2
+    @Condition eventPlayer.Category == 1
     @Condition eventPlayer.getHorizontalSpeed() > 8.6
     @Condition eventPlayer.getHorizontalSpeed() < 13.15
 
@@ -1798,7 +1804,7 @@ rule "Velocity Counter - Gravspeed (Orange)":
 
 rule "Velocity Counter - Gravspeed (Red)":
     @Event eachPlayer
-    @Condition eventPlayer.Category == 2
+    @Condition eventPlayer.Category == 1
     @Condition eventPlayer.getHorizontalSpeed() <= 8.6
     
     eventPlayer.SpeedColor = Color.RED
@@ -1872,7 +1878,7 @@ rule "Auto Reset (Personal Best)":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
     @Condition eventPlayer.AutoReset == 1
-    @Condition eventPlayer.TimeCurrent > (eventPlayer.TimeBestStan if eventPlayer.Category == 1 else eventPlayer.TimeBestGrav)
+    @Condition eventPlayer.TimeCurrent > (eventPlayer.TimeBestStan if eventPlayer.Category == 0 else eventPlayer.TimeBestGrav)
     
     smallMessage(eventPlayer, "Reset by 'Auto Reset'")
     async(Respawn, AsyncBehavior.NOOP)
@@ -1882,7 +1888,7 @@ rule "Auto Reset (Record)":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
     @Condition eventPlayer.AutoReset == 2
-    @Condition eventPlayer.TimeCurrent > (TimeFirstStan if eventPlayer.Category == 1 else TimeFirstGrav)
+    @Condition eventPlayer.TimeCurrent > (TimeFirstStan if eventPlayer.Category == 0 else TimeFirstGrav)
     
     smallMessage(eventPlayer, "Reset by 'Auto Reset'")
     async(Respawn, AsyncBehavior.NOOP)
@@ -1896,13 +1902,13 @@ rule "Cycle Category":
 
     eventPlayer.ExecutingMenu = true
     eventPlayer.Category += 1
-    if eventPlayer.Category > 2:
-        eventPlayer.Category = 1
-    if eventPlayer.Category == 1:
+    if eventPlayer.Category > 1:
+        eventPlayer.Category = 0
+    if eventPlayer.Category == 0:
         eventPlayer.setMoveSpeed(100)
         eventPlayer.setGravity(100)
         smallMessage(eventPlayer, "Now playing Standard")
-    elif eventPlayer.Category == 2:
+    elif eventPlayer.Category == 1:
         eventPlayer.setMoveSpeed(125)
         eventPlayer.setGravity(80)
         smallMessage(eventPlayer, "Now playing Gravspeed")
@@ -2055,9 +2061,9 @@ rule "Enable Spectator Mode":
     eventPlayer.ExecutingMenu = true
     eventPlayer.Mode = 3
     eventPlayer.setGravity(0)
-    if eventPlayer.Category == 1:
+    if eventPlayer.Category == 0:
         eventPlayer.setMoveSpeed(225)
-    elif eventPlayer.Category == 2:
+    elif eventPlayer.Category == 1:
         eventPlayer.setMoveSpeed(275)
     eventPlayer.setInvisibility(Invis.ALL)
     stopChasingVariable(eventPlayer.TimeCurrent)
@@ -2076,10 +2082,10 @@ rule "Disable Spectator Mode":
     @Condition not eventPlayer.ExecutingMenu
     
     eventPlayer.ExecutingMenu = true
-    if eventPlayer.Category == 1:
+    if eventPlayer.Category == 0:
         eventPlayer.setMoveSpeed(100)
         eventPlayer.setGravity(100)
-    elif eventPlayer.Category == 2:
+    elif eventPlayer.Category == 1:
         eventPlayer.setMoveSpeed(125)
         eventPlayer.setGravity(80)
     bigMessage(eventPlayer, "Leaving Spectator Mode")
@@ -2159,7 +2165,7 @@ rule "Circle Fix":
     @Condition eventPlayer.Mode <= 1
     @Condition not eventPlayer.PracticeCheckpoint
     @Condition not any([checkpoint for checkpoint in eventPlayer.Checkpoint])
-    @Condition updateEveryTick((eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 2 and eventPlayer.getHorizontalSpeed() <= 8.6))
+    @Condition updateEveryTick((eventPlayer.Category == 0 and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 8.6))
     
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.TimeCurrent = 0
@@ -2177,7 +2183,7 @@ rule "Circle Fix (Practice)":
     @Condition updateEveryTick(abs(eventPlayer.getPosition().y - eventPlayer.PosPracticeCheckpoint.y) <= 3)
     @Condition eventPlayer.isOnGround()
     @Condition not eventPlayer.Reset
-    @Condition updateEveryTick((eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 2 and eventPlayer.getHorizontalSpeed() <= 8.6))
+    @Condition updateEveryTick((eventPlayer.Category == 0 and eventPlayer.getHorizontalSpeed() <= 6.88) or (eventPlayer.Category == 1 and eventPlayer.getHorizontalSpeed() <= 8.6))
     
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.TimeCurrent = 0
@@ -2242,10 +2248,10 @@ def Respawn():
     if eventPlayer.Mode > 1:
         eventPlayer.Attempts = -1
         eventPlayer.Mode = 0
-        if eventPlayer.Category == 1:
+        if eventPlayer.Category == 0:
             eventPlayer.setGravity(100)
             eventPlayer.setMoveSpeed(100)
-        elif eventPlayer.Category == 2:
+        elif eventPlayer.Category == 1:
             eventPlayer.setGravity(80)
             eventPlayer.setMoveSpeed(125)
 
