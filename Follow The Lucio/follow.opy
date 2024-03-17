@@ -22,9 +22,9 @@ playervar InDanger 2
 #Workshop settings
 rule "Workshop Settings":
     SelectLeader = createWorkshopSetting(enum["Slot 0", "Random"], "Settings", "Leader selection", 1, 0)
-    SelectMode = createWorkshopSetting(enum["Elimination", "Timer"], "Settings", "Mode", 0, 1)
-    MaxDistance = createWorkshopSetting(int[5:50], "Settings", "Elimation distance", 15, 2)
-    Time = createWorkshopSetting(int[0:60], "Settings", "Elimation time", 20, 3)
+    SelectMode = createWorkshopSetting(enum["Elimination", "Knockout"], "Settings", "Mode", 0, 1)
+    MaxDistance = createWorkshopSetting(int[5:50], "Settings", "Elimination distance", 15, 2)
+    Time = createWorkshopSetting(int[0:60], "Settings", "Elimination time", 20, 3)
 
 #Setup
 rule "Global Setup":
@@ -87,7 +87,7 @@ rule "Declare Victory - Followers":
     @Condition isGameInProgress()
     @Condition getMatchTime() <= 1
 
-    declarePlayerVictory(random.choice([player for player in getLivingPlayers(Team.ALL) if player.isAlive()]))
+    declarePlayerVictory(random.choice([player for player in getLivingPlayers(Team.ALL) if player != Leader]))
 
 
 rule "Leader left":
@@ -104,7 +104,7 @@ rule "Leader died":
     declarePlayerVictory(random.choice(getLivingPlayers(Team.ALL)))
 
 
-rule "Elimation - Timer start":
+rule "Knockout - Timer start":
     @Event eachPlayer
     @Condition not SelectMode
     @Condition eventPlayer.isAlive()
@@ -118,7 +118,7 @@ rule "Elimation - Timer start":
         wait(1, Wait.ABORT_WHEN_FALSE)
 
 
-rule "Elimation - Timer end":
+rule "Knockout - Timer end":
     @Event eachPlayer
     @Condition not SelectMode
     @Condition eventPlayer.isAlive()
@@ -130,7 +130,7 @@ rule "Elimation - Timer end":
     eventPlayer.DistanceColor = Color.YELLOW
 
 
-rule "Elimation - Elimate Player":
+rule "Knockout - Elimate Player":
     @Event eachPlayer
     @Condition not SelectMode
     @Condition eventPlayer.Time > Time
@@ -139,7 +139,7 @@ rule "Elimation - Elimate Player":
     eventPlayer.InDanger = false
 
 
-rule "Elimation - Distance White":
+rule "Knockout - Distance White":
     @Event eachPlayer
     @Condition not SelectMode
     @Condition distance(Leader.getPosition(), eventPlayer.getPosition()) < WarningDistance
@@ -147,7 +147,7 @@ rule "Elimation - Distance White":
     eventPlayer.DistanceColor = Color.WHITE
 
 
-rule "Elimation - Distance Yellow":
+rule "Knockout - Distance Yellow":
     @Event eachPlayer
     @Condition not SelectMode
     @Condition distance(Leader.getPosition(), eventPlayer.getPosition()) > WarningDistance
@@ -161,6 +161,7 @@ rule "Timer - Timer":
     @Condition CurrTime >= 20
 
     kill(sorted(getLivingPlayers(Team.ALL), lambda player: distance(Leader, player))[getNumberOfLivingPlayers(Team.ALL) - 1], sorted(getLivingPlayers(Team.ALL), lambda player: distance(Leader, player))[getNumberOfLivingPlayers(Team.ALL) - 1])
+    Leader.addToScore(1)
     CurrTime = 0
 
 

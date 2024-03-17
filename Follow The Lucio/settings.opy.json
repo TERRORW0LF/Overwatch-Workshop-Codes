@@ -7,7 +7,8 @@
         "allowPlayersInQueue": true,
         "mapRotation": "afterGame",
         "enableMatchVoiceChat": true,
-        "spectatorSlots": 12,
+        "spectatorSlots": 10,
+        "ffaSlots": 10,
         "returnToLobby": "never",
         "swapTeamsAfterMatch": false
     },
@@ -54,4 +55,3 @@
         }
     }
 }
-

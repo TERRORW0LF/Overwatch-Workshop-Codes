@@ -10,7 +10,8 @@ settings
 		Allow Players Who Are In Queue: Yes
 		Map Rotation: After A Game
 		Match Voice Chat: Enabled
-		Max Spectators: 12
+		Max Spectators: 10
+		Max FFA Players: 10
 		Return To Lobby: Never
 		Swap Teams After Match: No
 	}
@@ -86,9 +87,9 @@ rule ("Workshop Settings") {
     }
     actions {
         Set Global Variable(SelectLeader, Workshop Setting Combo(Custom String("Settings", Null, Null, Null), Custom String("Leader selection", Null, Null, Null), 1, Array(Custom String("Slot 0", Null, Null, Null), Custom String("Random", Null, Null, Null)), 0));
-        Set Global Variable(SelectMode, Workshop Setting Combo(Custom String("Settings", Null, Null, Null), Custom String("Mode", Null, Null, Null), 0, Array(Custom String("Elimination", Null, Null, Null), Custom String("Timer", Null, Null, Null)), 1));
-        Set Global Variable(MaxDistance, Workshop Setting Integer(Custom String("Settings", Null, Null, Null), Custom String("Elimation distance", Null, Null, Null), 15, 5, 50, 2));
-        Set Global Variable(Time, Workshop Setting Integer(Custom String("Settings", Null, Null, Null), Custom String("Elimation time", Null, Null, Null), 20, 0, 60, 3));
+        Set Global Variable(SelectMode, Workshop Setting Combo(Custom String("Settings", Null, Null, Null), Custom String("Mode", Null, Null, Null), 0, Array(Custom String("Elimination", Null, Null, Null), Custom String("Knockout", Null, Null, Null)), 1));
+        Set Global Variable(MaxDistance, Workshop Setting Integer(Custom String("Settings", Null, Null, Null), Custom String("Elimination distance", Null, Null, Null), 15, 5, 50, 2));
+        Set Global Variable(Time, Workshop Setting Integer(Custom String("Settings", Null, Null, Null), Custom String("Elimination time", Null, Null, Null), 20, 0, 60, 3));
     }
 }
 
@@ -194,7 +195,7 @@ rule ("Declare Victory - Followers") {
         Match Time <= 1;
     }
     actions {
-        Declare Player Victory(Random Value In Array(Filtered Array(All Living Players(All Teams), Is Alive(Current Array Element))));
+        Declare Player Victory(Random Value In Array(Remove From Array(All Living Players(All Teams), Global.Leader)));
     }
 }
 
@@ -226,7 +227,7 @@ rule ("Leader died") {
     }
 }
 
-rule ("Elimation - Timer start") {
+rule ("Knockout - Timer start") {
     event {
         Ongoing - Each Player;
         All;
@@ -248,7 +249,7 @@ rule ("Elimation - Timer start") {
     }
 }
 
-rule ("Elimation - Timer end") {
+rule ("Knockout - Timer end") {
     event {
         Ongoing - Each Player;
         All;
@@ -267,7 +268,7 @@ rule ("Elimation - Timer end") {
     }
 }
 
-rule ("Elimation - Elimate Player") {
+rule ("Knockout - Elimate Player") {
     event {
         Ongoing - Each Player;
         All;
@@ -283,7 +284,7 @@ rule ("Elimation - Elimate Player") {
     }
 }
 
-rule ("Elimation - Distance White") {
+rule ("Knockout - Distance White") {
     event {
         Ongoing - Each Player;
         All;
@@ -298,7 +299,7 @@ rule ("Elimation - Distance White") {
     }
 }
 
-rule ("Elimation - Distance Yellow") {
+rule ("Knockout - Distance Yellow") {
     event {
         Ongoing - Each Player;
         All;
@@ -324,6 +325,7 @@ rule ("Timer - Timer") {
     }
     actions {
         Kill(Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1)), Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1)));
+        Modify Player Score(Global.Leader, 1);
         Set Global Variable(CurrTime, 0);
     }
 }
