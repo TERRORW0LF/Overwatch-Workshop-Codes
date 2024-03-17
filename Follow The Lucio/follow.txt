@@ -101,8 +101,8 @@ rule ("Global Setup") {
         Set Global Variable(CurrTime, 0);
         Set Global Variable(WarningDistance, Divide(Global.MaxDistance, 2));
         Wait(4, Ignore Condition);
-        Set Global Variable(Leader, If-Then-Else(Global.SelectLeader, Value In Array(All Players(All Teams), Random Value In Array(All Players(All Teams))), Players In Slot(0, All Teams)));
-        Create Icon(Remove From Array(All Players(All Teams), Global.Leader), Position Of(Global.Leader), Flag, Visible To and Position, Color(Green), True);
+        Set Global Variable(Leader, If-Then-Else(Global.SelectLeader, Random Value In Array(All Players(All Teams)), Players In Slot(0, All Teams)));
+        Create Icon(Remove From Array(All Players(All Teams), Global.Leader), Position Of(Global.Leader), Flag, Visible To and Position, Color(Blue), True);
         If(Global.SelectMode);
             Create HUD Text(All Players(All Teams), Custom String("{0} sec", Subtract(Global.Time, Global.CurrTime), Null, Null), Null, Null, Top, 0, Color(White), Null, Null, Visible To and String, Default Visibility);
     }
@@ -321,7 +321,7 @@ rule ("Timer - Timer") {
     conditions {
         Global.SelectMode != False;
         Is Game In Progress == True;
-        Global.CurrTime >= 20;
+        Global.CurrTime >= Global.Time;
     }
     actions {
         Kill(Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1)), Value In Array(Sorted Array(All Living Players(All Teams), Distance Between(Global.Leader, Current Array Element)), Subtract(Number Of Living Players(All Teams), 1)));

@@ -31,8 +31,8 @@ rule "Global Setup":
     CurrTime = 0
     WarningDistance = MaxDistance / 2
     wait(4)
-    Leader = getAllPlayers()[random.choice(getAllPlayers())] if SelectLeader else getPlayersInSlot(0, Team.ALL)
-    createIcon([player for player in getAllPlayers() if player != Leader], Leader.getPosition(), Icon.FLAG, IconReeval.VISIBILITY_AND_POSITION, Color.GREEN, true)
+    Leader = random.choice(getAllPlayers()) if SelectLeader else getPlayersInSlot(0, Team.ALL)
+    createIcon([player for player in getAllPlayers() if player != Leader], Leader.getPosition(), Icon.FLAG, IconReeval.VISIBILITY_AND_POSITION, Color.BLUE, true)
     if SelectMode:
         hudHeader(getAllPlayers(), "{0} sec".format(Time - CurrTime), HudPosition.TOP, 0, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
 
@@ -158,7 +158,7 @@ rule "Knockout - Distance Yellow":
 rule "Timer - Timer":
     @Condition SelectMode
     @Condition isGameInProgress()
-    @Condition CurrTime >= 20
+    @Condition CurrTime >= Time
 
     kill(sorted(getLivingPlayers(Team.ALL), lambda player: distance(Leader, player))[getNumberOfLivingPlayers(Team.ALL) - 1], sorted(getLivingPlayers(Team.ALL), lambda player: distance(Leader, player))[getNumberOfLivingPlayers(Team.ALL) - 1])
     Leader.addToScore(1)
