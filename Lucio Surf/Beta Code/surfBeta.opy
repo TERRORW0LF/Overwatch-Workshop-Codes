@@ -101,6 +101,19 @@ rule "Workshop Settings":
 
 #Maps
 rule "Start - Maps (Identifier)":
+    if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
+        #Icebreaker
+        if getCurrentObjective() == 0:
+            MapName = "AI"
+            return
+        #Labs
+        if getCurrentObjective() == 1:
+            MapName = "AL"
+            return
+        #Sublevel
+        if getCurrentObjective() == 2:
+            MapName = "AS"
+            return
     if getCurrentMap() == Map.BLIZZ_WORLD:
         MapName = "BW"
         return
@@ -135,8 +148,11 @@ rule "Start - Maps (Identifier)":
     if getCurrentMap() == Map.ESPERANCA:
         MapName = "ER"
         return
-    if getCurrentMap() == Map.HANAMURA:
+    /*if getCurrentMap() == Map.HANAMURA:
         MapName = "HM"
+        return*/
+    if getCurrentMap() == Map.HANAOKA:
+        MapName = "HO"
         return
     if getCurrentMap() == Map.HAVANA:
         MapName = "HV"
@@ -189,6 +205,9 @@ rule "Start - Maps (Identifier)":
     if getCurrentMap() == Map.NEPAL_VILLAGE:
         MapName = "NV"
         return
+    if getCurrentMap() == Map.NEW_JUNK_CITY:
+        MapName = "NJ"
+        return
     if getCurrentMap() == Map.NEW_QUEEN_STREET:
         MapName = "NQ"
         return
@@ -219,8 +238,24 @@ rule "Start - Maps (Identifier)":
     if getCurrentMap() == Map.ROUTE66:
         MapName = "R6"
         return
+    if getCurrentMap() == Map.SAMOA:
+        #Downtown
+        if getCurrentObjective() == 0:
+            MapName = "SD"
+            return
+        #Lava (volcano)
+        if getCurrentObjective() == 2:
+            MapName = "SL"
+            return
+        #Beach
+        if getCurrentObjective() == 1:
+            MapName = "SB"
+            return
     if getCurrentMap() == Map.SHAMBALI_MONASTERY:
         MapName = "SM"
+        return
+    if getCurrentMap() == Map.SURAVASA:
+        MapName = "SV"
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         MapName = "TA"
@@ -237,6 +272,22 @@ rule "Start - Maps (Season 1)":
     @Condition Season == 0
     
     Checkpoint = false
+    if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
+        #Icebreaker
+        if getCurrentObjective() == 0:
+            PosStart = vect(210.355, -10, -243.085)
+            PosFinish = vect(367.933, -10, -239.742)
+            return
+        #Labs
+        if getCurrentObjective() == 1:
+            PosStart = vect(341.613, 45.5, 168.55)
+            PosFinish = vect(187.745, 43, 175.131)
+            return
+        #Sublevel
+        if getCurrentObjective() == 2:
+            PosStart = vect(-104.816, -153, 131.51)
+            PosFinish = vect(-68.91, -153, -14.468)
+            return
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(3, -0.1, 21.5)
         PosFinish = vect(-122.14, -0.5, 110.64)
@@ -282,10 +333,10 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(-109.68, -1, -56.06)
         PosFinish = vect(94.7, -1.1, -84.88)
         return
-    if getCurrentMap() == Map.HANAMURA:
+    /*if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(57, -1.87, 33.65)
         PosFinish = vect(-10.57, -1.02, -84.71)
-        return
+        return*/
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(-95.37, 4, -93.5)
         PosFinish = vect(140.14, 5.9, -46.38)
@@ -354,6 +405,11 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(-191, -98.23, 60)
         PosFinish = vect(-176.5, -99.5, -71)
         return
+    if getCurrentMap() == Map.NEW_JUNK_CITY:
+        PosStart = vect(33.458, 6, 108.106)
+        PosFinish = vect(29.696, 5, -110.794)
+        PosBarrier = [vect(33.445, 14, 108.136)]
+        return
     if getCurrentMap() == Map.NEW_QUEEN_STREET:
         PosStart = vect(77.5, 8, -55.34)
         PosFinish = vect(-79, 7.9, 4.4)
@@ -394,9 +450,29 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(38.5, 5.5, 36.5)
         PosFinish = vect(-92.49, 6.4, -23.25)
         return
+    if getCurrentMap() == Map.SAMOA:
+        #Beach
+        if getCurrentObjective() == 1:
+            PosStart = vect(-420.555, 3, -130.698)
+            PosFinish = vect(-258.518, 8, -83.803)
+            return
+        #Downtown
+        if getCurrentObjective() == 0:
+            PosStart = vect(296.303, 12, -234.158)
+            PosFinish = vect(158.955, 10, -225.984)
+            return
+        #Volcano
+        if getCurrentObjective() == 2:
+            PosStart = vect(86.774, 340.5, 381.732)
+            PosFinish = vect(-40.694, 340, 369.567)
+            return
     if getCurrentMap() == Map.SHAMBALI_MONASTERY:
         PosStart = vect(20.75, 9, -14.83)
         PosFinish = vect(-22.46, 30.15, 202.14)
+        return
+    if getCurrentMap() == Map.SURAVASA:
+        PosStart = vect(19.24, 4, 92.476)
+        PosFinish = vect(-26.934, 2, -87.188)
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-1, -2.32, -9)
@@ -416,6 +492,23 @@ rule "Start - Maps (Season 2)":
     @Condition Season == 1
     
     Checkpoint = false
+    if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
+        #Icebreaker
+        if getCurrentObjective() == 0:
+            PosStart = vect(357.027, -9.7, -246.979)
+            PosFinish = vect(257.034, -15, -197.215)
+            return
+        #Labs
+        if getCurrentObjective() == 1:
+            PosStart = vect(182.047, 46.5, 191.41)
+            PosFinish = vect(355.296, 44, 174.37)
+            return
+        #Sublevel
+        if getCurrentObjective() == 2:
+            PosStart = vect(-80.78, -155.4, -2.941)
+            PosFinish = vect(-56.828, -152, 121.799)
+            PosBarrier = [vect(-80.534, -146, -2.941)]
+            return
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(-121.57, -0.4, 116.2)
         PosFinish = vect(3, -0.2, 21.5)
@@ -460,10 +553,10 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(92.82, -1, -85.71)
         PosFinish = vect(-106.63, -1.1, -58.81)
         return
-    if getCurrentMap() == Map.HANAMURA:
+    /*if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(-6.786, -0.92, -84.457)
         PosFinish = vect(58, -2.1, 34)
-        return
+        return*/
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(138.376, 6, -34.025)
         PosFinish = vect(-98, 3.9, -93)
@@ -532,6 +625,10 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(-182, -99.08, -74.5)
         PosFinish = vect(-191, -98.7, 60)
         return
+    if getCurrentMap() == Map.NEW_JUNK_CITY:
+        PosStart = vect(1.643, 4, -87.097)
+        PosFinish = vect(-24.061, 5, 107.724)
+        return
     if getCurrentMap() == Map.NEW_QUEEN_STREET:
         PosStart = vect(-82.67, 8.21, 3.75)
         PosFinish = vect(76.21, 7.9, -46.4)
@@ -572,9 +669,29 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(-89.63, 6.5, -29.58)
         PosFinish = vect(38.5, 4.6, 36.5)
         return
+    if getCurrentMap() == Map.SAMOA:
+        #Beach
+        if getCurrentObjective() == 1:
+            PosStart = vect(-239.457, 3.4, -130.615)
+            PosFinish = vect(-408.311, 3, -125.042)
+            return
+        #Downtown
+        if getCurrentObjective() == 0:
+            PosStart = vect(172.891, 12, -233.684)
+            PosFinish = vect(316.276, -5, -253.42)
+            return
+        #Volcano
+        if getCurrentObjective() == 2:
+            PosStart = vect(-31.177, 340.5, 382.058)
+            PosFinish = vect(72.045, 340, 419.6)
+            return
     if getCurrentMap() == Map.SHAMBALI_MONASTERY:
         PosStart = vect(-24, 30.65, 200.22)
         PosFinish = vect(16, 7.9, -10)
+        return
+    if getCurrentMap() == Map.SURAVASA:
+        PosStart = vect(-15.326, 1.5, -100.684)
+        PosFinish = vect(-0.008, 2, 122.674)
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-11.096, 4.66, 110.46)
@@ -592,8 +709,28 @@ rule "Start - Maps (Season 2)":
 
 rule "Start - Maps (Season 3)":
     @Condition Season == 2
-    
+
     Checkpoint = true
+    if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
+        #Icebreaker
+        if getCurrentObjective() == 0:
+            PosStart = vect(280.745, -11, -267.232)
+            PosCheckpoint = [vect(283.976, -13, -200.454)]
+            PosFinish = vect(345.558, -10, -250.369)
+            PosBarrier = [vect(280.745, -4, -267.232)]
+            return
+        #labs
+        if getCurrentObjective() == 1:
+            PosStart = vect(299.529, 44, 133.918)
+            PosCheckpoint = [vect(278.517, 39, 185.735)]
+            PosFinish = vect(255.2, 40, 147.868)
+            return
+        #Sublevel
+        if getCurrentObjective() == 2:
+            PosStart = vect(-56.838, -150.2, 121.766)
+            PosCheckpoint = [vect(-105.367, -160, 46.553)]
+            PosFinish = vect(-38.556, -163, 60.279)
+            return
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(23.31, 2, 79.2)
         PosCheckpoint = [vect(-72.57, 6.5, 105.2)]
@@ -648,11 +785,11 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(12.23, -6.1, -75.73)]
         PosFinish = vect(106, -1.1, -58.6)
         return
-    if getCurrentMap() == Map.HANAMURA:
+    /*if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(55.024, -1.92, 41.766)
         PosCheckpoint = [vect(76.329, -3.55, 97.421)]
         PosFinish = vect(91.752, -2.1, 17.33)
-        return
+        return*/
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(100.75, 2.14, -83.53)
         PosCheckpoint = [vect(6, 5.7, -75)]
@@ -738,6 +875,11 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(-220, -94.1, 0)]
         PosFinish = vect(-207, -87.1, -44)
         return
+    if getCurrentMap() == Map.NEW_JUNK_CITY:
+        PosStart = vect(5.111, 0, -41.202)
+        PosCheckpoint = [vect(-85.446, -2, -26.642)]
+        PosFinish = vect(-2.294, 0, -85.973)
+        return
     if getCurrentMap() == Map.NEW_QUEEN_STREET:
         PosStart = vect(-59.69, 8.02, -1.29)
         PosCheckpoint = [vect(0, 1.9, -42.2)]
@@ -788,10 +930,34 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(16, 7.8, -23)]
         PosFinish = vect(51, 0.1, 45)
         return
+    if getCurrentMap() == Map.SAMOA:
+        #Beach
+        if getCurrentObjective() == 1:
+            PosStart = vect(-265.359, 7.3, -89.839)
+            PosCheckpoint = [vect(-352.723, 2, -133.535)]
+            PosFinish = vect(-377.014, 9, -76.371)
+            return
+        #Downtown
+        if getCurrentObjective() == 0:
+            PosStart = vect(233.765, 15, -232.2)
+            PosCheckpoint = [vect(225.595, 7, -284.959)]
+            PosFinish = vect(270.602, 12, -219.317)
+            return
+        #Volcano
+        if getCurrentObjective() == 2:
+            PosStart = vect(26.362, 344.4, 398.531)
+            PosCheckpoint = [vect(3.945, 340, 369.301)]
+            PosFinish = vect(89.777, 340, 372.38)
+            return
     if getCurrentMap() == Map.SHAMBALI_MONASTERY:
         PosStart = vect(25, 14, 63.75)
         PosCheckpoint = [vect(-60, 22.9, 126)]
         PosFinish = vect(12.36, 26.9, 117.14)
+        return
+    if getCurrentMap() == Map.SURAVASA:
+        PosStart = vect(82.83, 5, -20.14)
+        PosCheckpoint = [vect(-38, 0, -103)]
+        PosFinish = vect(-28.121, 3, 0.131)
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-58.89, 6.51, 44.81)
@@ -813,6 +979,28 @@ rule "Start - Maps (Season 3)":
 rule "Start - Maps (Season 4)":
     @Condition Season == 3
     
+    if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
+        #Icebreaker
+        if getCurrentObjective() == 0:
+            PosStart = vect(356.937, -10, -247.13)
+            PosCheckpoint = [vect(284.074, -13, -199.044)]
+            PosFinish = vect(214.406, -11, -244.933)
+            Checkpoint = true
+            return
+        #labs
+        if getCurrentObjective() == 1:
+            PosStart = vect(202.923, 43.9, 160.495)
+            PosCheckpoint = [vect(278.651, 40, 188.052)]
+            PosFinish = vect(303.159, 47.5, 146.37)
+            Checkpoint = true
+            return
+        #Sublevel
+        if getCurrentObjective() == 2:
+            PosStart = vect(-124.401, -152.5, 55.646)
+            PosCheckpoint = [vect(-66.245, -156, 46.512)]
+            PosFinish = vect(-72.542, -153, 156.563)
+            Checkpoint = true
+            return
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(52.118, -0.81, -7.795)
         PosCheckpoint = [vect(53.816, -6.5, -87.717)]
@@ -876,12 +1064,12 @@ rule "Start - Maps (Season 4)":
         PosFinish = vect(-62.63, -6.1, -82.11)
         Checkpoint = true
         return
-    if getCurrentMap() == Map.HANAMURA:
+    /*if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(85.867, -2.02, 16.524)
         PosCheckpoint = [vect(64.123, -3.4, 84.188)]
         PosFinish = vect(30.542, 1.9, 40.845)
         Checkpoint = true
-        return
+        return*/
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(-107.29, 3.85, -57.71)
         PosFinish = vect(65.054, 10.82, -83.635)
@@ -982,6 +1170,12 @@ rule "Start - Maps (Season 4)":
         PosFinish = vect(-147.782, -92.5, 62.105)
         Checkpoint = true
         return
+    if getCurrentMap() == Map.NEW_JUNK_CITY:
+        PosStart = vect(64.873, 0, 102.267)
+        PosCheckpoint = [vect(-23.902, 0, 67.831)]
+        PosFinish = vect(-31.008, 0, 3.66)
+        Checkpoint = true
+        return
     if getCurrentMap() == Map.NEW_QUEEN_STREET:
         PosStart = vect(-60.9, 8, -40)
         PosCheckpoint = [vect(0, -0.2, 10.5)]
@@ -1040,10 +1234,38 @@ rule "Start - Maps (Season 4)":
         PosFinish = vect(-100.763, 8.4, 8.128)
         Checkpoint = true
         return
+    if getCurrentMap() == Map.SAMOA:
+        #Beach
+        if getCurrentObjective() == 1:
+            PosStart = vect(-420.555, 3.2, -130.697)
+            PosCheckpoint = [vect(-329.987, 8, -75.654)]
+            PosFinish = vect(-241.798, 6, -89.416)
+            Checkpoint = true
+            return
+        #Downtown
+        if getCurrentObjective() == 0:
+            PosStart = vect(154.841, 11, -245.887)
+            PosCheckpoint = [vect(210.433, 4, -277.317)]
+            PosFinish = vect(300.02, 10, -210.518)
+            Checkpoint = true
+            return
+        #Volcano
+        if getCurrentObjective() == 2:
+            PosStart = vect(-23.621, 340.4, 404.727)
+            PosCheckpoint = [vect(-7.638, 343, 350.267)]
+            PosFinish = vect(79.726, 338, 395.268)
+            Checkpoint = true
+            return
     if getCurrentMap() == Map.SHAMBALI_MONASTERY:
         PosStart = vect(-40.68, 31, 213.38)
         PosCheckpoint = [vect(6.42, 18.8, 90)]
         PosFinish = vect(-14.75, 7.9, -5.12)
+        Checkpoint = true
+        return
+    if getCurrentMap() == Map.SURAVASA:
+        PosStart = vect(-36.962, 1, -80.842)
+        PosCheckpoint = [vect(14.149, 3, -20.876)]
+        PosFinish = vect(-53.471, 3, 103.788)
         Checkpoint = true
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
@@ -1069,6 +1291,26 @@ rule "Start - Maps (Season 5)":
     @Condition Season == 4
     
     Checkpoint = true
+    if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
+        #Icebreaker
+        if getCurrentObjective() == 0:
+            PosStart = vect(283.944, -11, -247.474)
+            PosCheckpoint = [vect(225.535, -11, -245.627), vect(240.373, -18, -199.518), vect(342.476, -13, -233.311)]
+            PosFinish = vect(284.001, -14, -222.088)
+            return
+        #labs
+        if getCurrentObjective() == 1:
+            PosStart = vect(270, 37.8, 177.329)
+            PosCheckpoint = [vect(354.446, 43, 168.863), vect(203.926, 42, 187.222)]
+            PosFinish = vect(270.025, 38, 153.709)
+            return
+        #Sublevel
+        if getCurrentObjective() == 2:
+            PosStart = vect(-53.982, -154.5, 59.997)
+            PosCheckpoint = [vect(-63.283, -153, -0.486), vect(-95.097, -155, -11.09), vect(-77.397, -162, 59.954), vect(-69.847, -153, 128.858)]
+            PosFinish = vect(-127.491, -154, 60.037)
+            PosBarrier = [vect(-53.982, -147, 59.997)]
+            return
     if getCurrentMap() == Map.BLIZZ_WORLD:
         PosStart = vect(-46.717, 4.7, 86.88)
         PosCheckpoint = [vect(0.922, -1, 107.766), vect(2.998, -4.2, -18.814), vect(-122.15, -0.3, 110.5)]
@@ -1123,11 +1365,11 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(-73.24, -5, -76.88), vect(-75.95, -3.1, -36.09), vect(73.24, -5, -76.88), vect(101.26, -1.1, -57.19)]
         PosFinish = vect(0, -0.1, -29.48)
         return
-    if getCurrentMap() == Map.HANAMURA:
+    /*if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(11.329, 0, -24.036)
         PosCheckpoint = [vect(66.147, -2, -3.121), vect(-23.977, -0.95, -72.131)]
         PosFinish = vect(12.963, 6.7, -23.213)
-        return
+        return*/
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(25.471, 6, -70.081)
         PosCheckpoint = [vect(138.605, 4.8, -25.422), vect(107.194, 1.2, -26.704), vect(-30.023, 9.9, -98.164), vect(-84.714, 3.8, -55.305)]
@@ -1213,6 +1455,11 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(-171.284, -99.3, -62.016), vect(-155.566, -91.2, 45.98), vect(-186.996, -96.6, 72.119)]
         PosFinish = vect(-181.606, -88, 0)
         return
+    if getCurrentMap() == Map.NEW_JUNK_CITY:
+        PosStart = vect(19.679, 4, 0.009)
+        PosCheckpoint = [vect(-71.89, 0, 40.001), vect(-3.033, 0, 90.177), vect(33.249, 0, 43.03), vect(62.5, -3, -43.066), vect(47.958, 0, -85.671), vect(-67.688, 0, -40.294)]
+        PosFinish = vect(-27.9, 0, 0.036)
+        return
     if getCurrentMap() == Map.NEW_QUEEN_STREET:
         PosStart = vect(0, 0, 6.42)
         PosCheckpoint = [vect(0, 1.9, -36.5), vect(52.54, 3.9, -46.67), vect(82.98, 7.9, -2.8), vect(-82, 7.9, -8.5)]
@@ -1263,10 +1510,34 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(-43.069, 3.3, 5.652), vect(-68.091, 6.4, -14.181), vect(44.356, 2.3, 62.423)]
         PosFinish = vect(-23.554, 3.2, -15.238)
         return
+    if getCurrentMap() == Map.SAMOA:
+        #Beach
+        if getCurrentObjective() == 1:
+            PosStart = vect(-330.056, 3, -119.495)
+            PosCheckpoint = [vect(-394.669, 5, -114.272), vect(-391.203, 7, -84.535), vect(-257.359, 10, -94.679), vect(-282.716, 0, -132.766)]
+            PosFinish = vect(-329.992, 6, -66.685)
+            return
+        #Downtown
+        if getCurrentObjective() == 0:
+            PosStart = vect(233.772, 15, -232.166)
+            PosCheckpoint = [vect(213.794, 4, -279.019), vect(172.214, 8, -251.764), vect(302.387, 10, -237.014)]
+            PosFinish = vect(234.134, 6, -256.518)
+            return
+        #Volcano
+        if getCurrentObjective() == 2:
+            PosStart = vect(27.564, 340.5, 368.459)
+            PosCheckpoint = [vect(-23.376, 340, 393.926), vect(27.567, 343, 396.274), vect(78.624, 340, 393.98)]
+            PosFinish = vect(27.727, 335, 359.321)
+            return
     if getCurrentMap() == Map.SHAMBALI_MONASTERY:
         PosStart = vect(-33.63, 22.16, 105.5)
         PosCheckpoint = [vect(-14.65, 30, 196.4), vect(-59.62, 25.9, 149.41), vect(3.13, 24.9, 115.18), vect(22.07, 12.5, 53.02), vect(-19.7, 9.8, 34.6)]
         PosFinish = vect(-16.4, 12.5, 103)
+        return
+    if getCurrentMap() == Map.SURAVASA:
+        PosStart = vect(-42, 0, 0)
+        PosCheckpoint = [vect(-57.401, -1, 41.977), vect(0.398, 3, 106.895), vect(59.326, 4, 42.034), vect(85.321, 1, -41.919), vect(-9.241, 2, -94.347), vect(-92.491, 3, -56.881)]
+        PosFinish = vect(27.3, 2, 0)
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         PosStart = vect(-31.404, 1.3, 27.937)
@@ -1737,7 +2008,7 @@ rule "Death":
 rule "Barrier":
     @Event eachPlayer
     @Condition eventPlayer.Mode == 0
-    @Condition any([distance(eventPlayer, barrier) <= 5 for barrier in PosBarrier])
+    @Condition any([distance(eventPlayer, barrier) <= 5 or distance(eventPlayer.getEyePosition(), barrier) <= 5 for barrier in PosBarrier])
 
     async(Respawn, AsyncBehavior.NOOP)
 
