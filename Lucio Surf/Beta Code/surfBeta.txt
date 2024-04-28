@@ -383,9 +383,9 @@ rule ("Start - Maps (Identifier)") {
                 Set Global Variable(MapName, Custom String("SD", Null, Null, Null));
                 Abort;
             End;
-            "Lava (volcano)"
+            "volcano"
             If(Compare(Objective Index, ==, 2));
-                Set Global Variable(MapName, Custom String("SL", Null, Null, Null));
+                Set Global Variable(MapName, Custom String("SV", Null, Null, Null));
                 Abort;
             End;
             "Beach"
@@ -399,7 +399,7 @@ rule ("Start - Maps (Identifier)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Suravasa)));
-            Set Global Variable(MapName, Custom String("SV", Null, Null, Null));
+            Set Global Variable(MapName, Custom String("SA", Null, Null, Null));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Temple of Anubis)));
@@ -428,8 +428,8 @@ rule ("Start - Maps (Season 1)") {
         If(Compare(Current Map, ==, Map(Antarctic Peninsula)));
             "Icebreaker"
             If(Compare(Objective Index, ==, 0));
-                Set Global Variable(PosStart, Vector(210.355, -10, -243.085));
-                Set Global Variable(PosFinish, Vector(367.933, -10, -239.742));
+                Set Global Variable(PosStart, Vector(210.355, -9.86, -243.085));
+                Set Global Variable(PosFinish, Vector(358.92, -10.1, -225.01));
                 Abort;
             End;
             "Labs"

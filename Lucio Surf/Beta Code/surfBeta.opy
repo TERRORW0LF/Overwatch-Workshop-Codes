@@ -243,9 +243,9 @@ rule "Start - Maps (Identifier)":
         if getCurrentObjective() == 0:
             MapName = "SD"
             return
-        #Lava (volcano)
+        #volcano
         if getCurrentObjective() == 2:
-            MapName = "SL"
+            MapName = "SV"
             return
         #Beach
         if getCurrentObjective() == 1:
@@ -255,7 +255,7 @@ rule "Start - Maps (Identifier)":
         MapName = "SM"
         return
     if getCurrentMap() == Map.SURAVASA:
-        MapName = "SV"
+        MapName = "SA"
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
         MapName = "TA"
@@ -275,8 +275,8 @@ rule "Start - Maps (Season 1)":
     if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
         #Icebreaker
         if getCurrentObjective() == 0:
-            PosStart = vect(210.355, -10, -243.085)
-            PosFinish = vect(367.933, -10, -239.742)
+            PosStart = vect(210.355, -9.86, -243.085)
+            PosFinish = vect(358.92, -10.1, -225.01)
             return
         #Labs
         if getCurrentObjective() == 1:
