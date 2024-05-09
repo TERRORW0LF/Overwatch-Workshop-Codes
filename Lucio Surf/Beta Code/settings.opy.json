@@ -16,45 +16,12 @@
     },
     "gamemodes": {
         "ffa": {
-            "enabledMaps": [
-                "chateauGuillard",
-                "iliosLighthouse",
-                "iliosRuins",
-                "iliosWell",
-                "kanezaka",
-                "lijiangControlCenter",
-                "lijiangGarden",
-                "lijiangNightMarket",
-                "malevento",
-                "nepalSanctum",
-                "nepalShrine",
-                "nepalVillage",
-                "oasisCityCenter",
-                "oasisGardens",
-                "oasisUniversity",
-                "petra"
-            ],
+            "enabledMaps": [],
             "enableSelfInitiatedRespawn": false
         },
         "skirmish": {
-            "disabledMaps": [
-                "blizzWorld",
-                "blizzWorldWinter",
-                "eichenwaldeHalloween",
-                "hollywoodHalloween",
-                "ilios",
-                "kingsRowWinter",
-                "lijiangTower",
-                "lijiangTowerLny",
-                "nepal",
-                "oasis",
-                "rialto",
-                "workshopChamber",
-                "workshopExpanse",
-                "workshopExpanseNight",
-                "workshopGreenScreen",
-                "workshopIsland",
-                "workshopIslandNight"
+            "enabledMaps": [
+                "antarcticPeninsula"
             ]
         },
         "general": {

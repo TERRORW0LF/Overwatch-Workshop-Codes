@@ -86,13 +86,13 @@ rule "Debug (Player)":
 rule "Workshop Settings":
     SeasonArr = []
     SeasonArr[0] = 0 if createWorkshopSetting(bool, "Season", "Season 1", true, 0) else -1
-    SeasonArr[1] = 1 if createWorkshopSetting(bool, "Season", "Season 2", true, 1) else -1
-    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", true, 2) else -1
-    SeasonArr[3] = 3 if createWorkshopSetting(bool, "Season", "Season 4", true, 3) else -1
+    SeasonArr[1] = 1 if createWorkshopSetting(bool, "Season", "Season 2", false, 1) else -1
+    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", false, 2) else -1
+    SeasonArr[3] = 3 if createWorkshopSetting(bool, "Season", "Season 4", false, 3) else -1
     SeasonArr[4] = 4 if createWorkshopSetting(bool, "Season", "Season 5", false, 4) else -1
     Season = random.choice([season for season in SeasonArr if season >= 0])
     CategoryArr = []
-    CategoryArr[0] = 0 if createWorkshopSetting(bool, "Default Category", "Standard", true, 0) else -1
+    CategoryArr[0] = 0 if createWorkshopSetting(bool, "Default Category", "Standard", false, 0) else -1
     CategoryArr[1] = 1 if createWorkshopSetting(bool, "Default Category", "Gravspeed", true, 1) else -1
     Category = random.choice([category for category in CategoryArr if category >= 0])
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
@@ -148,12 +148,12 @@ rule "Start - Maps (Identifier)":
     if getCurrentMap() == Map.ESPERANCA:
         MapName = "ER"
         return
-    /*if getCurrentMap() == Map.HANAMURA:
+    if getCurrentMap() == Map.HANAMURA:
         MapName = "HM"
-        return*/
-    if getCurrentMap() == Map.HANAOKA:
-        MapName = "HO"
         return
+    /*if getCurrentMap() == Map.HANAOKA:
+        MapName = "HO"
+        return*/
     if getCurrentMap() == Map.HAVANA:
         MapName = "HV"
         return
@@ -333,10 +333,10 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(-109.68, -1, -56.06)
         PosFinish = vect(94.7, -1.1, -84.88)
         return
-    /*if getCurrentMap() == Map.HANAMURA:
+    if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(57, -1.87, 33.65)
         PosFinish = vect(-10.57, -1.02, -84.71)
-        return*/
+        return
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(-95.37, 4, -93.5)
         PosFinish = vect(140.14, 5.9, -46.38)

@@ -23,46 +23,14 @@ settings
 		{
 			enabled maps
 			{
-				Château Guillard
-				Ilios Lighthouse
-				Ilios Ruins
-				Ilios Well
-				Kanezaka
-				Lijiang Control Center
-				Lijiang Garden
-				Lijiang Night Market
-				Malevento
-				Nepal Sanctum
-				Nepal Shrine
-				Nepal Village
-				Oasis City Center
-				Oasis Gardens
-				Oasis University
-				Petra
 			}
 			Self Initiated Respawn: Off
 		}
 		Skirmish
 		{
-			disabled maps
+			enabled maps
 			{
-				Blizzard World
-				Blizzard World Winter
-				Eichenwalde Halloween
-				Hollywood Halloween
-				Ilios
-				King's Row Winter
-				Lijiang Tower
-				Lijiang Tower Lunar New Year
-				Nepal
-				Oasis
-				Rialto
-				Workshop Chamber
-				Workshop Expanse
-				Workshop Expanse Night
-				Workshop Green Screen
-				Workshop Island
-				Workshop Island Night
+				Antarctic Peninsula
 			}
 		}
 		General
@@ -180,13 +148,13 @@ rule ("Workshop Settings") {
     actions {
         Set Global Variable(SeasonArr, Empty Array);
         Set Global Variable At Index(SeasonArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 1", Null, Null, Null), True, 0), 0, -1));
-        Set Global Variable At Index(SeasonArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 2", Null, Null, Null), True, 1), 1, -1));
-        Set Global Variable At Index(SeasonArr, 2, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 3", Null, Null, Null), True, 2), 2, -1));
-        Set Global Variable At Index(SeasonArr, 3, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 4", Null, Null, Null), True, 3), 3, -1));
+        Set Global Variable At Index(SeasonArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 2", Null, Null, Null), False, 1), 1, -1));
+        Set Global Variable At Index(SeasonArr, 2, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 3", Null, Null, Null), False, 2), 2, -1));
+        Set Global Variable At Index(SeasonArr, 3, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 4", Null, Null, Null), False, 3), 3, -1));
         Set Global Variable At Index(SeasonArr, 4, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 5", Null, Null, Null), False, 4), 4, -1));
         Set Global Variable(Season, Random Value In Array(Filtered Array(Global.SeasonArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(CategoryArr, Empty Array);
-        Set Global Variable At Index(CategoryArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category", Null, Null, Null), Custom String("Standard", Null, Null, Null), True, 0), 0, -1));
+        Set Global Variable At Index(CategoryArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category", Null, Null, Null), Custom String("Standard", Null, Null, Null), False, 0), 0, -1));
         Set Global Variable At Index(CategoryArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null), True, 1), 1, -1));
         Set Global Variable(Category, Random Value In Array(Filtered Array(Global.CategoryArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
@@ -261,8 +229,8 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("ER", Null, Null, Null));
             Abort;
         End;
-        If(Compare(Current Map, ==, Map(Hanaoka)));
-            Set Global Variable(MapName, Custom String("HO", Null, Null, Null));
+        If(Compare(Current Map, ==, Map(Hanamura)));
+            Set Global Variable(MapName, Custom String("HM", Null, Null, Null));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Havana)));
@@ -499,6 +467,11 @@ rule ("Start - Maps (Season 1)") {
         If(Compare(Current Map, ==, Map(Esperança)));
             Set Global Variable(PosStart, Vector(-109.68, -1, -56.06));
             Set Global Variable(PosFinish, Vector(94.7, -1.1, -84.88));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Hanamura)));
+            Set Global Variable(PosStart, Vector(57, -1.87, 33.65));
+            Set Global Variable(PosFinish, Vector(-10.57, -1.02, -84.71));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Havana)));
