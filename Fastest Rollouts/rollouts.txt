@@ -2,15 +2,15 @@ settings
 {
 	main
 	{
-		Description: "Fastest Lucio Rollouts v2.3 | Maintained by TERRORWOLF\nInteract to Reset\nT0H08"
+		Description: "Fastest Lucio Rollouts v2.4 | Maintained by TERRORWOLF\nInteract to Reset\nT0H08"
 		Mode Name: "Lucio Rollouts"
 	}
 	lobby
 	{
 		Map Rotation: After A Game
-		Return To Lobby: Never
 		Max Team 1 Players: 6
 		Max Team 2 Players: 6
+		Return To Lobby: Never
 		Swap Teams After Match: No
 	}
 	modes
@@ -21,7 +21,13 @@ settings
 			{
 				Hanamura Winter
 			}
+			Allow Hero Switching: Off
 			Capture Speed Modifier: 500%
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Kill Cam: Off
+			Kill Feed: Off
+			Respawn As Random Hero: On
 		}
 		Control
 		{
@@ -29,10 +35,25 @@ settings
 			{
 				Lijiang Tower Lunar New Year
 			}
+			Allow Hero Switching: Off
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Kill Cam: Off
+			Kill Feed: Off
+			Respawn As Random Hero: On
 		}
 		Escort
 		{
+			Allow Hero Switching: Off
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Kill Cam: Off
+			Kill Feed: Off
 			Payload Speed Modifier: 500%
+			Respawn As Random Hero: On
+		}
+		Flashpoint
+		{
 		}
 		Hybrid
 		{
@@ -43,16 +64,13 @@ settings
 				Hollywood Halloween
 				King's Row Winter
 			}
-			Capture Speed Modifier: 500%
-			Payload Speed Modifier: 500%
-		}
-		General
-		{
 			Allow Hero Switching: Off
+			Capture Speed Modifier: 500%
 			Game Mode Start: Immediately
 			Hero Limit: Off
 			Kill Cam: Off
 			Kill Feed: Off
+			Payload Speed Modifier: 500%
 			Respawn As Random Hero: On
 		}
 	}
@@ -134,7 +152,7 @@ rule ("Unlock Control Point") {
         Ongoing - Global;
     }
     conditions {
-        Or(Compare(Current Game Mode, ==, Game Mode(Control)), Compare(Current Game Mode, ==, Game Mode(Push))) == True;
+        Or(Or(Compare(Current Game Mode, ==, Game Mode(Control)), Compare(Current Game Mode, ==, Game Mode(Push))), Compare(Current Game Mode, ==, Game Mode(Flashpoint))) == True;
         Is In Setup == False;
         Is Control Mode Point Locked == True;
     }
@@ -183,7 +201,7 @@ rule ("Setup - Global") {
         Ongoing - Global;
     }
     actions {
-        Create HUD Text(All Players(All Teams), Custom String("Fastest Rollouts v2.0", Null, Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, None, Default Visibility);
+        Create HUD Text(All Players(All Teams), Custom String("Fastest Rollouts v2.4", Null, Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, None, Default Visibility);
     }
 }
 
@@ -282,12 +300,12 @@ rule ("Setup - Active Point (Payload)") {
     }
 }
 
-rule ("Setup - Active Point (Control)") {
+rule ("Setup - Active Point (Control | Flashpoint)") {
     event {
         Ongoing - Global;
     }
     conditions {
-        Current Game Mode == Game Mode(Control);
+        Or(Compare(Current Game Mode, ==, Game Mode(Control)), Compare(Current Game Mode, ==, Game Mode(Flashpoint))) == True;
         Is In Setup == False;
     }
     actions {
@@ -500,7 +518,7 @@ rule ("Infinite Match Time") {
     }
     conditions {
         Is Game In Progress == True;
-        Or(Not(Is Control Mode Point Locked), Compare(Current Game Mode, !=, Game Mode(Control))) == True;
+        Or(Not(Is Control Mode Point Locked), And(And(Compare(Current Game Mode, !=, Game Mode(Control)), Compare(Current Game Mode, !=, Game Mode(Flashpoint))), Compare(Current Game Mode, !=, Game Mode(Push)))) == True;
         Match Time < 10;
     }
     actions {

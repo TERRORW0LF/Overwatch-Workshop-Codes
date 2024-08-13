@@ -49,7 +49,7 @@ rule "Skip Prepare Phase":
 
 
 rule "Unlock Control Point":
-    @Condition getCurrentGamemode() == Gamemode.CONTROL or getCurrentGamemode() == Gamemode.PUSH
+    @Condition getCurrentGamemode() == Gamemode.CONTROL or getCurrentGamemode() == Gamemode.PUSH or getCurrentGamemode() == Gamemode.FLASHPOINT
     @Condition not isInSetup()
     @Condition isControlPointLocked()
 
@@ -82,7 +82,7 @@ rule "Setup - Player":
 
 rule "Setup - Global":
 
-    hudHeader(getAllPlayers(), "Fastest Rollouts v2.0", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.NONE)
+    hudHeader(getAllPlayers(), "Fastest Rollouts v2.4", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.NONE)
 
 
 rule "Setup - Active Point (Assault)":
@@ -161,8 +161,8 @@ rule "Setup - Active Point (Payload)":
     ObjectiveInPosition = true
 
 
-rule "Setup - Active Point (Control)":
-    @Condition getCurrentGamemode() == Gamemode.CONTROL
+rule "Setup - Active Point (Control | Flashpoint)":
+    @Condition getCurrentGamemode() == Gamemode.CONTROL or getCurrentGamemode() == Gamemode.FLASHPOINT
     @Condition not isInSetup()
 
     waitUntil(nearestWalkablePosition(getObjectivePosition(getCurrentObjective())) != 0, 9999)
@@ -300,7 +300,7 @@ rule "Velocity Counter (Red)":
 
 rule "Infinite Match Time":
     @Condition isGameInProgress()
-    @Condition not isControlPointLocked() or getCurrentGamemode() != Gamemode.CONTROL
+    @Condition not isControlPointLocked() or (getCurrentGamemode() != Gamemode.CONTROL and getCurrentGamemode() != Gamemode.FLASHPOINT and getCurrentGamemode() != Gamemode.PUSH)
     @Condition getMatchTime() < 10
 
     setMatchTime(Time)

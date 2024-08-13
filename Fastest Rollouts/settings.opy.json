@@ -1,13 +1,13 @@
 {
     "main": {
-        "description": "Fastest Lucio Rollouts v2.3 | Maintained by TERRORWOLF\nInteract to Reset\nT0H08",
+        "description": "Fastest Lucio Rollouts v2.4 | Maintained by TERRORWOLF\nInteract to Reset\nT0H08",
         "modeName": "Lucio Rollouts"
     },
     "lobby": {
         "mapRotation": "afterGame",
-        "returnToLobby": "never",
         "team1Slots": 6,
         "team2Slots": 6,
+        "returnToLobby": "never",
         "swapTeamsAfterMatch": false
     },
     "gamemodes": {
@@ -15,16 +15,35 @@
             "disabledMaps": [
                 "hanamuraWinter"
             ],
-            "captureSpeed%": 500
+            "enableHeroSwitching": false,
+            "captureSpeed%": 500,
+            "gamemodeStartTrigger": "immediately",
+            "heroLimit": "off",
+            "enableKillCam": false,
+            "enableKillFeed": false,
+            "enableRandomHeroes": true
         },
         "control": {
             "disabledMaps": [
                 "lijiangTowerLny"
-            ]
+            ],
+            "enableHeroSwitching": false,
+            "gamemodeStartTrigger": "immediately",
+            "heroLimit": "off",
+            "enableKillCam": false,
+            "enableKillFeed": false,
+            "enableRandomHeroes": true
         },
         "escort": {
-            "payloadSpeed%": 500
+            "enableHeroSwitching": false,
+            "gamemodeStartTrigger": "immediately",
+            "heroLimit": "off",
+            "enableKillCam": false,
+            "enableKillFeed": false,
+            "payloadSpeed%": 500,
+            "enableRandomHeroes": true
         },
+        "flashpoint": {},
         "hybrid": {
             "disabledMaps": [
                 "blizzWorldWinter",
@@ -32,15 +51,13 @@
                 "hollywoodHalloween",
                 "kingsRowWinter"
             ],
-            "captureSpeed%": 500,
-            "payloadSpeed%": 500
-        },
-        "general": {
             "enableHeroSwitching": false,
+            "captureSpeed%": 500,
             "gamemodeStartTrigger": "immediately",
             "heroLimit": "off",
             "enableKillCam": false,
             "enableKillFeed": false,
+            "payloadSpeed%": 500,
             "enableRandomHeroes": true
         }
     },
