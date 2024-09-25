@@ -85,9 +85,9 @@ rule "Debug (Player)":
 #Settings
 rule "Workshop Settings":
     SeasonArr = []
-    SeasonArr[0] = 0 if createWorkshopSetting(bool, "Season", "Season 1", true, 0) else -1
+    SeasonArr[0] = 0 if createWorkshopSetting(bool, "Season", "Season 1", false, 0) else -1
     SeasonArr[1] = 1 if createWorkshopSetting(bool, "Season", "Season 2", false, 1) else -1
-    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", false, 2) else -1
+    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", true, 2) else -1
     SeasonArr[3] = 3 if createWorkshopSetting(bool, "Season", "Season 4", false, 3) else -1
     SeasonArr[4] = 4 if createWorkshopSetting(bool, "Season", "Season 5", false, 4) else -1
     Season = random.choice([season for season in SeasonArr if season >= 0])
@@ -151,9 +151,9 @@ rule "Start - Maps (Identifier)":
     if getCurrentMap() == Map.HANAMURA:
         MapName = "HM"
         return
-    /*if getCurrentMap() == Map.HANAOKA:
+    if getCurrentMap() == Map.HANAOKA:
         MapName = "HO"
-        return*/
+        return
     if getCurrentMap() == Map.HAVANA:
         MapName = "HV"
         return
@@ -276,7 +276,7 @@ rule "Start - Maps (Season 1)":
         #Icebreaker
         if getCurrentObjective() == 0:
             PosStart = vect(210.355, -9.86, -243.085)
-            PosFinish = vect(358.92, -10.1, -225.01)
+            PosFinish = vect(347, -11.6, -226.5)
             return
         #Labs
         if getCurrentObjective() == 1:
@@ -553,10 +553,10 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(92.82, -1, -85.71)
         PosFinish = vect(-106.63, -1.1, -58.81)
         return
-    /*if getCurrentMap() == Map.HANAMURA:
+    if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(-6.786, -0.92, -84.457)
         PosFinish = vect(58, -2.1, 34)
-        return*/
+        return
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(138.376, 6, -34.025)
         PosFinish = vect(-98, 3.9, -93)
@@ -626,7 +626,7 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(-191, -98.7, 60)
         return
     if getCurrentMap() == Map.NEW_JUNK_CITY:
-        PosStart = vect(1.643, 4, -87.097)
+        PosStart = vect(4.7, 4, -84.94)
         PosFinish = vect(-24.061, 5, 107.724)
         return
     if getCurrentMap() == Map.NEW_QUEEN_STREET:
@@ -690,7 +690,7 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(16, 7.9, -10)
         return
     if getCurrentMap() == Map.SURAVASA:
-        PosStart = vect(-15.326, 1.5, -100.684)
+        PosStart = vect(-15.92, 1.57, -100.6)
         PosFinish = vect(-0.008, 2, 122.674)
         return
     if getCurrentMap() == Map.TEMPLE_OF_ANUBIS:
