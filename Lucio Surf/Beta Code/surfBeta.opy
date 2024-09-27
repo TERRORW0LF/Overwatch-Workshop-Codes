@@ -87,8 +87,8 @@ rule "Workshop Settings":
     SeasonArr = []
     SeasonArr[0] = 0 if createWorkshopSetting(bool, "Season", "Season 1", false, 0) else -1
     SeasonArr[1] = 1 if createWorkshopSetting(bool, "Season", "Season 2", false, 1) else -1
-    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", true, 2) else -1
-    SeasonArr[3] = 3 if createWorkshopSetting(bool, "Season", "Season 4", false, 3) else -1
+    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", false, 2) else -1
+    SeasonArr[3] = 3 if createWorkshopSetting(bool, "Season", "Season 4", true, 3) else -1
     SeasonArr[4] = 4 if createWorkshopSetting(bool, "Season", "Season 5", false, 4) else -1
     Season = random.choice([season for season in SeasonArr if season >= 0])
     CategoryArr = []
@@ -728,7 +728,7 @@ rule "Start - Maps (Season 3)":
         #Sublevel
         if getCurrentObjective() == 2:
             PosStart = vect(-56.838, -150.2, 121.766)
-            PosCheckpoint = [vect(-105.367, -160, 46.553)]
+            PosCheckpoint = [vect(-109.85, -152.6, 50)]
             PosFinish = vect(-38.556, -163, 60.279)
             return
     if getCurrentMap() == Map.BLIZZ_WORLD:
@@ -785,11 +785,11 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(12.23, -6.1, -75.73)]
         PosFinish = vect(106, -1.1, -58.6)
         return
-    /*if getCurrentMap() == Map.HANAMURA:
+    if getCurrentMap() == Map.HANAMURA:
         PosStart = vect(55.024, -1.92, 41.766)
         PosCheckpoint = [vect(76.329, -3.55, 97.421)]
         PosFinish = vect(91.752, -2.1, 17.33)
-        return*/
+        return
     if getCurrentMap() == Map.HAVANA:
         PosStart = vect(100.75, 2.14, -83.53)
         PosCheckpoint = [vect(6, 5.7, -75)]
@@ -933,7 +933,7 @@ rule "Start - Maps (Season 3)":
     if getCurrentMap() == Map.SAMOA:
         #Beach
         if getCurrentObjective() == 1:
-            PosStart = vect(-265.359, 7.3, -89.839)
+            PosStart = vect(-265.53, 7.2, -92.18)
             PosCheckpoint = [vect(-352.723, 2, -133.535)]
             PosFinish = vect(-377.014, 9, -76.371)
             return
@@ -955,7 +955,7 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(12.36, 26.9, 117.14)
         return
     if getCurrentMap() == Map.SURAVASA:
-        PosStart = vect(82.83, 5, -20.14)
+        PosStart = vect(82.47, 4.75, -20.68)
         PosCheckpoint = [vect(-38, 0, -103)]
         PosFinish = vect(-28.121, 3, 0.131)
         return

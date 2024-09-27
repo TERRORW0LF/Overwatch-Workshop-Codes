@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.11b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
+		Description: "Lucio Surf v5.12b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
 		Mode Name: "Lucio Surf Beta"
 	}
 	lobby
@@ -149,8 +149,8 @@ rule ("Workshop Settings") {
         Set Global Variable(SeasonArr, Empty Array);
         Set Global Variable At Index(SeasonArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 1", Null, Null, Null), False, 0), 0, -1));
         Set Global Variable At Index(SeasonArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 2", Null, Null, Null), False, 1), 1, -1));
-        Set Global Variable At Index(SeasonArr, 2, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 3", Null, Null, Null), True, 2), 2, -1));
-        Set Global Variable At Index(SeasonArr, 3, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 4", Null, Null, Null), False, 3), 3, -1));
+        Set Global Variable At Index(SeasonArr, 2, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 3", Null, Null, Null), False, 2), 2, -1));
+        Set Global Variable At Index(SeasonArr, 3, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 4", Null, Null, Null), True, 3), 3, -1));
         Set Global Variable At Index(SeasonArr, 4, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 5", Null, Null, Null), False, 4), 4, -1));
         Set Global Variable(Season, Random Value In Array(Filtered Array(Global.SeasonArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(CategoryArr, Empty Array);
@@ -971,7 +971,7 @@ rule ("Start - Maps (Season 3)") {
             "Sublevel"
             If(Compare(Objective Index, ==, 2));
                 Set Global Variable(PosStart, Vector(-56.838, -150.2, 121.766));
-                Set Global Variable(PosCheckpoint, Array(Vector(-105.367, -160, 46.553)));
+                Set Global Variable(PosCheckpoint, Array(Vector(-109.85, -152.6, 50)));
                 Set Global Variable(PosFinish, Vector(-38.556, -163, 60.279));
                 Abort;
             End;
@@ -1039,6 +1039,12 @@ rule ("Start - Maps (Season 3)") {
             Set Global Variable(PosStart, Vector(-39.86, -2, -26.51));
             Set Global Variable(PosCheckpoint, Array(Vector(12.23, -6.1, -75.73)));
             Set Global Variable(PosFinish, Vector(106, -1.1, -58.6));
+            Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Hanamura)));
+            Set Global Variable(PosStart, Vector(55.024, -1.92, 41.766));
+            Set Global Variable(PosCheckpoint, Array(Vector(76.329, -3.55, 97.421)));
+            Set Global Variable(PosFinish, Vector(91.752, -2.1, 17.33));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Havana)));
@@ -1212,7 +1218,7 @@ rule ("Start - Maps (Season 3)") {
         If(Compare(Current Map, ==, Map(Samoa)));
             "Beach"
             If(Compare(Objective Index, ==, 1));
-                Set Global Variable(PosStart, Vector(-265.359, 7.3, -89.839));
+                Set Global Variable(PosStart, Vector(-265.53, 7.2, -92.18));
                 Set Global Variable(PosCheckpoint, Array(Vector(-352.723, 2, -133.535)));
                 Set Global Variable(PosFinish, Vector(-377.014, 9, -76.371));
                 Abort;
@@ -1239,7 +1245,7 @@ rule ("Start - Maps (Season 3)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Suravasa)));
-            Set Global Variable(PosStart, Vector(82.83, 5, -20.14));
+            Set Global Variable(PosStart, Vector(82.47, 4.75, -20.68));
             Set Global Variable(PosCheckpoint, Array(Vector(-38, 0, -103)));
             Set Global Variable(PosFinish, Vector(-28.121, 3, 0.131));
             Abort;
