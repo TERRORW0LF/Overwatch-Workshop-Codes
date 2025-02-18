@@ -1082,7 +1082,7 @@ rule "Start - Maps (Season 4)":
     if MapName == "IW":
         PosStart = vect(-258.986, -0.5, 48.481)
         PosCheckpoint = [vect(-224.969, 5.3, -33.21)]
-        PosFinish = vect(-144.5, -3.5, -83.33)
+        PosFinish = vect(-141.105, 10.5, -87.497)
         Checkpoint = true
         return
     if MapName == "JT":
@@ -1134,7 +1134,7 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         return
     if MapName == "NS":
-        PosStart = vect(107.5, 134, -82.56)
+        PosStart = vect(107.495, 133.1, -73.174)
         PosCheckpoint = [vect(55.295, 129.7, 0.52)]
         PosFinish = vect(102.618, 131.7, 78.165)
         Checkpoint = true
@@ -1445,12 +1445,12 @@ rule "Start - Maps (Season 5)":
         return
     if MapName == "OG":
         PosStart = vect(122.619, 6.27, -228.847)
-        PosCheckpoint = [vect(185.4, 7.9, -203.4), vect(83.077, 5.4, -262.511), vect(120.717, 7.4, -267.995)]
+        PosCheckpoint = [vect(186.331, 8.3, -195.651), vect(83.077, 5.4, -262.511), vect(120.717, 7.4, -267.995)]
         PosFinish = vect(121.375, 11.4, -227.604)
         return
     if MapName == "OU":
         PosStart = vect(-196.495, 15, 0)
-        PosCheckpoint = [vect(-196.1, 16.9, 57.72), vect(-171.972, 14.9, -44.885), vect(-207.617, 17.9, -62.585)]
+        PosCheckpoint = [vect(-188.089, 19.9, 115.294), vect(-171.972, 14.9, -44.885), vect(-207.617, 17.9, -62.585)]
         PosFinish = vect(-202.067, 18.9, -0.002)
         return
     if MapName == "PI":
