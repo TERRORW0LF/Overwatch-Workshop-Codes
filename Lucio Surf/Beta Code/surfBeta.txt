@@ -23,14 +23,29 @@ settings
 		{
 			enabled maps
 			{
+				Château Guillard
+				Kanezaka
+				Malevento
+				Petra
 			}
 			Self Initiated Respawn: Off
 		}
 		Skirmish
 		{
-			enabled maps
+			disabled maps
 			{
-				Antarctic Peninsula
+				Blizzard World Winter
+				Eichenwalde Halloween
+				Hanamura Winter
+				Hollywood Halloween
+				King's Row Winter
+				Lijiang Tower Lunar New Year
+				Workshop Chamber
+				Workshop Expanse
+				Workshop Expanse Night
+				Workshop Green Screen
+				Workshop Island
+				Workshop Island Night
 			}
 		}
 		General
@@ -149,9 +164,9 @@ rule ("Workshop Settings") {
     }
     actions {
         Set Global Variable(SeasonArr, Empty Array);
-        Set Global Variable At Index(SeasonArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 1", Null, Null, Null), False, 0), 0, -1));
-        Set Global Variable At Index(SeasonArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 2", Null, Null, Null), False, 1), 1, -1));
-        Set Global Variable At Index(SeasonArr, 2, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 3", Null, Null, Null), False, 2), 2, -1));
+        Set Global Variable At Index(SeasonArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 1", Null, Null, Null), True, 0), 0, -1));
+        Set Global Variable At Index(SeasonArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 2", Null, Null, Null), True, 1), 1, -1));
+        Set Global Variable At Index(SeasonArr, 2, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 3", Null, Null, Null), True, 2), 2, -1));
         Set Global Variable At Index(SeasonArr, 3, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 4", Null, Null, Null), True, 3), 3, -1));
         Set Global Variable At Index(SeasonArr, 4, If-Then-Else(Workshop Setting Toggle(Custom String("Season", Null, Null, Null), Custom String("Season 5", Null, Null, Null), False, 4), 4, -1));
         Set Global Variable(Season, Random Value In Array(Filtered Array(Global.SeasonArr, Compare(Current Array Element, >=, 0))));
@@ -160,7 +175,7 @@ rule ("Workshop Settings") {
         Set Global Variable At Index(CategoryArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category", Null, Null, Null), Custom String("Gravspeed", Null, Null, Null), True, 1), 1, -1));
         Set Global Variable(Category, Random Value In Array(Filtered Array(Global.CategoryArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
-        Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), True, 1));
+        Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
     }
 }
 

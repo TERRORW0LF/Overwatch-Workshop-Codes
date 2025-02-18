@@ -87,9 +87,9 @@ rule "Debug (Player)":
 #Settings
 rule "Workshop Settings":
     SeasonArr = []
-    SeasonArr[0] = 0 if createWorkshopSetting(bool, "Season", "Season 1", false, 0) else -1
-    SeasonArr[1] = 1 if createWorkshopSetting(bool, "Season", "Season 2", false, 1) else -1
-    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", false, 2) else -1
+    SeasonArr[0] = 0 if createWorkshopSetting(bool, "Season", "Season 1", true, 0) else -1
+    SeasonArr[1] = 1 if createWorkshopSetting(bool, "Season", "Season 2", true, 1) else -1
+    SeasonArr[2] = 2 if createWorkshopSetting(bool, "Season", "Season 3", true, 2) else -1
     SeasonArr[3] = 3 if createWorkshopSetting(bool, "Season", "Season 4", true, 3) else -1
     SeasonArr[4] = 4 if createWorkshopSetting(bool, "Season", "Season 5", false, 4) else -1
     Season = random.choice([season for season in SeasonArr if season >= 0])
@@ -98,7 +98,7 @@ rule "Workshop Settings":
     CategoryArr[1] = 1 if createWorkshopSetting(bool, "Default Category", "Gravspeed", true, 1) else -1
     Category = random.choice([category for category in CategoryArr if category >= 0])
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
-    Infinite = createWorkshopSetting(bool, "Time", "Infinite", true, 1)
+    Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
 
 
 #Maps
