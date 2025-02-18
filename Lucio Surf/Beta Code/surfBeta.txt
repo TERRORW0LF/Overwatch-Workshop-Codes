@@ -1397,7 +1397,7 @@ rule ("Start - Maps (Season 4)") {
         If(Compare(Global.MapName, ==, Custom String("IW", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-258.986, -0.5, 48.481));
             Set Global Variable(PosCheckpoint, Array(Vector(-224.969, 5.3, -33.21)));
-            Set Global Variable(PosFinish, Vector(-144.5, -3.5, -83.33));
+            Set Global Variable(PosFinish, Vector(-141.105, 10.5, -87.497));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
@@ -1458,7 +1458,7 @@ rule ("Start - Maps (Season 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NS", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(107.5, 134, -82.56));
+            Set Global Variable(PosStart, Vector(107.495, 133.1, -73.174));
             Set Global Variable(PosCheckpoint, Array(Vector(55.295, 129.7, 0.52)));
             Set Global Variable(PosFinish, Vector(102.618, 131.7, 78.165));
             Set Global Variable(Checkpoint, True);
@@ -1831,13 +1831,13 @@ rule ("Start - Maps (Season 5)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("OG", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(122.619, 6.27, -228.847));
-            Set Global Variable(PosCheckpoint, Array(Vector(185.4, 7.9, -203.4), Vector(83.077, 5.4, -262.511), Vector(120.717, 7.4, -267.995)));
+            Set Global Variable(PosCheckpoint, Array(Vector(186.331, 8.3, -195.651), Vector(83.077, 5.4, -262.511), Vector(120.717, 7.4, -267.995)));
             Set Global Variable(PosFinish, Vector(121.375, 11.4, -227.604));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("OU", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-196.495, 15, 0));
-            Set Global Variable(PosCheckpoint, Array(Vector(-196.1, 16.9, 57.72), Vector(-171.972, 14.9, -44.885), Vector(-207.617, 17.9, -62.585)));
+            Set Global Variable(PosCheckpoint, Array(Vector(-188.089, 19.9, 115.294), Vector(-171.972, 14.9, -44.885), Vector(-207.617, 17.9, -62.585)));
             Set Global Variable(PosFinish, Vector(-202.067, 18.9, -0.002));
             Abort;
         End;
