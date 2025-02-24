@@ -354,8 +354,8 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-10.57, -1.02, -84.71)
         return
     if MapName == "HO":
-        PosStart = vect(0, 39.5, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-22.268, 40, -105.072)
+        PosFinish = vect(19.255, 39.8, 123.08)
         return
     if MapName == "HV":
         PosStart = vect(-95.37, 4, -93.5)
@@ -471,8 +471,8 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-92.49, 6.4, -23.25)
         return
     if MapName == "RS":
-        PosStart = vect(0, 0.5, -9)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-109.287, 8, 18.494)
+        PosFinish = vect(87.624, 3.9, 11.579)
         return
     if MapName == "SB":
         PosStart = vect(-420.555, 3, -130.698)
@@ -499,8 +499,8 @@ rule "Start - Maps (Season 1)":
         PosFinish = vect(-7.5, 4.57, 111.3)
         return
     if MapName == "TH":
-        PosStart = vect(-1.5, 3.5, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-6.916, 1.96, -70.729)
+        PosFinish = vect(-10.152, 8.5, 129.813)
         return
     if MapName == "VS":
         PosStart = vect(15.74, -4.64, 22.19)
@@ -574,8 +574,8 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(58, -2.1, 34)
         return
     if MapName == "HO":
-        PosStart = vect(0, 39.5, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-28.36, 41.86, 117.55)
+        PosFinish = vect(34.036, 25, -54.63)
         return
     if MapName == "HV":
         PosStart = vect(138.376, 6, -34.025)
@@ -690,8 +690,8 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(38.5, 4.6, 36.5)
         return
     if MapName == "RS":
-        PosStart = vect(0, 0.5, -9)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(76.089, 4, 36.925)
+        PosFinish = vect(-71.05, 2.1, 45.223)
         return
     if MapName == "SB":
         PosStart = vect(-239.457, 3.4, -130.615)
@@ -718,8 +718,8 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(-1, -2.8, -9)
         return
     if MapName == "TH":
-        PosStart = vect(-1.5, 3.5, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-15.102, 7.01, 105.546)
+        PosFinish = vect(-2.23, 0, -82.134)
         return
     if MapName == "VS":
         PosStart = vect(-92.538, 2.02, 59.543)
@@ -807,8 +807,9 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(91.752, -2.1, 17.33)
         return
     if MapName == "HO":
-        PosStart = vect(0, 39.5, 0)
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(13.03, 39.83, 115.84)
+        PosCheckpoint = [vect(22.16, 39.3, 16.10)]
+        PosFinish = vect(-17.427, 41.3, 1.386)
         return
     if MapName == "HV":
         PosStart = vect(100.75, 2.14, -83.53)
@@ -951,9 +952,9 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(51, 0.1, 45)
         return
     if MapName == "RS":
-        PosStart = vect(0, 0.5, -9)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(32.06, 0, -8.214)
+        PosCheckpoint = [vect(0, 5, 82.415)]
+        PosFinish = vect(-76.223, 5.168, -7.437)
         return
     if MapName == "SB":
         PosStart = vect(-265.53, 7.2, -92.18)
@@ -986,9 +987,9 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(-36.8, 9, 2.543)
         return
     if MapName == "TH":
-        PosStart = vect(-1.5, 3.5, 0)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(18.44, -1.36, 12.93)
+        PosCheckpoint = [vect(-19, -5.1, 0)]
+        PosFinish = vect(-14.717, 8.1, -122.242)
         return
     if MapName == "VS":
         PosStart = vect(-32.21, -2.94, 46.15)
@@ -1089,9 +1090,9 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         return
     if MapName == "HO":
-        PosStart = vect(0, 39.5, 0)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-20.677, 40, 111.782)
+        PosCheckpoint = [vect(31.162, 40, 7.029)]
+        PosFinish = vect(-15.901, 38, -47.675)
         Checkpoint = true
         return
     if MapName == "HV":
@@ -1259,9 +1260,9 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         return
     if MapName == "RS":
-        PosStart = vect(0, 0.5, -9)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-109.609, 8, 19.449)
+        PosCheckpoint = [vect(0.077, -0.5, -7.425)]
+        PosFinish = vect(60.722, 1.9, 55.035)
         Checkpoint = true
         return
     if MapName == "SB":
@@ -1300,9 +1301,9 @@ rule "Start - Maps (Season 4)":
         Checkpoint = false
         return
     if MapName == "TH":
-        PosStart = vect(-1.5, 3.5, 0)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(16.75, 6.6, 98.9)
+        PosCheckpoint = [vect(-30.96, 1.9, -49.4)]
+        PosFinish = vect(24.17, 4, -89.27)
         Checkpoint = true
         return
     if MapName == "VS":
@@ -1395,9 +1396,9 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(12.963, 6.7, -23.213)
         return
     if MapName == "HO":
-        PosStart = vect(0, 39.5, 0)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(-2.495, 39.5, 7.027)
+        PosCheckpoint = [vect(-4.835, 38, -92.711), vect(-5.035, 38, 106.657)]
+        PosFinish = vect(9.144, 35, 6.946)
         return
     if MapName == "HV":
         PosStart = vect(25.471, 6, -70.081)
@@ -1540,9 +1541,9 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(-23.554, 3.2, -15.238)
         return
     if MapName == "RS":
-        PosStart = vect(0, 0.5, -9)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(0, 5, 76.807)
+        PosCheckpoint = [vect(0.077, -2, -7.425), vect(89.904, 0, 16.849), vect(-76.928, 0, 45.845), vect(-89.293, 0, 10.462)]
+        PosFinish = vect(0, -5, 30.15)
         return
     if MapName == "SB":
         PosStart = vect(-330.056, 3, -119.495)
@@ -1574,10 +1575,11 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(12.334, -2.6, -1.291), vect(15.76, 0.4, 98.839), vect(-20.635, 2.5, 104.372), vect(-8.628, -2.5, -15.143)]
         PosFinish = vect(-21.014, 4.5, 35.175)
         return
+    # TODO: Actually good map
     if MapName == "TH":
-        PosStart = vect(-1.5, 3.5, 0)
-        PosCheckpoint = [vect(0, 0, 0)]
-        PosFinish = vect(0, 0, 0)
+        PosStart = vect(15.722, 2.271, -0.111)
+        PosCheckpoint = [vect(-18.977, -5.989, -18.579), vect(-27.458, -3.178, 50.387), vect(0, -6.303, 99.968), vect(0, -6.168, -100.089)]
+        PosFinish = vect(-21.684, -4.825, -0.086)
         return
     if MapName == "VS":
         PosStart = vect(-38.235, -2.51, 54.73)
