@@ -2003,6 +2003,7 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(PosFinish, Vector(-21.014, 4.5, 35.175));
             Abort;
         End;
+        "TODO: Actually good map"
         If(Compare(Global.MapName, ==, Custom String("TH", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(15.722, 2.271, -0.111));
             Set Global Variable(PosCheckpoint, Array(Vector(-18.977, -5.989, -18.579), Vector(-27.458, -3.178, 50.387), Vector(0, -6.303, 99.968), Vector(0, -6.168, -100.089)));
@@ -2621,7 +2622,7 @@ rule ("Velocity Counter - Standard (Yellow)") {
     }
     conditions {
         (Event Player).Category == 0;
-        Horizontal Speed Of(Event Player) > 11;
+        Horizontal Speed Of(Event Player) > 11.55;
         Horizontal Speed Of(Event Player) < 13.75;
     }
     actions {
@@ -2638,7 +2639,7 @@ rule ("Velocity Counter - Standard (Orange)") {
     conditions {
         (Event Player).Category == 0;
         Horizontal Speed Of(Event Player) > 6.88;
-        Horizontal Speed Of(Event Player) < 11;
+        Horizontal Speed Of(Event Player) < 11.55;
     }
     actions {
         Set Player Variable(Event Player, SpeedColor, Color(Orange));
@@ -2683,7 +2684,7 @@ rule ("Velocity Counter - Gravspeed (Yellow)") {
     }
     conditions {
         (Event Player).Category == 1;
-        Horizontal Speed Of(Event Player) > 13.15;
+        Horizontal Speed Of(Event Player) > 13.82;
         Horizontal Speed Of(Event Player) < 17.2;
     }
     actions {
@@ -2700,7 +2701,7 @@ rule ("Velocity Counter - Gravspeed (Orange)") {
     conditions {
         (Event Player).Category == 1;
         Horizontal Speed Of(Event Player) > 8.6;
-        Horizontal Speed Of(Event Player) < 13.15;
+        Horizontal Speed Of(Event Player) < 13.82;
     }
     actions {
         Set Player Variable(Event Player, SpeedColor, Color(Orange));

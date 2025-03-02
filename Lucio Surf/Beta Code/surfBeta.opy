@@ -2061,7 +2061,7 @@ rule "Velocity Counter - Standard (Green)":
 rule "Velocity Counter - Standard (Yellow)":
     @Event eachPlayer
     @Condition eventPlayer.Category == 0
-    @Condition eventPlayer.getHorizontalSpeed() > 11
+    @Condition eventPlayer.getHorizontalSpeed() > 11.55
     @Condition eventPlayer.getHorizontalSpeed() < 13.75
 
     eventPlayer.SpeedColor = Color.YELLOW
@@ -2071,7 +2071,7 @@ rule "Velocity Counter - Standard (Orange)":
     @Event eachPlayer
     @Condition eventPlayer.Category  == 0
     @Condition eventPlayer.getHorizontalSpeed() > 6.88
-    @Condition eventPlayer.getHorizontalSpeed() < 11
+    @Condition eventPlayer.getHorizontalSpeed() < 11.55
 
     eventPlayer.SpeedColor = Color.ORANGE
     
@@ -2095,7 +2095,7 @@ rule "Velocity Counter - Gravspeed (Green)":
 rule "Velocity Counter - Gravspeed (Yellow)":
     @Event eachPlayer
     @Condition eventPlayer.Category == 1
-    @Condition eventPlayer.getHorizontalSpeed() > 13.15
+    @Condition eventPlayer.getHorizontalSpeed() > 13.82
     @Condition eventPlayer.getHorizontalSpeed() < 17.2
 
     eventPlayer.SpeedColor = Color.YELLOW
@@ -2105,7 +2105,7 @@ rule "Velocity Counter - Gravspeed (Orange)":
     @Event eachPlayer
     @Condition eventPlayer.Category == 1
     @Condition eventPlayer.getHorizontalSpeed() > 8.6
-    @Condition eventPlayer.getHorizontalSpeed() < 13.15
+    @Condition eventPlayer.getHorizontalSpeed() < 13.82
 
     eventPlayer.SpeedColor = Color.ORANGE
 

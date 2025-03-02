@@ -1,6 +1,6 @@
 {
     "main": {
-        "description": "Lucio Surf v5.11.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR",
+        "description": "Lucio Surf v5.12.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: KVKKR",
         "modeName": "Lucio Surf"
     },
     "lobby": {
@@ -18,40 +18,20 @@
         "ffa": {
             "enabledMaps": [
                 "chateauGuillard",
-                "iliosLighthouse",
-                "iliosRuins",
-                "iliosWell",
                 "kanezaka",
-                "lijiangControlCenter",
-                "lijiangGarden",
-                "lijiangNightMarket",
                 "malevento",
-                "nepalSanctum",
-                "nepalShrine",
-                "nepalVillage",
-                "oasisCityCenter",
-                "oasisGardens",
-                "oasisUniversity",
                 "petra"
             ],
             "enableSelfInitiatedRespawn": false
         },
         "skirmish": {
             "disabledMaps": [
-                "antarcticPeninsula",
                 "blizzWorldWinter",
                 "eichenwaldeHalloween",
                 "hanamuraWinter",
                 "hollywoodHalloween",
-                "ilios",
                 "kingsRowWinter",
-                "lijiangTower",
                 "lijiangTowerLny",
-                "nepal",
-                "newJunkCity",
-                "oasis",
-                "samoa",
-                "suravasa",
                 "workshopChamber",
                 "workshopExpanse",
                 "workshopExpanseNight",
