@@ -22,12 +22,15 @@ globalvar Category 16
 globalvar CategoryArr 17
 globalvar Time 18
 globalvar Infinite 19
-globalvar Loop1 20
-globalvar PosStart 21
-globalvar PosCheckpoint 22
-globalvar PosFinish 23
-globalvar PosBarrier 24
-globalvar MapName 25
+globalvar VoteMin 20
+globalvar VotePerc 21
+globalvar VoteTimer 22
+globalvar Loop1 23
+globalvar PosStart 24
+globalvar PosCheckpoint 25
+globalvar PosFinish 26
+globalvar PosBarrier 27
+globalvar MapName 28
 
 
 #Player variables
@@ -42,15 +45,16 @@ playervar Finished 6
 playervar Category 7
 playervar AutoReset 8
 playervar HideHud 9
-playervar Mode 10
-playervar Attempts 11
-playervar SpeedColor 12
-playervar ExecutingMenu 13
-playervar Speed 14
-playervar CurrCheckpoint 15
-playervar CheckpointLoop 16
-playervar Reset 17
-playervar FFAReset 18
+playervar SkipMap 10
+playervar Mode 11
+playervar Attempts 12
+playervar SpeedColor 13
+playervar ExecutingMenu 14
+playervar Speed 15
+playervar CurrCheckpoint 16
+playervar CheckpointLoop 17
+playervar Reset 18
+playervar FFAReset 19
 playervar PracticeCheckpoint 22
 playervar PosPracticeCheckpoint 23
 playervar FacingPracticeCheckpoint 24
@@ -99,6 +103,8 @@ rule "Workshop Settings":
     Category = random.choice([category for category in CategoryArr if category >= 0])
     Time = createWorkshopSetting(int[60:3600], "Time", "Seconds", 600, 0)
     Infinite = createWorkshopSetting(bool, "Time", "Infinite", false, 1)
+    VoteMin = createWorkshopSetting(int[1:10], "Map skip", "Minimum Votes", 2, 0)
+    VotePerc = createWorkshopSetting(float[0:100], "Map skip", "Minimum Percentage", 50, 1)
 
 
 #Maps
@@ -285,7 +291,7 @@ rule "Start - Maps (Identifier)":
         MapName = "TH"
         return
     if getCurrentMap() == Map.VOLSKAYA:
-        MapName = "VS"
+        MapName = "VI"
         return
     if getCurrentMap() == Map.WATCHPOINT_GIBRALTAR:
         MapName = "WG"
@@ -331,7 +337,7 @@ rule "Start - Maps (Season 1)":
         return
     if MapName == "CR":
         PosStart = vect(-78.48, 4.21, -78.5)
-        PosFinish = vect(108.7, 10.9, 11.81)
+        PosFinish = vect(110.94, 9.9, 11.67)
         return
     if MapName == "CS":
         PosStart = vect(-89.44, 9, -25.68)
@@ -502,7 +508,7 @@ rule "Start - Maps (Season 1)":
         PosStart = vect(-6.916, 1.96, -70.729)
         PosFinish = vect(-10.152, 8.5, 129.813)
         return
-    if MapName == "VS":
+    if MapName == "VI":
         PosStart = vect(15.74, -4.64, 22.19)
         PosFinish = vect(-94.24, -2.08, 49.3)
         return
@@ -517,11 +523,11 @@ rule "Start - Maps (Season 2)":
     
     Checkpoint = false
     if MapName == "AI":
-        PosStart = vect(357.027, -9.7, -246.979)
+        PosStart = vect(350.57, -10.4, -233.23)
         PosFinish = vect(257.034, -15, -197.215)
         return
     if MapName == "AL":
-        PosStart = vect(182.047, 46.5, 191.41)
+        PosStart = vect(187.07, 46, 189.51)
         PosFinish = vect(355.296, 44, 174.37)
         return
     if MapName == "AS":
@@ -550,7 +556,7 @@ rule "Start - Maps (Season 2)":
         PosFinish = vect(176.515, -1, 52.458)
         return
     if MapName == "CR":
-        PosStart = vect(108.96, 10.96, 11.66)
+        PosStart = vect(110.94, 9.9, 11.67)
         PosFinish = vect(-72.29, 3.9, -72.73)
         return
     if MapName == "CS":
@@ -721,7 +727,7 @@ rule "Start - Maps (Season 2)":
         PosStart = vect(-15.102, 7.01, 105.546)
         PosFinish = vect(-2.23, 0, -82.134)
         return
-    if MapName == "VS":
+    if MapName == "VI":
         PosStart = vect(-92.538, 2.02, 59.543)
         PosFinish = vect(18, -5.1, 23)
         return
@@ -778,8 +784,8 @@ rule "Start - Maps (Season 3)":
         return
     if MapName == "CR":
         PosStart = vect(-19.88, 11, -60)
-        PosCheckpoint = [vect(11.1, 9.5, -34.7)]
-        PosFinish = vect(79.91, 17.6, 50.08)
+        PosCheckpoint = [vect(14.3, 9.5, -34.98)]
+        PosFinish = vect(81.41, 16.6, 51.02)
         return
     if MapName == "CS":
         PosStart = vect(44.5, 4, -40.35)
@@ -907,7 +913,7 @@ rule "Start - Maps (Season 3)":
         PosFinish = vect(66.14, 7.9, 9.89)
         return
     if MapName == "NB":
-        PosStart = vect(87.83, 4.25, -23.57)
+        PosStart = vect(89.26, 2.26, -22.81)
         PosCheckpoint = [vect(129.52, -3.85, 38.61)]
         PosFinish = vect(204.25, -2.25, 22.61)
         return
@@ -991,7 +997,7 @@ rule "Start - Maps (Season 3)":
         PosCheckpoint = [vect(-19, -5.1, 0)]
         PosFinish = vect(-14.717, 8.1, -122.242)
         return
-    if MapName == "VS":
+    if MapName == "VI":
         PosStart = vect(-32.21, -2.94, 46.15)
         PosCheckpoint = [vect(16.248, -5.1, 25.782)]
         PosFinish = vect(2.417, -8, 107.37)
@@ -1054,8 +1060,8 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         return
     if MapName == "CR":
-        PosStart = vect(95.54, 17.96, 47.36)
-        PosCheckpoint = [vect(58, 14.9, -7)]
+        PosStart = vect(98.47, 16.96, 47.19)
+        PosCheckpoint = [vect(58, 13.9, -7)]
         PosFinish = vect(-77.34, 5.9, -15.69)
         Checkpoint = true
         return
@@ -1173,9 +1179,9 @@ rule "Start - Maps (Season 4)":
         Checkpoint = true
         return
     if MapName == "MT":
-        PosStart = vect(132.2, 1.26, -38.57)
+        PosStart = vect(142.2, 2.85, -38.6)
         PosCheckpoint = [vect(65.5, 5.5, 27.33)]
-        PosFinish = vect(-8.1, 4.8, 27)
+        PosFinish = vect(-25.43, 3.6, 37.75)
         Checkpoint = true
         return
     if MapName == "NS":
@@ -1302,11 +1308,11 @@ rule "Start - Maps (Season 4)":
         return
     if MapName == "TH":
         PosStart = vect(16.75, 6.6, 98.9)
-        PosCheckpoint = [vect(-30.96, 1.9, -49.4)]
+        PosCheckpoint = [vect(-34.42, 2.9, -39.43)]
         PosFinish = vect(24.17, 4, -89.27)
         Checkpoint = true
         return
-    if MapName == "VS":
+    if MapName == "VI":
         PosStart = vect(-96.722, -2.48, 24.146)
         PosCheckpoint = [vect(-37.356, 1.9, 98.043)]
         PosFinish = vect(-30.133, 1.9, 38.232)
@@ -1367,7 +1373,7 @@ rule "Start - Maps (Season 5)":
         return
     if MapName == "CR":
         PosStart = vect(9.32, 11.01, 8.18)
-        PosCheckpoint = [vect(77.77, 17.9, 42.37), vect(11.1, 9.5, -34.7), vect(27.34, 1, 37.78), vect(-63.78, 4, -41.41), vect(-22.04, 5.8, -42.31)]
+        PosCheckpoint = [vect(80.97, 16.9, 42.6), vect(14.3, 9.5, -34.98), vect(27.34, 1, 37.78), vect(-63.78, 4, -41.41), vect(-22.04, 5.8, -42.31)]
         PosFinish = vect(11, 5.9, 6.39)
         return
     if MapName == "CS":
@@ -1497,7 +1503,7 @@ rule "Start - Maps (Season 5)":
         return
     if MapName == "NB":
         PosStart = vect(161.121, -4, 6.575)
-        PosCheckpoint = [vect(207.578, -2.2, 31.463), vect(203.656, -3.9, 1.168), vect(120.67, -5.8, -17.039), vect(131.903, -3.8, 40.896), vect(59.889, -0.8, -25.254), vect(8.506, 0.2, 37.804)]
+        PosCheckpoint = [vect(207.578, -2.2, 31.463), vect(203.656, -3.9, 1.168), vect(120.67, -5.8, -17.039), vect(131.903, -3.8, 40.896), vect(49.435, 1.6, -6.419)]
         PosFinish = vect(169.395, 4.2, 6.428)
         return
     if MapName == "OC":
@@ -1551,14 +1557,14 @@ rule "Start - Maps (Season 5)":
         PosFinish = vect(-329.992, 6, -66.685)
         return
     if MapName == "SD":
-        PosStart = vect(233.772, 15, -232.166)
+        PosStart = vect(234.98, 8.52, -231.29)
         PosCheckpoint = [vect(213.794, 4, -279.019), vect(172.214, 8, -251.764), vect(302.387, 10, -237.014)]
         PosFinish = vect(234.134, 6, -256.518)
         return
     if MapName == "SV":
-        PosStart = vect(27.564, 340.5, 368.459)
-        PosCheckpoint = [vect(-23.376, 340, 393.926), vect(27.567, 343, 396.274), vect(78.624, 340, 393.98)]
-        PosFinish = vect(27.727, 335, 359.321)
+        PosStart = vect(27.619, 343.76, 384.75)
+	    PosCheckpoint = [vect(83.2, 346.5, 415.8), vect(27.738, 335.500, 350.381), vect(-28, 346.4, 415.8)]
+        PosFinish = vect(27.609, 341.5, 376.217)
         return
     if MapName == "SM":
         PosStart = vect(-33.63, 22.16, 105.5)
@@ -1581,7 +1587,7 @@ rule "Start - Maps (Season 5)":
         PosCheckpoint = [vect(-18.977, -5.989, -18.579), vect(-27.458, -3.178, 50.387), vect(0, -6.303, 99.968), vect(0, -6.168, -100.089)]
         PosFinish = vect(-21.684, -4.825, -0.086)
         return
-    if MapName == "VS":
+    if MapName == "VI":
         PosStart = vect(-38.235, -2.51, 54.73)
         PosCheckpoint = [vect(-98.926, -2.5, 23.314), vect(-104.674, -4, 68.186), vect(23.227, -4.1, 100.796), vect(-23.84, -5, 38.582)]
         PosFinish = vect(-56.662, -4.2, 71.855)
@@ -1609,6 +1615,7 @@ rule "Start - Global":
     #Vars
     wait()
     setMatchTime(Time + 10)
+    chase(VoteTimer, 9999, rate=1, ChaseReeval.NONE)
     TimeFirstStan = 9999
     TimeFirstGrav = 9999
     TimeSecondStan = 9999
@@ -1697,38 +1704,42 @@ rule "Start - Global":
     for Loop1 in range(0, len(PosBarrier), 1):
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 
-    #Seaons / Mode information
-    hudHeader([player for player in getAllPlayers() if player.Category == 0], "Lucio Surf v5.12b0 | {0}S{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.12b0 | {0}G{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    #Leaderboards
+    # Layout / Category information
+    hudHeader([player for player in getAllPlayers() if player.Category == 0], "Lucio Surf v5.13b0 | {0}S{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader([player for player in getAllPlayers() if player.Category == 1], "Lucio Surf v5.13b0 | {0}G{1}".format(Season + 1, MapName), HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    # Leaderboards
     hudHeader([player for player in getAllPlayers() if player.Category == 0 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdStan), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if player.Category == 0 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondStan), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if player.Category == 0], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstStan + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstStan + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstStan), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "3 - {0}.{1} sec - {2}".format(floor(TimeThirdGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeThirdGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerThirdGrav), HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], "2 - {0}.{1} sec - {2}".format(floor(TimeSecondGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeSecondGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerSecondGrav), HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if player.Category == 1], "1 - {0}.{1} sec - {2}".format(floor(TimeFirstGrav + 0.001 / 1000), "{0}".format(floor((1000 * TimeFirstGrav + 0.001)) % 1000 + 1000).substring(1, 3), PlayerFirstGrav), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    #Help text standard
-    hudSubtext(getAllPlayers(), "Cycle HUD - Crouch + Interact", HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player == hostPlayer], "Toggle Invisibility - Crouch + Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Auto Reset - Crouch + Melee", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Category - Crouch + Ability 2", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Practice Mode - Interact", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Player Spectator Mode - Ability 2", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Spectator Mode - Reload", HudPosition.LEFT, 11, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    #Help text practice
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Standard Mode - Interact", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Ult Reset (Checkpoint) - Ultimate", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Set Checkpoint - Secondary Fire", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Delete Checkpoint - Ability 2", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    #Help text playerspec
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Standard Mode - Ability 2", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate next - Primary Fire", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate previous - Secondary Fire", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)    
+    # Always visible help text
+    hudSubtext(getAllPlayers(), "Map Skip - {0}/{1} | {2}%".format(len([player for player in getAllPlayers() if player.SkipMap]), VoteMin, "{}/{}".format(len([player for player in getAllPlayers() if player.SkipMap]) / len(getAllPlayers()) * 100, VotePerc)), HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    # Help text standard
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Auto Reset - Crouch + Melee", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Category - Crouch + Ability 2", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Practice Mode - Interact", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Player Spectator Mode - Ability 2", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Spectator Mode - Reload", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    # Help text practice
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Standard Mode - Interact", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Ult Reset (Checkpoint) - Ultimate", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Set Checkpoint - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Delete Checkpoint - Ability 2", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    # Help text playerspec
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Standard Mode - Ability 2", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate next - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate previous - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)    
     #Help text spectator
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Standard Mode - Reload", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Stop - Primary Fire", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Slow Move - Secondary Fire", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Standard Mode - Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Stop - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Slow Move - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    # Always visible help text
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud], "Vote Skip Map - Crouch + Secondary Fire", HudPosition.LEFT, 18, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player == hostPlayer], "Toggle Invisibility - Crouch + Reload", HudPosition.LEFT, 19, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext(getAllPlayers(), "Cycle HUD - Crouch + Interact", HudPosition.LEFT, 20, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
 
 
 rule "Start - Player FFA":
@@ -2061,7 +2072,7 @@ rule "Velocity Counter - Standard (Green)":
 rule "Velocity Counter - Standard (Yellow)":
     @Event eachPlayer
     @Condition eventPlayer.Category == 0
-    @Condition eventPlayer.getHorizontalSpeed() > 11.55
+    @Condition eventPlayer.getHorizontalSpeed() > 11
     @Condition eventPlayer.getHorizontalSpeed() < 13.75
 
     eventPlayer.SpeedColor = Color.YELLOW
@@ -2071,7 +2082,7 @@ rule "Velocity Counter - Standard (Orange)":
     @Event eachPlayer
     @Condition eventPlayer.Category  == 0
     @Condition eventPlayer.getHorizontalSpeed() > 6.88
-    @Condition eventPlayer.getHorizontalSpeed() < 11.55
+    @Condition eventPlayer.getHorizontalSpeed() < 11
 
     eventPlayer.SpeedColor = Color.ORANGE
     
@@ -2095,7 +2106,7 @@ rule "Velocity Counter - Gravspeed (Green)":
 rule "Velocity Counter - Gravspeed (Yellow)":
     @Event eachPlayer
     @Condition eventPlayer.Category == 1
-    @Condition eventPlayer.getHorizontalSpeed() > 13.82
+    @Condition eventPlayer.getHorizontalSpeed() > 13.15
     @Condition eventPlayer.getHorizontalSpeed() < 17.2
 
     eventPlayer.SpeedColor = Color.YELLOW
@@ -2105,7 +2116,7 @@ rule "Velocity Counter - Gravspeed (Orange)":
     @Event eachPlayer
     @Condition eventPlayer.Category == 1
     @Condition eventPlayer.getHorizontalSpeed() > 8.6
-    @Condition eventPlayer.getHorizontalSpeed() < 13.82
+    @Condition eventPlayer.getHorizontalSpeed() < 13.15
 
     eventPlayer.SpeedColor = Color.ORANGE
 
@@ -2116,6 +2127,17 @@ rule "Velocity Counter - Gravspeed (Red)":
     @Condition eventPlayer.getHorizontalSpeed() <= 8.6
     
     eventPlayer.SpeedColor = Color.RED
+
+
+rule "Vote Map Skip":
+    @Event eachPlayer
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH) and eventPlayer.isHoldingButton(Button.SECONDARY_FIRE)
+    @Condition not eventPlayer.ExecutingMenu
+
+    eventPlayer.ExecutingMenu = true
+    eventPlayer.SkipMap = not eventPlayer.SkipMap
+    waitUntil(not eventPlayer.isHoldingButton(Button.SECONDARY_FIRE), 9999)
+    eventPlayer.ExecutingMenu = false
 
 
 rule "Toggle Invisibility (Host only)":
@@ -2528,6 +2550,14 @@ rule "Match Time Frozen":
     
     wait()
     setMatchTime(Time + 10)
+
+
+rule "Skip Map":
+    @Condition len([player for player in getAllPlayers() if player.SkipMap]) >= VoteMin
+    @Condition len([player for player in getAllPlayers() if player.SkipMap]) / len(getAllPlayers()) * 100 >= VotePerc - 0.01
+
+    waitUntil(VoteTimer > 35, 9999)
+    restartMatch()
 
 
 rule "End Match FFA":

@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.12b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and become a surfer!\nCode: 048YZ"
+		Description: "Lucio Surf v5.13b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 048YZ"
 		Mode Name: "Lucio Surf Beta"
 	}
 	lobby
@@ -102,12 +102,15 @@ variables {
         17: CategoryArr
         18: Time
         19: Infinite
-        20: Loop1
-        21: PosStart
-        22: PosCheckpoint
-        23: PosFinish
-        24: PosBarrier
-        25: MapName
+        20: VoteMin
+        21: VotePerc
+        22: VoteTimer
+        23: Loop1
+        24: PosStart
+        25: PosCheckpoint
+        26: PosFinish
+        27: PosBarrier
+        28: MapName
     player:
         0: TimeCurrent
         1: TimeExtra
@@ -119,15 +122,16 @@ variables {
         7: Category
         8: AutoReset
         9: HideHud
-        10: Mode
-        11: Attempts
-        12: SpeedColor
-        13: ExecutingMenu
-        14: Speed
-        15: CurrCheckpoint
-        16: CheckpointLoop
-        17: Reset
-        18: FFAReset
+        10: SkipMap
+        11: Mode
+        12: Attempts
+        13: SpeedColor
+        14: ExecutingMenu
+        15: Speed
+        16: CurrCheckpoint
+        17: CheckpointLoop
+        18: Reset
+        19: FFAReset
         22: PracticeCheckpoint
         23: PosPracticeCheckpoint
         24: FacingPracticeCheckpoint
@@ -176,6 +180,8 @@ rule ("Workshop Settings") {
         Set Global Variable(Category, Random Value In Array(Filtered Array(Global.CategoryArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
+        Set Global Variable(VoteMin, Workshop Setting Integer(Custom String("Map skip", Null, Null, Null), Custom String("Minimum Votes", Null, Null, Null), 2, 1, 10, 0));
+        Set Global Variable(VotePerc, Workshop Setting Real(Custom String("Map skip", Null, Null, Null), Custom String("Minimum Percentage", Null, Null, Null), 50, 0, 100, 1));
     }
 }
 
@@ -424,7 +430,7 @@ rule ("Start - Maps (Identifier)") {
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Volskaya Industries)));
-            Set Global Variable(MapName, Custom String("VS", Null, Null, Null));
+            Set Global Variable(MapName, Custom String("VI", Null, Null, Null));
             Abort;
         End;
         If(Compare(Current Map, ==, Map(Watchpoint: Gibraltar)));
@@ -485,7 +491,7 @@ rule ("Start - Maps (Season 1)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("CR", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-78.48, 4.21, -78.5));
-            Set Global Variable(PosFinish, Vector(108.7, 10.9, 11.81));
+            Set Global Variable(PosFinish, Vector(110.94, 9.9, 11.67));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("CS", Null, Null, Null)));
@@ -699,7 +705,7 @@ rule ("Start - Maps (Season 1)") {
             Set Global Variable(PosFinish, Vector(-10.152, 8.5, 129.813));
             Abort;
         End;
-        If(Compare(Global.MapName, ==, Custom String("VS", Null, Null, Null)));
+        If(Compare(Global.MapName, ==, Custom String("VI", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(15.74, -4.64, 22.19));
             Set Global Variable(PosFinish, Vector(-94.24, -2.08, 49.3));
             Abort;
@@ -721,12 +727,12 @@ rule ("Start - Maps (Season 2)") {
     actions {
         Set Global Variable(Checkpoint, False);
         If(Compare(Global.MapName, ==, Custom String("AI", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(357.027, -9.7, -246.979));
+            Set Global Variable(PosStart, Vector(350.57, -10.4, -233.23));
             Set Global Variable(PosFinish, Vector(257.034, -15, -197.215));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(182.047, 46.5, 191.41));
+            Set Global Variable(PosStart, Vector(187.07, 46, 189.51));
             Set Global Variable(PosFinish, Vector(355.296, 44, 174.37));
             Abort;
         End;
@@ -762,7 +768,7 @@ rule ("Start - Maps (Season 2)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("CR", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(108.96, 10.96, 11.66));
+            Set Global Variable(PosStart, Vector(110.94, 9.9, 11.67));
             Set Global Variable(PosFinish, Vector(-72.29, 3.9, -72.73));
             Abort;
         End;
@@ -976,7 +982,7 @@ rule ("Start - Maps (Season 2)") {
             Set Global Variable(PosFinish, Vector(-2.23, 0, -82.134));
             Abort;
         End;
-        If(Compare(Global.MapName, ==, Custom String("VS", Null, Null, Null)));
+        If(Compare(Global.MapName, ==, Custom String("VI", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-92.538, 2.02, 59.543));
             Set Global Variable(PosFinish, Vector(18, -5.1, 23));
             Abort;
@@ -1048,8 +1054,8 @@ rule ("Start - Maps (Season 3)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("CR", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-19.88, 11, -60));
-            Set Global Variable(PosCheckpoint, Array(Vector(11.1, 9.5, -34.7)));
-            Set Global Variable(PosFinish, Vector(79.91, 17.6, 50.08));
+            Set Global Variable(PosCheckpoint, Array(Vector(14.3, 9.5, -34.98)));
+            Set Global Variable(PosFinish, Vector(81.41, 16.6, 51.02));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("CS", Null, Null, Null)));
@@ -1203,7 +1209,7 @@ rule ("Start - Maps (Season 3)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NB", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(87.83, 4.25, -23.57));
+            Set Global Variable(PosStart, Vector(89.26, 2.26, -22.81));
             Set Global Variable(PosCheckpoint, Array(Vector(129.52, -3.85, 38.61)));
             Set Global Variable(PosFinish, Vector(204.25, -2.25, 22.61));
             Abort;
@@ -1304,7 +1310,7 @@ rule ("Start - Maps (Season 3)") {
             Set Global Variable(PosFinish, Vector(-14.717, 8.1, -122.242));
             Abort;
         End;
-        If(Compare(Global.MapName, ==, Custom String("VS", Null, Null, Null)));
+        If(Compare(Global.MapName, ==, Custom String("VI", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-32.21, -2.94, 46.15));
             Set Global Variable(PosCheckpoint, Array(Vector(16.248, -5.1, 25.782)));
             Set Global Variable(PosFinish, Vector(2.417, -8, 107.37));
@@ -1382,8 +1388,8 @@ rule ("Start - Maps (Season 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("CR", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(95.54, 17.96, 47.36));
-            Set Global Variable(PosCheckpoint, Array(Vector(58, 14.9, -7)));
+            Set Global Variable(PosStart, Vector(98.47, 16.96, 47.19));
+            Set Global Variable(PosCheckpoint, Array(Vector(58, 13.9, -7)));
             Set Global Variable(PosFinish, Vector(-77.34, 5.9, -15.69));
             Set Global Variable(Checkpoint, True);
             Abort;
@@ -1521,9 +1527,9 @@ rule ("Start - Maps (Season 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("MT", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(132.2, 1.26, -38.57));
+            Set Global Variable(PosStart, Vector(142.2, 2.85, -38.6));
             Set Global Variable(PosCheckpoint, Array(Vector(65.5, 5.5, 27.33)));
-            Set Global Variable(PosFinish, Vector(-8.1, 4.8, 27));
+            Set Global Variable(PosFinish, Vector(-25.43, 3.6, 37.75));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
@@ -1672,12 +1678,12 @@ rule ("Start - Maps (Season 4)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("TH", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(16.75, 6.6, 98.9));
-            Set Global Variable(PosCheckpoint, Array(Vector(-30.96, 1.9, -49.4)));
+            Set Global Variable(PosCheckpoint, Array(Vector(-34.42, 2.9, -39.43)));
             Set Global Variable(PosFinish, Vector(24.17, 4, -89.27));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
-        If(Compare(Global.MapName, ==, Custom String("VS", Null, Null, Null)));
+        If(Compare(Global.MapName, ==, Custom String("VI", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-96.722, -2.48, 24.146));
             Set Global Variable(PosCheckpoint, Array(Vector(-37.356, 1.9, 98.043)));
             Set Global Variable(PosFinish, Vector(-30.133, 1.9, 38.232));
@@ -1753,7 +1759,7 @@ rule ("Start - Maps (Season 5)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("CR", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(9.32, 11.01, 8.18));
-            Set Global Variable(PosCheckpoint, Array(Vector(77.77, 17.9, 42.37), Vector(11.1, 9.5, -34.7), Vector(27.34, 1, 37.78), Vector(-63.78, 4, -41.41), Vector(-22.04, 5.8, -42.31)));
+            Set Global Variable(PosCheckpoint, Array(Vector(80.97, 16.9, 42.6), Vector(14.3, 9.5, -34.98), Vector(27.34, 1, 37.78), Vector(-63.78, 4, -41.41), Vector(-22.04, 5.8, -42.31)));
             Set Global Variable(PosFinish, Vector(11, 5.9, 6.39));
             Abort;
         End;
@@ -1909,7 +1915,7 @@ rule ("Start - Maps (Season 5)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("NB", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(161.121, -4, 6.575));
-            Set Global Variable(PosCheckpoint, Array(Vector(207.578, -2.2, 31.463), Vector(203.656, -3.9, 1.168), Vector(120.67, -5.8, -17.039), Vector(131.903, -3.8, 40.896), Vector(59.889, -0.8, -25.254), Vector(8.506, 0.2, 37.804)));
+            Set Global Variable(PosCheckpoint, Array(Vector(207.578, -2.2, 31.463), Vector(203.656, -3.9, 1.168), Vector(120.67, -5.8, -17.039), Vector(131.903, -3.8, 40.896), Vector(49.435, 1.6, -6.419)));
             Set Global Variable(PosFinish, Vector(169.395, 4.2, 6.428));
             Abort;
         End;
@@ -1974,15 +1980,15 @@ rule ("Start - Maps (Season 5)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("SD", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(233.772, 15, -232.166));
+            Set Global Variable(PosStart, Vector(234.98, 8.52, -231.29));
             Set Global Variable(PosCheckpoint, Array(Vector(213.794, 4, -279.019), Vector(172.214, 8, -251.764), Vector(302.387, 10, -237.014)));
             Set Global Variable(PosFinish, Vector(234.134, 6, -256.518));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("SV", Null, Null, Null)));
-            Set Global Variable(PosStart, Vector(27.564, 340.5, 368.459));
-            Set Global Variable(PosCheckpoint, Array(Vector(-23.376, 340, 393.926), Vector(27.567, 343, 396.274), Vector(78.624, 340, 393.98)));
-            Set Global Variable(PosFinish, Vector(27.727, 335, 359.321));
+            Set Global Variable(PosStart, Vector(27.619, 343.76, 384.75));
+            Set Global Variable(PosCheckpoint, Array(Vector(83.2, 346.5, 415.8), Vector(27.738, 335.500, 350.381), Vector(-28, 346.4, 415.8)));
+            Set Global Variable(PosFinish, Vector(27.609, 341.5, 376.217));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("SM", Null, Null, Null)));
@@ -2010,7 +2016,7 @@ rule ("Start - Maps (Season 5)") {
             Set Global Variable(PosFinish, Vector(-21.684, -4.825, -0.086));
             Abort;
         End;
-        If(Compare(Global.MapName, ==, Custom String("VS", Null, Null, Null)));
+        If(Compare(Global.MapName, ==, Custom String("VI", Null, Null, Null)));
             Set Global Variable(PosStart, Vector(-38.235, -2.51, 54.73));
             Set Global Variable(PosCheckpoint, Array(Vector(-98.926, -2.5, 23.314), Vector(-104.674, -4, 68.186), Vector(23.227, -4.1, 100.796), Vector(-23.84, -5, 38.582)));
             Set Global Variable(PosFinish, Vector(-56.662, -4.2, 71.855));
@@ -2049,6 +2055,7 @@ rule ("Start - Global") {
         "Vars"
         Wait(0.016, Ignore Condition);
         Set Match Time(Add(Global.Time, 10));
+        Chase Global Variable At Rate(VoteTimer, 9999, 1, None);
         Set Global Variable(TimeFirstStan, 9999);
         Set Global Variable(TimeFirstGrav, 9999);
         Set Global Variable(TimeSecondStan, 9999);
@@ -2147,9 +2154,9 @@ rule ("Start - Global") {
         For Global Variable(Loop1, 0, Count Of(Global.PosBarrier), 1);
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Global.Loop1), 5, Visible To);
         End;
-        "Seaons / Mode information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.12b0 | {0}S{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.12b0 | {0}G{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        "Layout / Category information"
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.13b0 | {0}S{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.13b0 | {0}G{1}", Add(Global.Season, 1), Global.MapName, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
@@ -2157,28 +2164,32 @@ rule ("Start - Global") {
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), Null, Null), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        "Always visible help text"
+        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Map Skip - {0}/{1} | {2}%", Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Global.VoteMin, Custom String("{0}/{1}", Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100), Global.VotePerc, Null)), Left, 3, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text standard"
-        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Cycle HUD - Crouch + Interact", Null, Null, Null), Left, 3, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate", Null, Null, Null), Left, 4, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Toggle Invisibility - Crouch + Reload", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Cycle Auto Reset - Crouch + Melee", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Cycle Category - Crouch + Ability 2", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Practice Mode - Interact", Null, Null, Null), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Player Spectator Mode - Ability 2", Null, Null, Null), Left, 10, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Spectator Mode - Reload", Null, Null, Null), Left, 11, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Cycle Auto Reset - Crouch + Melee", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Cycle Category - Crouch + Ability 2", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Practice Mode - Interact", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Player Spectator Mode - Ability 2", Null, Null, Null), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Not((Current Array Element).Mode))), Null, Null, Custom String("Spectator Mode - Reload", Null, Null, Null), Left, 10, Null, Null, Color(Yellow), Visible To, Default Visibility);
         "Help text practice"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Standard Mode - Interact", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Ult Reset (Checkpoint) - Ultimate", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Set Checkpoint - Secondary Fire", Null, Null, Null), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Delete Checkpoint - Ability 2", Null, Null, Null), Left, 10, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Standard Mode - Interact", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Ult Reset (Checkpoint) - Ultimate", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Set Checkpoint - Secondary Fire", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Delete Checkpoint - Ability 2", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
         "Help text playerspec"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Standard Mode - Ability 2", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate next - Primary Fire", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate previous - Secondary Fire", Null, Null, Null), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Standard Mode - Ability 2", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate next - Primary Fire", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate previous - Secondary Fire", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
         "Help text spectator"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Standard Mode - Reload", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Stop - Primary Fire", Null, Null, Null), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Slow Move - Secondary Fire", Null, Null, Null), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Standard Mode - Reload", Null, Null, Null), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Stop - Primary Fire", Null, Null, Null), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Slow Move - Secondary Fire", Null, Null, Null), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        "Always visible help text"
+        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).HideHud)), Null, Null, Custom String("Vote Skip Map - Crouch + Secondary Fire", Null, Null, Null), Left, 18, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Toggle Invisibility - Crouch + Reload", Null, Null, Null), Left, 19, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Cycle HUD - Crouch + Interact", Null, Null, Null), Left, 20, Null, Null, Color(Yellow), Visible To, Default Visibility);
     }
 }
 
@@ -2622,7 +2633,7 @@ rule ("Velocity Counter - Standard (Yellow)") {
     }
     conditions {
         (Event Player).Category == 0;
-        Horizontal Speed Of(Event Player) > 11.55;
+        Horizontal Speed Of(Event Player) > 11;
         Horizontal Speed Of(Event Player) < 13.75;
     }
     actions {
@@ -2639,7 +2650,7 @@ rule ("Velocity Counter - Standard (Orange)") {
     conditions {
         (Event Player).Category == 0;
         Horizontal Speed Of(Event Player) > 6.88;
-        Horizontal Speed Of(Event Player) < 11.55;
+        Horizontal Speed Of(Event Player) < 11;
     }
     actions {
         Set Player Variable(Event Player, SpeedColor, Color(Orange));
@@ -2684,7 +2695,7 @@ rule ("Velocity Counter - Gravspeed (Yellow)") {
     }
     conditions {
         (Event Player).Category == 1;
-        Horizontal Speed Of(Event Player) > 13.82;
+        Horizontal Speed Of(Event Player) > 13.15;
         Horizontal Speed Of(Event Player) < 17.2;
     }
     actions {
@@ -2701,7 +2712,7 @@ rule ("Velocity Counter - Gravspeed (Orange)") {
     conditions {
         (Event Player).Category == 1;
         Horizontal Speed Of(Event Player) > 8.6;
-        Horizontal Speed Of(Event Player) < 13.82;
+        Horizontal Speed Of(Event Player) < 13.15;
     }
     actions {
         Set Player Variable(Event Player, SpeedColor, Color(Orange));
@@ -2720,6 +2731,25 @@ rule ("Velocity Counter - Gravspeed (Red)") {
     }
     actions {
         Set Player Variable(Event Player, SpeedColor, Color(Red));
+    }
+}
+
+rule ("Vote Map Skip") {
+    event {
+        Ongoing - Each Player;
+        All;
+        All;
+    }
+    conditions {
+        Is Button Held(Event Player, Button(Crouch)) == True;
+        Is Button Held(Event Player, Button(Secondary Fire)) == True;
+        (Event Player).ExecutingMenu == False;
+    }
+    actions {
+        Set Player Variable(Event Player, ExecutingMenu, True);
+        Set Player Variable(Event Player, SkipMap, Not((Event Player).SkipMap));
+        Wait Until(Not(Is Button Held(Event Player, Button(Secondary Fire))), 9999);
+        Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
 
@@ -3353,6 +3383,20 @@ rule ("Match Time Frozen") {
     actions {
         Wait(0.016, Ignore Condition);
         Set Match Time(Add(Global.Time, 10));
+    }
+}
+
+rule ("Skip Map") {
+    event {
+        Ongoing - Global;
+    }
+    conditions {
+        Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)) >= Global.VoteMin;
+        Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100) >= Subtract(Global.VotePerc, 0.01);
+    }
+    actions {
+        Wait Until(Compare(Global.VoteTimer, >, 35), 9999);
+        Restart Match;
     }
 }
 
