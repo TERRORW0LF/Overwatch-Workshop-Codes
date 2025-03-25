@@ -3357,7 +3357,7 @@ rule ("Curveboost Prevention") {
         Update Every Frame(Is On Wall(Event Player)) != False;
     }
     actions {
-        Set Player Variable(Event Player, SpeedWall, Max((Event Player).SpeedNow, If-Then-Else(Compare((Event Player).Category, ==, 0), 9.08, 11.34)));
+        Set Player Variable(Event Player, SpeedWall, Max((Event Player).SpeedNow, If-Then-Else(Compare((Event Player).Category, ==, 0), 8.53, 10.66)));
         While(True);
             Set Player Variable(Event Player, SpeedDiff, Subtract((Event Player).SpeedNow, (Event Player).SpeedWall));
             If(And(Is On Wall(Event Player), Compare((Event Player).SpeedDiff, >, 0.01)));

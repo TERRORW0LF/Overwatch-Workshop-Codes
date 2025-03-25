@@ -2526,7 +2526,7 @@ rule "Curveboost Prevention":
     @Event eachPlayer
     @Condition updateEveryTick(eventPlayer.isOnWall())
 
-    eventPlayer.SpeedWall = max(eventPlayer.SpeedNow, 9.08 if eventPlayer.Category == 0 else 11.34)
+    eventPlayer.SpeedWall = max(eventPlayer.SpeedNow, 8.53 if eventPlayer.Category == 0 else 10.66)
 
     while true:
         eventPlayer.SpeedDiff = eventPlayer.SpeedNow - eventPlayer.SpeedWall
