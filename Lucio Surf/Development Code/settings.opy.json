@@ -1,0 +1,81 @@
+{
+    "main": {
+        "description": "Lucio Surf v5.14d1.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 6XN1G",
+        "modeName": "Lucio Surf Development"
+    },
+    "lobby": {
+        "allowPlayersInQueue": true,
+        "mapRotation": "afterGame",
+        "enableMatchVoiceChat": true,
+        "ffaSlots": 10,
+        "spectatorSlots": 6,
+        "team1Slots": 10,
+        "team2Slots": 0,
+        "returnToLobby": "never",
+        "swapTeamsAfterMatch": false
+    },
+    "gamemodes": {
+        "ffa": {
+            "enabledMaps": [
+                "chateauGuillard",
+                "kanezaka",
+                "malevento",
+                "petra"
+            ],
+            "enableSelfInitiatedRespawn": false
+        },
+        "skirmish": {
+            "disabledMaps": [
+                "blizzWorldWinter",
+                "eichenwaldeHalloween",
+                "hanamuraWinter",
+                "hollywoodHalloween",
+                "kingsRowWinter",
+                "lijiangTowerLny",
+                "workshopChamber",
+                "workshopExpanse",
+                "workshopExpanseNight",
+                "workshopGreenScreen",
+                "workshopIsland",
+                "workshopIslandNight"
+            ]
+        },
+        "general": {
+            "enableHeroSwitching": false,
+            "enableEnemyHealthBars": false,
+            "gamemodeStartTrigger": "immediately",
+            "heroLimit": "off",
+            "enableKillCam": false,
+            "enableKillFeed": false,
+            "enableRandomHeroes": true,
+            "spawnHealthPacks": "disabled"
+        }
+    },
+    "heroes": {
+        "allTeams": {
+            "lucio": {
+                "enableAbility2": false,
+                "enableSecondaryFire": false
+            },
+            "enabledHeroes": [
+                "lucio"
+            ],
+            "general": {
+                "enableInfiniteAmmo": true,
+                "enablePrimaryFire": false,
+                "enableHeadshotsOnly": true,
+                "enableUlt": false
+            }
+        }
+    },
+    "workshop": {
+        "Standard": true,
+        "Gravspeed": true,
+        "Season 1": true,
+        "Season 2": true,
+        "Season 3": true,
+        "Season 4": true,
+        "Season 5": true,
+        "Infinite": true
+    }
+}
