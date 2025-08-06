@@ -1629,78 +1629,15 @@ rule "Start - Global":
     createEffect(getAllPlayers(), Effect.RING, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY)
     createIcon(getAllPlayers(), PosFinish + vect(0, 6, 0), Icon.FLAG, IconReeval.VISIBILITY, Color.WHITE, true)
     #Non-sense ahead. Workshop only evaluades index when var is array, so no loop possible.
-    if PosCheckpoint[0]:
+    for Loop1 in range(0, len(PosCheckpoint)):
         #Not collected
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[0]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[0], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[0]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[0], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[0]], PosCheckpoint[0] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
+        createEffect([player for player in getAllPlayers() if not player.Checkpoint[evalOnce(Loop1)]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
+        createEffect([player for player in getAllPlayers() if not player.Checkpoint[evalOnce(Loop1)]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
+        createIcon([player for player in getAllPlayers() if not player.Checkpoint[evalOnce(Loop1)]], PosCheckpoint[Loop1] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
         #Collected
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[0]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[0], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[0]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[0], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[0]], PosCheckpoint[0] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[1]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[1]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[1], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[1]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[1], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[1]], PosCheckpoint[1] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[1]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[1], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[1]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[1], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[1]], PosCheckpoint[1] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[2]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[2]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[2], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[2]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[2], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[2]], PosCheckpoint[2] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[2]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[2], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[2]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[2], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[2]], PosCheckpoint[2] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[3]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[3]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[3], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[3]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[3], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[3]], PosCheckpoint[3] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[3]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[3], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[3]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[3], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[3]], PosCheckpoint[3] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[4]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[4]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[4], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[4]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[4], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[4]], PosCheckpoint[4] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[4]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[4], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[4]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[4], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[4]], PosCheckpoint[4] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[5]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[5]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[5], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[5]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[5], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[5]], PosCheckpoint[5] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[5]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[5], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[5]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[5], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[5]], PosCheckpoint[5] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[6]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[6]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[6], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[6]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[6], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[6]], PosCheckpoint[6] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[6]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[6], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[6]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[6], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[6]], PosCheckpoint[6] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[7]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[7]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[7], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[7]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[7], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[7]], PosCheckpoint[7] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[7]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[7], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[7]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[7], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[7]], PosCheckpoint[7] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[8]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[8]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[8], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[8]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[8], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[8]], PosCheckpoint[8] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[8]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[8], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[8]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[8], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[8]], PosCheckpoint[8] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
-    if PosCheckpoint[9]:
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[9]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[9], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[9]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[9], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[9]], PosCheckpoint[9] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[9]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[9], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[9]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[9], 3.5, EffectReeval.VISIBILITY)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[9]], PosCheckpoint[9] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
+        createEffect([player for player in getAllPlayers() if player.Checkpoint[evalOnce(Loop1)]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
+        createEffect([player for player in getAllPlayers() if player.Checkpoint[evalOnce(Loop1)]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
+        createIcon([player for player in getAllPlayers() if player.Checkpoint[evalOnce(Loop1)]], PosCheckpoint[Loop1] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
     for Loop1 in range(0, len(PosBarrier), 1):
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
 

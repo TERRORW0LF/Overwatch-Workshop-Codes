@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.13b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 048YZ"
+		Description: "Lucio Surf v5.14b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 048YZ"
 		Mode Name: "Lucio Surf Beta"
 	}
 	lobby
@@ -78,6 +78,17 @@ settings
 				Lúcio
 			}
 		}
+	}
+	workshop
+	{
+		Standard: Off
+		Gravspeed: On
+		Season 1: On
+		Season 2: On
+		Season 3: On
+		Season 4: On
+		Season 5: On
+		Infinite: On
 	}
 }
 variables {
@@ -2069,87 +2080,15 @@ rule ("Start - Global") {
         Create Effect(All Players(All Teams), Ring, Color(White), Global.PosFinish, 5, Visible To);
         Create Icon(All Players(All Teams), Add(Global.PosFinish, Vector(0, 6, 0)), Flag, Visible To, Color(White), True);
         "Non-sense ahead. Workshop only evaluades index when var is array, so no loop possible."
-        If(First Of(Global.PosCheckpoint));
+        For Global Variable(Loop1, 0, Count Of(Global.PosCheckpoint), 1);
             "Not collected"
-            Create Effect(Filtered Array(All Players(All Teams), Not(First Of((Current Array Element).Checkpoint))), Light Shaft, Color(Sky Blue), First Of(Global.PosCheckpoint), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(First Of((Current Array Element).Checkpoint))), Ring, Color(Sky Blue), First Of(Global.PosCheckpoint), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(First Of((Current Array Element).Checkpoint))), Add(First Of(Global.PosCheckpoint), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
+            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1)))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, Global.Loop1), 3.5, Visible To);
+            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1)))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, Global.Loop1), 3.5, Visible To);
+            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1)))), Add(Value In Array(Global.PosCheckpoint, Global.Loop1), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
             "Collected"
-            Create Effect(Filtered Array(All Players(All Teams), First Of((Current Array Element).Checkpoint)), Light Shaft, Color(Lime Green), First Of(Global.PosCheckpoint), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), First Of((Current Array Element).Checkpoint)), Ring, Color(Lime Green), First Of(Global.PosCheckpoint), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), First Of((Current Array Element).Checkpoint)), Add(First Of(Global.PosCheckpoint), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 1));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 1))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 1), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 1))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 1), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 1))), Add(Value In Array(Global.PosCheckpoint, 1), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 1)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 1), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 1)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 1), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 1)), Add(Value In Array(Global.PosCheckpoint, 1), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 2));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 2))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 2), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 2))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 2), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 2))), Add(Value In Array(Global.PosCheckpoint, 2), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 2)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 2), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 2)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 2), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 2)), Add(Value In Array(Global.PosCheckpoint, 2), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 3));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 3))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 3), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 3))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 3), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 3))), Add(Value In Array(Global.PosCheckpoint, 3), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 3)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 3), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 3)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 3), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 3)), Add(Value In Array(Global.PosCheckpoint, 3), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 4));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 4))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 4), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 4))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 4), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 4))), Add(Value In Array(Global.PosCheckpoint, 4), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 4)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 4), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 4)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 4), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 4)), Add(Value In Array(Global.PosCheckpoint, 4), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 5));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 5))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 5), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 5))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 5), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 5))), Add(Value In Array(Global.PosCheckpoint, 5), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 5)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 5), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 5)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 5), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 5)), Add(Value In Array(Global.PosCheckpoint, 5), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 6));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 6))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 6), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 6))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 6), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 6))), Add(Value In Array(Global.PosCheckpoint, 6), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 6)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 6), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 6)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 6), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 6)), Add(Value In Array(Global.PosCheckpoint, 6), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 7));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 7))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 7), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 7))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 7), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 7))), Add(Value In Array(Global.PosCheckpoint, 7), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 7)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 7), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 7)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 7), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 7)), Add(Value In Array(Global.PosCheckpoint, 7), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 8));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 8))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 8), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 8))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 8), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 8))), Add(Value In Array(Global.PosCheckpoint, 8), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 8)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 8), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 8)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 8), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 8)), Add(Value In Array(Global.PosCheckpoint, 8), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
-        End;
-        If(Value In Array(Global.PosCheckpoint, 9));
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 9))), Light Shaft, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 9), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 9))), Ring, Color(Sky Blue), Value In Array(Global.PosCheckpoint, 9), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, 9))), Add(Value In Array(Global.PosCheckpoint, 9), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 9)), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, 9), 3.5, Visible To);
-            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 9)), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, 9), 3.5, Visible To);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, 9)), Add(Value In Array(Global.PosCheckpoint, 9), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
+            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1))), Light Shaft, Color(Lime Green), Value In Array(Global.PosCheckpoint, Global.Loop1), 3.5, Visible To);
+            Create Effect(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1))), Ring, Color(Lime Green), Value In Array(Global.PosCheckpoint, Global.Loop1), 3.5, Visible To);
+            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1))), Add(Value In Array(Global.PosCheckpoint, Global.Loop1), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
         End;
         For Global Variable(Loop1, 0, Count Of(Global.PosBarrier), 1);
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Global.Loop1), 5, Visible To);
