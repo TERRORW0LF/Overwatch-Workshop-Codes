@@ -1,4 +1,7 @@
 rule "Start - Maps (Identifier)":
+    if getCurrentMap() == Map.AATLIS:
+        MapName = "AA"
+        return
     if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
         #Icebreaker
         if getCurrentObjective() == 0:

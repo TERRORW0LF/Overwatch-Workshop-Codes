@@ -17,18 +17,14 @@ rule "Start - Global":
     setMatchTime(Time + 10)
     chase(VoteTimer, 9999, rate=1, ChaseReeval.NONE)
     #Start / Checkpoint / Finish / Barrier effects
-    createEffect(getAllPlayers(), Effect.RING, Color.GREEN, PosStart, 2, EffectReeval.VISIBILITY)
-    createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY)
-    createEffect(getAllPlayers(), Effect.RING, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY)
+    createEffect(getAllPlayers(), Effect.RING, Color.GREEN, PosStart, 2, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    createEffect(getAllPlayers(), Effect.RING, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     for Loop1 in range(0, len(PosCheckpoint)):
-        #Not collected
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[evalOnce(Loop1)]], Effect.LIGHT_SHAFT, Color.SKY_BLUE, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if not player.Checkpoint[evalOnce(Loop1)]], Effect.RING, Color.SKY_BLUE, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
-        #Collected
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[evalOnce(Loop1)]], Effect.LIGHT_SHAFT, Color.LIME_GREEN, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
-        createEffect([player for player in getAllPlayers() if player.Checkpoint[evalOnce(Loop1)]], Effect.RING, Color.LIME_GREEN, PosCheckpoint[Loop1], 3.5, EffectReeval.VISIBILITY)
+        createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.LIME_GREEN if localPlayer.Checkpoint[evalOnce(Loop1)] else Color.SKY_BLUE, PosCheckpoint[evalOnce(Loop1)], 3.5, EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
+        createEffect(getAllPlayers(), Effect.RING, Color.LIME_GREEN if localPlayer.Checkpoint[evalOnce(Loop1)] else Color.SKY_BLUE, PosCheckpoint[evalOnce(Loop1)], 3.5, EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
     for Loop1 in range(0, len(PosBarrier), 1):
-        createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[Loop1], 5, EffectReeval.VISIBILITY)
+        createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[evalOnce(Loop1)], 5, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
 
     # Layout / Category information
     hudHeader([player for player in getAllPlayers() if player.Category == 0], f"Lucio Surf v{VERSION} | {Layout + 1}S{MapName}", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
@@ -84,14 +80,10 @@ rule "Start - Player":
     @Event eachPlayer
     @Condition eventPlayer.hasSpawned()
     
-    #vars
-    eventPlayer.Checkpoint = []
-    for eventPlayer.CheckpointLoop in range(0, len(PosCheckpoint), 1):
-        eventPlayer.Checkpoint.append(false)
+    eventPlayer.Checkpoint = [false for cp in PosCheckpoint]
     if (getCurrentGamemode() != Gamemode.FFA):
         eventPlayer.FFAReset = true
     #Category setup
-    eventPlayer.Category = Category
     if Category == 0:
         eventPlayer.setMoveSpeed(100)
         eventPlayer.setGravity(100)

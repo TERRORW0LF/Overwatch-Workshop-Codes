@@ -121,7 +121,6 @@ rule "Circle Fix (Practice)":
     
     stopChasingVariable(eventPlayer.TimeCurrent)
     eventPlayer.TimeCurrent = 0
-    eventPlayer.TimeExtra = 0
     wait(0.05)
     eventPlayer.allowButton(Button.JUMP)
 

@@ -114,10 +114,10 @@ rule ("Workshop Settings") {
         Ongoing - Global;
     }
     actions {
-        Set Global Variable(Defense, Workshop Setting Combo(Custom String("Point Select", Null, Null, Null), Custom String("Active Team", Null, Null, Null), 0, Array(Custom String("Attack", Null, Null, Null), Custom String("Defense", Null, Null, Null)), 0));
-        Set Global Variable(Point, Workshop Setting Integer(Custom String("Point Select", Null, Null, Null), Custom String("Active Point", Null, Null, Null), 1, 1, 3, 1));
-        Set Global Variable(Time, Workshop Setting Integer(Custom String("Time", Null, Null, Null), Custom String("Seconds", Null, Null, Null), 600, 60, 3600, 0));
-        Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time", Null, Null, Null), Custom String("Infinite", Null, Null, Null), False, 1));
+        Set Global Variable(Defense, Workshop Setting Combo(Custom String("Point Select"), Custom String("Active Team"), 0, Array(Custom String("Attack"), Custom String("Defense")), 0));
+        Set Global Variable(Point, Workshop Setting Integer(Custom String("Point Select"), Custom String("Active Point"), 1, 1, 3, 1));
+        Set Global Variable(Time, Workshop Setting Integer(Custom String("Time"), Custom String("Seconds"), 600, 60, 3600, 0));
+        Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time"), Custom String("Infinite"), False, 1));
     }
 }
 
@@ -128,10 +128,10 @@ disabled rule ("Debug Player") {
         All;
     }
     actions {
-        Create HUD Text(Event Player, Custom String("{0}", Position Of(Event Player), Null, Null), Null, Null, Top, 5, Color(White), Null, Null, String, Default Visibility);
-        Create HUD Text(Event Player, Custom String("{0}", Objective Index, Null, Null), Null, Null, Top, 6, Color(White), Null, Null, String, Default Visibility);
-        Create HUD Text(Event Player, Custom String("{0}", Objective Position(Objective Index), Null, Null), Null, Null, Top, 7, Color(White), Null, Null, String, Default Visibility);
-        Create HUD Text(Event Player, Custom String("{0}", Payload Position, Null, Null), Null, Null, Top, 8, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}", Position Of(Event Player)), Null, Null, Top, 5, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}", Objective Index), Null, Null, Top, 6, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}", Objective Position(Objective Index)), Null, Null, Top, 7, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("{0}", Payload Position), Null, Null, Top, 8, Color(White), Null, Null, String, Default Visibility);
     }
 }
 
@@ -188,11 +188,11 @@ rule ("Setup - Player") {
         Set Status(Event Player, Null, Invincible, 9999);
         Set Status(Event Player, Null, Phased Out, 9999);
         Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
-        Create HUD Text(Event Player, Custom String("Spawn: {0} sec", (Event Player).TimeSpawn, Null, Null), Null, Null, Left, 1, Color(White), Null, Null, String, Default Visibility);
-        Create HUD Text(Event Player, Custom String("Run: {0} sec", (Event Player).TimeRun, Null, Null), Null, Null, Left, 2, Color(White), Null, Null, String, Default Visibility);
-        Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player), Null, Null), Null, Null, Top, 1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
-        Create HUD Text(Event Player, Custom String("Best Spawn: {0} sec", (Event Player).BestSpawn, Null, Null), Null, Null, Right, 1, Color(White), Null, Null, String, Default Visibility);
-        Create HUD Text(Event Player, Custom String("Best Run: {0} sec", (Event Player).BestRun, Null, Null), Null, Null, Right, 2, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Spawn: {0} sec", (Event Player).TimeSpawn), Null, Null, Left, 1, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Run: {0} sec", (Event Player).TimeRun), Null, Null, Left, 2, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, String("{0} m/s", Horizontal Speed Of(Event Player)), Null, Null, Top, 1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Best Spawn: {0} sec", (Event Player).BestSpawn), Null, Null, Right, 1, Color(White), Null, Null, String, Default Visibility);
+        Create HUD Text(Event Player, Custom String("Best Run: {0} sec", (Event Player).BestRun), Null, Null, Right, 2, Color(White), Null, Null, String, Default Visibility);
     }
 }
 
@@ -201,7 +201,7 @@ rule ("Setup - Global") {
         Ongoing - Global;
     }
     actions {
-        Create HUD Text(All Players(All Teams), Custom String("Fastest Rollouts v2.4", Null, Null, Null), Null, Null, Right, 0, Color(Yellow), Null, Null, None, Default Visibility);
+        Create HUD Text(All Players(All Teams), Custom String("Fastest Rollouts v2.4"), Null, Null, Right, 0, Color(Yellow), Null, Null, None, Default Visibility);
     }
 }
 
@@ -408,9 +408,9 @@ rule ("Start Timer - Run") {
         Stop Chasing Player Variable(Event Player, TimeSpawn);
         If(And(Compare((Event Player).TimeSpawn, <, (Event Player).BestSpawn), Compare((Event Player).TimeSpawn, !=, 0)));
             Set Player Variable(Event Player, BestSpawn, (Event Player).TimeSpawn);
-            Small Message(Event Player, Custom String("PB Spawn: {0} sec", (Event Player).TimeSpawn, Null, Null));
+            Small Message(Event Player, Custom String("PB Spawn: {0} sec", (Event Player).TimeSpawn));
         Else;
-            Small Message(Event Player, Custom String("Spawn: {0} sec", (Event Player).TimeSpawn, Null, Null));
+            Small Message(Event Player, Custom String("Spawn: {0} sec", (Event Player).TimeSpawn));
     }
 }
 
@@ -446,9 +446,9 @@ rule ("Finish") {
         Stop Chasing Player Variable(Event Player, TimeRun);
         If(Compare((Event Player).TimeRun, <, (Event Player).BestRun));
             Set Player Variable(Event Player, BestRun, (Event Player).TimeRun);
-            Small Message(Event Player, Custom String("PB Run: {0} sec", (Event Player).TimeRun, Null, Null));
+            Small Message(Event Player, Custom String("PB Run: {0} sec", (Event Player).TimeRun));
         Else;
-            Small Message(Event Player, Custom String("Run: {0} sec", (Event Player).TimeRun, Null, Null));
+            Small Message(Event Player, Custom String("Run: {0} sec", (Event Player).TimeRun));
         End;
         Set Player Variable(Event Player, Finished, True);
     }

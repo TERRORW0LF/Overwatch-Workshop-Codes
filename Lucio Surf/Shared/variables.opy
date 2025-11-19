@@ -30,11 +30,6 @@ globalvar PosFinish 26
 globalvar PosBarrier 27
 globalvar MapName 28
 globalvar Edit 50
-globalvar SelectedEditable 51
-globalvar YOffset 52
-globalvar PosEditable 53
-globalvar EntEditable 54
-globalvar CpStr 55
 
 
 # Player variables
@@ -44,9 +39,9 @@ playervar TimeExtra 1
 playervar TimeBestGrav 2 = 9999
 playervar TimeBestStan 3 = 9999
 playervar NewBest 4
-playervar Checkpoint 5
+playervar Checkpoint 5 = []
 playervar Finished 6
-playervar Category 7
+playervar Category 7 = Category
 playervar AutoReset 8
 playervar HideHud 9 = 1
 playervar SkipMap 10
