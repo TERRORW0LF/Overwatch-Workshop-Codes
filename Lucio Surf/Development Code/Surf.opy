@@ -1,5 +1,5 @@
 macro DEV = true
-macro VERSION = "5.14d2"
+macro VERSION = "5.14d3"
 macro CODE = "6XN1G"
 macro MODE = " Development"
 
@@ -43,8 +43,13 @@ rule "Start - Map Overrides":
         return
 
     if MapName == "NJ" and Layout == 1:
-        PosStart = vect(2.90, 5.65, -89.94)
+        PosStart = vect(-5.03, 4, -77.46)
         return
+
+    if MapName == "NJ" and Layout == 3:
+        PosStart = vect(63.86, -0.47, 98.6)
+        PosCheckpoint = [vect(-71.13, 3.25, 53.03)]
+        PosBarrier = [vect(-48.91, 10, 24.02)]
 
     # Start if fucked no matter what
     if MapName == "NJ" and Layout == 4:
@@ -52,6 +57,10 @@ rule "Start - Map Overrides":
         PosCheckpoint = [vect(-67.574, -1.1, -39.99), vect(20.901, 3.8, -75.494), vect(66.197, -3, -42.641), vect(49.998, 2.7, 43.036), vect(-0.505, 5.8, 92.147), vect(-91.813, -0.2, 40.051)]
         PosFinish = vect(-31, 0, 0)
         Checkpoint = true
+        return
+    
+    if MapName == "SA" and Layout == 0:
+        PosStart = vect(5.57, 3.95, 87.59)
         return
 
     if MapName == "SA" and Layout == 4:
@@ -217,7 +226,7 @@ rule "Place Editable":
         createInWorldText(getAllPlayers(), f"{Loop1 + 1}", PosCheckpoint[evalOnce(Loop1)] + vect(0, 6, 0), 5, Clip.NONE, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
         createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.LIME_GREEN if localPlayer.Checkpoint[evalOnce(Loop1)] else Color.SKY_BLUE, PosCheckpoint[evalOnce(Loop1)], 3.5, EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
         createEffect(getAllPlayers(), Effect.RING, Color.LIME_GREEN if localPlayer.Checkpoint[evalOnce(Loop1)] else Color.SKY_BLUE, PosCheckpoint[evalOnce(Loop1)], 3.5, EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
-    for Loop1 in range(0, len(getAllPlayers())):
+        for Loop1 in range(0, len(getAllPlayers())):
             getAllPlayers()[Loop1].Checkpoint.append(false)
     elif SelectedEditable == len(PosCheckpoint) + 2:
         PosFinish = PosEditable + Vector.UP * YOffset

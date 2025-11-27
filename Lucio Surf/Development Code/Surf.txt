@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.14d2.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 6XN1G"
+		Description: "Lucio Surf v5.14d3.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 6XN1G"
 		Mode Name: "Lucio Surf Development"
 	}
 	lobby
@@ -2105,8 +2105,13 @@ rule ("Start - Map Overrides") {
             Abort;
         End;
         If(And(Compare(Global.MapName, ==, Custom String("NJ")), Compare(Global.Layout, ==, 1)));
-            Set Global Variable(PosStart, Vector(2.90, 5.65, -89.94));
+            Set Global Variable(PosStart, Vector(-5.03, 4, -77.46));
             Abort;
+        End;
+        If(And(Compare(Global.MapName, ==, Custom String("NJ")), Compare(Global.Layout, ==, 3)));
+            Set Global Variable(PosStart, Vector(63.86, -0.47, 98.6));
+            Set Global Variable(PosCheckpoint, Array(Vector(-71.13, 3.25, 53.03)));
+            Set Global Variable(PosBarrier, Array(Vector(-48.91, 10, 24.02)));
         End;
         "Start if fucked no matter what"
         If(And(Compare(Global.MapName, ==, Custom String("NJ")), Compare(Global.Layout, ==, 4)));
@@ -2114,6 +2119,10 @@ rule ("Start - Map Overrides") {
             Set Global Variable(PosCheckpoint, Array(Vector(-67.574, -1.1, -39.99), Vector(20.901, 3.8, -75.494), Vector(66.197, -3, -42.641), Vector(49.998, 2.7, 43.036), Vector(-0.505, 5.8, 92.147), Vector(-91.813, -0.2, 40.051)));
             Set Global Variable(PosFinish, Vector(-31, 0, 0));
             Set Global Variable(Checkpoint, True);
+            Abort;
+        End;
+        If(And(Compare(Global.MapName, ==, Custom String("SA")), Compare(Global.Layout, ==, 0)));
+            Set Global Variable(PosStart, Vector(5.57, 3.95, 87.59));
             Abort;
         End;
         If(And(Compare(Global.MapName, ==, Custom String("SA")), Compare(Global.Layout, ==, 4)));
@@ -2192,8 +2201,8 @@ rule ("Start - Global") {
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Evaluate Once(Global.Loop1)), 5, Visible To Position and Radius);
         End;
         "Layout / Category information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.14d2 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.14d2 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.14d3 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.14d3 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
         Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
@@ -3269,10 +3278,9 @@ rule ("Place Editable") {
             Create In-World Text(All Players(All Teams), Custom String("{0}", Add(Global.Loop1, 1)), Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, 6, 0)), 5, Do Not Clip, Visible To and Position, Color(White), Default Visibility);
             Create Effect(All Players(All Teams), Light Shaft, If-Then-Else(Value In Array((Local Player).Checkpoint, Evaluate Once(Global.Loop1)), Color(Lime Green), Color(Sky Blue)), Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), 3.5, Visible To Position Radius and Color);
             Create Effect(All Players(All Teams), Ring, If-Then-Else(Value In Array((Local Player).Checkpoint, Evaluate Once(Global.Loop1)), Color(Lime Green), Color(Sky Blue)), Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), 3.5, Visible To Position Radius and Color);
-        End;
-        For Global Variable(Loop1, 0, Number Of Players(All Teams), 1);
-            Modify Player Variable(Value In Array(All Players(All Teams), Global.Loop1), Checkpoint, Append To Array, False);
-        End;
+            For Global Variable(Loop1, 0, Number Of Players(All Teams), 1);
+                Modify Player Variable(Value In Array(All Players(All Teams), Global.Loop1), Checkpoint, Append To Array, False);
+            End;
         Else If(Compare(Global.SelectedEditable, ==, Add(Count Of(Global.PosCheckpoint), 2)));
             Set Global Variable(PosFinish, Add(Global.PosEditable, Multiply(Up, Global.YOffset)));
         Else;

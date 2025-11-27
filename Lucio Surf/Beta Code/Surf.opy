@@ -1,5 +1,5 @@
 macro DEV = true
-macro VERSION = "5.14b0"
+macro VERSION = "5.14b1"
 macro CODE = "048YZ"
 macro MODE = " Beta"
 
@@ -32,8 +32,13 @@ rule "Start - Map Overrides":
         return
 
     if MapName == "NJ" and Layout == 1:
-        PosStart = vect(2.90, 5.65, -89.94)
+        PosStart = vect(-5.03, 4, -77.46)
         return
+
+    if MapName == "NJ" and Layout == 3:
+        PosStart = vect(63.86, -0.47, 98.6)
+        PosCheckpoint = [vect(-71.13, 3.25, 53.03)]
+        PosBarrier = [vect(-48.91, 10, 24.02)]
 
     # Start if fucked no matter what
     if MapName == "NJ" and Layout == 4:
@@ -41,6 +46,10 @@ rule "Start - Map Overrides":
         PosCheckpoint = [vect(-67.574, -1.1, -39.99), vect(20.901, 3.8, -75.494), vect(66.197, -3, -42.641), vect(49.998, 2.7, 43.036), vect(-0.505, 5.8, 92.147), vect(-91.813, -0.2, 40.051)]
         PosFinish = vect(-31, 0, 0)
         Checkpoint = true
+        return
+    
+    if MapName == "SA" and Layout == 0:
+        PosStart = vect(5.57, 3.95, 87.59)
         return
 
     if MapName == "SA" and Layout == 4:
@@ -75,7 +84,7 @@ rule "Start - Map Overrides":
             PosCheckpoint = [vect(-77.869, 9, -28.175), vect(-84.305, 11.8, -71.17), vect(53.731, 10.8, -89.036), vect(85.613, 13.8, -52.378), vect(95.749, 7, 40.007), vect(22.516, 13.8, 68.788), vect(-70.785, 11, 79.292), vect(-87.784, 9.4, 39.892)]
             PosFinish = vect(-12.737, 8.8, -0.014)
             return
-    
+
 
 # Setup
 #!include "../Shared/game_setup.opy"
