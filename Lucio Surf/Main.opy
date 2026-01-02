@@ -25,8 +25,7 @@ settings "Shared/settings.opy.json"
 rule "Start - Global (Extra)":
     createIcon(getAllPlayers(), PosFinish + vect(0, 6, 0), Icon.FLAG, IconReeval.VISIBILITY, Color.WHITE, true)
     for Loop1 in range(0, len(PosCheckpoint)):
-        createIcon([player for player in getAllPlayers() if not player.Checkpoint[evalOnce(Loop1)]], PosCheckpoint[Loop1] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY, Color.SKY_BLUE, false)
-        createIcon([player for player in getAllPlayers() if player.Checkpoint[evalOnce(Loop1)]], PosCheckpoint[Loop1] + vect(0, 6, 0), Icon.CHECKMARK, IconReeval.VISIBILITY, Color.LIME_GREEN, false)
+        createIcon(getAllPlayers(), PosCheckpoint[Loop1] + vect(0, 6, 0), Icon.ARROW_DOWN, IconReeval.VISIBILITY_AND_COLOR, Color.SKY_BLUE if not localPlayer.Checkpoint[evalOnce(Loop1)] else Color.LIME_GREEN, false)
 
 
 # Gamemode
