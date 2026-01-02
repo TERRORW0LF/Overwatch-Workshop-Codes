@@ -2235,8 +2235,7 @@ rule ("Start - Global (Extra)") {
     actions {
         Create Icon(All Players(All Teams), Add(Global.PosFinish, Vector(0, 6, 0)), Flag, Visible To, Color(White), True);
         For Global Variable(Loop1, 0, Count Of(Global.PosCheckpoint), 1);
-            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1)))), Add(Value In Array(Global.PosCheckpoint, Global.Loop1), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
-            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1))), Add(Value In Array(Global.PosCheckpoint, Global.Loop1), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
+            Create Icon(All Players(All Teams), Add(Value In Array(Global.PosCheckpoint, Global.Loop1), Vector(0, 6, 0)), Arrow: Down, Visible To and Color, If-Then-Else(Value In Array((Local Player).Checkpoint, Evaluate Once(Global.Loop1)), Color(Lime Green), Color(Sky Blue)), False);
         End;
     }
 }
