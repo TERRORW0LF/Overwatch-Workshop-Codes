@@ -2,8 +2,8 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.14d3.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 6XN1G"
-		Mode Name: "Lucio Surf Development"
+		Description: "Lucio Surf v5.14.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: KVKKR"
+		Mode Name: "Lucio Surf"
 	}
 	lobby
 	{
@@ -81,14 +81,14 @@ settings
 	}
 	workshop
 	{
-		Standard: Off
+		Standard: On
 		Gravspeed: On
 		Season 1: On
 		Season 2: On
 		Season 3: On
 		Season 4: On
-		Season 5: On
-		Infinite: On
+		Season 5: Off
+		Infinite: Off
 	}
 }
 variables {
@@ -123,11 +123,6 @@ variables {
         27: PosBarrier
         28: MapName
         50: Edit
-        51: SelectedEditable
-        52: YOffset
-        53: PosEditable
-        54: EntEditable
-        55: CpStr
     player:
         0: TimeCurrent
         1: TimeExtra
@@ -198,30 +193,6 @@ rule ("Initialize player variables") {
     }
 }
 
-rule ("Debug (Player)") {
-    event {
-        Ongoing - Global;
-    }
-    actions {
-        Create HUD Text(Local Player, Custom String("{0}", Position Of(Local Player)), Null, Null, Top, 4, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Local Player, Custom String("{0}.{1} sec", Round To Integer(Add((Local Player).TimeExtra, 0.0001), Down), String Slice(Custom String("{0}", Round To Integer(Add(Modulo(Multiply(1000, (Local Player).TimeExtra), 1000), 1000), To Nearest)), 1, 3)), Null, Null, Top, 5, Color(White), Null, Null, Visible To and String, Default Visibility);
-    }
-}
-
-rule ("Debug (Player - Host)") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Event Player == Host Player;
-    }
-    actions {
-        Create HUD Text(Event Player, Custom String("Edit: {0} | Y-Offset: {1}", Global.SelectedEditable, Global.YOffset), Null, Null, Top, 5, Color(White), Null, Null, String, Default Visibility);
-    }
-}
-
 rule ("Workshop Settings") {
     event {
         Ongoing - Global;
@@ -235,8 +206,8 @@ rule ("Workshop Settings") {
         Set Global Variable At Index(LayoutArr, 4, If-Then-Else(Workshop Setting Toggle(Custom String("Layout"), Custom String("Layout 5"), False, 4), 4, -1));
         Set Global Variable(Layout, Random Value In Array(Filtered Array(Global.LayoutArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(CategoryArr, Empty Array);
-        Set Global Variable At Index(CategoryArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category"), Custom String("Standard"), True, 0), 0, -1));
-        Set Global Variable At Index(CategoryArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Default Category"), Custom String("Gravspeed"), True, 1), 1, -1));
+        Set Global Variable At Index(CategoryArr, 0, If-Then-Else(Workshop Setting Toggle(Custom String("Category"), Custom String("Standard"), True, 0), 0, -1));
+        Set Global Variable At Index(CategoryArr, 1, If-Then-Else(Workshop Setting Toggle(Custom String("Category"), Custom String("Gravspeed"), True, 1), 1, -1));
         Set Global Variable(Category, Random Value In Array(Filtered Array(Global.CategoryArr, Compare(Current Array Element, >=, 0))));
         Set Global Variable(Time, Workshop Setting Integer(Custom String("Time"), Custom String("Seconds"), 600, 60, 3600, 0));
         Set Global Variable(Infinite, Workshop Setting Toggle(Custom String("Time"), Custom String("Infinite"), False, 1));
@@ -253,23 +224,6 @@ rule ("Start - Maps (Identifier)") {
         If(Compare(Current Map, ==, Map(Aatlis)));
             Set Global Variable(MapName, Custom String("AA"));
             Abort;
-        End;
-        If(Compare(Current Map, ==, Map(Antarctic Peninsula)));
-            "Icebreaker"
-            If(Compare(Objective Index, ==, 0));
-                Set Global Variable(MapName, Custom String("AI"));
-                Abort;
-            End;
-            "Labs"
-            If(Compare(Objective Index, ==, 1));
-                Set Global Variable(MapName, Custom String("AL"));
-                Abort;
-            End;
-            "Sublevel"
-            If(Compare(Objective Index, ==, 2));
-                Set Global Variable(MapName, Custom String("AS"));
-                Abort;
-            End;
         End;
         If(Compare(Current Map, ==, Map(Blizzard World)));
             Set Global Variable(MapName, Custom String("BW"));
@@ -512,6 +466,11 @@ rule ("Start - Maps (Layout 1)") {
     }
     actions {
         Set Global Variable(Checkpoint, False);
+        If(Compare(Global.MapName, ==, Custom String("AA")));
+            Set Global Variable(PosStart, Vector(25.61, 13.19, -79.56));
+            Set Global Variable(PosFinish, Vector(41.77, 10.8, 96.7));
+            Abort;
+        End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
             Set Global Variable(PosStart, Vector(210.355, -9.86, -243.085));
             Set Global Variable(PosFinish, Vector(347, -11.6, -226.5));
@@ -755,8 +714,8 @@ rule ("Start - Maps (Layout 1)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("SA")));
-            Set Global Variable(PosStart, Vector(19.24, 4, 92.476));
-            Set Global Variable(PosFinish, Vector(-26.934, 2, -87.188));
+            Set Global Variable(PosStart, Vector(22.17, 4.01, 79.02));
+            Set Global Variable(PosFinish, Vector(-22.65, -0.2, -87.188));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("TA")));
@@ -790,6 +749,11 @@ rule ("Start - Maps (Layout 2)") {
     }
     actions {
         Set Global Variable(Checkpoint, False);
+        If(Compare(Global.MapName, ==, Custom String("AA")));
+            Set Global Variable(PosStart, Vector(47.89, 11.02, 86.04));
+            Set Global Variable(PosFinish, Vector(25.72, 13.04, -92.99));
+            Abort;
+        End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
             Set Global Variable(PosStart, Vector(350.57, -10.4, -233.23));
             Set Global Variable(PosFinish, Vector(257.034, -15, -197.215));
@@ -952,7 +916,7 @@ rule ("Start - Maps (Layout 2)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NJ")));
-            Set Global Variable(PosStart, Vector(4.7, 4, -84.94));
+            Set Global Variable(PosStart, Vector(-5.03, 4, -77.46));
             Set Global Variable(PosFinish, Vector(-24.061, 5, 107.724));
             Abort;
         End;
@@ -1067,6 +1031,12 @@ rule ("Start - Maps (Layout 3)") {
     }
     actions {
         Set Global Variable(Checkpoint, True);
+        If(Compare(Global.MapName, ==, Custom String("AA")));
+            Set Global Variable(PosStart, Vector(8.346, 14, 44.745));
+            Set Global Variable(PosCheckpoint, Array(Vector(-86.743, 9.5, 39.957)));
+            Set Global Variable(PosFinish, Vector(2.1, 7.8, 0));
+            Abort;
+        End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
             Set Global Variable(PosStart, Vector(280.745, -11, -267.232));
             Set Global Variable(PosCheckpoint, Array(Vector(283.976, -13, -200.454)));
@@ -1396,6 +1366,13 @@ rule ("Start - Maps (Layout 4)") {
         Global.Layout == 3;
     }
     actions {
+        If(Compare(Global.MapName, ==, Custom String("AA")));
+            Set Global Variable(PosStart, Vector(-93.21, 10.25, 61.16));
+            Set Global Variable(PosCheckpoint, Array(Vector(78.596, 10.4, -2.73)));
+            Set Global Variable(PosFinish, Vector(28.836, 13, -91.974));
+            Set Global Variable(Checkpoint, True);
+            Abort;
+        End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
             Set Global Variable(PosStart, Vector(350.57, -10.4, -233.23));
             Set Global Variable(PosCheckpoint, Array(Vector(284.074, -13.4, -199.044)));
@@ -1447,7 +1424,7 @@ rule ("Start - Maps (Layout 4)") {
         If(Compare(Global.MapName, ==, Custom String("CG")));
             Set Global Variable(PosStart, Vector(207.33, 9, 44.4));
             Set Global Variable(PosCheckpoint, Array(Vector(161, -1, 117.51)));
-            Set Global Variable(PosFinish, Vector(226.5, 11.2, 64.5));
+            Set Global Variable(PosFinish, Vector(231.5, 0, 64.5));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
@@ -1467,7 +1444,7 @@ rule ("Start - Maps (Layout 4)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("DR")));
             Set Global Variable(PosStart, Vector(62.246, 13.42, 21.758));
-            Set Global Variable(PosCheckpoint, Array(Vector(117.076, 17.9, 5.438)));
+            Set Global Variable(PosCheckpoint, Array(Vector(117.076, 16.9, 5.438)));
             Set Global Variable(PosFinish, Vector(26.047, 3.9, -41.35));
             Set Global Variable(Checkpoint, True);
             Abort;
@@ -1618,9 +1595,10 @@ rule ("Start - Maps (Layout 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NJ")));
-            Set Global Variable(PosStart, Vector(64.873, 0, 102.267));
-            Set Global Variable(PosCheckpoint, Array(Vector(-74.96, -0.1, 39.86)));
+            Set Global Variable(PosStart, Vector(63.86, -0.47, 98.6));
+            Set Global Variable(PosCheckpoint, Array(Vector(-71.13, 3.25, 53.03)));
             Set Global Variable(PosFinish, Vector(22.8, 0, -41.18));
+            Set Global Variable(PosBarrier, Array(Vector(-48.91, 10, 24.02)));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
@@ -1772,6 +1750,12 @@ rule ("Start - Maps (Layout 5)") {
     }
     actions {
         Set Global Variable(Checkpoint, True);
+        If(Compare(Global.MapName, ==, Custom String("AA")));
+            Set Global Variable(PosStart, Vector(-1.425, 8.04, 0));
+            Set Global Variable(PosCheckpoint, Array(Vector(-77.869, 9, -28.175), Vector(-84.305, 11.8, -71.17), Vector(53.731, 10.8, -89.036), Vector(85.613, 13.8, -52.378), Vector(95.749, 7, 40.007), Vector(22.516, 13.8, 68.788), Vector(-70.785, 11, 79.292), Vector(-87.784, 9.4, 39.892)));
+            Set Global Variable(PosFinish, Vector(-12.737, 8.8, -0.014));
+            Abort;
+        End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
             Set Global Variable(PosStart, Vector(283.944, -11, -247.474));
             Set Global Variable(PosCheckpoint, Array(Vector(225.535, -11, -245.627), Vector(240.373, -18, -199.518), Vector(342.476, -13, -233.311)));
@@ -1966,9 +1950,9 @@ rule ("Start - Maps (Layout 5)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NJ")));
-            Set Global Variable(PosStart, Vector(19.679, 4, 0.009));
-            Set Global Variable(PosCheckpoint, Array(Vector(-71.89, 0, 40.001), Vector(-3.033, 0, 90.177), Vector(33.249, 0, 43.03), Vector(62.5, -3, -43.066), Vector(47.958, 0, -85.671), Vector(-67.688, 0, -40.294)));
-            Set Global Variable(PosFinish, Vector(-27.9, 0, 0.036));
+            Set Global Variable(PosStart, Vector(-27.75, 5.04, 0));
+            Set Global Variable(PosCheckpoint, Array(Vector(-67.574, -1.1, -39.99), Vector(20.901, 3.8, -75.494), Vector(66.197, -3, -42.641), Vector(49.998, 2.7, 43.036), Vector(-0.505, 5.8, 92.147), Vector(-91.813, -0.2, 40.051)));
+            Set Global Variable(PosFinish, Vector(-31, 0, 0));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NQ")));
@@ -2033,7 +2017,7 @@ rule ("Start - Maps (Layout 5)") {
         End;
         If(Compare(Global.MapName, ==, Custom String("RS")));
             Set Global Variable(PosStart, Vector(0, 5, 76.807));
-            Set Global Variable(PosCheckpoint, Array(Vector(0.077, -2, -7.425), Vector(89.904, 0, 16.849), Vector(-76.928, 0, 45.845), Vector(-89.293, 0, 10.462)));
+            Set Global Variable(PosCheckpoint, Array(Vector(0.077, -2, -7.425), Vector(89.904, 0, 16.849), Vector(-76.928, 0, 45.845), Vector(-87.95, 4.58, 11.33)));
             Set Global Variable(PosFinish, Vector(0, -5, 30.15));
             Abort;
         End;
@@ -2062,9 +2046,9 @@ rule ("Start - Maps (Layout 5)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("SA")));
-            Set Global Variable(PosStart, Vector(-42, 0, 0));
-            Set Global Variable(PosCheckpoint, Array(Vector(-57.401, -1, 41.977), Vector(0.398, 3, 106.895), Vector(59.326, 4, 42.034), Vector(85.321, 1, -41.919), Vector(-9.241, 2, -94.347), Vector(-92.491, 3, -56.881)));
-            Set Global Variable(PosFinish, Vector(27.3, 2, 0));
+            Set Global Variable(PosStart, Vector(-5.509, 4.13, 0));
+            Set Global Variable(PosCheckpoint, Array(Vector(-93.032, -3.2, 41.929), Vector(0.731, 2.8, 84.548), Vector(59.309, 4.8, 45.652), Vector(73.2, 2.5, -41.999), Vector(-12.948, 0.8, -87.767), Vector(-92.491, 4.8, -56.881)));
+            Set Global Variable(PosFinish, Vector(17, 3.8, 0));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("TA")));
@@ -2073,7 +2057,6 @@ rule ("Start - Maps (Layout 5)") {
             Set Global Variable(PosFinish, Vector(-21.014, 4.5, 35.175));
             Abort;
         End;
-        "TODO: Actually good map"
         If(Compare(Global.MapName, ==, Custom String("TH")));
             Set Global Variable(PosStart, Vector(15.722, 2.271, -0.111));
             Set Global Variable(PosCheckpoint, Array(Vector(-18.977, -5.989, -18.579), Vector(-27.458, -3.178, 50.387), Vector(0, -6.303, 99.968), Vector(0, -6.168, -100.089)));
@@ -2092,75 +2075,6 @@ rule ("Start - Maps (Layout 5)") {
             Set Global Variable(PosFinish, Vector(59.279, -3.2, -39.483));
             Set Global Variable(PosBarrier, Array(Vector(38.005, 4.175, -76.422), Vector(38.619, -3.844, -76.96)));
             Abort;
-    }
-}
-
-rule ("Start - Map Overrides") {
-    event {
-        Ongoing - Global;
-    }
-    actions {
-        If(And(Compare(Global.MapName, ==, Custom String("DR")), Compare(Global.Layout, ==, 3)));
-            Set Global Variable(PosCheckpoint, Array(Vector(117.076, 16.9, 5.438)));
-            Abort;
-        End;
-        If(And(Compare(Global.MapName, ==, Custom String("NJ")), Compare(Global.Layout, ==, 1)));
-            Set Global Variable(PosStart, Vector(-5.03, 4, -77.46));
-            Abort;
-        End;
-        If(And(Compare(Global.MapName, ==, Custom String("NJ")), Compare(Global.Layout, ==, 3)));
-            Set Global Variable(PosStart, Vector(63.86, -0.47, 98.6));
-            Set Global Variable(PosCheckpoint, Array(Vector(-71.13, 3.25, 53.03)));
-            Set Global Variable(PosBarrier, Array(Vector(-48.91, 10, 24.02)));
-        End;
-        "Start if fucked no matter what"
-        If(And(Compare(Global.MapName, ==, Custom String("NJ")), Compare(Global.Layout, ==, 4)));
-            Set Global Variable(PosStart, Vector(-27.75, 5.04, 0));
-            Set Global Variable(PosCheckpoint, Array(Vector(-67.574, -1.1, -39.99), Vector(20.901, 3.8, -75.494), Vector(66.197, -3, -42.641), Vector(49.998, 2.7, 43.036), Vector(-0.505, 5.8, 92.147), Vector(-91.813, -0.2, 40.051)));
-            Set Global Variable(PosFinish, Vector(-31, 0, 0));
-            Set Global Variable(Checkpoint, True);
-            Abort;
-        End;
-        If(And(Compare(Global.MapName, ==, Custom String("SA")), Compare(Global.Layout, ==, 0)));
-            Set Global Variable(PosStart, Vector(5.57, 3.95, 87.59));
-            Abort;
-        End;
-        If(And(Compare(Global.MapName, ==, Custom String("SA")), Compare(Global.Layout, ==, 4)));
-            Set Global Variable(PosStart, Vector(-5.509, 4.13, 0));
-            Set Global Variable(PosCheckpoint, Array(Vector(-93.032, -3.2, 41.929), Vector(0.731, 2.8, 84.548), Vector(59.309, 4.8, 45.652), Vector(73.2, 2.5, -41.999), Vector(-12.948, 0.8, -87.767), Vector(-92.491, 4.8, -56.881)));
-            Set Global Variable(PosFinish, Vector(17, 3.8, 0));
-            Set Global Variable(Checkpoint, True);
-            Abort;
-        End;
-        If(Compare(Global.MapName, ==, Custom String("AA")));
-            If(Compare(Global.Layout, ==, 0));
-                Set Global Variable(PosStart, Vector(25.61, 13.19, -79.56));
-                Set Global Variable(PosFinish, Vector(41.77, 10.8, 96.7));
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 1));
-                Set Global Variable(PosStart, Vector(47.89, 11.02, 86.04));
-                Set Global Variable(PosFinish, Vector(25.72, 13.04, -92.99));
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 2));
-                Set Global Variable(PosStart, Vector(8.346, 14, 44.745));
-                Set Global Variable(PosCheckpoint, Array(Vector(-86.743, 9.5, 39.957)));
-                Set Global Variable(PosFinish, Vector(2.1, 7.8, 0));
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 3));
-                Set Global Variable(PosStart, Vector(-89.226, 10.25, 57.74));
-                Set Global Variable(PosCheckpoint, Array(Vector(78.596, 10.4, -2.73)));
-                Set Global Variable(PosFinish, Vector(28.836, 13, -91.974));
-                Set Global Variable(Checkpoint, True);
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 4));
-                Set Global Variable(PosStart, Vector(-1.425, 8.04, 0));
-                Set Global Variable(PosCheckpoint, Array(Vector(-77.869, 9, -28.175), Vector(-84.305, 11.8, -71.17), Vector(53.731, 10.8, -89.036), Vector(85.613, 13.8, -52.378), Vector(95.749, 7, 40.007), Vector(22.516, 13.8, 68.788), Vector(-70.785, 11, 79.292), Vector(-87.784, 9.4, 39.892)));
-                Set Global Variable(PosFinish, Vector(-12.737, 8.8, -0.014));
-                Abort;
     }
 }
 
@@ -2200,9 +2114,11 @@ rule ("Start - Global") {
         For Global Variable(Loop1, 0, Count Of(Global.PosBarrier), 1);
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Evaluate Once(Global.Loop1)), 5, Visible To Position and Radius);
         End;
+        "Site ad"
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).HideHud, <=, 1)), Null, Null, Custom String("website - lucio.surf/"), Left, 3, Null, Null, Color(White), Visible To, Default Visibility);
         "Layout / Category information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.14d3 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.14d3 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.14 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.14 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
         Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
@@ -2211,7 +2127,7 @@ rule ("Start - Global") {
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         "Always visible help text"
-        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Map Skip - {0}/{1} | {2}", Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Global.VoteMin, Custom String("{0}/{1}%", Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100), Global.VotePerc)), Left, 3, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Map Skip - {0}/{1} | {2}", Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Global.VoteMin, Custom String("{0}/{1}%", Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100), Global.VotePerc)), Left, 4, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text standard"
         Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
         Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Cycle Auto Reset - Crouch + Melee"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
@@ -2301,25 +2217,11 @@ rule ("Start - Global (Extra)") {
         Ongoing - Global;
     }
     actions {
-        "Start / Checkpoint / Finish / Barrier effects"
-        Create Effect(All Players(All Teams), Sphere, Color(White), Global.PosStart, 0.2, Visible To Position and Radius);
-        Create In-World Text(All Players(All Teams), Custom String("0"), Add(Global.PosStart, Vector(0, 6, 0)), 5, Do Not Clip, Visible To Position and String, Color(White), Default Visibility);
-        Create Beam Effect(All Players(All Teams), Grapple Beam, Add(Global.PosFinish, Vector(0, -10, 0)), Add(Global.PosFinish, Vector(0, 10, 0)), Color(White), Visible To Position and Radius);
-        Create In-World Text(All Players(All Teams), Custom String("{0}", Add(Count Of(Global.PosCheckpoint), 2)), Add(Global.PosFinish, Vector(0, 6, 0)), 5, Do Not Clip, Visible To Position and String, Color(White), Default Visibility);
+        Create Icon(All Players(All Teams), Add(Global.PosFinish, Vector(0, 6, 0)), Flag, Visible To, Color(White), True);
         For Global Variable(Loop1, 0, Count Of(Global.PosCheckpoint), 1);
-            Create Beam Effect(All Players(All Teams), Grapple Beam, Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, -10, 0)), Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, 10, 0)), Color(White), Visible To Position and Radius);
-            Create In-World Text(All Players(All Teams), Custom String("{0}", Add(Global.Loop1, 1)), Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, 6, 0)), 5, Do Not Clip, Visible To and Position, Color(White), Default Visibility);
+            Create Icon(Filtered Array(All Players(All Teams), Not(Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1)))), Add(Value In Array(Global.PosCheckpoint, Global.Loop1), Vector(0, 6, 0)), Arrow: Down, Visible To, Color(Sky Blue), False);
+            Create Icon(Filtered Array(All Players(All Teams), Value In Array((Current Array Element).Checkpoint, Evaluate Once(Global.Loop1))), Add(Value In Array(Global.PosCheckpoint, Global.Loop1), Vector(0, 6, 0)), Checkmark, Visible To, Color(Lime Green), False);
         End;
-        "Extra help text"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1)), Not(Global.Edit)), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Edit Mode - Crouch + Ability 1"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3)), Not(Global.Edit)), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Edit Mode - Crouch + Ability 1"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        "Help text Edit"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Play Mode - Crouch + Ability 1"), Left, 11, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Increase Y-Offset - Ultimate"), Left, 12, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Decrease Y-Offset - Crouch + Ultimate"), Left, 13, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Next Editable - Ability 2"), Left, 14, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Previous Editable - Crouch + Ability 2"), Left, 15, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Place Editable - Crouch + Melee"), Left, 16, Null, Null, Color(Yellow), Visible To, Default Visibility);
     }
 }
 
@@ -2709,25 +2611,6 @@ rule ("Respawn") {
                 Set Move Speed(Event Player, 125);
             End;
         End;
-    }
-}
-
-rule ("Teleport") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Is Button Held(Event Player, Button(Melee)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Teleport(Event Player, Add(Position Of(Event Player), Multiply(5, Facing Direction Of(Event Player))));
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
 
@@ -3134,213 +3017,6 @@ rule ("Circle Fix") {
         Set Invisible(Event Player, All);
         Wait(0.05, Ignore Condition);
         Allow Button(Event Player, Button(Jump));
-    }
-}
-
-rule ("Enable Edit Mode") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Global.Edit == False;
-        Or(Compare((Event Player).Mode, ==, 1), Compare((Event Player).Mode, ==, 3)) == True;
-        Is Button Held(Event Player, Button(Ability 1)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == True;
-        Event Player == Host Player;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Set Global Variable(Edit, True);
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 1))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
-    }
-}
-
-rule ("Disable Edit Mode") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Global.Edit != False;
-        Is Button Held(Event Player, Button(Ability 1)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == True;
-        Event Player == Host Player;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Set Global Variable(Edit, False);
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 1))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
-    }
-}
-
-rule ("Draw Editable Pos") {
-    event {
-        Ongoing - Global;
-    }
-    conditions {
-        Global.Edit != False;
-    }
-    actions {
-        Create Effect(Host Player, Sphere, Color(Red), Ray Cast Hit Position(Eye Position(Host Player), Add(Eye Position(Host Player), Multiply(Facing Direction Of(Host Player), 100)), Null, Null, False), 0.2, Visible To Position and Radius);
-        Set Global Variable(EntEditable, Last Created Entity);
-    }
-}
-
-rule ("Stop Drawing Editable Pos") {
-    event {
-        Ongoing - Global;
-    }
-    conditions {
-        Global.Edit == False;
-    }
-    actions {
-        Destroy Effect(Global.EntEditable);
-    }
-}
-
-rule ("Next Editable") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Global.Edit != False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
-        Event Player == Host Player;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Modify Global Variable(SelectedEditable, Add, 1);
-        If(Compare(Global.SelectedEditable, >, Add(Count Of(Global.PosCheckpoint), 2)));
-            Set Global Variable(SelectedEditable, Add(Count Of(Global.PosCheckpoint), 2));
-        End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
-    }
-}
-
-rule ("Previous Editable") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Global.Edit != False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == True;
-        Event Player == Host Player;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Modify Global Variable(SelectedEditable, Subtract, 1);
-        If(Compare(Global.SelectedEditable, <, 0));
-            Set Global Variable(SelectedEditable, 0);
-        End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
-    }
-}
-
-rule ("Place Editable") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Global.Edit != False;
-        Is Button Held(Event Player, Button(Melee)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == True;
-        Event Player == Host Player;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Set Global Variable(PosEditable, Ray Cast Hit Position(Eye Position(Event Player), Add(Eye Position(Event Player), Multiply(Facing Direction Of(Event Player), 100)), Null, Null, False));
-        If(Compare(Global.SelectedEditable, ==, 0));
-            Set Global Variable(PosStart, Global.PosEditable);
-        Else If(Compare(Global.SelectedEditable, ==, Add(Count Of(Global.PosCheckpoint), 1)));
-            Modify Global Variable(PosCheckpoint, Append To Array, Add(Global.PosEditable, Multiply(Up, Global.YOffset)));
-            Set Global Variable(Loop1, Subtract(Global.SelectedEditable, 1));
-            Create Beam Effect(All Players(All Teams), Grapple Beam, Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, -10, 0)), Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, 10, 0)), Color(White), Visible To Position and Radius);
-            Create In-World Text(All Players(All Teams), Custom String("{0}", Add(Global.Loop1, 1)), Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, 6, 0)), 5, Do Not Clip, Visible To and Position, Color(White), Default Visibility);
-            Create Effect(All Players(All Teams), Light Shaft, If-Then-Else(Value In Array((Local Player).Checkpoint, Evaluate Once(Global.Loop1)), Color(Lime Green), Color(Sky Blue)), Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), 3.5, Visible To Position Radius and Color);
-            Create Effect(All Players(All Teams), Ring, If-Then-Else(Value In Array((Local Player).Checkpoint, Evaluate Once(Global.Loop1)), Color(Lime Green), Color(Sky Blue)), Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), 3.5, Visible To Position Radius and Color);
-            For Global Variable(Loop1, 0, Number Of Players(All Teams), 1);
-                Modify Player Variable(Value In Array(All Players(All Teams), Global.Loop1), Checkpoint, Append To Array, False);
-            End;
-        Else If(Compare(Global.SelectedEditable, ==, Add(Count Of(Global.PosCheckpoint), 2)));
-            Set Global Variable(PosFinish, Add(Global.PosEditable, Multiply(Up, Global.YOffset)));
-        Else;
-            Set Global Variable At Index(PosCheckpoint, Subtract(Global.SelectedEditable, 1), Add(Global.PosEditable, Multiply(Up, Global.YOffset)));
-        End;
-        Log To Inspector(Custom String("Set Global Variable(PosStart, Vector({0}, {1}, {2}));", X Component Of(Global.PosStart), Y Component Of(Global.PosStart), Z Component Of(Global.PosStart)));
-        If(Global.Checkpoint);
-            Set Global Variable(CpStr, Custom String("Set Global Variable(PosCheckpoint, Array("));
-            For Global Variable(Loop1, 0, Subtract(Count Of(Global.PosCheckpoint), 1), 1);
-                Set Global Variable(CpStr, Custom String("{0}Vector({1}, {2}", Global.CpStr, X Component Of(Value In Array(Global.PosCheckpoint, Global.Loop1)), Custom String("{0}, {1}), ", Y Component Of(Value In Array(Global.PosCheckpoint, Global.Loop1)), Z Component Of(Value In Array(Global.PosCheckpoint, Global.Loop1)))));
-            End;
-            Set Global Variable(Loop1, Subtract(Count Of(Global.PosCheckpoint), 1));
-            Set Global Variable(CpStr, Custom String("{0}Vector({1}, {2}", Global.CpStr, X Component Of(Value In Array(Global.PosCheckpoint, Global.Loop1)), Custom String("{0}, {1})));", Y Component Of(Value In Array(Global.PosCheckpoint, Global.Loop1)), Z Component Of(Value In Array(Global.PosCheckpoint, Global.Loop1)))));
-            Log To Inspector(Global.CpStr);
-        End;
-        Log To Inspector(Custom String("Set Global Variable(PosFinish, Vector({0}, {1}, {2}));", X Component Of(Global.PosFinish), Y Component Of(Global.PosFinish), Z Component Of(Global.PosFinish)));
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
-    }
-}
-
-rule ("Increase Y-Offset") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Global.Edit != False;
-        Is Button Held(Event Player, Button(Ultimate)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
-        Event Player == Host Player;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Modify Global Variable(YOffset, Add, 0.1);
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
-    }
-}
-
-rule ("Decrease Y-Offset") {
-    event {
-        Ongoing - Each Player;
-        All;
-        All;
-    }
-    conditions {
-        Global.Edit != False;
-        Is Button Held(Event Player, Button(Ultimate)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == True;
-        Event Player == Host Player;
-        (Event Player).ExecutingMenu == False;
-    }
-    actions {
-        Set Player Variable(Event Player, ExecutingMenu, True);
-        Modify Global Variable(YOffset, Subtract, 0.1);
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
-        Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
 

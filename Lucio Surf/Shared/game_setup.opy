@@ -25,7 +25,8 @@ rule "Start - Global":
         createEffect(getAllPlayers(), Effect.RING, Color.LIME_GREEN if localPlayer.Checkpoint[evalOnce(Loop1)] else Color.SKY_BLUE, PosCheckpoint[evalOnce(Loop1)], 3.5, EffectReeval.VISIBILITY_POSITION_RADIUS_AND_COLOR)
     for Loop1 in range(0, len(PosBarrier), 1):
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[evalOnce(Loop1)], 5, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
-
+    # Site ad
+    hudSubtext([player for player in getAllPlayers() if player.HideHud <= 1], f"website - lucio.surf/", HudPosition.LEFT, 3, Color.WHITE, HudReeval.VISIBILITY)
     # Layout / Category information
     hudHeader([player for player in getAllPlayers() if player.Category == 0], f"Lucio Surf v{VERSION} | {Layout + 1}S{MapName}", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     hudHeader([player for player in getAllPlayers() if player.Category == 1], f"Lucio Surf v{VERSION} | {Layout + 1}G{MapName}", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
@@ -37,7 +38,7 @@ rule "Start - Global":
     hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], f"2 - {floor(TimeSecondGrav + 0.001 / 1000)}.{(floor((1000 * TimeSecondGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerSecondGrav}", HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], f"3 - {floor(TimeThirdGrav + 0.001 / 1000)}.{(floor((1000 * TimeThirdGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerThirdGrav}", HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Always visible help text
-    hudSubtext(getAllPlayers(), "Map Skip - {0}/{1} | {2}%".format(len([player for player in getAllPlayers() if player.SkipMap]), VoteMin, "{}/{}".format(len([player for player in getAllPlayers() if player.SkipMap]) / len(getAllPlayers()) * 100, VotePerc)), HudPosition.LEFT, 3, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(getAllPlayers(), "Map Skip - {0}/{1} | {2}%".format(len([player for player in getAllPlayers() if player.SkipMap]), VoteMin, "{}/{}".format(len([player for player in getAllPlayers() if player.SkipMap]) / len(getAllPlayers()) * 100, VotePerc)), HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Help text standard
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Auto Reset - Crouch + Melee", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
