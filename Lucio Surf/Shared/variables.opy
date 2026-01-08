@@ -63,11 +63,16 @@ playervar PosNow 30
 playervar PosPrev 31
 playervar SpeedNow 32
 playervar SpeedPrev 33
-playervar SpeedDiff 34
-playervar SpeedWall 35
-playervar PosNorm 36
-playervar Angle 37
-playervar TimeExtra2 38
+playervar TimePrev 34
+playervar TimeNow 35
+playervar TimeDiff 36
+playervar SpeedDiff 37
+playervar SpeedWall 38
+playervar PosNorm 39
+playervar Angle 40
+playervar TimeExtra2 41
+playervar Timing 42
+playervar Skip 43
 
 
 # Subroutine names

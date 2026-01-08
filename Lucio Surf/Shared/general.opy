@@ -6,15 +6,39 @@ rule "Death":
     async(Respawn, AsyncBehavior.NOOP)
 
 
-rule "Last Frame Data":
+rule "Last Frame Data - 1":
     @Event eachPlayer
+    @Condition not eventPlayer.Timing
 
-    while true:
-        eventPlayer.PosNow = eventPlayer.getPosition()
-        eventPlayer.SpeedNow = eventPlayer.getHorizontalSpeed()
-        wait()
-        eventPlayer.PosPrev = eventPlayer.PosNow
-        eventPlayer.SpeedPrev = eventPlayer.SpeedNow
+    eventPlayer.Skip = false
+
+
+rule "Last Frame Data - 2":
+    @Event eachPlayer
+    @Condition eventPlayer.Timing
+
+    eventPlayer.PosPrev = eventPlayer.PosNow
+    eventPlayer.SpeedPrev = eventPlayer.SpeedNow
+    eventPlayer.TimePrev = eventPlayer.TimeNow
+    eventPlayer.PosNow = eventPlayer.getPosition()
+    eventPlayer.SpeedNow = eventPlayer.getHorizontalSpeed()
+    eventPlayer.TimeNow = getMatchTime()
+    eventPlayer.Timing = not eventPlayer.Timing
+    eventPlayer.Skip = true
+
+
+rule "Last Frame Data - 3":
+    @Event eachPlayer
+    @Condition not eventPlayer.Timing
+    @Condition not eventPlayer.Skip
+
+    eventPlayer.PosPrev = eventPlayer.PosNow
+    eventPlayer.SpeedPrev = eventPlayer.SpeedNow
+    eventPlayer.TimePrev = eventPlayer.TimeNow
+    eventPlayer.PosNow = eventPlayer.getPosition()
+    eventPlayer.SpeedNow = eventPlayer.getHorizontalSpeed()
+    eventPlayer.TimeNow = getMatchTime()
+    eventPlayer.Timing = not eventPlayer.Timing
 
 
 rule "Finish Message (Best Time)":
