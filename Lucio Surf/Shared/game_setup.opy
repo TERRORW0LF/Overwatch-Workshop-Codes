@@ -1,3 +1,14 @@
+rule " Setup <\ztx> / <\zfg> Code":
+    #Script Created By Zezombye.
+    #More Info: https://workshop.codes/wiki/articles/tx-reference-sheet
+    createDummy(getAllHeroes(), Team.1 if getNumberOfSlots(Team.1) else Team.2 if getNumberOfSlots(Team.2) else true, false, null, null)
+    getLastCreatedEntity().startForcingName("\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z〼")
+    Bracket = getLastCreatedEntity()[0].split([])
+    getLastCreatedEntity().startForcingName("\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\zࡀ")
+    Bracket = "\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z\z〼".replace(Bracket, getLastCreatedEntity()[0]).substring(63, true)
+    destroyAllDummies()
+
+
 rule "Start - Global FFA":
     @Condition getCurrentGamemode() == Gamemode.FFA
 
@@ -26,43 +37,43 @@ rule "Start - Global":
     for Loop1 in range(0, len(PosBarrier), 1):
         createEffect(getAllPlayers(), Effect.SPHERE, Color.RED, PosBarrier[evalOnce(Loop1)], 5, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     # Site ad
-    hudSubtext([player for player in getAllPlayers() if player.HideHud <= 1], f"website - lucio.surf/", HudPosition.LEFT, 3, Color.WHITE, HudReeval.VISIBILITY)
+    hudSubtext(localPlayer if localPlayer.HideHud <= 1 else null, f"website - lucio.surf/", HudPosition.ACTUALLY_LEFT, 3, Color.WHITE, HudReeval.VISIBILITY)
     # Layout / Category information
-    hudHeader([player for player in getAllPlayers() if player.Category == 0], f"Lucio Surf v{VERSION} | {Layout + 1}S{MapName}", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], f"Lucio Surf v{VERSION} | {Layout + 1}G{MapName}", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader(localPlayer if localPlayer.Category == 0 else null, f"Lucio Surf v{VERSION} | {Layout + 1}S{MapName}", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
+    hudHeader(localPlayer if localPlayer.Category == 1 else null, f"Lucio Surf v{VERSION} | {Layout + 1}G{MapName}", HudPosition.RIGHT, 0, Color.YELLOW, HudReeval.VISIBILITY)
     # Leaderboards
-    hudHeader([player for player in getAllPlayers() if player.Category == 0], f"1 - {floor(TimeFirstStan + 0.001 / 1000)}.{(floor((1000 * TimeFirstStan + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerFirstStan}", HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 0 and player.HideHud <= 1], f"2 - {floor(TimeSecondStan + 0.001 / 1000)}.{(floor((1000 * TimeSecondStan + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerSecondStan}", HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 0 and player.HideHud <= 1], f"3 - {floor(TimeThirdStan + 0.001 / 1000)}.{(floor((1000 * TimeThirdStan + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerThirdStan}", HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1], f"1 - {floor(TimeFirstGrav + 0.001 / 1000)}.{(floor((1000 * TimeFirstGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerFirstGrav}", HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], f"2 - {floor(TimeSecondGrav + 0.001 / 1000)}.{(floor((1000 * TimeSecondGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerSecondGrav}", HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader([player for player in getAllPlayers() if player.Category == 1 and player.HideHud <= 1], f"3 - {floor(TimeThirdGrav + 0.001 / 1000)}.{(floor((1000 * TimeThirdGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerThirdGrav}", HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(localPlayer if localPlayer.Category == 0 else null, f"1 - {floor(TimeFirstStan + 0.001 / 1000)}.{(floor((1000 * TimeFirstStan + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerFirstStan}", HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(localPlayer if localPlayer.Category == 0 and localPlayer.HideHud <= 1 else null, f"2 - {floor(TimeSecondStan + 0.001 / 1000)}.{(floor((1000 * TimeSecondStan + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerSecondStan}", HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(localPlayer if localPlayer.Category == 0 and localPlayer.HideHud <= 1 else null, f"3 - {floor(TimeThirdStan + 0.001 / 1000)}.{(floor((1000 * TimeThirdStan + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerThirdStan}", HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(localPlayer if localPlayer.Category == 1 else null, f"1 - {floor(TimeFirstGrav + 0.001 / 1000)}.{(floor((1000 * TimeFirstGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerFirstGrav}", HudPosition.RIGHT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(localPlayer if localPlayer.Category == 1 and localPlayer.HideHud <= 1 else null, f"2 - {floor(TimeSecondGrav + 0.001 / 1000)}.{(floor((1000 * TimeSecondGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerSecondGrav}", HudPosition.RIGHT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(localPlayer if localPlayer.Category == 1 and localPlayer.HideHud <= 1 else null, f"3 - {floor(TimeThirdGrav + 0.001 / 1000)}.{(floor((1000 * TimeThirdGrav + 0.001)) % 1000 + 1000).substring(1, 3)} sec - {PlayerThirdGrav}", HudPosition.RIGHT, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Always visible help text
-    hudSubtext(getAllPlayers(), "Map Skip - {0}/{1} | {2}%".format(len([player for player in getAllPlayers() if player.SkipMap]), VoteMin, "{}/{}".format(len([player for player in getAllPlayers() if player.SkipMap]) / len(getAllPlayers()) * 100, VotePerc)), HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(getAllPlayers(), "Map Skip - {0}/{1} | {2}%".format(len([player for player in getAllPlayers() if player.SkipMap]), VoteMin, "{}/{}".format(len([player for player in getAllPlayers() if player.SkipMap]) / len(getAllPlayers()) * 100, VotePerc)), HudPosition.ACTUALLY_LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Help text standard
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Practice Mode - Interact", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Player Spectator Mode - Reload", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Spectator Mode - Crouch + Reload", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Category - Crouch + Interact", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Auto Reset - Crouch + Ability 2", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and not localPlayer.Mode else null, f"{inputBindingString(Button.ULTIMATE)}: Reset", HudPosition.ACTUALLY_LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and not localPlayer.Mode else null, f"{inputBindingString(Button.INTERACT)}: Practice Mode", HudPosition.ACTUALLY_LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and not localPlayer.Mode else null, f"{inputBindingString(Button.RELOAD)}: Player Spectator Mode", HudPosition.ACTUALLY_LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and not localPlayer.Mode else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.RELOAD)}: Spectator Mode", HudPosition.ACTUALLY_LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and not localPlayer.Mode else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.INTERACT)}: Cycle Category", HudPosition.ACTUALLY_LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and not localPlayer.Mode else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.ABILITY_2)}: Cycle Auto Reset", HudPosition.ACTUALLY_LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Help text practice
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Standard Mode - Interact", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Ult Reset (Checkpoint) - Ultimate", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Set Checkpoint - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Delete Checkpoint - Reload", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 1 else null, f"{inputBindingString(Button.INTERACT)}: Standard Mode", HudPosition.ACTUALLY_LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 1 else null, f"{inputBindingString(Button.ULTIMATE)}: Ult Reset (Checkpoint)", HudPosition.ACTUALLY_LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 1 else null, f"{inputBindingString(Button.SECONDARY_FIRE)}: Set Checkpoint", HudPosition.ACTUALLY_LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 1 else null, f"{inputBindingString(Button.RELOAD)}: Delete Checkpoint", HudPosition.ACTUALLY_LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Help text playerspec
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Standard Mode - Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate next - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate previous - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)    
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 2 else null, f"{inputBindingString(Button.RELOAD)}: Standard Mode", HudPosition.ACTUALLY_LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 2 else null, f"{inputBindingString(Button.PRIMARY_FIRE)}: Spectate next", HudPosition.ACTUALLY_LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 2 else null, f"{inputBindingString(Button.SECONDARY_FIRE)}: Spectate previous", HudPosition.ACTUALLY_LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)    
     #Help text spectator
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Standard Mode - Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Stop - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Slow Move - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.RELOAD)}: Standard Mode", HudPosition.ACTUALLY_LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.PRIMARY_FIRE)}: Stop", HudPosition.ACTUALLY_LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.SECONDARY_FIRE)}: Slow Move", HudPosition.ACTUALLY_LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Always visible help text
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud], "Vote Skip Map - Crouch + Secondary Fire", HudPosition.LEFT, 18, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player == hostPlayer], "Toggle Invisibility - Crouch + Melee", HudPosition.LEFT, 19, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext(getAllPlayers(), "Cycle HUD - Ability 2", HudPosition.LEFT, 20, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.SECONDARY_FIRE)}: Vote Skip Map", HudPosition.ACTUALLY_LEFT, 18, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer == hostPlayer else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.MELEE)}: Toggle Invisibility", HudPosition.ACTUALLY_LEFT, 19, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer, f"{inputBindingString(Button.ABILITY_2)}: Cycle HUD", HudPosition.ACTUALLY_LEFT, 20, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
 
 
 rule "Start - Player FFA":
@@ -96,10 +107,10 @@ rule "Start - Player":
     eventPlayer.enableDeathSpectateTargetHud()
     eventPlayer.disablePlayerCollision()
     #Hud
-    hudHeader(eventPlayer, eventPlayer, HudPosition.LEFT, 0, Color.YELLOW, HudReeval.NONE, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 0 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestStan + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestStan + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestGrav + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestGrav + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudHeader(eventPlayer if eventPlayer.HideHud <= 1 else null, "Attempts: {0}".format(eventPlayer.Attempts), HudPosition.LEFT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer, eventPlayer, HudPosition.ACTUALLY_LEFT, 0, Color.YELLOW, HudReeval.NONE, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 0 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestStan + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestStan + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.ACTUALLY_LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.Category == 1 else null, "Best - {0}.{1} sec".format(floor(eventPlayer.TimeBestGrav + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeBestGrav + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.ACTUALLY_LEFT, 1, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudHeader(eventPlayer if eventPlayer.HideHud <= 1 else null, "Attempts: {0}".format(eventPlayer.Attempts), HudPosition.ACTUALLY_LEFT, 2, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "{0} m/s".format(eventPlayer.getHorizontalSpeed()), HudPosition.TOP, 0.1, eventPlayer.SpeedColor, HudReeval.STRING_AND_COLOR, SpecVisibility.DEFAULT)
     hudHeader(eventPlayer, "{0}.{1} sec".format(floor(eventPlayer.TimeCurrent + 0.001 / 1000), "{0}".format(floor((1000 * eventPlayer.TimeCurrent + 0.001)) % 1000 + 1000).substring(1, 3)), HudPosition.TOP, 0.2, Color.WHITE, HudReeval.STRING, SpecVisibility.DEFAULT)
     #Start

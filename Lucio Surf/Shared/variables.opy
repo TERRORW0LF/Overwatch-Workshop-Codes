@@ -29,6 +29,7 @@ globalvar PosCheckpoint 25
 globalvar PosFinish 26
 globalvar PosBarrier 27
 globalvar MapName 28
+globalvar Bracket 29
 globalvar Edit 50
 
 
