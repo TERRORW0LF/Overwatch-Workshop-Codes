@@ -1,7 +1,8 @@
 rule "Enable Spectator Mode":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
-    @Condition eventPlayer.isHoldingButton(Button.RELOAD) and not eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD)
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition not eventPlayer.ExecutingMenu
     
     eventPlayer.ExecutingMenu = true
@@ -24,7 +25,7 @@ rule "Enable Spectator Mode":
 rule "Disable Spectator Mode":
     @Event eachPlayer
     @Condition eventPlayer.Mode == 3
-    @Condition eventPlayer.isHoldingButton(Button.RELOAD) and not eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD)
     @Condition not eventPlayer.ExecutingMenu
     
     eventPlayer.ExecutingMenu = true

@@ -41,18 +41,18 @@ rule "Start - Global":
     hudSubtext(getAllPlayers(), "Map Skip - {0}/{1} | {2}%".format(len([player for player in getAllPlayers() if player.SkipMap]), VoteMin, "{}/{}".format(len([player for player in getAllPlayers() if player.SkipMap]) / len(getAllPlayers()) * 100, VotePerc)), HudPosition.LEFT, 4, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Help text standard
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Reset - Ultimate", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Auto Reset - Crouch + Melee", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Category - Crouch + Ability 2", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Practice Mode - Interact", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Player Spectator Mode - Ability 2", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Spectator Mode - Reload", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Practice Mode - Interact", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Player Spectator Mode - Reload", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Spectator Mode - Crouch + Reload", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Category - Crouch + Interact", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and not player.Mode], "Cycle Auto Reset - Crouch + Ability 2", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     # Help text practice
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Standard Mode - Interact", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Ult Reset (Checkpoint) - Ultimate", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Set Checkpoint - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Delete Checkpoint - Ability 2", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1], "Delete Checkpoint - Reload", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     # Help text playerspec
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Standard Mode - Ability 2", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Standard Mode - Reload", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate next - Primary Fire", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 2], "Spectate previous - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)    
     #Help text spectator
@@ -61,8 +61,8 @@ rule "Start - Global":
     hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3], "Slow Move - Secondary Fire", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
     # Always visible help text
     hudSubtext([player for player in getAllPlayers() if not player.HideHud], "Vote Skip Map - Crouch + Secondary Fire", HudPosition.LEFT, 18, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player == hostPlayer], "Toggle Invisibility - Crouch + Reload", HudPosition.LEFT, 19, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext(getAllPlayers(), "Cycle HUD - Crouch + Interact", HudPosition.LEFT, 20, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player == hostPlayer], "Toggle Invisibility - Crouch + Melee", HudPosition.LEFT, 19, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext(getAllPlayers(), "Cycle HUD - Ability 2", HudPosition.LEFT, 20, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
 
 
 rule "Start - Player FFA":

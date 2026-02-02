@@ -1,5 +1,5 @@
 macro DEV = true
-macro VERSION = "5.15b0"
+macro VERSION = "5.16b0"
 macro CODE = "048YZ"
 macro MODE = " Beta"
 

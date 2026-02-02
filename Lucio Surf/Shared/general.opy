@@ -129,7 +129,8 @@ rule "Velocity Counter - Gravspeed (Red)":
 
 rule "Vote Map Skip":
     @Event eachPlayer
-    @Condition eventPlayer.isHoldingButton(Button.CROUCH) and eventPlayer.isHoldingButton(Button.SECONDARY_FIRE)
+    @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE)
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition not eventPlayer.ExecutingMenu
 
     eventPlayer.ExecutingMenu = true
@@ -140,7 +141,8 @@ rule "Vote Map Skip":
 
 rule "Toggle Invisibility (Host only)":
     @Event eachPlayer
-    @Condition eventPlayer.isHoldingButton(Button.RELOAD) and eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.MELEE)
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition eventPlayer == hostPlayer
     @Condition not eventPlayer.ExecutingMenu
     
@@ -153,13 +155,14 @@ rule "Toggle Invisibility (Host only)":
         smallMessage(eventPlayer, "{0} {1}".format(l"Players", l"Visible"))
         ([player for player in getAllPlayers() if not player.Mode and not (distance(PosStart, vect(player.getPosition().x, PosStart.y, player.getPosition().z)) <= 2 and abs(player.getPosition().y - PosStart.y) <= 3)]).setInvisibility(Invis.NONE)
         Visible = true
-    waitUntil(not eventPlayer.isHoldingButton(Button.RELOAD), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.MELEE), 9999)
     eventPlayer.ExecutingMenu = false
 
 
 rule "Cycle HUD":
     @Event eachPlayer
-    @Condition eventPlayer.isHoldingButton(Button.INTERACT) and eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2)
+    @Condition not eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition not eventPlayer.ExecutingMenu
     
     eventPlayer.ExecutingMenu = true
@@ -171,7 +174,7 @@ rule "Cycle HUD":
     else:
         eventPlayer.enableHeroHud()
         eventPlayer.HideHud = 0
-    waitUntil(not eventPlayer.isHoldingButton(Button.INTERACT), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.ABILITY_2), 9999)
     eventPlayer.ExecutingMenu = false
 
 

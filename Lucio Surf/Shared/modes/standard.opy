@@ -274,7 +274,8 @@ rule "Barrier":
 rule "Cycle Auto Reset":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
-    @Condition eventPlayer.isHoldingButton(Button.MELEE) and eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) 
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition not eventPlayer.ExecutingMenu
     
     eventPlayer.ExecutingMenu = true
@@ -287,7 +288,7 @@ rule "Cycle Auto Reset":
         smallMessage(eventPlayer, "Auto Reset - Personal Best")
     elif eventPlayer.AutoReset == 2:
         smallMessage(eventPlayer, "Auto Reset - Record")
-    waitUntil(not eventPlayer.isHoldingButton(Button.MELEE), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.ABILITY_2), 9999)
     eventPlayer.ExecutingMenu = false
 
 
@@ -314,7 +315,8 @@ rule "Auto Reset (Record)":
 rule "Cycle Category":
     @Event eachPlayer
     @Condition not eventPlayer.Mode
-    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) and eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.INTERACT)
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition not eventPlayer.ExecutingMenu
 
     eventPlayer.ExecutingMenu = true
@@ -332,7 +334,7 @@ rule "Cycle Category":
     async(Respawn(), AsyncBehavior.NOOP)
     wait(0.2, Wait.IGNORE_CONDITION)
     eventPlayer.allowButton(Button.JUMP)
-    waitUntil(not eventPlayer.isHoldingButton(Button.ABILITY_2), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.INTERACT), 9999)
     eventPlayer.ExecutingMenu = false
 
 
