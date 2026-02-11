@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.15.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: KVKKR"
+		Description: "Lucio Surf v5.16.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: KVKKR"
 		Mode Name: "Lucio Surf"
 	}
 	lobby
@@ -122,6 +122,7 @@ variables {
         26: PosFinish
         27: PosBarrier
         28: MapName
+        29: Bracket
         50: Edit
     player:
         0: TimeCurrent
@@ -2083,6 +2084,21 @@ rule ("Start - Maps (Layout 5)") {
     }
 }
 
+rule (" Setup <­tx> / <­fg> Code") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        "Script Created By Zezombye.\nMore Info: https://workshop.codes/wiki/articles/tx-reference-sheet"
+        Create Dummy Bot(All Heroes, If-Then-Else(Number Of Slots(Team 1), Team 1, If-Then-Else(Number Of Slots(Team 2), Team 2, True)), False, Null, Null);
+        Start Forcing Dummy Bot Name(Last Created Entity, Custom String("­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­〼"));
+        Set Global Variable(Bracket, String Split(First Of(Last Created Entity), Empty Array));
+        Start Forcing Dummy Bot Name(Last Created Entity, Custom String("­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­ࡀ"));
+        Set Global Variable(Bracket, String Slice(String Replace(Custom String("­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­〼"), Global.Bracket, First Of(Last Created Entity)), 63, True));
+        Destroy All Dummy Bots;
+    }
+}
+
 rule ("Start - Global FFA") {
     event {
         Ongoing - Global;
@@ -2120,43 +2136,43 @@ rule ("Start - Global") {
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Evaluate Once(Global.Loop1)), 5, Visible To Position and Radius);
         End;
         "Site ad"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).HideHud, <=, 1)), Null, Null, Custom String("website - lucio.surf/"), Left, 3, Null, Null, Color(White), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).HideHud, <=, 1), Local Player, Null), Null, Null, Custom String("website - lucio.surf/                                                                                                        {0}", Custom String("                                                                  ")), Left, 3, Null, Null, Color(White), Visible To, Default Visibility);
         "Layout / Category information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.15 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.15 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 0), Local Player, Null), Custom String("Lucio Surf v5.16 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 1), Local Player, Null), Custom String("Lucio Surf v5.16 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 0), Local Player, Null), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 0), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 0), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 1), Local Player, Null), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 1), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 1), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         "Always visible help text"
-        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Map Skip - {0}/{1} | {2}", Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Global.VoteMin, Custom String("{0}/{1}%", Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100), Global.VotePerc)), Left, 4, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Map Skip - {0}/{1} | {2}", Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Global.VoteMin, Custom String("{0}/{1}%                                                                                                                     {2}", Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100), Global.VotePerc, Custom String("                                                     "))), Left, 4, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text standard"
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Cycle Auto Reset - Crouch + Melee"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Cycle Category - Crouch + Ability 2"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Practice Mode - Interact"), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Player Spectator Mode - Ability 2"), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Spectator Mode - Reload"), Left, 10, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}: Reset                                                                                                                   {1}", Input Binding String(Button(Ultimate)), Custom String("                                                       ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}: Practice Mode                                                                                                           {1}", Input Binding String(Button(Interact)), Custom String("                                                               ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}: Player Spectator Mode                                                                                                   {1}", Input Binding String(Button(Reload)), Custom String("                                                                       ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}+{1}: Spectator Mode                                                                                                      {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Reload)), Custom String("                                                                    ")), Left, 8, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}+{1}: Cycle Category                                                                                                      {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Interact)), Custom String("                                                                    ")), Left, 9, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}+{1}: Cycle Auto Reset                                                                                                    {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Ability 2)), Custom String("                                                                      ")), Left, 10, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text practice"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Standard Mode - Interact"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Ult Reset (Checkpoint) - Ultimate"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Set Checkpoint - Secondary Fire"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Delete Checkpoint - Ability 2"), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Standard Mode                                                                                                           {1}", Input Binding String(Button(Interact)), Custom String("                                                               ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Ult Reset (Checkpoint)                                                                                                  {1}", Input Binding String(Button(Ultimate)), Custom String("                                                                        ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Set Checkpoint                                                                                                          {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                                ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Delete Checkpoint                                                                                                       {1}", Input Binding String(Button(Reload)), Custom String("                                                                   ")), Left, 8, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text playerspec"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Standard Mode - Ability 2"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate next - Primary Fire"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate previous - Secondary Fire"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 2)), Local Player, Null), Null, Null, Custom String("{0}: Standard Mode                                                                                                           {1}", Input Binding String(Button(Reload)), Custom String("                                                               ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 2)), Local Player, Null), Null, Null, Custom String("{0}: Spectate next                                                                                                           {1}", Input Binding String(Button(Primary Fire)), Custom String("                                                               ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 2)), Local Player, Null), Null, Null, Custom String("{0}: Spectate previous                                                                                                       {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                                   ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text spectator"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Standard Mode - Reload"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Stop - Primary Fire"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Slow Move - Secondary Fire"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Standard Mode                                                                                                           {1}", Input Binding String(Button(Reload)), Custom String("                                                               ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Stop                                                                                                                    {1}", Input Binding String(Button(Primary Fire)), Custom String("                                                      ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Slow Move                                                                                                               {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                           ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Always visible help text"
-        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).HideHud)), Null, Null, Custom String("Vote Skip Map - Crouch + Secondary Fire"), Left, 18, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Toggle Invisibility - Crouch + Reload"), Left, 19, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Cycle HUD - Crouch + Interact"), Left, 20, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else((Local Player).HideHud, Null, Local Player), Null, Null, Custom String("{0}+{1}: Vote Skip Map                                                                                                       {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Secondary Fire)), Custom String("                                                                   ")), Left, 18, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare(Local Player, ==, Host Player)), Local Player, Null), Null, Null, Custom String("{0}+{1}: Toggle Invisibility                                                                                                 {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Melee)), Custom String("                                                                         ")), Left, 19, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(Local Player, Null, Null, Custom String("{0}: Cycle HUD                                                                                                               {1}", Input Binding String(Button(Ability 2)), Custom String("                                                           ")), Left, 20, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
     }
 }
 
@@ -2206,10 +2222,10 @@ rule ("Start - Player") {
         Enable Death Spectate Target HUD(Event Player);
         Disable Movement Collision With Players(Event Player);
         "Hud"
-        Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 0), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestStan), 0.001), Down), 1000), 1000)), 1, 3)), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestGrav), 0.001), Down), 1000), 1000)), 1, 3)), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("Attempts: {0}", (Event Player).Attempts), Null, Null, Left, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Event Player, Event Player, Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 0), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestStan), 0.001), Down), 1000), 1000)), 1, 3)), Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestGrav), 0.001), Down), 1000), 1000)), 1, 3)), Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("Attempts: {0}", (Event Player).Attempts), Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0} m/s", Horizontal Speed Of(Event Player)), Null, Null, Top, 0.1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0}.{1} sec", Round To Integer(Add((Event Player).TimeCurrent, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeCurrent), 0.001), Down), 1000), 1000)), 1, 3)), Null, Null, Top, 0.2, Color(White), Null, Null, String, Default Visibility);
         "Start"
@@ -2463,8 +2479,8 @@ rule ("Vote Map Skip") {
         All;
     }
     conditions {
-        Is Button Held(Event Player, Button(Crouch)) == True;
         Is Button Held(Event Player, Button(Secondary Fire)) == True;
+        Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -2482,7 +2498,7 @@ rule ("Toggle Invisibility (Host only)") {
         All;
     }
     conditions {
-        Is Button Held(Event Player, Button(Reload)) == True;
+        Is Button Held(Event Player, Button(Melee)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         Event Player == Host Player;
         (Event Player).ExecutingMenu == False;
@@ -2498,7 +2514,7 @@ rule ("Toggle Invisibility (Host only)") {
             Set Invisible(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).Mode, And(Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Current Array Element)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Current Array Element)))), <=, 2), Compare(Absolute Value(Subtract(Y Component Of(Position Of(Current Array Element)), Y Component Of(Global.PosStart))), <=, 3))))), None);
             Set Global Variable(Visible, True);
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -2510,8 +2526,8 @@ rule ("Cycle HUD") {
         All;
     }
     conditions {
-        Is Button Held(Event Player, Button(Interact)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == True;
+        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -2525,7 +2541,7 @@ rule ("Cycle HUD") {
             Enable Hero HUD(Event Player);
             Set Player Variable(Event Player, HideHud, 0);
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -2964,7 +2980,7 @@ rule ("Cycle Auto Reset") {
     }
     conditions {
         (Event Player).Mode == False;
-        Is Button Held(Event Player, Button(Melee)) == True;
+        Is Button Held(Event Player, Button(Ability 2)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
@@ -2981,7 +2997,7 @@ rule ("Cycle Auto Reset") {
         Else If(Compare((Event Player).AutoReset, ==, 2));
             Small Message(Event Player, Custom String("Auto Reset - Record"));
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3028,7 +3044,7 @@ rule ("Cycle Category") {
     }
     conditions {
         (Event Player).Mode == False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Interact)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
@@ -3050,7 +3066,7 @@ rule ("Cycle Category") {
         Start Rule(Respawn, Do Nothing);
         Wait(0.2, Ignore Condition);
         Allow Button(Event Player, Button(Jump));
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3148,7 +3164,6 @@ rule ("Disable Practice Mode") {
     conditions {
         (Event Player).Mode == 1;
         Is Button Held(Event Player, Button(Interact)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -3224,7 +3239,7 @@ rule ("Delete Practice Checkpoint") {
     }
     conditions {
         (Event Player).Mode == 1;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Reload)) == True;
     }
     actions {
         If((Event Player).PracticeCheckpoint);
@@ -3285,7 +3300,7 @@ rule ("Enable Player Spectator Mode") {
     }
     conditions {
         (Event Player).Mode == False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Reload)) == True;
         Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
@@ -3299,7 +3314,7 @@ rule ("Enable Player Spectator Mode") {
         Big Message(Event Player, Custom String("Entering Player Spectator Mode"));
         Wait(0.1, Ignore Condition);
         Kill(Event Player, Null);
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3312,8 +3327,7 @@ rule ("Disable Player Specator Mode") {
     }
     conditions {
         (Event Player).Mode == 2;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
+        Is Button Held(Event Player, Button(Reload)) == True;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -3321,7 +3335,7 @@ rule ("Disable Player Specator Mode") {
         Resurrect(Event Player);
         Start Rule(Respawn, Do Nothing);
         Big Message(Event Player, Custom String("Leaving Player Spectator Mode"));
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3335,7 +3349,7 @@ rule ("Enable Spectator Mode") {
     conditions {
         (Event Player).Mode == False;
         Is Button Held(Event Player, Button(Reload)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
+        Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -3367,7 +3381,6 @@ rule ("Disable Spectator Mode") {
     conditions {
         (Event Player).Mode == 3;
         Is Button Held(Event Player, Button(Reload)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
     actions {
