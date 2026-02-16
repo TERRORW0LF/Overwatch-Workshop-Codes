@@ -4,9 +4,9 @@ macro CODE = "KVKKR"
 macro MODE = ""
 
 # Colosseo - First
-# Esperanca - First 
+# Esperanca - Second 
 # Hanaoka - Second
-# Samoa - First
+# Samoa - Second
 # Throne of Anubis - Second
 
 settings "Shared/settings.opy.json"
