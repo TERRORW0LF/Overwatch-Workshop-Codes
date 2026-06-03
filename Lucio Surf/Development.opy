@@ -36,6 +36,90 @@ rule "Debug (Player - Host)":
 
 # Maps
 #!include "Shared/map_init.opy"
+rule "Start - Maps (Overrides)":
+    if MapName == "HV" and Layout == 3:
+        PosStart = vect(65.05, 10.82, -83.64)
+
+
+rule "Start - Maps (Layout 1)":
+    @Condition Layout == 0
+    
+    Checkpoint = false
+    if MapName == "AI":
+        PosStart = vect(208.224, -8.98, -238.046)
+        PosFinish = vect(347, -11.6, -226.5)
+        return
+    if MapName == "AL":
+        PosStart = vect(341.613, 45.5, 168.55)
+        PosFinish = vect(187.745, 43, 175.131)
+        return
+    if MapName == "AS":
+        PosStart = vect(-107.528, 6, 60.23)
+        PosFinish = vect(-88.466, 6.5, -69.033)
+        return
+
+
+rule "Start - Maps (Layout 2)":
+    @Condition Layout == 1
+    
+    Checkpoint = false
+    if MapName == "AI":
+        PosStart = vect(349.8, -9.49, -232.23)
+        PosFinish = vect(257.034, -15, -197.215)
+        return
+    if MapName == "AL":
+        PosStart = vect(204.291, 43.99, 176.709)
+        PosFinish = vect(355.296, 44, 174.37)
+        return
+    if MapName == "AS":
+        PosStart = vect(-81.809, 6, -50.173)
+        PosFinish = vect(-76.476, 6.247, 63.389)
+        return
+
+
+rule "Start - Maps (Layout 3)":
+    @Condition Layout == 2
+    
+    Checkpoint = true
+    if MapName == "AI":
+        PosStart = vect(253.5, -12.92, -259.15)
+        PosCheckpoint = [vect(283.976, -13, -200.454)]
+        PosFinish = vect(345.558, -10, -250.369)
+        return
+    if MapName == "AL":
+        PosStart = vect(325.163, 43.7, 157.958)
+        PosCheckpoint = [vect(278.517, 39, 185.735)]
+        PosFinish = vect(255.2, 40, 147.868)
+        return
+    if MapName == "AS":
+        PosStart = vect(-67.3, 6, 42.188)
+        PosCheckpoint = [vect(-109.45, 8, -11.43)]
+        PosFinish = vect(-33, -5.394, 0)
+        return
+
+
+rule "Start - Maps (Layout 4)":
+    @Condition Layout == 3
+    
+    if MapName == "AI":
+        PosStart = vect(349.8, -9.49, -232.23)
+        PosCheckpoint = [vect(284.074, -13.4, -199.044)]
+        PosFinish = vect(214.406, -11, -244.933)
+        Checkpoint = true
+        return
+    if MapName == "AL":
+        PosStart = vect(202.923, 44.09, 160.495)
+        PosCheckpoint = [vect(278.651, 41, 188.052)]
+        PosFinish = vect(303.159, 42, 146.37)
+        Checkpoint = true
+        return
+    if MapName == "AS":
+        PosStart = vect(-117.55, 7.81, -2.422)
+        PosCheckpoint = [vect(-77.486, 5.5, -21.861)]
+        PosFinish = vect(-97.458, 9, 68.65)
+        Checkpoint = true
+        return
+
 
 # Setup
 #!include "Shared/game_setup.opy"

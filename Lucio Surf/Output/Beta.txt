@@ -2,7 +2,7 @@ settings
 {
 	main
 	{
-		Description: "Lucio Surf v5.16b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 048YZ"
+		Description: "Lucio Surf v5.17b0.\nCreated by the Lucio Surf Community, maintained by TERRORWOLF\nJoin our Discord (https://discord.gg/G9QBCDY) and website (https://lucio.surf) and become a surfer!\nCode: 048YZ"
 		Mode Name: "Lucio Surf Beta"
 	}
 	lobby
@@ -246,6 +246,23 @@ rule ("Start - Maps (Identifier)") {
         If(Compare(Current Map, ==, Map(Aatlis)));
             Set Global Variable(MapName, Custom String("AA"));
             Abort;
+        End;
+        If(Compare(Current Map, ==, Map(Antarctic Peninsula)));
+            "Icebreaker"
+            If(Compare(Objective Index, ==, 0));
+                Set Global Variable(MapName, Custom String("AI"));
+                Abort;
+            End;
+            "Labs"
+            If(Compare(Objective Index, ==, 1));
+                Set Global Variable(MapName, Custom String("AL"));
+                Abort;
+            End;
+            "Sublevel"
+            If(Compare(Objective Index, ==, 2));
+                Set Global Variable(MapName, Custom String("AS"));
+                Abort;
+            End;
         End;
         If(Compare(Current Map, ==, Map(Blizzard World)));
             Set Global Variable(MapName, Custom String("BW"));
@@ -1460,7 +1477,7 @@ rule ("Start - Maps (Layout 4)") {
         If(Compare(Global.MapName, ==, Custom String("CS")));
             Set Global Variable(PosStart, Vector(129.83, 9, -64.82));
             Set Global Variable(PosCheckpoint, Array(Vector(-14.81, 2.9, -38.8)));
-            Set Global Variable(PosFinish, Vector(-85.38, -0.1, 17.52));
+            Set Global Variable(PosFinish, Vector(-54.32, -1.8, 6.75));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
@@ -2100,6 +2117,112 @@ rule ("Start - Maps (Layout 5)") {
     }
 }
 
+rule ("Start - Maps (Overrides)") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(And(Compare(Global.MapName, ==, Custom String("HV")), Compare(Global.Layout, ==, 3)));
+            Set Global Variable(PosStart, Vector(65.05, 10.82, -83.64));
+            Abort;
+        End;
+        If(Compare(Global.Layout, ==, 0));
+            If(Compare(Global.MapName, ==, Custom String("AI")));
+                Set Global Variable(PosStart, Vector(208.224, -8.98, -238.046));
+                Set Global Variable(PosFinish, Vector(347, -10.6, -226.5));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AL")));
+                Set Global Variable(PosStart, Vector(341.7, 45.6, 168.63));
+                Set Global Variable(PosFinish, Vector(187.745, 44.5, 175.131));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AS")));
+                Set Global Variable(PosStart, Vector(-107.528, 6, 60.23));
+                Set Global Variable(PosFinish, Vector(-88.466, 6.1, -69.033));
+                Abort;
+            End;
+        End;
+        If(Compare(Global.Layout, ==, 1));
+            If(Compare(Global.MapName, ==, Custom String("AI")));
+                Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
+                Set Global Variable(PosFinish, Vector(257.034, -20, -197.215));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AL")));
+                Set Global Variable(PosStart, Vector(204.291, 43.99, 176.709));
+                Set Global Variable(PosFinish, Vector(355.296, 44.8, 174.37));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AS")));
+                Set Global Variable(PosStart, Vector(-81.809, 6, -50.173));
+                Set Global Variable(PosFinish, Vector(-76.476, 6.247, 63.389));
+                Abort;
+            End;
+        End;
+        If(Compare(Global.Layout, ==, 2));
+            If(Compare(Global.MapName, ==, Custom String("AI")));
+                Set Global Variable(PosStart, Vector(253.5, -12.92, -259.15));
+                Set Global Variable(PosCheckpoint, Array(Vector(283.976, -11.1, -200.454)));
+                Set Global Variable(PosFinish, Vector(345.558, -9, -250.369));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AL")));
+                Set Global Variable(PosStart, Vector(325.163, 43.7, 157.958));
+                Set Global Variable(PosCheckpoint, Array(Vector(278.517, 42, 185.735)));
+                Set Global Variable(PosFinish, Vector(255.2, 40.4, 147.868));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AS")));
+                Set Global Variable(PosStart, Vector(-67.3, 6, 42.188));
+                Set Global Variable(PosCheckpoint, Array(Vector(-109.45, 7.8, -11.43)));
+                Set Global Variable(PosFinish, Vector(-33, -5, 0));
+                Abort;
+            End;
+        End;
+        If(Compare(Global.Layout, ==, 3));
+            If(Compare(Global.MapName, ==, Custom String("AI")));
+                Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
+                Set Global Variable(PosCheckpoint, Array(Vector(284, -15.1, -198)));
+                Set Global Variable(PosFinish, Vector(214.406, -9.8, -244.933));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AL")));
+                Set Global Variable(PosStart, Vector(202.923, 44.09, 160.495));
+                Set Global Variable(PosCheckpoint, Array(Vector(278.651, 42, 188.052)));
+                Set Global Variable(PosFinish, Vector(303.159, 42, 146.37));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AS")));
+                Set Global Variable(PosStart, Vector(-117.55, 7.81, -2.422));
+                Set Global Variable(PosCheckpoint, Array(Vector(-77.486, 5.3, -21.861)));
+                Set Global Variable(PosFinish, Vector(-99.5, 8.8, 68.5));
+                Abort;
+            End;
+        End;
+        If(Compare(Global.Layout, ==, 4));
+            If(Compare(Global.MapName, ==, Custom String("AI")));
+                Set Global Variable(PosStart, Vector(284, -11, -202.5));
+                Set Global Variable(PosCheckpoint, Array(Vector(240.373, -15, -199.518), Vector(227.852, -8.4, -240.547), Vector(284, -9.2, -259), Vector(335.274, -11.1, -237.736)));
+                Set Global Variable(PosFinish, Vector(284.001, -12.9, -222.088));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AL")));
+                Set Global Variable(PosStart, Vector(269.938, 43.96, 184.71));
+                Set Global Variable(PosCheckpoint, Array(Vector(228.712, 43.3, 187.033), Vector(212.887, 43, 177.008), Vector(356.132, 45, 168.618)));
+                Set Global Variable(PosFinish, Vector(270.025, 39.8, 153.709));
+                Set Global Variable(PosBarrier, Array(Vector(310.21, 46.876, 172.599)));
+                Abort;
+            End;
+            If(Compare(Global.MapName, ==, Custom String("AS")));
+                Set Global Variable(PosStart, Vector(-116.89, 7.81, 0));
+                Set Global Variable(PosCheckpoint, Array(Vector(-103.996, 7.5, -67.884), Vector(-67.17, 4.8, -31.457), Vector(-67.17, 4.8, 31.616), Vector(-102.396, 8.1, 68.5)));
+                Set Global Variable(PosFinish, Vector(-75.5, 0, 0));
+                Set Global Variable(PosBarrier, Empty Array);
+                Abort;
+    }
+}
+
 rule (" Setup <­tx> / <­fg> Code") {
     event {
         Ongoing - Global;
@@ -2154,8 +2277,8 @@ rule ("Start - Global") {
         "Site ad"
         Create HUD Text(If-Then-Else(Compare((Local Player).HideHud, <=, 1), Local Player, Null), Null, Null, Custom String("website - lucio.surf/                                                                                                        {0}", Custom String("                                                                  ")), Left, 3, Null, Null, Color(White), Visible To, Default Visibility);
         "Layout / Category information"
-        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 0), Local Player, Null), Custom String("Lucio Surf v5.16b0 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 1), Local Player, Null), Custom String("Lucio Surf v5.16b0 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 0), Local Player, Null), Custom String("Lucio Surf v5.17b0 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 1), Local Player, Null), Custom String("Lucio Surf v5.17b0 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
         Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 0), Local Player, Null), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 0), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);

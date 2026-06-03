@@ -1444,7 +1444,7 @@ rule ("Start - Maps (Layout 4)") {
         If(Compare(Global.MapName, ==, Custom String("CS")));
             Set Global Variable(PosStart, Vector(129.83, 9, -64.82));
             Set Global Variable(PosCheckpoint, Array(Vector(-14.81, 2.9, -38.8)));
-            Set Global Variable(PosFinish, Vector(-85.38, -0.1, 17.52));
+            Set Global Variable(PosFinish, Vector(-54.32, -1.8, 6.75));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;

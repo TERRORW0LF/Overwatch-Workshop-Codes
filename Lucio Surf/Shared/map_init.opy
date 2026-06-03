@@ -2,7 +2,7 @@ rule "Start - Maps (Identifier)":
     if getCurrentMap() == Map.AATLIS:
         MapName = "AA"
         return
-    /*if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
+    if getCurrentMap() == Map.ANTARCTIC_PENINSULA:
         #Icebreaker
         if getCurrentObjective() == 0:
             MapName = "AI"
@@ -14,7 +14,7 @@ rule "Start - Maps (Identifier)":
         #Sublevel
         if getCurrentObjective() == 2:
             MapName = "AS"
-            return*/
+            return
     if getCurrentMap() == Map.BLIZZ_WORLD:
         MapName = "BW"
         return
@@ -980,7 +980,7 @@ rule "Start - Maps (Layout 4)":
     if MapName == "CS":
         PosStart = vect(129.83, 9, -64.82)
         PosCheckpoint = [vect(-14.81, 2.9, -38.8)]
-        PosFinish = vect(-85.38, -0.1, 17.52)
+        PosFinish = vect(-54.32, -1.8, 6.75)
         Checkpoint = true
         return
     if MapName == "DR":

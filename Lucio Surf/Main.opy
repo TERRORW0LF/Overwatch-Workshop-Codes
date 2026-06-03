@@ -6,7 +6,7 @@ macro MODE = ""
 # Colosseo - First
 # Esperanca - Second 
 # Hanaoka - Second
-# Samoa - Second
+# Samoa - First
 # Throne of Anubis - Second
 
 settings "Shared/settings.opy.json"
