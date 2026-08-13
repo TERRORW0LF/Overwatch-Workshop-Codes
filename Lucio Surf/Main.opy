@@ -1,5 +1,5 @@
 macro DEV = false
-macro VERSION = "5.16"
+macro VERSION = "5.17"
 macro CODE = "KVKKR"
 macro MODE = ""
 
