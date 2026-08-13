@@ -26,7 +26,7 @@ rule "Start - Global":
     #Vars
     wait()
     setMatchTime(Time + 10)
-    chase(VoteTimer, 9999, rate=1, ChaseReeval.NONE)
+    chase(VoteTimer, Math.INFINITY, rate=1, ChaseReeval.NONE)
     #Start / Checkpoint / Finish / Barrier effects
     createEffect(getAllPlayers(), Effect.RING, Color.GREEN, PosStart, 2, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     createEffect(getAllPlayers(), Effect.LIGHT_SHAFT, Color.WHITE, PosFinish, 5, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
@@ -68,8 +68,10 @@ rule "Start - Global":
     hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 2 else null, f"{inputBindingString(Button.SECONDARY_FIRE)}: Spectate previous", HudPosition.ACTUALLY_LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)    
     #Help text spectator
     hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.RELOAD)}: Standard Mode", HudPosition.ACTUALLY_LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.PRIMARY_FIRE)}: Stop", HudPosition.ACTUALLY_LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
-    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.SECONDARY_FIRE)}: Slow Move", HudPosition.ACTUALLY_LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.RELOAD)}: Move Up", HudPosition.ACTUALLY_LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.RELOAD)}: Move Down", HudPosition.ACTUALLY_LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.PRIMARY_FIRE)}: Stop", HudPosition.ACTUALLY_LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer.Mode == 3 else null, f"{inputBindingString(Button.SECONDARY_FIRE)}: Slow Move", HudPosition.ACTUALLY_LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Always visible help text
     hudSubtext(localPlayer if not localPlayer.HideHud else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.SECONDARY_FIRE)}: Vote Skip Map", HudPosition.ACTUALLY_LEFT, 18, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     hudSubtext(localPlayer if not localPlayer.HideHud and localPlayer == hostPlayer else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.MELEE)}: Toggle Invisibility", HudPosition.ACTUALLY_LEFT, 19, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)

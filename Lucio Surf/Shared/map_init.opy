@@ -105,6 +105,8 @@ rule "Start - Maps (Identifier)":
     if getCurrentMap() == Map.MIDTOWN:
         MapName = "MT"
         return
+    if getCurrentMap() == Map.NEON_JUNCTION:
+        MapName = "NO"
     if getCurrentMap() == Map.NEPAL:
         # Sanctum
         if getCurrentObjective() == 2:
@@ -200,16 +202,17 @@ rule "Start - Maps (Layout 1)":
         PosFinish = vect(41.77, 10.8, 96.7)
         return
     if MapName == "AI":
-        PosStart = vect(210.355, -9.86, -243.085)
-        PosFinish = vect(347, -11.6, -226.5)
+        PosStart = vect(208.224, -8.98, -238.046)
+        PosFinish = vect(347, -10.6, -226.5)
         return
     if MapName == "AL":
-        PosStart = vect(341.613, 45.5, 168.55)
-        PosFinish = vect(187.745, 43, 175.131)
+        PosStart = vect(341.7, 45.6, 168.63)
+        PosFinish = vect(187.745, 44.5, 175.131)
+        PosBarrier = [vect(235.09, 48, 170.15)]
         return
     if MapName == "AS":
-        PosStart = vect(-104.816, -153, 131.51)
-        PosFinish = vect(-68.91, -153, -14.468)
+        PosStart = vect(-107.528, 6, 60.23)
+        PosFinish = vect(-88.466, 6.1, -69.033)
         return
     if MapName == "BW":
         PosStart = vect(3, -0.1, 21.5)
@@ -315,6 +318,10 @@ rule "Start - Maps (Layout 1)":
     if MapName == "MT":
         PosStart = vect(41.22, 3.98, 126.22)
         PosFinish = vect(128.32, 0.8, -65.74)
+        return
+    if MapName == "NO":
+        PosStart = vect(-6.408, 2.25, 222.625)
+        PosFinish = vect(-27.68, 0.65, 405.61)
         return
     if MapName == "NS":
         PosStart = vect(81, 131.8, 36)
@@ -424,17 +431,16 @@ rule "Start - Maps (Layout 2)":
         PosFinish = vect(25.72, 13.04, -92.99)
         return
     if MapName == "AI":
-        PosStart = vect(350.57, -10.4, -233.23)
-        PosFinish = vect(257.034, -15, -197.215)
+        PosStart = vect(349.8, -9.47, -232.23)
+        PosFinish = vect(257.034, -20, -197.215)
         return
     if MapName == "AL":
-        PosStart = vect(187.07, 46, 189.51)
-        PosFinish = vect(355.296, 44, 174.37)
+        PosStart = vect(204.291, 43.99, 176.709)
+        PosFinish = vect(355.296, 44.8, 174.37)
         return
     if MapName == "AS":
-        PosStart = vect(-80.78, -155.4, -2.941)
-        PosFinish = vect(-56.828, -152, 121.799)
-        PosBarrier = [vect(-80.534, -146, -2.941)]
+        PosStart = vect(-81.809, 6, -50.173)
+        PosFinish = vect(-76.476, 5.9, 63.389)
         return
     if MapName == "BW":
         PosStart = vect(-121.57, -0.4, 116.2)
@@ -539,6 +545,10 @@ rule "Start - Maps (Layout 2)":
     if MapName == "MT":
         PosStart = vect(126.07, 1.09, -76.23)
         PosFinish = vect(40.22, 3.9, 123.15)
+        return
+    if MapName == "NO":
+        PosStart = vect(-22.818, 1.75, 399.267)
+        PosFinish = vect(-17.646, 4, 208.624)
         return
     if MapName == "NS":
         PosStart = vect(81, 131.8, -35.5)
@@ -648,20 +658,19 @@ rule "Start - Maps (Layout 3)":
         PosFinish = vect(2.1, 7.8, 0)
         return
     if MapName == "AI":
-        PosStart = vect(280.745, -11, -267.232)
-        PosCheckpoint = [vect(283.976, -13, -200.454)]
-        PosFinish = vect(345.558, -10, -250.369)
-        PosBarrier = [vect(280.745, -4, -267.232)]
+        PosStart = vect(253.5, -12.92, -259.15)
+        PosCheckpoint = [vect(283.976, -11.1, -200.454)]
+        PosFinish = vect(345.558, -9, -250.369)
         return
     if MapName == "AL":
-        PosStart = vect(299.529, 44, 133.918)
-        PosCheckpoint = [vect(278.517, 39, 185.735)]
-        PosFinish = vect(255.2, 40, 147.868)
+        PosStart = vect(325.163, 43.7, 157.958)
+        PosCheckpoint = [vect(278.517, 42, 185.735)]
+        PosFinish = vect(255.2, 40.4, 147.868)
         return
     if MapName == "AS":
-        PosStart = vect(-56.838, -150.2, 121.766)
-        PosCheckpoint = [vect(-109.85, -152.6, 50)]
-        PosFinish = vect(-38.556, -163, 60.279)
+        PosStart = vect(-67.3, 6, 42.188)
+        PosCheckpoint = [vect(-109.45, 7.8, -11.43)]
+        PosFinish = vect(-33, -5, 0)
         return
     if MapName == "BW":
         PosStart = vect(23.31, 2, 79.2)
@@ -792,6 +801,11 @@ rule "Start - Maps (Layout 3)":
         PosStart = vect(47.73, 3.84, -41.25)
         PosCheckpoint = [vect(-30.54, 3.9, 45.31)]
         PosFinish = vect(-16.41, 3.9, 98.35)
+        return
+    if MapName == "NO":
+        PosStart = vect(-11.922, 3.99, 315.58)
+        PosCheckpoint = [vect(45.710, 6.15, 286.181)]
+        PosFinish = vect(14.296, 2, 212.823)
         return
     if MapName == "NS":
         PosStart = vect(78, 129.8, -59)
@@ -925,22 +939,19 @@ rule "Start - Maps (Layout 4)":
         Checkpoint = true
         return
     if MapName == "AI":
-        PosStart = vect(350.57, -10.4, -233.23)
-        PosCheckpoint = [vect(284.074, -13.4, -199.044)]
-        PosFinish = vect(214.406, -11, -244.933)
-        Checkpoint = true
+        PosStart = vect(349.8, -9.47, -232.23)
+        PosCheckpoint = [vect(284, -15.1, -198)]
+        PosFinish = vect(214.406, -9.8, -244.933)
         return
     if MapName == "AL":
-        PosStart = vect(202.923, 43.98, 160.495)
-        PosCheckpoint = [vect(278.651, 41, 188.052)]
-        PosFinish = vect(303.159, 47.5, 146.37)
-        Checkpoint = true
+        PosStart = vect(202.923, 44.09, 160.495)
+        PosCheckpoint = [vect(278.651, 42, 188.052)]
+        PosFinish = vect(303.159, 42, 146.37)
         return
     if MapName == "AS":
-        PosStart = vect(-124.401, -152.5, 55.646)
-        PosCheckpoint = [vect(-66.245, -156.3, 46.512)]
-        PosFinish = vect(-65, -151.7, 134.89)
-        Checkpoint = true
+        PosStart = vect(-117.55, 7.81, -2.422)
+        PosCheckpoint = [vect(-77.8, 5.3, -21.83)]
+        PosFinish = vect(-67.77, 8.7, 63.24)
         return
     if MapName == "BW":
         PosStart = vect(52.118, -0.81, -7.795)
@@ -1014,7 +1025,7 @@ rule "Start - Maps (Layout 4)":
         Checkpoint = true
         return
     if MapName == "HV":
-        PosStart = vect(-107.29, 3.85, -57.71)
+        PosStart = vect(-98.43, 3.85, -49.44)
         PosFinish = vect(65.054, 10.82, -83.635)
         Checkpoint = false
         return
@@ -1096,6 +1107,11 @@ rule "Start - Maps (Layout 4)":
         PosFinish = vect(-25.43, 3.6, 37.75)
         Checkpoint = true
         return
+    if MapName == "NO":
+        PosStart = vect(15.670, 2.25, 271.17)
+        PosCheckpoint = [vect(44.539, 6.50, 297.201)]
+        PosFinish = vect(-28.771, 1.6, 381.651)
+        Checkpoint = true
     if MapName == "NS":
         PosStart = vect(107.495, 133.1, -73.174)
         PosCheckpoint = [vect(55.295, 129.7, 0.52)]
@@ -1249,20 +1265,20 @@ rule "Start - Maps (Layout 5)":
         PosFinish = vect(-12.737, 8.8, -0.014)
         return
     if MapName == "AI":
-        PosStart = vect(283.944, -11, -247.474)
-        PosCheckpoint = [vect(225.535, -11, -245.627), vect(240.373, -18, -199.518), vect(342.476, -13, -233.311)]
-        PosFinish = vect(284.001, -14, -222.088)
+        PosStart = vect(284, -11, -202.5)
+        PosCheckpoint = [vect(240.373, -15, -199.518), vect(227.852, -8.4, -240.547), vect(284, -9.2, -259), vect(335.274, -11.1, -237.736)]
+        PosFinish = vect(284.001, -12.9, -222.088)
         return
     if MapName == "AL":
-        PosStart = vect(270, 37.8, 177.329)
-        PosCheckpoint = [vect(354.446, 43, 168.863), vect(203.926, 42, 187.222)]
-        PosFinish = vect(270.025, 38, 153.709)
+        PosStart = vect(269.938, 42.96, 184.71)
+        PosCheckpoint = [vect(228.712, 43.3, 187.033), vect(212.887, 43, 177.008), vect(356.132, 45, 168.618)]
+        PosFinish = vect(270.025, 39.8, 153.709)
+        PosBarrier = [vect(310.21, 46.876, 172.599)]
         return
     if MapName == "AS":
-        PosStart = vect(-53.982, -154.5, 59.997)
-        PosCheckpoint = [vect(-63.283, -153, -0.486), vect(-95.097, -155, -11.09), vect(-77.397, -162, 59.954), vect(-69.847, -153, 128.858)]
-        PosFinish = vect(-127.491, -154, 60.037)
-        PosBarrier = [vect(-53.982, -147, 59.997)]
+        PosStart = vect(-116.89, 7.81, 0)
+        PosCheckpoint = [vect(-103.996, 7.5, -67.884), vect(-67.17, 4.8, -31.457), vect(-67.17, 4.8, 31.616), vect(-102.396, 8.1, 68.5)]
+        PosFinish = vect(-75.5, 0, 0)
         return
     if MapName == "BW":
         PosStart = vect(-46.717, 4.7, 86.88)
@@ -1393,6 +1409,11 @@ rule "Start - Maps (Layout 5)":
         PosStart = vect(54.52, -1.16, 3.23)
         PosCheckpoint = [vect(38.11, 3.9, 73.33), vect(14.76, 3.7, 95.87), vect(-29.88, 3.9, 45.392), vect(119.58, 0.8, -72.17), vect(139, 2.8, -51.38)]
         PosFinish = vect(50.25, 7.8, 2.75)
+        return
+    if MapName == "NO":
+        PosStart = vect(36.628, 0.25, 290.02)
+        PosCheckpoint = [vect(33.96, 2.1, 321.07), vect(-2.305, -0.4, 389.501), vect(12.206, 2.4, 227.79), vect(-7.104, 4.15, 264.748)]
+        PosFinish = vect(26.076, 7.2, 291.457)
         return
     if MapName == "NS":
         PosStart = vect(67.643, 132, 0.073)

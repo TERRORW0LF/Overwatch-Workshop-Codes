@@ -36,89 +36,35 @@ rule "Debug (Player - Host)":
 
 # Maps
 #!include "Shared/map_init.opy"
+
 rule "Start - Maps (Overrides)":
-    if MapName == "HV" and Layout == 3:
-        PosStart = vect(65.05, 10.82, -83.64)
-
-
-rule "Start - Maps (Layout 1)":
-    @Condition Layout == 0
-    
-    Checkpoint = false
-    if MapName == "AI":
-        PosStart = vect(208.224, -8.98, -238.046)
-        PosFinish = vect(347, -11.6, -226.5)
-        return
-    if MapName == "AL":
-        PosStart = vect(341.613, 45.5, 168.55)
-        PosFinish = vect(187.745, 43, 175.131)
-        return
-    if MapName == "AS":
-        PosStart = vect(-107.528, 6, 60.23)
-        PosFinish = vect(-88.466, 6.5, -69.033)
-        return
-
-
-rule "Start - Maps (Layout 2)":
-    @Condition Layout == 1
-    
-    Checkpoint = false
-    if MapName == "AI":
-        PosStart = vect(349.8, -9.49, -232.23)
-        PosFinish = vect(257.034, -15, -197.215)
-        return
-    if MapName == "AL":
-        PosStart = vect(204.291, 43.99, 176.709)
-        PosFinish = vect(355.296, 44, 174.37)
-        return
-    if MapName == "AS":
-        PosStart = vect(-81.809, 6, -50.173)
-        PosFinish = vect(-76.476, 6.247, 63.389)
-        return
-
-
-rule "Start - Maps (Layout 3)":
-    @Condition Layout == 2
-    
-    Checkpoint = true
-    if MapName == "AI":
-        PosStart = vect(253.5, -12.92, -259.15)
-        PosCheckpoint = [vect(283.976, -13, -200.454)]
-        PosFinish = vect(345.558, -10, -250.369)
-        return
-    if MapName == "AL":
-        PosStart = vect(325.163, 43.7, 157.958)
-        PosCheckpoint = [vect(278.517, 39, 185.735)]
-        PosFinish = vect(255.2, 40, 147.868)
-        return
-    if MapName == "AS":
-        PosStart = vect(-67.3, 6, 42.188)
-        PosCheckpoint = [vect(-109.45, 8, -11.43)]
-        PosFinish = vect(-33, -5.394, 0)
-        return
-
-
-rule "Start - Maps (Layout 4)":
-    @Condition Layout == 3
-    
-    if MapName == "AI":
-        PosStart = vect(349.8, -9.49, -232.23)
-        PosCheckpoint = [vect(284.074, -13.4, -199.044)]
-        PosFinish = vect(214.406, -11, -244.933)
-        Checkpoint = true
-        return
-    if MapName == "AL":
-        PosStart = vect(202.923, 44.09, 160.495)
-        PosCheckpoint = [vect(278.651, 41, 188.052)]
-        PosFinish = vect(303.159, 42, 146.37)
-        Checkpoint = true
-        return
-    if MapName == "AS":
-        PosStart = vect(-117.55, 7.81, -2.422)
-        PosCheckpoint = [vect(-77.486, 5.5, -21.861)]
-        PosFinish = vect(-97.458, 9, 68.65)
-        Checkpoint = true
-        return
+    if getCurrentMap() == Map.NEON_JUNCTION:
+        MapName = "NO"
+    if MapName == "NO":
+        if Layout == 0:
+            PosStart = vect(-6.408, 2.25, 222.625)
+            PosFinish = vect(-27.68, 0.65, 405.61)
+            return
+        if Layout == 1:
+            PosStart = vect(-22.818, 1.75, 399.267)
+            PosFinish = vect(-17.646, 4, 208.624)
+            return
+        if Layout == 2:
+            PosStart = vect(-11.922, 3.99, 315.58)
+            PosCheckpoint = [vect(45.710, 6.15, 286.181)]
+            PosFinish = vect(14.296, 2, 212.823)
+            return
+        if Layout == 3:
+            PosStart = vect(15.670, 2.25, 271.17)
+            PosCheckpoint = [vect(44.539, 6.50, 297.201)]
+            PosFinish = vect(-28.771, 1.6, 381.651)
+            Checkpoint = true
+            return
+        if Layout == 4:
+            PosStart = vect(36.628, 0.25, 290.02)
+            PosCheckpoint = [vect(33.96, 2.1, 321.07), vect(-2.305, -0.4, 389.501), vect(12.206, 2.4, 227.79), vect(-7.104, 4.15, 264.748)]
+            PosFinish = vect(26.076, 7.2, 291.457)
+            return
 
 
 # Setup
@@ -134,15 +80,14 @@ rule "Start - Global (Extra)":
         createBeam(getAllPlayers(), Beam.GRAPPLE, PosCheckpoint[evalOnce(Loop1)] + Vector.DOWN * 10, PosCheckpoint[evalOnce(Loop1)] + Vector.UP * 10, Color.WHITE, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         createInWorldText(getAllPlayers(), f"{Loop1 + 1}", PosCheckpoint[evalOnce(Loop1)] + vect(0, 6, 0), 5, Clip.NONE, WorldTextReeval.VISIBILITY_AND_POSITION, Color.WHITE, SpecVisibility.DEFAULT)
     # Extra help text
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 1 and not Edit and player == hostPlayer], "Edit Mode - Crouch + Ability 1", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and player.Mode == 3 and not Edit and player == hostPlayer], "Edit Mode - Crouch + Ability 1", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext(localPlayer if not localPlayer.HideHud and not localPlayer.Mode else null, f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.ULTIMATE)}: Development Mode", HudPosition.ACTUALLY_LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT)
     # Help text Edit
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], "Play Mode - Crouch + Ability 1", HudPosition.LEFT, 11, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], "Increase Y-Offset - Ultimate", HudPosition.LEFT, 12, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], "Decrease Y-Offset - Crouch + Ultimate", HudPosition.LEFT, 13, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], "Next Editable - Ability 2", HudPosition.LEFT, 14, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], "Previous Editable - Crouch + Ability 2", HudPosition.LEFT, 15, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
-    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], "Place Editable - Crouch + Melee", HudPosition.LEFT, 16, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.ABILITY_1)}: Standard Mode", HudPosition.LEFT, 5, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], f"{inputBindingString(Button.ULTIMATE)}: Increase Y-Offset", HudPosition.LEFT, 6, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.ULTIMATE)}: Decrease Y-Offset", HudPosition.LEFT, 7, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], f"{inputBindingString(Button.RELOAD)}: Next Editable", HudPosition.LEFT, 8, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], f"{inputBindingString(Button.CROUCH)}+{inputBindingString(Button.RELOAD)}: Previous Editable", HudPosition.LEFT, 9, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
+    hudSubtext([player for player in getAllPlayers() if not player.HideHud and Edit and player == hostPlayer], f"{inputBindingString(Button.INTERACT)}: Place Editable", HudPosition.LEFT, 10, Color.YELLOW, HudReeval.VISIBILITY, SpecVisibility.DEFAULT)
 
 
 # Gamemode
@@ -207,7 +152,7 @@ rule "Stop Drawing Editable Pos":
 rule "Next Editable":
     @Event eachPlayer
     @Condition Edit
-    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) and not eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) and not eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition eventPlayer == hostPlayer
     @Condition not eventPlayer.ExecutingMenu
 
@@ -215,14 +160,14 @@ rule "Next Editable":
     SelectedEditable += 1
     if SelectedEditable > len(PosCheckpoint) + 2:
         SelectedEditable = len(PosCheckpoint) + 2
-    waitUntil(not eventPlayer.isHoldingButton(Button.ABILITY_2), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.RELOAD), 9999)
     eventPlayer.ExecutingMenu = false
 
 
 rule "Previous Editable":
     @Event eachPlayer
     @Condition Edit
-    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) and eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) and eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition eventPlayer == hostPlayer
     @Condition not eventPlayer.ExecutingMenu
 
@@ -230,14 +175,14 @@ rule "Previous Editable":
     SelectedEditable -= 1
     if SelectedEditable < 0:
         SelectedEditable = 0
-    waitUntil(not eventPlayer.isHoldingButton(Button.ABILITY_2), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.RELOAD), 9999)
     eventPlayer.ExecutingMenu = false
 
 
 rule "Place Editable":
     @Event eachPlayer
     @Condition Edit
-    @Condition eventPlayer.isHoldingButton(Button.MELEE) and eventPlayer.isHoldingButton(Button.CROUCH)
+    @Condition eventPlayer.isHoldingButton(Button.INTERACT) and eventPlayer.isHoldingButton(Button.CROUCH)
     @Condition eventPlayer == hostPlayer
     @Condition not eventPlayer.ExecutingMenu
 
@@ -267,7 +212,7 @@ rule "Place Editable":
         CpStr = f"{CpStr}Vector({PosCheckpoint[Loop1].x}, {PosCheckpoint[Loop1].y}, {PosCheckpoint[Loop1].z})));"
         printLog(CpStr)
     printLog(f"Set Global Variable(PosFinish, Vector({PosFinish.x}, {PosFinish.y}, {PosFinish.z}));")
-    waitUntil(not eventPlayer.isHoldingButton(Button.MELEE), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.INTERACT), 9999)
     eventPlayer.ExecutingMenu = false
 
 
@@ -280,7 +225,7 @@ rule "Increase Y-Offset":
 
     eventPlayer.ExecutingMenu = true
     YOffset += 0.1
-    waitUntil(not eventPlayer.isHoldingButton(Button.MELEE), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.ULTIMATE), 9999)
     eventPlayer.ExecutingMenu = false
 
 
@@ -293,7 +238,7 @@ rule "Decrease Y-Offset":
 
     eventPlayer.ExecutingMenu = true
     YOffset -= 0.1
-    waitUntil(not eventPlayer.isHoldingButton(Button.MELEE), 9999)
+    waitUntil(not eventPlayer.isHoldingButton(Button.ULTIMATE), 9999)
     eventPlayer.ExecutingMenu = false
 
 

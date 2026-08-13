@@ -91,6 +91,7 @@ settings
 		Infinite: On
 	}
 }
+
 variables {
     global:
         0: TimeFirstGrav
@@ -122,6 +123,7 @@ variables {
         26: PosFinish
         27: PosBarrier
         28: MapName
+        29: Bracket
         50: Edit
         51: SelectedEditable
         52: YOffset
@@ -169,9 +171,11 @@ variables {
         42: Timing
         43: Skip
 }
+
 subroutines {
     0: Respawn
 }
+
 rule ("Initialize global variables") {
     event {
         Ongoing - Global;
@@ -259,6 +263,23 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("AA"));
             Abort;
         End;
+        If(Compare(Current Map, ==, Map(Antarctic Peninsula)));
+            "Icebreaker"
+            If(Compare(Objective Index, ==, 0));
+                Set Global Variable(MapName, Custom String("AI"));
+                Abort;
+            End;
+            "Labs"
+            If(Compare(Objective Index, ==, 1));
+                Set Global Variable(MapName, Custom String("AL"));
+                Abort;
+            End;
+            "Sublevel"
+            If(Compare(Objective Index, ==, 2));
+                Set Global Variable(MapName, Custom String("AS"));
+                Abort;
+            End;
+        End;
         If(Compare(Current Map, ==, Map(Blizzard World)));
             Set Global Variable(MapName, Custom String("BW"));
             Abort;
@@ -288,7 +309,7 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("CR"));
             Abort;
         End;
-        If(Compare(Current Map, ==, Map(Colosseo)));
+        If(Compare(Custom String("{0}", Current Map), ==, Custom String("{0}", Map(Colosseo))));
             Set Global Variable(MapName, Custom String("CS"));
             Abort;
         End;
@@ -300,7 +321,7 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("EW"));
             Abort;
         End;
-        If(Compare(Current Map, ==, Map(Esperança)));
+        If(Compare(Custom String("{0}", Current Map), ==, Custom String("{0}", Map(Esperança))));
             Set Global Variable(MapName, Custom String("ER"));
             Abort;
         End;
@@ -378,6 +399,9 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("MT"));
             Abort;
         End;
+        If(Compare(Current Map, ==, Map(Neon Junction)));
+            Set Global Variable(MapName, Custom String("NO"));
+        End;
         If(Compare(Current Map, ==, Map(Nepal)));
             "Sanctum"
             If(Compare(Objective Index, ==, 2));
@@ -448,7 +472,7 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("RS"));
             Abort;
         End;
-        If(Compare(Current Map, ==, Map(Samoa)));
+        If(Compare(Custom String("{0}", Current Map), ==, Custom String("{0}", Map(Samoa))));
             "Downtown"
             If(Compare(Objective Index, ==, 1));
                 Set Global Variable(MapName, Custom String("SD"));
@@ -506,18 +530,19 @@ rule ("Start - Maps (Layout 1)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(210.355, -9.86, -243.085));
-            Set Global Variable(PosFinish, Vector(347, -11.6, -226.5));
+            Set Global Variable(PosStart, Vector(208.224, -8.98, -238.046));
+            Set Global Variable(PosFinish, Vector(347, -10.6, -226.5));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(341.613, 45.5, 168.55));
-            Set Global Variable(PosFinish, Vector(187.745, 43, 175.131));
+            Set Global Variable(PosStart, Vector(341.7, 45.6, 168.63));
+            Set Global Variable(PosFinish, Vector(187.745, 44.5, 175.131));
+            Set Global Variable(PosBarrier, Array(Vector(235.09, 48, 170.15)));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-104.816, -153, 131.51));
-            Set Global Variable(PosFinish, Vector(-68.91, -153, -14.468));
+            Set Global Variable(PosStart, Vector(-107.528, 6, 60.23));
+            Set Global Variable(PosFinish, Vector(-88.466, 6.1, -69.033));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -649,6 +674,11 @@ rule ("Start - Maps (Layout 1)") {
         If(Compare(Global.MapName, ==, Custom String("MT")));
             Set Global Variable(PosStart, Vector(41.22, 3.98, 126.22));
             Set Global Variable(PosFinish, Vector(128.32, 0.8, -65.74));
+            Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(-6.408, 2.25, 222.625));
+            Set Global Variable(PosFinish, Vector(-27.68, 0.65, 405.61));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
@@ -789,19 +819,18 @@ rule ("Start - Maps (Layout 2)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(350.57, -10.4, -233.23));
-            Set Global Variable(PosFinish, Vector(257.034, -15, -197.215));
+            Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
+            Set Global Variable(PosFinish, Vector(257.034, -20, -197.215));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(187.07, 46, 189.51));
-            Set Global Variable(PosFinish, Vector(355.296, 44, 174.37));
+            Set Global Variable(PosStart, Vector(204.291, 43.99, 176.709));
+            Set Global Variable(PosFinish, Vector(355.296, 44.8, 174.37));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-80.78, -155.4, -2.941));
-            Set Global Variable(PosFinish, Vector(-56.828, -152, 121.799));
-            Set Global Variable(PosBarrier, Array(Vector(-80.534, -146, -2.941)));
+            Set Global Variable(PosStart, Vector(-81.809, 6, -50.173));
+            Set Global Variable(PosFinish, Vector(-76.476, 5.9, 63.389));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -932,6 +961,11 @@ rule ("Start - Maps (Layout 2)") {
         If(Compare(Global.MapName, ==, Custom String("MT")));
             Set Global Variable(PosStart, Vector(126.07, 1.09, -76.23));
             Set Global Variable(PosFinish, Vector(40.22, 3.9, 123.15));
+            Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(-22.818, 1.75, 399.267));
+            Set Global Variable(PosFinish, Vector(-17.646, 4, 208.624));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
@@ -1072,22 +1106,21 @@ rule ("Start - Maps (Layout 3)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(280.745, -11, -267.232));
-            Set Global Variable(PosCheckpoint, Array(Vector(283.976, -13, -200.454)));
-            Set Global Variable(PosFinish, Vector(345.558, -10, -250.369));
-            Set Global Variable(PosBarrier, Array(Vector(280.745, -4, -267.232)));
+            Set Global Variable(PosStart, Vector(253.5, -12.92, -259.15));
+            Set Global Variable(PosCheckpoint, Array(Vector(283.976, -11.1, -200.454)));
+            Set Global Variable(PosFinish, Vector(345.558, -9, -250.369));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(299.529, 44, 133.918));
-            Set Global Variable(PosCheckpoint, Array(Vector(278.517, 39, 185.735)));
-            Set Global Variable(PosFinish, Vector(255.2, 40, 147.868));
+            Set Global Variable(PosStart, Vector(325.163, 43.7, 157.958));
+            Set Global Variable(PosCheckpoint, Array(Vector(278.517, 42, 185.735)));
+            Set Global Variable(PosFinish, Vector(255.2, 40.4, 147.868));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-56.838, -150.2, 121.766));
-            Set Global Variable(PosCheckpoint, Array(Vector(-109.85, -152.6, 50)));
-            Set Global Variable(PosFinish, Vector(-38.556, -163, 60.279));
+            Set Global Variable(PosStart, Vector(-67.3, 6, 42.188));
+            Set Global Variable(PosCheckpoint, Array(Vector(-109.45, 7.8, -11.43)));
+            Set Global Variable(PosFinish, Vector(-33, -5, 0));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -1244,6 +1277,12 @@ rule ("Start - Maps (Layout 3)") {
             Set Global Variable(PosStart, Vector(47.73, 3.84, -41.25));
             Set Global Variable(PosCheckpoint, Array(Vector(-30.54, 3.9, 45.31)));
             Set Global Variable(PosFinish, Vector(-16.41, 3.9, 98.35));
+            Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(-11.922, 3.99, 315.58));
+            Set Global Variable(PosCheckpoint, Array(Vector(45.710, 6.15, 286.181)));
+            Set Global Variable(PosFinish, Vector(14.296, 2, 212.823));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
@@ -1408,24 +1447,21 @@ rule ("Start - Maps (Layout 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(350.57, -10.4, -233.23));
-            Set Global Variable(PosCheckpoint, Array(Vector(284.074, -13.4, -199.044)));
-            Set Global Variable(PosFinish, Vector(214.406, -11, -244.933));
-            Set Global Variable(Checkpoint, True);
+            Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
+            Set Global Variable(PosCheckpoint, Array(Vector(284, -15.1, -198)));
+            Set Global Variable(PosFinish, Vector(214.406, -9.8, -244.933));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(202.923, 43.98, 160.495));
-            Set Global Variable(PosCheckpoint, Array(Vector(278.651, 41, 188.052)));
-            Set Global Variable(PosFinish, Vector(303.159, 47.5, 146.37));
-            Set Global Variable(Checkpoint, True);
+            Set Global Variable(PosStart, Vector(202.923, 44.09, 160.495));
+            Set Global Variable(PosCheckpoint, Array(Vector(278.651, 42, 188.052)));
+            Set Global Variable(PosFinish, Vector(303.159, 42, 146.37));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-124.401, -152.5, 55.646));
-            Set Global Variable(PosCheckpoint, Array(Vector(-66.245, -156.3, 46.512)));
-            Set Global Variable(PosFinish, Vector(-65, -151.7, 134.89));
-            Set Global Variable(Checkpoint, True);
+            Set Global Variable(PosStart, Vector(-117.55, 7.81, -2.422));
+            Set Global Variable(PosCheckpoint, Array(Vector(-77.8, 5.3, -21.83)));
+            Set Global Variable(PosFinish, Vector(-67.77, 8.7, 63.24));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -1472,7 +1508,7 @@ rule ("Start - Maps (Layout 4)") {
         If(Compare(Global.MapName, ==, Custom String("CS")));
             Set Global Variable(PosStart, Vector(129.83, 9, -64.82));
             Set Global Variable(PosCheckpoint, Array(Vector(-14.81, 2.9, -38.8)));
-            Set Global Variable(PosFinish, Vector(-85.38, -0.1, 17.52));
+            Set Global Variable(PosFinish, Vector(-54.32, -1.8, 6.75));
             Set Global Variable(Checkpoint, True);
             Abort;
         End;
@@ -1512,7 +1548,7 @@ rule ("Start - Maps (Layout 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("HV")));
-            Set Global Variable(PosStart, Vector(-107.29, 3.85, -57.71));
+            Set Global Variable(PosStart, Vector(-98.43, 3.85, -49.44));
             Set Global Variable(PosFinish, Vector(65.054, 10.82, -83.635));
             Set Global Variable(Checkpoint, False);
             Abort;
@@ -1607,6 +1643,12 @@ rule ("Start - Maps (Layout 4)") {
             Set Global Variable(PosFinish, Vector(-25.43, 3.6, 37.75));
             Set Global Variable(Checkpoint, True);
             Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(15.670, 2.25, 271.17));
+            Set Global Variable(PosCheckpoint, Array(Vector(44.539, 6.50, 297.201)));
+            Set Global Variable(PosFinish, Vector(-28.771, 1.6, 381.651));
+            Set Global Variable(Checkpoint, True);
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
             Set Global Variable(PosStart, Vector(107.495, 133.1, -73.174));
@@ -1791,22 +1833,22 @@ rule ("Start - Maps (Layout 5)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(283.944, -11, -247.474));
-            Set Global Variable(PosCheckpoint, Array(Vector(225.535, -11, -245.627), Vector(240.373, -18, -199.518), Vector(342.476, -13, -233.311)));
-            Set Global Variable(PosFinish, Vector(284.001, -14, -222.088));
+            Set Global Variable(PosStart, Vector(284, -11, -202.5));
+            Set Global Variable(PosCheckpoint, Array(Vector(240.373, -15, -199.518), Vector(227.852, -8.4, -240.547), Vector(284, -9.2, -259), Vector(335.274, -11.1, -237.736)));
+            Set Global Variable(PosFinish, Vector(284.001, -12.9, -222.088));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(270, 37.8, 177.329));
-            Set Global Variable(PosCheckpoint, Array(Vector(354.446, 43, 168.863), Vector(203.926, 42, 187.222)));
-            Set Global Variable(PosFinish, Vector(270.025, 38, 153.709));
+            Set Global Variable(PosStart, Vector(269.938, 42.96, 184.71));
+            Set Global Variable(PosCheckpoint, Array(Vector(228.712, 43.3, 187.033), Vector(212.887, 43, 177.008), Vector(356.132, 45, 168.618)));
+            Set Global Variable(PosFinish, Vector(270.025, 39.8, 153.709));
+            Set Global Variable(PosBarrier, Array(Vector(310.21, 46.876, 172.599)));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-53.982, -154.5, 59.997));
-            Set Global Variable(PosCheckpoint, Array(Vector(-63.283, -153, -0.486), Vector(-95.097, -155, -11.09), Vector(-77.397, -162, 59.954), Vector(-69.847, -153, 128.858)));
-            Set Global Variable(PosFinish, Vector(-127.491, -154, 60.037));
-            Set Global Variable(PosBarrier, Array(Vector(-53.982, -147, 59.997)));
+            Set Global Variable(PosStart, Vector(-116.89, 7.81, 0));
+            Set Global Variable(PosCheckpoint, Array(Vector(-103.996, 7.5, -67.884), Vector(-67.17, 4.8, -31.457), Vector(-67.17, 4.8, 31.616), Vector(-102.396, 8.1, 68.5)));
+            Set Global Variable(PosFinish, Vector(-75.5, 0, 0));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -1965,6 +2007,12 @@ rule ("Start - Maps (Layout 5)") {
             Set Global Variable(PosFinish, Vector(50.25, 7.8, 2.75));
             Abort;
         End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(36.628, 0.25, 290.02));
+            Set Global Variable(PosCheckpoint, Array(Vector(33.96, 2.1, 321.07), Vector(-2.305, -0.4, 389.501), Vector(12.206, 2.4, 227.79), Vector(-7.104, 4.15, 264.748)));
+            Set Global Variable(PosFinish, Vector(26.076, 7.2, 291.457));
+            Abort;
+        End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
             Set Global Variable(PosStart, Vector(67.643, 132, 0.073));
             Set Global Variable(PosCheckpoint, Array(Vector(97.8, 131.7, 73.715), Vector(96.973, 131.7, -0.008), Vector(56.276, 129.7, -0.025), Vector(70.755, 127.7, -63.246)));
@@ -2112,6 +2160,61 @@ rule ("Start - Maps (Layout 5)") {
     }
 }
 
+rule ("Start - Maps (Overrides)") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        If(Compare(Current Map, ==, Map(Neon Junction)));
+            Set Global Variable(MapName, Custom String("NO"));
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            If(Compare(Global.Layout, ==, 0));
+                Set Global Variable(PosStart, Vector(-6.408, 2.25, 222.625));
+                Set Global Variable(PosFinish, Vector(-27.68, 0.65, 405.61));
+                Abort;
+            End;
+            If(Compare(Global.Layout, ==, 1));
+                Set Global Variable(PosStart, Vector(-22.818, 1.75, 399.267));
+                Set Global Variable(PosFinish, Vector(-17.646, 4, 208.624));
+                Abort;
+            End;
+            If(Compare(Global.Layout, ==, 2));
+                Set Global Variable(PosStart, Vector(-11.922, 3.99, 315.58));
+                Set Global Variable(PosCheckpoint, Array(Vector(45.710, 6.15, 286.181)));
+                Set Global Variable(PosFinish, Vector(14.296, 2, 212.823));
+                Abort;
+            End;
+            If(Compare(Global.Layout, ==, 3));
+                Set Global Variable(PosStart, Vector(15.670, 2.25, 271.17));
+                Set Global Variable(PosCheckpoint, Array(Vector(44.539, 6.50, 297.201)));
+                Set Global Variable(PosFinish, Vector(-28.771, 1.6, 381.651));
+                Set Global Variable(Checkpoint, True);
+                Abort;
+            End;
+            If(Compare(Global.Layout, ==, 4));
+                Set Global Variable(PosStart, Vector(36.628, 0.25, 290.02));
+                Set Global Variable(PosCheckpoint, Array(Vector(33.96, 2.1, 321.07), Vector(-2.305, -0.4, 389.501), Vector(12.206, 2.4, 227.79), Vector(-7.104, 4.15, 264.748)));
+                Set Global Variable(PosFinish, Vector(26.076, 7.2, 291.457));
+                Abort;
+    }
+}
+
+rule (" Setup <­tx> / <­fg> Code") {
+    event {
+        Ongoing - Global;
+    }
+    actions {
+        "Script Created By Zezombye.\nMore Info: https://workshop.codes/wiki/articles/tx-reference-sheet"
+        Create Dummy Bot(All Heroes, If-Then-Else(Number Of Slots(Team 1), Team 1, If-Then-Else(Number Of Slots(Team 2), Team 2, True)), False, Null, Null);
+        Start Forcing Dummy Bot Name(Last Created Entity, Custom String("­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­〼"));
+        Set Global Variable(Bracket, String Split(First Of(Last Created Entity), Empty Array));
+        Start Forcing Dummy Bot Name(Last Created Entity, Custom String("­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­ࡀ"));
+        Set Global Variable(Bracket, String Slice(String Replace(Custom String("­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­­〼"), Global.Bracket, First Of(Last Created Entity)), 63, True));
+        Destroy All Dummy Bots;
+    }
+}
+
 rule ("Start - Global FFA") {
     event {
         Ongoing - Global;
@@ -2136,7 +2239,7 @@ rule ("Start - Global") {
         "Vars"
         Wait(0.016, Ignore Condition);
         Set Match Time(Add(Global.Time, 10));
-        Chase Global Variable At Rate(VoteTimer, 9999, 1, None);
+        Chase Global Variable At Rate(VoteTimer, 999999999999, 1, None);
         "Start / Checkpoint / Finish / Barrier effects"
         Create Effect(All Players(All Teams), Ring, Color(Green), Global.PosStart, 2, Visible To Position and Radius);
         Create Effect(All Players(All Teams), Light Shaft, Color(White), Global.PosFinish, 5, Visible To Position and Radius);
@@ -2149,43 +2252,45 @@ rule ("Start - Global") {
             Create Effect(All Players(All Teams), Sphere, Color(Red), Value In Array(Global.PosBarrier, Evaluate Once(Global.Loop1)), 5, Visible To Position and Radius);
         End;
         "Site ad"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).HideHud, <=, 1)), Null, Null, Custom String("website - lucio.surf/"), Left, 3, Null, Null, Color(White), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).HideHud, <=, 1), Local Player, Null), Null, Null, Custom String("website - lucio.surf/                                                                                                        {0}", Custom String("                                                                  ")), Left, 3, Null, Null, Color(White), Visible To, Default Visibility);
         "Layout / Category information"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("Lucio Surf v5.15d0 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("Lucio Surf v5.15d0 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 0), Local Player, Null), Custom String("Lucio Surf v5.15d0 | {0}S{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 1), Local Player, Null), Custom String("Lucio Surf v5.15d0 | {0}G{1}", Add(Global.Layout, 1), Global.MapName), Null, Null, Right, 0, Color(Yellow), Null, Null, Visible To, Default Visibility);
         "Leaderboards"
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 0)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 0), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Compare((Current Array Element).Category, ==, 1)), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Compare((Current Array Element).Category, ==, 1), Compare((Current Array Element).HideHud, <=, 1))), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 0), Local Player, Null), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstStan), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 0), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondStan), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 0), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdStan, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdStan), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdStan), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Local Player).Category, ==, 1), Local Player, Null), Custom String("1 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeFirstGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeFirstGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerFirstGrav), Null, Null, Right, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 1), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("2 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeSecondGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeSecondGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerSecondGrav), Null, Null, Right, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Compare((Local Player).Category, ==, 1), Compare((Local Player).HideHud, <=, 1)), Local Player, Null), Custom String("3 - {0}.{1} sec - {2}", Round To Integer(Add(Global.TimeThirdGrav, 0.000001), Down), String Slice(Add(Modulo(Round To Integer(Add(Multiply(1000, Global.TimeThirdGrav), 0.001), Down), 1000), 1000), 1, 3), Global.PlayerThirdGrav), Null, Null, Right, 3, Color(White), Null, Null, Visible To and String, Default Visibility);
         "Always visible help text"
-        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Map Skip - {0}/{1} | {2}", Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Global.VoteMin, Custom String("{0}/{1}%", Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100), Global.VotePerc)), Left, 4, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Map Skip - {0}/{1} | {2}", Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Global.VoteMin, Custom String("{0}/{1}%                                                                                                                     {2}", Multiply(Divide(Count Of(Filtered Array(All Players(All Teams), (Current Array Element).SkipMap)), Number Of Players(All Teams)), 100), Global.VotePerc, Custom String("                                                     "))), Left, 4, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text standard"
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Reset - Ultimate"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Cycle Auto Reset - Crouch + Melee"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Cycle Category - Crouch + Ability 2"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Practice Mode - Interact"), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Player Spectator Mode - Ability 2"), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).HideHud, (Current Array Element).Mode))), Null, Null, Custom String("Spectator Mode - Reload"), Left, 10, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}: Reset                                                                                                                   {1}", Input Binding String(Button(Ultimate)), Custom String("                                                       ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}: Practice Mode                                                                                                           {1}", Input Binding String(Button(Interact)), Custom String("                                                               ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}: Player Spectator Mode                                                                                                   {1}", Input Binding String(Button(Reload)), Custom String("                                                                       ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}+{1}: Spectator Mode                                                                                                      {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Reload)), Custom String("                                                                    ")), Left, 8, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}+{1}: Cycle Category                                                                                                      {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Interact)), Custom String("                                                                    ")), Left, 9, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}+{1}: Cycle Auto Reset                                                                                                    {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Ability 2)), Custom String("                                                                      ")), Left, 10, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text practice"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Standard Mode - Interact"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Ult Reset (Checkpoint) - Ultimate"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Set Checkpoint - Secondary Fire"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1))), Null, Null, Custom String("Delete Checkpoint - Ability 2"), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Standard Mode                                                                                                           {1}", Input Binding String(Button(Interact)), Custom String("                                                               ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Ult Reset (Checkpoint)                                                                                                  {1}", Input Binding String(Button(Ultimate)), Custom String("                                                                        ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Set Checkpoint                                                                                                          {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                                ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 1)), Local Player, Null), Null, Null, Custom String("{0}: Delete Checkpoint                                                                                                       {1}", Input Binding String(Button(Reload)), Custom String("                                                                   ")), Left, 8, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text playerspec"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Standard Mode - Ability 2"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate next - Primary Fire"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 2))), Null, Null, Custom String("Spectate previous - Secondary Fire"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 2)), Local Player, Null), Null, Null, Custom String("{0}: Standard Mode                                                                                                           {1}", Input Binding String(Button(Reload)), Custom String("                                                               ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 2)), Local Player, Null), Null, Null, Custom String("{0}: Spectate next                                                                                                           {1}", Input Binding String(Button(Primary Fire)), Custom String("                                                               ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 2)), Local Player, Null), Null, Null, Custom String("{0}: Spectate previous                                                                                                       {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                                   ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text spectator"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Standard Mode - Reload"), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Stop - Primary Fire"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3))), Null, Null, Custom String("Slow Move - Secondary Fire"), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Standard Mode                                                                                                           {1}", Input Binding String(Button(Reload)), Custom String("                                                               ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Move Up                                                                                                                 {1}", Input Binding String(Button(Reload)), Custom String("                                                         ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Move Down                                                                                                               {1}", Input Binding String(Button(Reload)), Custom String("                                                           ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Stop                                                                                                                    {1}", Input Binding String(Button(Primary Fire)), Custom String("                                                      ")), Left, 8, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Slow Move                                                                                                               {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                           ")), Left, 9, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Always visible help text"
-        Create HUD Text(Filtered Array(All Players(All Teams), Not((Current Array Element).HideHud)), Null, Null, Custom String("Vote Skip Map - Crouch + Secondary Fire"), Left, 18, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(Not((Current Array Element).HideHud), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Toggle Invisibility - Crouch + Reload"), Left, 19, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(All Players(All Teams), Null, Null, Custom String("Cycle HUD - Crouch + Interact"), Left, 20, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else((Local Player).HideHud, Null, Local Player), Null, Null, Custom String("{0}+{1}: Vote Skip Map                                                                                                       {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Secondary Fire)), Custom String("                                                                   ")), Left, 18, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare(Local Player, ==, Host Player)), Local Player, Null), Null, Null, Custom String("{0}+{1}: Toggle Invisibility                                                                                                 {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Melee)), Custom String("                                                                         ")), Left, 19, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(Local Player, Null, Null, Custom String("{0}: Cycle HUD                                                                                                               {1}", Input Binding String(Button(Ability 2)), Custom String("                                                           ")), Left, 20, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
     }
 }
 
@@ -2235,10 +2340,10 @@ rule ("Start - Player") {
         Enable Death Spectate Target HUD(Event Player);
         Disable Movement Collision With Players(Event Player);
         "Hud"
-        Create HUD Text(Event Player, Event Player, Null, Null, Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 0), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestStan), 0.001), Down), 1000), 1000)), 1, 3)), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestGrav), 0.001), Down), 1000), 1000)), 1, 3)), Null, Null, Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("Attempts: {0}", (Event Player).Attempts), Null, Null, Left, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(Event Player, Event Player, Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 0, Color(Yellow), Null, Null, None, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 0), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestStan, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestStan), 0.001), Down), 1000), 1000)), 1, 3)), Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).Category, ==, 1), Event Player, Null), Custom String("Best - {0}.{1} sec", Round To Integer(Add((Event Player).TimeBestGrav, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeBestGrav), 0.001), Down), 1000), 1000)), 1, 3)), Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 1, Color(White), Null, Null, Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(Compare((Event Player).HideHud, <=, 1), Event Player, Null), Custom String("Attempts: {0}", (Event Player).Attempts), Null, Custom String("                                                                                                                             {0}", Custom String("                                             ")), Left, 2, Color(White), Null, Null, Visible To and String, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0} m/s", Horizontal Speed Of(Event Player)), Null, Null, Top, 0.1, (Event Player).SpeedColor, Null, Null, String and Color, Default Visibility);
         Create HUD Text(Event Player, Custom String("{0}.{1} sec", Round To Integer(Add((Event Player).TimeCurrent, 0.000001), Down), String Slice(Custom String("{0}", Add(Modulo(Round To Integer(Add(Multiply(1000, (Event Player).TimeCurrent), 0.001), Down), 1000), 1000)), 1, 3)), Null, Null, Top, 0.2, Color(White), Null, Null, String, Default Visibility);
         "Start"
@@ -2261,15 +2366,14 @@ rule ("Start - Global (Extra)") {
             Create In-World Text(All Players(All Teams), Custom String("{0}", Add(Global.Loop1, 1)), Add(Value In Array(Global.PosCheckpoint, Evaluate Once(Global.Loop1)), Vector(0, 6, 0)), 5, Do Not Clip, Visible To and Position, Color(White), Default Visibility);
         End;
         "Extra help text"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 1)), Not(Global.Edit)), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Edit Mode - Crouch + Ability 1"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(And(Not((Current Array Element).HideHud), Compare((Current Array Element).Mode, ==, 3)), Not(Global.Edit)), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Edit Mode - Crouch + Ability 1"), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(If-Then-Else(Or((Local Player).HideHud, (Local Player).Mode), Null, Local Player), Null, Null, Custom String("{0}+{1}: Development Mode                                                                                                    {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Ultimate)), Custom String("                                                                      ")), Left, 10, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text Edit"
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Play Mode - Crouch + Ability 1"), Left, 11, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Increase Y-Offset - Ultimate"), Left, 12, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Decrease Y-Offset - Crouch + Ultimate"), Left, 13, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Next Editable - Ability 2"), Left, 14, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Previous Editable - Crouch + Ability 2"), Left, 15, Null, Null, Color(Yellow), Visible To, Default Visibility);
-        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("Place Editable - Crouch + Melee"), Left, 16, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("{0}+{1}: Standard Mode", Input Binding String(Button(Crouch)), Input Binding String(Button(Ability 1))), Left, 5, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("{0}: Increase Y-Offset", Input Binding String(Button(Ultimate))), Left, 6, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("{0}+{1}: Decrease Y-Offset", Input Binding String(Button(Crouch)), Input Binding String(Button(Ultimate))), Left, 7, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("{0}: Next Editable", Input Binding String(Button(Reload))), Left, 8, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("{0}+{1}: Previous Editable", Input Binding String(Button(Crouch)), Input Binding String(Button(Reload))), Left, 9, Null, Null, Color(Yellow), Visible To, Default Visibility);
+        Create HUD Text(Filtered Array(All Players(All Teams), And(And(Not((Current Array Element).HideHud), Global.Edit), Compare(Current Array Element, ==, Host Player))), Null, Null, Custom String("{0}: Place Editable", Input Binding String(Button(Interact))), Left, 10, Null, Null, Color(Yellow), Visible To, Default Visibility);
     }
 }
 
@@ -2507,8 +2611,8 @@ rule ("Vote Map Skip") {
         All;
     }
     conditions {
-        Is Button Held(Event Player, Button(Crouch)) == True;
         Is Button Held(Event Player, Button(Secondary Fire)) == True;
+        Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -2526,7 +2630,7 @@ rule ("Toggle Invisibility (Host only)") {
         All;
     }
     conditions {
-        Is Button Held(Event Player, Button(Reload)) == True;
+        Is Button Held(Event Player, Button(Melee)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         Event Player == Host Player;
         (Event Player).ExecutingMenu == False;
@@ -2542,7 +2646,7 @@ rule ("Toggle Invisibility (Host only)") {
             Set Invisible(Filtered Array(All Players(All Teams), Not(Or((Current Array Element).Mode, And(Compare(Distance Between(Global.PosStart, Vector(X Component Of(Position Of(Current Array Element)), Y Component Of(Global.PosStart), Z Component Of(Position Of(Current Array Element)))), <=, 2), Compare(Absolute Value(Subtract(Y Component Of(Position Of(Current Array Element)), Y Component Of(Global.PosStart))), <=, 3))))), None);
             Set Global Variable(Visible, True);
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -2554,8 +2658,8 @@ rule ("Cycle HUD") {
         All;
     }
     conditions {
-        Is Button Held(Event Player, Button(Interact)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == True;
+        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -2569,7 +2673,7 @@ rule ("Cycle HUD") {
             Enable Hero HUD(Event Player);
             Set Player Variable(Event Player, HideHud, 0);
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3027,7 +3131,7 @@ rule ("Cycle Auto Reset") {
     }
     conditions {
         (Event Player).Mode == False;
-        Is Button Held(Event Player, Button(Melee)) == True;
+        Is Button Held(Event Player, Button(Ability 2)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
@@ -3044,7 +3148,7 @@ rule ("Cycle Auto Reset") {
         Else If(Compare((Event Player).AutoReset, ==, 2));
             Small Message(Event Player, Custom String("Auto Reset - Record"));
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3091,7 +3195,7 @@ rule ("Cycle Category") {
     }
     conditions {
         (Event Player).Mode == False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Interact)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
@@ -3113,7 +3217,7 @@ rule ("Cycle Category") {
         Start Rule(Respawn, Do Nothing);
         Wait(0.2, Ignore Condition);
         Allow Button(Event Player, Button(Jump));
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3219,7 +3323,7 @@ rule ("Next Editable") {
     }
     conditions {
         Global.Edit != False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Reload)) == True;
         Is Button Held(Event Player, Button(Crouch)) == False;
         Event Player == Host Player;
         (Event Player).ExecutingMenu == False;
@@ -3230,7 +3334,7 @@ rule ("Next Editable") {
         If(Compare(Global.SelectedEditable, >, Add(Count Of(Global.PosCheckpoint), 2)));
             Set Global Variable(SelectedEditable, Add(Count Of(Global.PosCheckpoint), 2));
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3243,7 +3347,7 @@ rule ("Previous Editable") {
     }
     conditions {
         Global.Edit != False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Reload)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         Event Player == Host Player;
         (Event Player).ExecutingMenu == False;
@@ -3254,7 +3358,7 @@ rule ("Previous Editable") {
         If(Compare(Global.SelectedEditable, <, 0));
             Set Global Variable(SelectedEditable, 0);
         End;
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3267,7 +3371,7 @@ rule ("Place Editable") {
     }
     conditions {
         Global.Edit != False;
-        Is Button Held(Event Player, Button(Melee)) == True;
+        Is Button Held(Event Player, Button(Interact)) == True;
         Is Button Held(Event Player, Button(Crouch)) == True;
         Event Player == Host Player;
         (Event Player).ExecutingMenu == False;
@@ -3303,7 +3407,7 @@ rule ("Place Editable") {
             Log To Inspector(Global.CpStr);
         End;
         Log To Inspector(Custom String("Set Global Variable(PosFinish, Vector({0}, {1}, {2}));", X Component Of(Global.PosFinish), Y Component Of(Global.PosFinish), Z Component Of(Global.PosFinish)));
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3324,7 +3428,7 @@ rule ("Increase Y-Offset") {
     actions {
         Set Player Variable(Event Player, ExecutingMenu, True);
         Modify Global Variable(YOffset, Add, 0.1);
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Ultimate))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3345,7 +3449,7 @@ rule ("Decrease Y-Offset") {
     actions {
         Set Player Variable(Event Player, ExecutingMenu, True);
         Modify Global Variable(YOffset, Subtract, 0.1);
-        Wait Until(Not(Is Button Held(Event Player, Button(Melee))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Ultimate))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3418,7 +3522,6 @@ rule ("Disable Practice Mode") {
     conditions {
         (Event Player).Mode == 1;
         Is Button Held(Event Player, Button(Interact)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -3494,7 +3597,7 @@ rule ("Delete Practice Checkpoint") {
     }
     conditions {
         (Event Player).Mode == 1;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Reload)) == True;
     }
     actions {
         If((Event Player).PracticeCheckpoint);
@@ -3555,7 +3658,7 @@ rule ("Enable Player Spectator Mode") {
     }
     conditions {
         (Event Player).Mode == False;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
+        Is Button Held(Event Player, Button(Reload)) == True;
         Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
@@ -3569,7 +3672,7 @@ rule ("Enable Player Spectator Mode") {
         Big Message(Event Player, Custom String("Entering Player Spectator Mode"));
         Wait(0.1, Ignore Condition);
         Kill(Event Player, Null);
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3582,8 +3685,7 @@ rule ("Disable Player Specator Mode") {
     }
     conditions {
         (Event Player).Mode == 2;
-        Is Button Held(Event Player, Button(Ability 2)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
+        Is Button Held(Event Player, Button(Reload)) == True;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -3591,7 +3693,7 @@ rule ("Disable Player Specator Mode") {
         Resurrect(Event Player);
         Start Rule(Respawn, Do Nothing);
         Big Message(Event Player, Custom String("Leaving Player Spectator Mode"));
-        Wait Until(Not(Is Button Held(Event Player, Button(Ability 2))), 9999);
+        Wait Until(Not(Is Button Held(Event Player, Button(Reload))), 9999);
         Set Player Variable(Event Player, ExecutingMenu, False);
     }
 }
@@ -3605,7 +3707,7 @@ rule ("Enable Spectator Mode") {
     conditions {
         (Event Player).Mode == False;
         Is Button Held(Event Player, Button(Reload)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
+        Is Button Held(Event Player, Button(Crouch)) == True;
         (Event Player).ExecutingMenu == False;
     }
     actions {
@@ -3637,7 +3739,6 @@ rule ("Disable Spectator Mode") {
     conditions {
         (Event Player).Mode == 3;
         Is Button Held(Event Player, Button(Reload)) == True;
-        Is Button Held(Event Player, Button(Crouch)) == False;
         (Event Player).ExecutingMenu == False;
     }
     actions {

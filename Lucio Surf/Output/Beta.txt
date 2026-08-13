@@ -91,6 +91,7 @@ settings
 		Infinite: On
 	}
 }
+
 variables {
     global:
         0: TimeFirstGrav
@@ -165,9 +166,11 @@ variables {
         42: Timing
         43: Skip
 }
+
 subroutines {
     0: Respawn
 }
+
 rule ("Initialize global variables") {
     event {
         Ongoing - Global;
@@ -293,7 +296,7 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("CR"));
             Abort;
         End;
-        If(Compare(Current Map, ==, Map(Colosseo)));
+        If(Compare(Custom String("{0}", Current Map), ==, Custom String("{0}", Map(Colosseo))));
             Set Global Variable(MapName, Custom String("CS"));
             Abort;
         End;
@@ -305,7 +308,7 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("EW"));
             Abort;
         End;
-        If(Compare(Current Map, ==, Map(Esperança)));
+        If(Compare(Custom String("{0}", Current Map), ==, Custom String("{0}", Map(Esperança))));
             Set Global Variable(MapName, Custom String("ER"));
             Abort;
         End;
@@ -383,6 +386,9 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("MT"));
             Abort;
         End;
+        If(Compare(Current Map, ==, Map(Neon Junction)));
+            Set Global Variable(MapName, Custom String("NO"));
+        End;
         If(Compare(Current Map, ==, Map(Nepal)));
             "Sanctum"
             If(Compare(Objective Index, ==, 2));
@@ -453,7 +459,7 @@ rule ("Start - Maps (Identifier)") {
             Set Global Variable(MapName, Custom String("RS"));
             Abort;
         End;
-        If(Compare(Current Map, ==, Map(Samoa)));
+        If(Compare(Custom String("{0}", Current Map), ==, Custom String("{0}", Map(Samoa))));
             "Downtown"
             If(Compare(Objective Index, ==, 1));
                 Set Global Variable(MapName, Custom String("SD"));
@@ -511,18 +517,19 @@ rule ("Start - Maps (Layout 1)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(210.355, -9.86, -243.085));
-            Set Global Variable(PosFinish, Vector(347, -11.6, -226.5));
+            Set Global Variable(PosStart, Vector(208.224, -8.98, -238.046));
+            Set Global Variable(PosFinish, Vector(347, -10.6, -226.5));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(341.613, 45.5, 168.55));
-            Set Global Variable(PosFinish, Vector(187.745, 43, 175.131));
+            Set Global Variable(PosStart, Vector(341.7, 45.6, 168.63));
+            Set Global Variable(PosFinish, Vector(187.745, 44.5, 175.131));
+            Set Global Variable(PosBarrier, Array(Vector(235.09, 48, 170.15)));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-104.816, -153, 131.51));
-            Set Global Variable(PosFinish, Vector(-68.91, -153, -14.468));
+            Set Global Variable(PosStart, Vector(-107.528, 6, 60.23));
+            Set Global Variable(PosFinish, Vector(-88.466, 6.1, -69.033));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -654,6 +661,11 @@ rule ("Start - Maps (Layout 1)") {
         If(Compare(Global.MapName, ==, Custom String("MT")));
             Set Global Variable(PosStart, Vector(41.22, 3.98, 126.22));
             Set Global Variable(PosFinish, Vector(128.32, 0.8, -65.74));
+            Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(-6.408, 2.25, 222.625));
+            Set Global Variable(PosFinish, Vector(-27.68, 0.65, 405.61));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
@@ -794,19 +806,18 @@ rule ("Start - Maps (Layout 2)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(350.57, -10.4, -233.23));
-            Set Global Variable(PosFinish, Vector(257.034, -15, -197.215));
+            Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
+            Set Global Variable(PosFinish, Vector(257.034, -20, -197.215));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(187.07, 46, 189.51));
-            Set Global Variable(PosFinish, Vector(355.296, 44, 174.37));
+            Set Global Variable(PosStart, Vector(204.291, 43.99, 176.709));
+            Set Global Variable(PosFinish, Vector(355.296, 44.8, 174.37));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-80.78, -155.4, -2.941));
-            Set Global Variable(PosFinish, Vector(-56.828, -152, 121.799));
-            Set Global Variable(PosBarrier, Array(Vector(-80.534, -146, -2.941)));
+            Set Global Variable(PosStart, Vector(-81.809, 6, -50.173));
+            Set Global Variable(PosFinish, Vector(-76.476, 5.9, 63.389));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -937,6 +948,11 @@ rule ("Start - Maps (Layout 2)") {
         If(Compare(Global.MapName, ==, Custom String("MT")));
             Set Global Variable(PosStart, Vector(126.07, 1.09, -76.23));
             Set Global Variable(PosFinish, Vector(40.22, 3.9, 123.15));
+            Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(-22.818, 1.75, 399.267));
+            Set Global Variable(PosFinish, Vector(-17.646, 4, 208.624));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
@@ -1077,22 +1093,21 @@ rule ("Start - Maps (Layout 3)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(280.745, -11, -267.232));
-            Set Global Variable(PosCheckpoint, Array(Vector(283.976, -13, -200.454)));
-            Set Global Variable(PosFinish, Vector(345.558, -10, -250.369));
-            Set Global Variable(PosBarrier, Array(Vector(280.745, -4, -267.232)));
+            Set Global Variable(PosStart, Vector(253.5, -12.92, -259.15));
+            Set Global Variable(PosCheckpoint, Array(Vector(283.976, -11.1, -200.454)));
+            Set Global Variable(PosFinish, Vector(345.558, -9, -250.369));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(299.529, 44, 133.918));
-            Set Global Variable(PosCheckpoint, Array(Vector(278.517, 39, 185.735)));
-            Set Global Variable(PosFinish, Vector(255.2, 40, 147.868));
+            Set Global Variable(PosStart, Vector(325.163, 43.7, 157.958));
+            Set Global Variable(PosCheckpoint, Array(Vector(278.517, 42, 185.735)));
+            Set Global Variable(PosFinish, Vector(255.2, 40.4, 147.868));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-56.838, -150.2, 121.766));
-            Set Global Variable(PosCheckpoint, Array(Vector(-109.85, -152.6, 50)));
-            Set Global Variable(PosFinish, Vector(-38.556, -163, 60.279));
+            Set Global Variable(PosStart, Vector(-67.3, 6, 42.188));
+            Set Global Variable(PosCheckpoint, Array(Vector(-109.45, 7.8, -11.43)));
+            Set Global Variable(PosFinish, Vector(-33, -5, 0));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -1249,6 +1264,12 @@ rule ("Start - Maps (Layout 3)") {
             Set Global Variable(PosStart, Vector(47.73, 3.84, -41.25));
             Set Global Variable(PosCheckpoint, Array(Vector(-30.54, 3.9, 45.31)));
             Set Global Variable(PosFinish, Vector(-16.41, 3.9, 98.35));
+            Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(-11.922, 3.99, 315.58));
+            Set Global Variable(PosCheckpoint, Array(Vector(45.710, 6.15, 286.181)));
+            Set Global Variable(PosFinish, Vector(14.296, 2, 212.823));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
@@ -1413,24 +1434,21 @@ rule ("Start - Maps (Layout 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(350.57, -10.4, -233.23));
-            Set Global Variable(PosCheckpoint, Array(Vector(284.074, -13.4, -199.044)));
-            Set Global Variable(PosFinish, Vector(214.406, -11, -244.933));
-            Set Global Variable(Checkpoint, True);
+            Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
+            Set Global Variable(PosCheckpoint, Array(Vector(284, -15.1, -198)));
+            Set Global Variable(PosFinish, Vector(214.406, -9.8, -244.933));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(202.923, 43.98, 160.495));
-            Set Global Variable(PosCheckpoint, Array(Vector(278.651, 41, 188.052)));
-            Set Global Variable(PosFinish, Vector(303.159, 47.5, 146.37));
-            Set Global Variable(Checkpoint, True);
+            Set Global Variable(PosStart, Vector(202.923, 44.09, 160.495));
+            Set Global Variable(PosCheckpoint, Array(Vector(278.651, 42, 188.052)));
+            Set Global Variable(PosFinish, Vector(303.159, 42, 146.37));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-124.401, -152.5, 55.646));
-            Set Global Variable(PosCheckpoint, Array(Vector(-66.245, -156.3, 46.512)));
-            Set Global Variable(PosFinish, Vector(-65, -151.7, 134.89));
-            Set Global Variable(Checkpoint, True);
+            Set Global Variable(PosStart, Vector(-117.55, 7.81, -2.422));
+            Set Global Variable(PosCheckpoint, Array(Vector(-77.8, 5.3, -21.83)));
+            Set Global Variable(PosFinish, Vector(-67.77, 8.7, 63.24));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -1517,7 +1535,7 @@ rule ("Start - Maps (Layout 4)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("HV")));
-            Set Global Variable(PosStart, Vector(-107.29, 3.85, -57.71));
+            Set Global Variable(PosStart, Vector(-98.43, 3.85, -49.44));
             Set Global Variable(PosFinish, Vector(65.054, 10.82, -83.635));
             Set Global Variable(Checkpoint, False);
             Abort;
@@ -1612,6 +1630,12 @@ rule ("Start - Maps (Layout 4)") {
             Set Global Variable(PosFinish, Vector(-25.43, 3.6, 37.75));
             Set Global Variable(Checkpoint, True);
             Abort;
+        End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(15.670, 2.25, 271.17));
+            Set Global Variable(PosCheckpoint, Array(Vector(44.539, 6.50, 297.201)));
+            Set Global Variable(PosFinish, Vector(-28.771, 1.6, 381.651));
+            Set Global Variable(Checkpoint, True);
         End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
             Set Global Variable(PosStart, Vector(107.495, 133.1, -73.174));
@@ -1796,22 +1820,22 @@ rule ("Start - Maps (Layout 5)") {
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AI")));
-            Set Global Variable(PosStart, Vector(283.944, -11, -247.474));
-            Set Global Variable(PosCheckpoint, Array(Vector(225.535, -11, -245.627), Vector(240.373, -18, -199.518), Vector(342.476, -13, -233.311)));
-            Set Global Variable(PosFinish, Vector(284.001, -14, -222.088));
+            Set Global Variable(PosStart, Vector(284, -11, -202.5));
+            Set Global Variable(PosCheckpoint, Array(Vector(240.373, -15, -199.518), Vector(227.852, -8.4, -240.547), Vector(284, -9.2, -259), Vector(335.274, -11.1, -237.736)));
+            Set Global Variable(PosFinish, Vector(284.001, -12.9, -222.088));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AL")));
-            Set Global Variable(PosStart, Vector(270, 37.8, 177.329));
-            Set Global Variable(PosCheckpoint, Array(Vector(354.446, 43, 168.863), Vector(203.926, 42, 187.222)));
-            Set Global Variable(PosFinish, Vector(270.025, 38, 153.709));
+            Set Global Variable(PosStart, Vector(269.938, 42.96, 184.71));
+            Set Global Variable(PosCheckpoint, Array(Vector(228.712, 43.3, 187.033), Vector(212.887, 43, 177.008), Vector(356.132, 45, 168.618)));
+            Set Global Variable(PosFinish, Vector(270.025, 39.8, 153.709));
+            Set Global Variable(PosBarrier, Array(Vector(310.21, 46.876, 172.599)));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("AS")));
-            Set Global Variable(PosStart, Vector(-53.982, -154.5, 59.997));
-            Set Global Variable(PosCheckpoint, Array(Vector(-63.283, -153, -0.486), Vector(-95.097, -155, -11.09), Vector(-77.397, -162, 59.954), Vector(-69.847, -153, 128.858)));
-            Set Global Variable(PosFinish, Vector(-127.491, -154, 60.037));
-            Set Global Variable(PosBarrier, Array(Vector(-53.982, -147, 59.997)));
+            Set Global Variable(PosStart, Vector(-116.89, 7.81, 0));
+            Set Global Variable(PosCheckpoint, Array(Vector(-103.996, 7.5, -67.884), Vector(-67.17, 4.8, -31.457), Vector(-67.17, 4.8, 31.616), Vector(-102.396, 8.1, 68.5)));
+            Set Global Variable(PosFinish, Vector(-75.5, 0, 0));
             Abort;
         End;
         If(Compare(Global.MapName, ==, Custom String("BW")));
@@ -1970,6 +1994,12 @@ rule ("Start - Maps (Layout 5)") {
             Set Global Variable(PosFinish, Vector(50.25, 7.8, 2.75));
             Abort;
         End;
+        If(Compare(Global.MapName, ==, Custom String("NO")));
+            Set Global Variable(PosStart, Vector(36.628, 0.25, 290.02));
+            Set Global Variable(PosCheckpoint, Array(Vector(33.96, 2.1, 321.07), Vector(-2.305, -0.4, 389.501), Vector(12.206, 2.4, 227.79), Vector(-7.104, 4.15, 264.748)));
+            Set Global Variable(PosFinish, Vector(26.076, 7.2, 291.457));
+            Abort;
+        End;
         If(Compare(Global.MapName, ==, Custom String("NS")));
             Set Global Variable(PosStart, Vector(67.643, 132, 0.073));
             Set Global Variable(PosCheckpoint, Array(Vector(97.8, 131.7, 73.715), Vector(96.973, 131.7, -0.008), Vector(56.276, 129.7, -0.025), Vector(70.755, 127.7, -63.246)));
@@ -2117,112 +2147,6 @@ rule ("Start - Maps (Layout 5)") {
     }
 }
 
-rule ("Start - Maps (Overrides)") {
-    event {
-        Ongoing - Global;
-    }
-    actions {
-        If(And(Compare(Global.MapName, ==, Custom String("HV")), Compare(Global.Layout, ==, 3)));
-            Set Global Variable(PosStart, Vector(65.05, 10.82, -83.64));
-            Abort;
-        End;
-        If(Compare(Global.Layout, ==, 0));
-            If(Compare(Global.MapName, ==, Custom String("AI")));
-                Set Global Variable(PosStart, Vector(208.224, -8.98, -238.046));
-                Set Global Variable(PosFinish, Vector(347, -10.6, -226.5));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AL")));
-                Set Global Variable(PosStart, Vector(341.7, 45.6, 168.63));
-                Set Global Variable(PosFinish, Vector(187.745, 44.5, 175.131));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AS")));
-                Set Global Variable(PosStart, Vector(-107.528, 6, 60.23));
-                Set Global Variable(PosFinish, Vector(-88.466, 6.1, -69.033));
-                Abort;
-            End;
-        End;
-        If(Compare(Global.Layout, ==, 1));
-            If(Compare(Global.MapName, ==, Custom String("AI")));
-                Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
-                Set Global Variable(PosFinish, Vector(257.034, -20, -197.215));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AL")));
-                Set Global Variable(PosStart, Vector(204.291, 43.99, 176.709));
-                Set Global Variable(PosFinish, Vector(355.296, 44.8, 174.37));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AS")));
-                Set Global Variable(PosStart, Vector(-81.809, 6, -50.173));
-                Set Global Variable(PosFinish, Vector(-76.476, 6.247, 63.389));
-                Abort;
-            End;
-        End;
-        If(Compare(Global.Layout, ==, 2));
-            If(Compare(Global.MapName, ==, Custom String("AI")));
-                Set Global Variable(PosStart, Vector(253.5, -12.92, -259.15));
-                Set Global Variable(PosCheckpoint, Array(Vector(283.976, -11.1, -200.454)));
-                Set Global Variable(PosFinish, Vector(345.558, -9, -250.369));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AL")));
-                Set Global Variable(PosStart, Vector(325.163, 43.7, 157.958));
-                Set Global Variable(PosCheckpoint, Array(Vector(278.517, 42, 185.735)));
-                Set Global Variable(PosFinish, Vector(255.2, 40.4, 147.868));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AS")));
-                Set Global Variable(PosStart, Vector(-67.3, 6, 42.188));
-                Set Global Variable(PosCheckpoint, Array(Vector(-109.45, 7.8, -11.43)));
-                Set Global Variable(PosFinish, Vector(-33, -5, 0));
-                Abort;
-            End;
-        End;
-        If(Compare(Global.Layout, ==, 3));
-            If(Compare(Global.MapName, ==, Custom String("AI")));
-                Set Global Variable(PosStart, Vector(349.8, -9.47, -232.23));
-                Set Global Variable(PosCheckpoint, Array(Vector(284, -15.1, -198)));
-                Set Global Variable(PosFinish, Vector(214.406, -9.8, -244.933));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AL")));
-                Set Global Variable(PosStart, Vector(202.923, 44.09, 160.495));
-                Set Global Variable(PosCheckpoint, Array(Vector(278.651, 42, 188.052)));
-                Set Global Variable(PosFinish, Vector(303.159, 42, 146.37));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AS")));
-                Set Global Variable(PosStart, Vector(-117.55, 7.81, -2.422));
-                Set Global Variable(PosCheckpoint, Array(Vector(-77.486, 5.3, -21.861)));
-                Set Global Variable(PosFinish, Vector(-99.5, 8.8, 68.5));
-                Abort;
-            End;
-        End;
-        If(Compare(Global.Layout, ==, 4));
-            If(Compare(Global.MapName, ==, Custom String("AI")));
-                Set Global Variable(PosStart, Vector(284, -11, -202.5));
-                Set Global Variable(PosCheckpoint, Array(Vector(240.373, -15, -199.518), Vector(227.852, -8.4, -240.547), Vector(284, -9.2, -259), Vector(335.274, -11.1, -237.736)));
-                Set Global Variable(PosFinish, Vector(284.001, -12.9, -222.088));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AL")));
-                Set Global Variable(PosStart, Vector(269.938, 43.96, 184.71));
-                Set Global Variable(PosCheckpoint, Array(Vector(228.712, 43.3, 187.033), Vector(212.887, 43, 177.008), Vector(356.132, 45, 168.618)));
-                Set Global Variable(PosFinish, Vector(270.025, 39.8, 153.709));
-                Set Global Variable(PosBarrier, Array(Vector(310.21, 46.876, 172.599)));
-                Abort;
-            End;
-            If(Compare(Global.MapName, ==, Custom String("AS")));
-                Set Global Variable(PosStart, Vector(-116.89, 7.81, 0));
-                Set Global Variable(PosCheckpoint, Array(Vector(-103.996, 7.5, -67.884), Vector(-67.17, 4.8, -31.457), Vector(-67.17, 4.8, 31.616), Vector(-102.396, 8.1, 68.5)));
-                Set Global Variable(PosFinish, Vector(-75.5, 0, 0));
-                Set Global Variable(PosBarrier, Empty Array);
-                Abort;
-    }
-}
-
 rule (" Setup <­tx> / <­fg> Code") {
     event {
         Ongoing - Global;
@@ -2262,7 +2186,7 @@ rule ("Start - Global") {
         "Vars"
         Wait(0.016, Ignore Condition);
         Set Match Time(Add(Global.Time, 10));
-        Chase Global Variable At Rate(VoteTimer, 9999, 1, None);
+        Chase Global Variable At Rate(VoteTimer, 999999999999, 1, None);
         "Start / Checkpoint / Finish / Barrier effects"
         Create Effect(All Players(All Teams), Ring, Color(Green), Global.PosStart, 2, Visible To Position and Radius);
         Create Effect(All Players(All Teams), Light Shaft, Color(White), Global.PosFinish, 5, Visible To Position and Radius);
@@ -2306,8 +2230,10 @@ rule ("Start - Global") {
         Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 2)), Local Player, Null), Null, Null, Custom String("{0}: Spectate previous                                                                                                       {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                                   ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Help text spectator"
         Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Standard Mode                                                                                                           {1}", Input Binding String(Button(Reload)), Custom String("                                                               ")), Left, 5, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Stop                                                                                                                    {1}", Input Binding String(Button(Primary Fire)), Custom String("                                                      ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
-        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Slow Move                                                                                                               {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                           ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Move Up                                                                                                                 {1}", Input Binding String(Button(Reload)), Custom String("                                                         ")), Left, 6, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Move Down                                                                                                               {1}", Input Binding String(Button(Reload)), Custom String("                                                           ")), Left, 7, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Stop                                                                                                                    {1}", Input Binding String(Button(Primary Fire)), Custom String("                                                      ")), Left, 8, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
+        Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare((Local Player).Mode, ==, 3)), Local Player, Null), Null, Null, Custom String("{0}: Slow Move                                                                                                               {1}", Input Binding String(Button(Secondary Fire)), Custom String("                                                           ")), Left, 9, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         "Always visible help text"
         Create HUD Text(If-Then-Else((Local Player).HideHud, Null, Local Player), Null, Null, Custom String("{0}+{1}: Vote Skip Map                                                                                                       {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Secondary Fire)), Custom String("                                                                   ")), Left, 18, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
         Create HUD Text(If-Then-Else(And(Not((Local Player).HideHud), Compare(Local Player, ==, Host Player)), Local Player, Null), Null, Null, Custom String("{0}+{1}: Toggle Invisibility                                                                                                 {2}", Input Binding String(Button(Crouch)), Input Binding String(Button(Melee)), Custom String("                                                                         ")), Left, 19, Null, Null, Color(Yellow), Visible To and String, Default Visibility);
