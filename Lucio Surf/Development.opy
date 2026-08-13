@@ -38,34 +38,7 @@ rule "Debug (Player - Host)":
 #!include "Shared/map_init.opy"
 
 rule "Start - Maps (Overrides)":
-    if getCurrentMap() == Map.NEON_JUNCTION:
-        MapName = "NO"
-    if MapName == "NO":
-        if Layout == 0:
-            PosStart = vect(-6.408, 2.25, 222.625)
-            PosFinish = vect(-27.68, 0.65, 405.61)
-            return
-        if Layout == 1:
-            PosStart = vect(-22.818, 1.75, 399.267)
-            PosFinish = vect(-17.646, 4, 208.624)
-            return
-        if Layout == 2:
-            PosStart = vect(-11.922, 3.99, 315.58)
-            PosCheckpoint = [vect(45.710, 6.15, 286.181)]
-            PosFinish = vect(14.296, 2, 212.823)
-            return
-        if Layout == 3:
-            PosStart = vect(15.670, 2.25, 271.17)
-            PosCheckpoint = [vect(44.539, 6.50, 297.201)]
-            PosFinish = vect(-28.771, 1.6, 381.651)
-            Checkpoint = true
-            return
-        if Layout == 4:
-            PosStart = vect(36.628, 0.25, 290.02)
-            PosCheckpoint = [vect(33.96, 2.1, 321.07), vect(-2.305, -0.4, 389.501), vect(12.206, 2.4, 227.79), vect(-7.104, 4.15, 264.748)]
-            PosFinish = vect(26.076, 7.2, 291.457)
-            return
-
+    
 
 # Setup
 #!include "Shared/game_setup.opy"

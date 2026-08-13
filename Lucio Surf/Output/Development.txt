@@ -2160,46 +2160,6 @@ rule ("Start - Maps (Layout 5)") {
     }
 }
 
-rule ("Start - Maps (Overrides)") {
-    event {
-        Ongoing - Global;
-    }
-    actions {
-        If(Compare(Current Map, ==, Map(Neon Junction)));
-            Set Global Variable(MapName, Custom String("NO"));
-        End;
-        If(Compare(Global.MapName, ==, Custom String("NO")));
-            If(Compare(Global.Layout, ==, 0));
-                Set Global Variable(PosStart, Vector(-6.408, 2.25, 222.625));
-                Set Global Variable(PosFinish, Vector(-27.68, 0.65, 405.61));
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 1));
-                Set Global Variable(PosStart, Vector(-22.818, 1.75, 399.267));
-                Set Global Variable(PosFinish, Vector(-17.646, 4, 208.624));
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 2));
-                Set Global Variable(PosStart, Vector(-11.922, 3.99, 315.58));
-                Set Global Variable(PosCheckpoint, Array(Vector(45.710, 6.15, 286.181)));
-                Set Global Variable(PosFinish, Vector(14.296, 2, 212.823));
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 3));
-                Set Global Variable(PosStart, Vector(15.670, 2.25, 271.17));
-                Set Global Variable(PosCheckpoint, Array(Vector(44.539, 6.50, 297.201)));
-                Set Global Variable(PosFinish, Vector(-28.771, 1.6, 381.651));
-                Set Global Variable(Checkpoint, True);
-                Abort;
-            End;
-            If(Compare(Global.Layout, ==, 4));
-                Set Global Variable(PosStart, Vector(36.628, 0.25, 290.02));
-                Set Global Variable(PosCheckpoint, Array(Vector(33.96, 2.1, 321.07), Vector(-2.305, -0.4, 389.501), Vector(12.206, 2.4, 227.79), Vector(-7.104, 4.15, 264.748)));
-                Set Global Variable(PosFinish, Vector(26.076, 7.2, 291.457));
-                Abort;
-    }
-}
-
 rule (" Setup <­tx> / <­fg> Code") {
     event {
         Ongoing - Global;
