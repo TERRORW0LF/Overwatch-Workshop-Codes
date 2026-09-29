@@ -942,16 +942,19 @@ rule "Start - Maps (Layout 4)":
         PosStart = vect(349.8, -9.47, -232.23)
         PosCheckpoint = [vect(284, -15.1, -198)]
         PosFinish = vect(214.406, -9.8, -244.933)
+        Checkpoint = true
         return
     if MapName == "AL":
         PosStart = vect(202.923, 44.09, 160.495)
         PosCheckpoint = [vect(278.651, 42, 188.052)]
         PosFinish = vect(303.159, 42, 146.37)
+        Checkpoint = true
         return
     if MapName == "AS":
         PosStart = vect(-117.55, 7.81, -2.422)
         PosCheckpoint = [vect(-77.8, 5.3, -21.83)]
         PosFinish = vect(-67.77, 8.7, 63.24)
+        Checkpoint = true
         return
     if MapName == "BW":
         PosStart = vect(52.118, -0.81, -7.795)
